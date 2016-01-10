@@ -841,32 +841,8 @@ class WC_Robokassa extends WC_Payment_Gateway
             /**
              * Local signature
              */
-            switch($signature_method)
-            {
-                case 'ripemd160':
-                    $local_signature = strtoupper(hash('ripemd160', "{$sum}:{$order_id}:{$signature_pass}"));
-                    break;
-
-                case 'sha1':
-                    $local_signature = strtoupper(sha1("{$sum}:{$order_id}:{$signature_pass}"));
-                    break;
-
-                case 'sha256':
-                    $local_signature = strtoupper(hash('sha256', "{$sum}:{$order_id}:{$signature_pass}"));
-                    break;
-
-                case 'sha384':
-                    $local_signature = strtoupper(hash('sha384', "{$sum}:{$order_id}:{$signature_pass}"));
-                    break;
-
-                case 'sha512':
-                    $local_signature = strtoupper(hash('sha512', "{$sum}:{$order_id}:{$signature_pass}"));
-                    break;
-
-                default:
-
-                    $local_signature = strtoupper(md5( "{$sum}:{$order_id}:{$signature_pass}" ));
-            }
+            $signature_payload = "{$sum}:{$order_id}:{$signature_pass}";
+            $local_signature = $this->get_signature($signature_payload, $signature_method);
 
             /**
              * Get order object
