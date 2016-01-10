@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2016-01-10 22:39+0300\n"
-"PO-Revision-Date: 2016-01-10 22:44+0300\n"
+"POT-Creation-Date: 2016-01-10 23:05+0300\n"
+"PO-Revision-Date: 2016-01-10 23:05+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language: ru_RU\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Poedit-WPHeader: wc-robokassa.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
-"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
@@ -151,7 +151,7 @@ msgstr "Пожалуйста введите первый пароль магаз
 
 #: class-wc-robokassa.php:431 class-wc-robokassa.php:477
 msgid "Shop pass 2"
-msgstr "Пароль #2"
+msgstr "Пароль магазина #2"
 
 #: class-wc-robokassa.php:433
 msgid "Please write Shop pass 2."
@@ -166,8 +166,8 @@ msgid "Test mode"
 msgstr "Тестовый режим"
 
 #: class-wc-robokassa.php:445
-msgid "The field is used only in the test mode."
-msgstr "Данное поле используется только в тестовом режиме."
+msgid "Activate testing mode for admins."
+msgstr "Активация тестового режима для админов."
 
 #: class-wc-robokassa.php:449
 msgid "Off"
@@ -234,8 +234,7 @@ msgstr "https://wordpress.org/plugins/wc-robokassa"
 #. Description of the plugin/theme
 msgid ""
 "Allows you to use Robokassa payment gateway with the WooCommerce plugin."
-msgstr ""
-"Позволяет использовать платежный шлюз Робокасса в плагине WooCommerce."
+msgstr "Позволяет использовать платежный шлюз Робокасса в плагине WooCommerce."
 
 #. Author of the plugin/theme
 msgid "Mofsy"
@@ -244,3 +243,6 @@ msgstr "Мофси"
 #. Author URI of the plugin/theme
 msgid "https://mofsy.ru"
 msgstr "https://mofsy.ru"
+
+#~ msgid "The field is used only in the test mode."
+#~ msgstr "Данное поле используется только в тестовом режиме."

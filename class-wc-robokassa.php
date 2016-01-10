@@ -442,7 +442,7 @@ class WC_Robokassa extends WC_Payment_Gateway
             (
                 'title' => __( 'Test mode', 'wc-robokassa' ),
                 'type'        => 'select',
-                'description'	=>  __( 'The field is used only in the test mode.', 'wc-robokassa' ),
+                'description'	=>  __( 'Activate testing mode for admins.', 'wc-robokassa' ),
                 'default'	=> '2',
                 'options'     => array
                 (

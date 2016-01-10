@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2016-01-10 22:39+0300\n"
+"POT-Creation-Date: 2016-01-10 23:05+0300\n"
 "PO-Revision-Date: 2016-01-10 16:41+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
@@ -163,7 +163,7 @@ msgid "Test mode"
 msgstr ""
 
 #: class-wc-robokassa.php:445
-msgid "The field is used only in the test mode."
+msgid "Activate testing mode for admins."
 msgstr ""
 
 #: class-wc-robokassa.php:449
