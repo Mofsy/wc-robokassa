@@ -313,7 +313,7 @@ class WC_Robokassa extends WC_Payment_Gateway
         </table>
 
     <?php else : ?>
-        <div class="inline error"><p><strong><?php _e('Gateway offline', 'wc-robokassa'); ?></strong>: <?php _e('Webmoney does not support the currency your store.', 'wc-robokassa' ); ?></p></div>
+        <div class="inline error"><p><strong><?php _e('Gateway offline', 'wc-robokassa'); ?></strong>: <?php _e('Robokassa does not support the currency your store.', 'wc-robokassa' ); ?></p></div>
         <?php
     endif;
     }
