@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2016-01-10 22:36+0300\n"
+"POT-Creation-Date: 2016-01-10 22:39+0300\n"
 "PO-Revision-Date: 2016-01-10 16:41+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
@@ -33,7 +33,7 @@ msgid "Gateway offline"
 msgstr ""
 
 #: class-wc-robokassa.php:316
-msgid "Webmoney does not support the currency your store."
+msgid "Robokassa does not support the currency your store."
 msgstr ""
 
 #: class-wc-robokassa.php:333

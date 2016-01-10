@@ -1,22 +1,227 @@
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2016-01-10 16:42+0300\n"
-"PO-Revision-Date: 2016-01-10 16:43+0300\n"
+"POT-Creation-Date: 2016-01-10 22:39+0300\n"
+"PO-Revision-Date: 2016-01-10 22:44+0300\n"
+"Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: wc-robokassa.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
-"Language: ru_RU\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: class-wc-robokassa.php:306 class-wc-robokassa.php:379
+msgid "Robokassa"
+msgstr "Робокасса"
+
+#: class-wc-robokassa.php:307
+msgid "Setting receiving payments through Robokassa Merchant."
+msgstr "Настройка приема платежей с использованием Робокассы."
+
+#: class-wc-robokassa.php:316
+msgid "Gateway offline"
+msgstr "Шлюз выключен"
+
+#: class-wc-robokassa.php:316
+msgid "Robokassa does not support the currency your store."
+msgstr "Робокасса не поддерживает ваши текущие валюты в магазине."
+
+#: class-wc-robokassa.php:333
+msgid "Online/Offline gateway"
+msgstr "Включить/Выключить шлюз"
+
+#: class-wc-robokassa.php:335
+msgid "Online"
+msgstr "Включить"
+
+#: class-wc-robokassa.php:339
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: class-wc-robokassa.php:345
+msgid "Show gateway icon?"
+msgstr "Показать иконку шлюза?"
+
+#: class-wc-robokassa.php:347
+msgid "Show"
+msgstr "Показать"
+
+#: class-wc-robokassa.php:352
+msgid "Language interface"
+msgstr "Язык интерфейса"
+
+#: class-wc-robokassa.php:356
+msgid "Russian"
+msgstr "Русский"
+
+#: class-wc-robokassa.php:357
+msgid "English"
+msgstr "Английский"
+
+#: class-wc-robokassa.php:359
+msgid "What language interface displayed for the customer on Robokassa?"
+msgstr "Какой язык показывать клиентам на стороне сервиса Робокасса?"
+
+#: class-wc-robokassa.php:364
+msgid "Language based on the locale?"
+msgstr "Язык интерфейса на основе локали?"
+
+#: class-wc-robokassa.php:368
+msgid "Yes"
+msgstr "Да"
+
+#: class-wc-robokassa.php:369
+msgid "No"
+msgstr "Нет"
+
+#: class-wc-robokassa.php:371
+msgid "Trying to get the language based on the locale?"
+msgstr "Получать язык для интерфейса Робокассы  на основе локали?"
+
+#: class-wc-robokassa.php:376
+msgid "Title"
+msgstr "Название"
+
+#: class-wc-robokassa.php:378
+msgid "This is the name that the user sees during the payment."
+msgstr "Заголовок, который видит пользователь в процессе оформления заказа."
+
+#: class-wc-robokassa.php:383
+msgid "Order button text"
+msgstr "Название кнопки оплаты"
+
+#: class-wc-robokassa.php:385
+msgid "This is the button text that the user sees during the payment."
+msgstr ""
+"Название кнопки оплаты, которое видит пользователь в процессе оформления "
+"заказа."
+
+#: class-wc-robokassa.php:386 class-wc-robokassa.php:676
+msgid "Pay"
+msgstr "Оплатить"
+
+#: class-wc-robokassa.php:390
+msgid "Description"
+msgstr "Описание"
+
+#: class-wc-robokassa.php:392
+msgid ""
+"Description of the method of payment that the customer will see on our "
+"website."
+msgstr "Описанием метода оплаты которое клиент будет видеть на вашем сайте."
+
+#: class-wc-robokassa.php:393
+msgid "Payment by Robokassa."
+msgstr "Оплатить с помощью Робокассы."
+
+#: class-wc-robokassa.php:396
+msgid "Technical details"
+msgstr "Технические детали"
+
+#: class-wc-robokassa.php:402 class-wc-robokassa.php:455
+msgid "Signature method"
+msgstr "Метод подписи"
+
+#: class-wc-robokassa.php:417
+msgid "Shop login"
+msgstr "Логин магазина"
+
+#: class-wc-robokassa.php:419
+msgid "Unique identification for shop."
+msgstr "Уникальный идентификатор магазина."
+
+#: class-wc-robokassa.php:424 class-wc-robokassa.php:470
+msgid "Shop pass 1"
+msgstr "Пароль магазина #1"
+
+#: class-wc-robokassa.php:426
+msgid "Please write Shop pass 1."
+msgstr "Пожалуйста введите первый пароль магазина."
+
+#: class-wc-robokassa.php:431 class-wc-robokassa.php:477
+msgid "Shop pass 2"
+msgstr "Пароль #2"
+
+#: class-wc-robokassa.php:433
+msgid "Please write Shop pass 2."
+msgstr "Пожалуйста введите второй пароль магазина."
+
+#: class-wc-robokassa.php:437
+msgid "Settings for test payments"
+msgstr "Настройки для тестовых платежей"
+
+#: class-wc-robokassa.php:443
+msgid "Test mode"
+msgstr "Тестовый режим"
+
+#: class-wc-robokassa.php:445
+msgid "The field is used only in the test mode."
+msgstr "Данное поле используется только в тестовом режиме."
+
+#: class-wc-robokassa.php:449
+msgid "Off"
+msgstr "Отключить"
+
+#: class-wc-robokassa.php:450
+msgid "On"
+msgstr "Включить"
+
+#: class-wc-robokassa.php:472
+msgid "Please write Shop pass 1 for testing payments."
+msgstr "Пожалуйста введите первый пароль магазина для тестовых платежей."
+
+#: class-wc-robokassa.php:479
+msgid "Please write Shop pass 2 for testing payments."
+msgstr "Пожалуйста введите второй пароль магазина для тестовых платежей."
+
+#: class-wc-robokassa.php:565
+msgid "Product number: "
+msgstr "Номер товара: "
+
+#: class-wc-robokassa.php:677
+msgid "Cancel & return to cart"
+msgstr "Отменить и вернутся в корзину"
+
+#: class-wc-robokassa.php:691
+msgid "The client started to pay."
+msgstr "Клиент начал оплату."
+
+#: class-wc-robokassa.php:714
+msgid "Thank you for your order, please press the button below to pay."
+msgstr ""
+"Спасибо за ваш заказ, пожалуйста, нажмите ниже на кнопку, чтобы заплатить."
+
+#: class-wc-robokassa.php:851
+#, php-format
+msgid "Validate hash error. Local: %1$s Remote: %2$s"
+msgstr "Ошибка валидации хеша. Локальный: %1$s Удаленный: %2$s"
+
+#: class-wc-robokassa.php:867
+msgid "Order successfully paid (TEST MODE)."
+msgstr "Счет успешно оплачен (ТЕСТОВЫЙ ПЛАТЕЖ)"
+
+#: class-wc-robokassa.php:877
+msgid "Order successfully paid."
+msgstr "Счет успешно оплачен."
+
+#: class-wc-robokassa.php:891 class-wc-robokassa.php:897
+msgid "Payment error, please pay other time."
+msgstr "Ошибка платежа, пожалуйста повторите попытку позже."
+
+#: class-wc-robokassa.php:922
+msgid "The order has not been paid."
+msgstr "Счет не был оплачен."
 
 #. Plugin Name of the plugin/theme
 msgid "WooCommerce - Robokassa Payment Gateway"
@@ -27,8 +232,10 @@ msgid "https://wordpress.org/plugins/wc-robokassa"
 msgstr "https://wordpress.org/plugins/wc-robokassa"
 
 #. Description of the plugin/theme
-msgid "Allows you to use Robokassa payment gateway with the WooCommerce plugin."
-msgstr "Позволяет использовать платежный шлюз Робокасса в плагине WooCommerce."
+msgid ""
+"Allows you to use Robokassa payment gateway with the WooCommerce plugin."
+msgstr ""
+"Позволяет использовать платежный шлюз Робокасса в плагине WooCommerce."
 
 #. Author of the plugin/theme
 msgid "Mofsy"
