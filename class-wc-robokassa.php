@@ -239,7 +239,7 @@ class WC_Robokassa extends WC_Payment_Gateway
          */
         if($this->get_option('enable_icon') === 'yes')
         {
-            $this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . '/assets/img/robokassa.jpg');
+            $this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . '/assets/img/robokassa.png');
         }
 
         /**
