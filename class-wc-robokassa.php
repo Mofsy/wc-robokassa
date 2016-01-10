@@ -543,13 +543,18 @@ class WC_Robokassa extends WC_Payment_Gateway
         /**
          * Shop login
          */
-        $args['MrchLogin'] = $this->shop_login;
+        $args['MerchantLogin'] = $this->shop_login;
 
         /**
          * Sum
          */
         $out_sum = number_format($order->order_total, 2, '.', '');
         $args['OutSum'] = $out_sum;
+
+        /**
+         * Order id
+         */
+        $args['InvId'] = $order_id;
 
         /**
          * Product description
@@ -560,26 +565,29 @@ class WC_Robokassa extends WC_Payment_Gateway
         {
             $description .= $item['name'];
         }
-        if(count($description) > 100)
+        if(count($description) > 99)
         {
             $description = __('Product number: ' . $order_id, 'wc-robokassa');
         }
-        $args['Desc'] = $description;
-
-        /**
-         * Order id
-         */
-        $args['InvId'] = $order_id;
-
-        /**
-         * Language (culture)
-         */
-        $args['Culture'] = $this->language;
+        $args['InvDesc'] = $description;
 
         /**
          * Rewrite currency from order
          */
         $this->currency = $order->order_currency;
+
+        /**
+         * Set currency to robokassa
+         */
+        //$args['OutSumCurrency'] = '';
+        if($this->currency === 'USD')
+        {
+            //$args['OutSumCurrency'] = 'USD';
+        }
+        elseif($this->currency === 'EUR')
+        {
+            //$args['OutSumCurrency'] = 'EUR';
+        }
 
         /**
          * Test mode
@@ -623,36 +631,33 @@ class WC_Robokassa extends WC_Payment_Gateway
         }
 
         /**
-         * Signature
+         * Billing email
          */
-        switch($signature_method)
+        if(!empty($order->billing_email))
         {
-            case 'ripemd160':
-                $signature = strtoupper(hash('ripemd160', "{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}"));
-                break;
-
-            case 'sha1':
-                $signature = strtoupper(sha1("{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}"));
-                break;
-
-            case 'sha256':
-                $signature = strtoupper(hash('sha256', "{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}"));
-                break;
-
-            case 'sha384':
-                $signature = strtoupper(hash('sha384', "{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}"));
-                break;
-
-            case 'sha512':
-                $signature = strtoupper(hash('sha512', "{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}"));
-                break;
-
-            default:
-
-                $signature = strtoupper(md5( "{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}" ));
+            $args['Email'] = $order->billing_email;
         }
 
-        $args['SignatureValue'] = $signature;
+        /**
+         * Shop item
+         */
+        $args['Shp_item'] = 1;
+
+        /**
+         * Signature
+         */
+        $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].':'.$signature_pass.':'.$args['Shp_item'];
+        $args['SignatureValue'] = $this->get_signature($signature_payload, $signature_method);
+
+        /**
+         * Encoding
+         */
+        $args['Encoding'] = 'utf-8';
+
+        /**
+         * Language (culture)
+         */
+        $args['Culture'] = $this->language;
 
         /**
          * Execute filter woocommerce_robokassa_args
@@ -671,11 +676,51 @@ class WC_Robokassa extends WC_Payment_Gateway
         /**
          * Return full form
          */
-        return '<form action="'.esc_url($form_url).'" method="POST" id="robokassa_payment_form">'."\n".
+        return '<form action="'.esc_url($form_url).'" method="POST" id="robokassa_payment_form" accept-charset="utf-8">'."\n".
         implode("\n", $args_array).
         '<input type="submit" class="button alt" id="submit_robokassa_payment_form" value="'.__('Pay', 'wc-robokassa').
         '" /> <a class="button cancel" href="'.$order->get_cancel_order_url().'">'.__('Cancel & return to cart', 'wc-robokassa').'</a>'."\n".
         '</form>';
+    }
+
+    /**
+     * Get signature
+     *
+     * @param $string
+     * @param $method
+     *
+     * @return string
+     */
+    public function get_signature($string, $method = 'sha256')
+    {
+        switch($method)
+        {
+            case 'ripemd160':
+                $signature = strtoupper(hash('ripemd160', $string));
+                break;
+
+            case 'sha1':
+                $signature = strtoupper(sha1($string));
+                break;
+
+            case 'sha256':
+                $signature = strtoupper(hash('sha256', $string));
+                break;
+
+            case 'sha384':
+                $signature = strtoupper(hash('sha384', $string));
+                break;
+
+            case 'sha512':
+                $signature = strtoupper(hash('sha512', $string));
+                break;
+
+            default:
+
+                $signature = md5($string);
+        }
+
+        return $signature;
     }
 
     /**
