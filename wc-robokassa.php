@@ -30,6 +30,10 @@ function woocommerce_robokassa_init()
     {
         return;
     }
+
+    /**
+     * Gate exists?
+     */
     if(class_exists('WC_Robokassa'))
     {
         return;
