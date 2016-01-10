@@ -29,7 +29,7 @@ class WC_Robokassa extends WC_Payment_Gateway
      *
      * @var array
      */
-    public $currency_all = array('RUB', 'USD');
+    public $currency_all = array('RUB', 'USD', 'EUR');
 
     /**
      * Shop login
@@ -87,6 +87,8 @@ class WC_Robokassa extends WC_Payment_Gateway
 
     /**
      * @var string
+     *
+     * deprecated
      */
     public $test_form_url = 'http://test.robokassa.ru/Index.aspx';
 
@@ -579,14 +581,13 @@ class WC_Robokassa extends WC_Payment_Gateway
         /**
          * Set currency to robokassa
          */
-        //$args['OutSumCurrency'] = '';
         if($this->currency === 'USD')
         {
-            //$args['OutSumCurrency'] = 'USD';
+            $args['OutSumCurrency'] = 'USD';
         }
         elseif($this->currency === 'EUR')
         {
-            //$args['OutSumCurrency'] = 'EUR';
+            $args['OutSumCurrency'] = 'EUR';
         }
 
         /**
@@ -605,9 +606,9 @@ class WC_Robokassa extends WC_Payment_Gateway
             $signature_method = $this->test_sign_method;
 
             /**
-             * Form url
+             * Test flag
              */
-            $form_url = $this->test_form_url;
+            $args['IsTest'] = 1;
         }
         /**
          * Real payments
@@ -623,11 +624,6 @@ class WC_Robokassa extends WC_Payment_Gateway
              * Sign method
              */
             $signature_method = $this->sign_method;
-
-            /**
-             * Form url
-             */
-            $form_url = $this->form_url;
         }
 
         /**
@@ -639,14 +635,17 @@ class WC_Robokassa extends WC_Payment_Gateway
         }
 
         /**
-         * Shop item
-         */
-        $args['Shp_item'] = 1;
-
-        /**
          * Signature
          */
-        $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].':'.$signature_pass.':'.$args['Shp_item'];
+
+        if(array_key_exists('OutSumCurrency',$args))
+        {
+            $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].':'.$args['OutSumCurrency'].':'.$signature_pass;
+        }
+        else
+        {
+            $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].':'.$signature_pass;
+        }
         $args['SignatureValue'] = $this->get_signature($signature_payload, $signature_method);
 
         /**
@@ -676,7 +675,7 @@ class WC_Robokassa extends WC_Payment_Gateway
         /**
          * Return full form
          */
-        return '<form action="'.esc_url($form_url).'" method="POST" id="robokassa_payment_form" accept-charset="utf-8">'."\n".
+        return '<form action="'.esc_url($this->form_url).'" method="POST" id="robokassa_payment_form" accept-charset="utf-8">'."\n".
         implode("\n", $args_array).
         '<input type="submit" class="button alt" id="submit_robokassa_payment_form" value="'.__('Pay', 'wc-robokassa').
         '" /> <a class="button cancel" href="'.$order->get_cancel_order_url().'">'.__('Cancel & return to cart', 'wc-robokassa').'</a>'."\n".
@@ -791,7 +790,7 @@ class WC_Robokassa extends WC_Payment_Gateway
             /**
              * Test mode
              */
-            if ($this->test === 'yes')
+            if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
             {
                 /**
                  * Test flag
