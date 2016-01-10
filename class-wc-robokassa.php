@@ -649,7 +649,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 
             default:
 
-                $signature = md5( "{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}" );
+                $signature = strtoupper(md5( "{$this->shop_login}:{$args['OutSum']}:{$args['InvId']}:{$signature_pass}" ));
         }
 
         $args['SignatureValue'] = $signature;
@@ -820,7 +820,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 
                 default:
 
-                    $local_signature = md5( "{$sum}:{$order_id}:{$signature_pass}" );
+                    $local_signature = strtoupper(md5( "{$sum}:{$order_id}:{$signature_pass}" ));
             }
 
             /**
