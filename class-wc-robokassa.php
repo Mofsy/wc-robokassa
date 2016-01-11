@@ -840,13 +840,18 @@ class WC_Robokassa extends WC_Payment_Gateway
             /**
              * Local signature
              */
-            $signature_payload = "{$sum}:{$order_id}:{$signature_pass}";
+            $signature_payload = $sum.':'.$order_id.':'.$signature_pass;
             $local_signature = $this->get_signature($signature_payload, $signature_method);
 
             /**
              * Get order object
              */
             $order = wc_get_order($order_id);
+
+            /**
+             * Add order note
+             */
+            $order->add_order_note(sprintf(__('Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-webmoney'), $sum, $local_signature, $signature));
 
             /**
              * Result
@@ -902,13 +907,6 @@ class WC_Robokassa extends WC_Payment_Gateway
                      */
                     $order->payment_complete($order_id);
                     die('OK'.$order_id);
-                }
-                else
-                {
-                    /**
-                     * Send Service unavailable
-                     */
-                    wp_die(__('Payment error, please pay other time.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
                 }
 
                 /**
