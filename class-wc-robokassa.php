@@ -114,19 +114,61 @@ class WC_Robokassa extends WC_Payment_Gateway
     public $test_sign_method = 'sha256';
 
     /**
+     * Logger
+     *
+     * @var WC_Robokassa_Logger
+     */
+    public $logger;
+
+    /**
+     * Logger path
+     *
+     * array
+     * (
+     *  'dir' => 'C:\path\to\wordpress\wp-content\uploads\logname.log',
+     *  'url' => 'http://example.com/wp-content/uploads/logname.log'
+     * )
+     *
+     * @var array
+     */
+    public $logger_path;
+
+    /**
      * WC_Robokassa constructor
      */
     public function __construct()
     {
+        /**
+         * Logger?
+         */
+        $wp_dir = wp_upload_dir();
+        $this->logger_path = array
+        (
+            'dir' => $wp_dir['basedir'] . '/wc-robokassa.txt',
+            'url' => $wp_dir['baseurl'] . '/wc-robokassa.txt'
+        );
+
+        $this->logger = new WC_Robokassa_Logger($this->logger_path['dir'], $this->get_option('logger'));
+
         /**
          * Get currency
          */
         $this->currency = get_woocommerce_currency();
 
         /**
+         * Logger debug
+         */
+        $this->logger->addDebug('Current currency: '.$this->currency);
+
+        /**
          * Set WooCommerce version
          */
         $this->wc_version = woocommerce_robokassa_get_version();
+
+        /**
+         * Logger debug
+         */
+        $this->logger->addDebug('WooCommerce version: '.$this->wc_version);
 
         /**
          * Set unique id
@@ -143,6 +185,19 @@ class WC_Robokassa extends WC_Payment_Gateway
          */
         $this->init_form_fields();
         $this->init_settings();
+
+        /**
+         * Gateway enabled?
+         */
+        if($this->get_option('enabled') !== 'yes')
+        {
+            $this->enabled = false;
+
+            /**
+             * Logger notice
+             */
+            $this->logger->addNotice('Gateway is NOT enabled.');
+        }
 
         /**
          * Title for user interface
@@ -164,6 +219,11 @@ class WC_Robokassa extends WC_Payment_Gateway
          */
         if($this->get_option('language_auto') === 'yes')
         {
+            /**
+             * Logger notice
+             */
+            $this->logger->addNotice('Language auto is enable.');
+
             $lang = get_locale();
             switch($lang)
             {
@@ -178,6 +238,11 @@ class WC_Robokassa extends WC_Payment_Gateway
                     break;
             }
         }
+
+        /**
+         * Logger debug
+         */
+        $this->logger->addDebug('Language: ' . $this->language);
 
         /**
          * Set description
@@ -250,7 +315,27 @@ class WC_Robokassa extends WC_Payment_Gateway
         if(current_user_can( 'manage_options' ))
         {
             add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+
+            /**
+             * Logger notice
+             */
+            $this->logger->addDebug('Manage options is allow.');
         }
+
+        /**
+         * Receipt page
+         */
+        add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
+
+        /**
+         * Payment listener/API hook
+         */
+        add_action('woocommerce_api_wc_' . $this->id, array($this, 'check_ipn'));
+
+        /**
+         * Send report API hook
+         */
+        add_action('woocommerce_api_wc_' . $this->id . '_send_report', array($this, 'send_report_callback'));
 
         /**
          * Gate allow?
@@ -258,18 +343,18 @@ class WC_Robokassa extends WC_Payment_Gateway
         if ($this->is_valid_for_use())
         {
             /**
-             * Receipt page
+             * Logger notice
              */
-            add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
-
-            /**
-             * Payment listener/API hook
-             */
-            add_action('woocommerce_api_wc_' . $this->id, array($this, 'check_ipn'));
+            $this->logger->addInfo('Is valid for use.');
         }
         else
         {
             $this->enabled = false;
+
+            /**
+             * Logger notice
+             */
+            $this->logger->addInfo('Is NOT valid for use.');
         }
     }
 
@@ -286,6 +371,11 @@ class WC_Robokassa extends WC_Payment_Gateway
         if (!in_array($this->currency, $this->currency_all, false))
         {
             $return = false;
+
+            /**
+             * Logger notice
+             */
+            $this->logger->addDebug('Currency not support:'.$this->currency);
         }
 
         /**
@@ -294,6 +384,11 @@ class WC_Robokassa extends WC_Payment_Gateway
         if ($this->test !== '' && !current_user_can( 'manage_options' ))
         {
             $return = false;
+
+            /**
+             * Logger notice
+             */
+            $this->logger->addNotice('Test mode only admins.');
         }
 
         return $return;
@@ -306,8 +401,9 @@ class WC_Robokassa extends WC_Payment_Gateway
     {
         ?>
         <h1><?php _e('Robokassa', 'wc-robokassa'); ?></h1><?php $this->get_icon(); ?>
-        <p><?php _e('Setting receiving payments through Robokassa Merchant.', 'wc-robokassa'); ?></p>
-
+        <p><?php _e('Setting receiving payments through Robokassa Merchant. If the gateway is not working, you can turn error level DEBUG and send the report to the developer. Developer looks for errors and corrected.', 'wc-robokassa'); ?></p>
+        <div class="report"><a style="color: red;" href="<?php wc()->api_request_url('wc_webmoney_send_report'); ?>"><?php _e('Send report to author. Do not press if no errors! ', 'wc-webmoney'); ?></a> </div>
+        <hr>
         <?php if ( $this->is_valid_for_use() ) : ?>
 
         <table class="form-table">
@@ -434,6 +530,26 @@ class WC_Robokassa extends WC_Payment_Gateway
                 'type' => 'text',
                 'description' => __( 'Please write Shop pass 2.', 'wc-robokassa' ),
                 'default' => ''
+            ),
+            'logger' => array
+            (
+                'title' => __( 'Enable logging?', 'wc-robokassa' ),
+                'type'        => 'select',
+                'description'	=>  __( 'You can enable gateway logging, specify the level of error that you want to benefit from logging. You can send reports to developer manually by pressing the button. All sensitive data in the report are deleted.
+By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
+                'default'	=> '400',
+                'options'     => array
+                (
+                    '' => __( 'Off', 'wc-robokassa' ),
+                    '100' => 'DEBUG',
+                    '200' => 'INFO',
+                    '250' => 'NOTICE',
+                    '300' => 'WARNING',
+                    '400' => 'ERROR',
+                    '500' => 'CRITICAL',
+                    '550' => 'ALERT',
+                    '600' => 'EMERGENCY'
+                )
             ),
             'test_payments' => array(
                 'title'       => __( 'Settings for test payments', 'wc-robokassa' ),
@@ -734,6 +850,11 @@ class WC_Robokassa extends WC_Payment_Gateway
          */
         $order->add_order_note(__('The client started to pay.', 'wc-robokassa'));
 
+        /**
+         * Logger notice
+         */
+        $this->logger->addNotice('The client started to pay.');
+
         if ( !version_compare( $this->wc_version, '2.1.0', '<' ) )
         {
             return array
@@ -849,9 +970,30 @@ class WC_Robokassa extends WC_Payment_Gateway
             $order = wc_get_order($order_id);
 
             /**
+             * Order not found
+             */
+            if($order === false)
+            {
+                /**
+                 * Logger notice
+                 */
+                $this->logger->addNotice('Api RESULT request error. Order not found.');
+
+                /**
+                 * Send Service unavailable
+                 */
+                wp_die(__('Order not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
+            }
+
+            /**
              * Add order note
              */
-            $order->add_order_note(sprintf(__('Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-webmoney'), $sum, $local_signature, $signature));
+            $order->add_order_note(sprintf(__('Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
+
+            /**
+             * Logger info
+             */
+            $this->logger->addInfo('Robokassa request success.');
 
             /**
              * Result
@@ -874,6 +1016,11 @@ class WC_Robokassa extends WC_Payment_Gateway
                      * Add order note
                      */
                     $order->add_order_note(sprintf(__('Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa'), $local_signature, $signature));
+
+                    /**
+                     * Logger info
+                     */
+                    $this->logger->addError('Validate secret key error. Local hash != remote hash.');
                 }
 
                 /**
@@ -881,6 +1028,11 @@ class WC_Robokassa extends WC_Payment_Gateway
                  */
                 if($validate === true)
                 {
+                    /**
+                     * Logger info
+                     */
+                    $this->logger->addInfo('Result Validated success.');
+
                     /**
                      * Testing
                      */
@@ -890,6 +1042,11 @@ class WC_Robokassa extends WC_Payment_Gateway
                          * Add order note
                          */
                         $order->add_order_note(__('Order successfully paid (TEST MODE).', 'wc-robokassa'));
+
+                        /**
+                         * Logger notice
+                         */
+                        $this->logger->addNotice('Order successfully paid (TEST MODE).');
                     }
                     /**
                      * Real payment
@@ -900,7 +1057,17 @@ class WC_Robokassa extends WC_Payment_Gateway
                          * Add order note
                          */
                         $order->add_order_note(__('Order successfully paid.', 'wc-robokassa'));
+
+                        /**
+                         * Logger notice
+                         */
+                        $this->logger->addNotice('Order successfully paid.');
                     }
+
+                    /**
+                     * Logger notice
+                     */
+                    $this->logger->addInfo('Payment complete.');
 
                     /**
                      * Set status is payment
@@ -908,6 +1075,11 @@ class WC_Robokassa extends WC_Payment_Gateway
                     $order->payment_complete($order_id);
                     die('OK'.$order_id);
                 }
+
+                /**
+                 * Logger notice
+                 */
+                $this->logger->addError('Result Validated error. Payment error, please pay other time.');
 
                 /**
                  * Send Service unavailable
@@ -919,6 +1091,11 @@ class WC_Robokassa extends WC_Payment_Gateway
              */
             else if ($_GET['action'] === 'success')
             {
+                /**
+                 * Logger info
+                 */
+                $this->logger->addInfo('Client return to success page.');
+
                 /**
                  * Empty cart
                  */
@@ -938,6 +1115,10 @@ class WC_Robokassa extends WC_Payment_Gateway
                  * Add order note
                  */
                 $order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
+                /**
+                 * Logger info
+                 */
+                $this->logger->addInfo('The order has not been paid.');
 
                 /**
                  * Sen status is failed
@@ -950,9 +1131,60 @@ class WC_Robokassa extends WC_Payment_Gateway
                 wp_redirect( str_replace('&amp;', '&', $order->get_cancel_order_url() ) );
             }
         }
-        else
+
+        /**
+         * Logger notice
+         */
+        $this->logger->addNotice('Api request error. Action not found.');
+
+        /**
+         * Send Service unavailable
+         */
+        wp_die(__('Api request error. Action not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
+    }
+
+    /**
+     * Display the test notice
+     **/
+    public function test_notice()
+    {
+        ?>
+        <div class="update-nag">
+            <?php $link = '<a href="'. admin_url('admin.php?page=wc-settings&tab=checkout&section=wc_robokassa') .'">'.__('here', 'wc-robokassa').'</a>';
+            echo sprintf( __( 'Robokassa test mode is enabled. Click %s -  to disable it when you want to start accepting live payment on your site.', 'wc-robokassa' ), $link ) ?>
+        </div>
+        <?php
+    }
+
+    /**
+     * Display the debug notice
+     **/
+    public function debug_notice()
+    {
+        ?>
+        <div class="update-nag">
+            <?php $link = '<a href="'. admin_url('admin.php?page=wc-settings&tab=checkout&section=wc_robokassa') .'">'.__('here', 'wc-robokassa').'</a>';
+            echo sprintf( __( 'Robokassa debug tool is enabled. Click %s -  to disable.', 'wc-robokassa' ), $link ) ?>
+        </div>
+        <?php
+    }
+
+    /**
+     * Send report to author
+     *
+     * @return bool
+     */
+    public function send_report_callback()
+    {
+        $to = 'report@mofsy.ru';
+        $subject = 'wc-robokassa';
+        $body = 'Report url: ' . $this->logger_path['url'];
+
+        if(function_exists('wp_mail'))
         {
-            die('IPN Request Failure');
+            wp_mail( $to, $subject, $body );
+            die('ok');
         }
+        die('error');
     }
 }

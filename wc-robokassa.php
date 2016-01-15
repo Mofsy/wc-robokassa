@@ -40,6 +40,11 @@ function woocommerce_robokassa_init()
     }
 
     /**
+     * Wc_Robokassa_Logger class load
+     */
+    include_once dirname(__FILE__) . '/class-wc-robokassa-logger.php';
+
+    /**
      * Define plugin url
      */
     define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
@@ -96,4 +101,40 @@ function woocommerce_robokassa_get_version()
     }
 
     return null;
+}
+
+
+add_action( 'admin_footer', 'wc_robokassa_report_javascript' );
+
+function wc_robokassa_report_javascript() { ?>
+    <script type="text/javascript" >
+        $(document).ready(function($)
+        {
+            var data =
+            {
+                'action': 'send'
+            };
+
+            var wc_robokassa_url_callback = '<?php echo wc()->api_request_url('wc_robokassa_send_report'); ?>';
+
+                $('.report a').click(function()
+                {
+                    $.post(wc_robokassa_url_callback, data, function(response)
+                    {
+                        if(response == 'ok')
+                        {
+                            $('.report').html('<?php _e('Report is sended! Thank you.', 'wc-robokassa'); ?>');
+                        }
+                        else
+                        {
+                            $('.report').html('<?php _e('Report is NOT sended! Please reload page and resend.', 'wc-robokassa'); ?>');
+                        }
+                    });
+
+                    return false;
+                });
+
+        });
+    </script>
+    <?php
 }
