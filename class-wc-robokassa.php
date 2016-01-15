@@ -1105,6 +1105,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                  * Redirect to success
                  */
                 wp_redirect( $this->get_return_url( $order ) );
+                die();
             }
             /**
              * Fail
@@ -1129,6 +1130,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                  * Redirect to cancel
                  */
                 wp_redirect( str_replace('&amp;', '&', $order->get_cancel_order_url() ) );
+                die();
             }
         }
 
