@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2016-01-10 23:05+0300\n"
-"PO-Revision-Date: 2016-01-10 23:05+0300\n"
+"POT-Creation-Date: 2016-01-16 16:26+0300\n"
+"PO-Revision-Date: 2016-01-16 16:31+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language: ru_RU\n"
@@ -21,207 +21,279 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: class-wc-robokassa.php:306 class-wc-robokassa.php:379
+#: class-wc-robokassa.php:403 class-wc-robokassa.php:477
 msgid "Robokassa"
 msgstr "Робокасса"
 
-#: class-wc-robokassa.php:307
-msgid "Setting receiving payments through Robokassa Merchant."
-msgstr "Настройка приема платежей с использованием Робокассы."
+#: class-wc-robokassa.php:404
+msgid ""
+"Setting receiving payments through Robokassa Merchant. If the gateway is not "
+"working, you can turn error level DEBUG and send the report to the "
+"developer. Developer looks for errors and corrected."
+msgstr ""
+"Установка приема платежей через Робокассу. Если шлюз не работает, вы можете "
+"включить отладку ошибок (DEBUG tool) и отправить отчет разработчику. "
+"Разработчик найдет ошибки и исправит, если они есть."
 
-#: class-wc-robokassa.php:316
+#: class-wc-robokassa.php:405
+msgid "Send report to author. Do not press if no errors! "
+msgstr "Отправить отчет автору. Не нажимайте, если ошибок нет!"
+
+#: class-wc-robokassa.php:414
 msgid "Gateway offline"
 msgstr "Шлюз выключен"
 
-#: class-wc-robokassa.php:316
+#: class-wc-robokassa.php:414
 msgid "Robokassa does not support the currency your store."
 msgstr "Робокасса не поддерживает ваши текущие валюты в магазине."
 
-#: class-wc-robokassa.php:333
+#: class-wc-robokassa.php:431
 msgid "Online/Offline gateway"
 msgstr "Включить/Выключить шлюз"
 
-#: class-wc-robokassa.php:335
+#: class-wc-robokassa.php:433
 msgid "Online"
 msgstr "Включить"
 
-#: class-wc-robokassa.php:339
+#: class-wc-robokassa.php:437
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: class-wc-robokassa.php:345
+#: class-wc-robokassa.php:443
 msgid "Show gateway icon?"
 msgstr "Показать иконку шлюза?"
 
-#: class-wc-robokassa.php:347
+#: class-wc-robokassa.php:445
 msgid "Show"
 msgstr "Показать"
 
-#: class-wc-robokassa.php:352
+#: class-wc-robokassa.php:450
 msgid "Language interface"
 msgstr "Язык интерфейса"
 
-#: class-wc-robokassa.php:356
+#: class-wc-robokassa.php:454
 msgid "Russian"
 msgstr "Русский"
 
-#: class-wc-robokassa.php:357
+#: class-wc-robokassa.php:455
 msgid "English"
 msgstr "Английский"
 
-#: class-wc-robokassa.php:359
+#: class-wc-robokassa.php:457
 msgid "What language interface displayed for the customer on Robokassa?"
 msgstr "Какой язык показывать клиентам на стороне сервиса Робокасса?"
 
-#: class-wc-robokassa.php:364
+#: class-wc-robokassa.php:462
 msgid "Language based on the locale?"
 msgstr "Язык интерфейса на основе локали?"
 
-#: class-wc-robokassa.php:368
+#: class-wc-robokassa.php:466
 msgid "Yes"
 msgstr "Да"
 
-#: class-wc-robokassa.php:369
+#: class-wc-robokassa.php:467
 msgid "No"
 msgstr "Нет"
 
-#: class-wc-robokassa.php:371
+#: class-wc-robokassa.php:469
 msgid "Trying to get the language based on the locale?"
 msgstr "Получать язык для интерфейса Робокассы  на основе локали?"
 
-#: class-wc-robokassa.php:376
+#: class-wc-robokassa.php:474
 msgid "Title"
 msgstr "Название"
 
-#: class-wc-robokassa.php:378
+#: class-wc-robokassa.php:476
 msgid "This is the name that the user sees during the payment."
 msgstr "Заголовок, который видит пользователь в процессе оформления заказа."
 
-#: class-wc-robokassa.php:383
+#: class-wc-robokassa.php:481
 msgid "Order button text"
 msgstr "Название кнопки оплаты"
 
-#: class-wc-robokassa.php:385
+#: class-wc-robokassa.php:483
 msgid "This is the button text that the user sees during the payment."
 msgstr ""
 "Название кнопки оплаты, которое видит пользователь в процессе оформления "
 "заказа."
 
-#: class-wc-robokassa.php:386 class-wc-robokassa.php:676
+#: class-wc-robokassa.php:484 class-wc-robokassa.php:796
 msgid "Pay"
 msgstr "Оплатить"
 
-#: class-wc-robokassa.php:390
+#: class-wc-robokassa.php:488
 msgid "Description"
 msgstr "Описание"
 
-#: class-wc-robokassa.php:392
+#: class-wc-robokassa.php:490
 msgid ""
 "Description of the method of payment that the customer will see on our "
 "website."
 msgstr "Описанием метода оплаты которое клиент будет видеть на вашем сайте."
 
-#: class-wc-robokassa.php:393
+#: class-wc-robokassa.php:491
 msgid "Payment by Robokassa."
 msgstr "Оплатить с помощью Робокассы."
 
-#: class-wc-robokassa.php:396
+#: class-wc-robokassa.php:494
 msgid "Technical details"
 msgstr "Технические детали"
 
-#: class-wc-robokassa.php:402 class-wc-robokassa.php:455
+#: class-wc-robokassa.php:500 class-wc-robokassa.php:573
 msgid "Signature method"
 msgstr "Метод подписи"
 
-#: class-wc-robokassa.php:417
+#: class-wc-robokassa.php:515
 msgid "Shop login"
 msgstr "Логин магазина"
 
-#: class-wc-robokassa.php:419
+#: class-wc-robokassa.php:517
 msgid "Unique identification for shop."
 msgstr "Уникальный идентификатор магазина."
 
-#: class-wc-robokassa.php:424 class-wc-robokassa.php:470
+#: class-wc-robokassa.php:522 class-wc-robokassa.php:588
 msgid "Shop pass 1"
 msgstr "Пароль магазина #1"
 
-#: class-wc-robokassa.php:426
+#: class-wc-robokassa.php:524
 msgid "Please write Shop pass 1."
 msgstr "Пожалуйста введите первый пароль магазина."
 
-#: class-wc-robokassa.php:431 class-wc-robokassa.php:477
+#: class-wc-robokassa.php:529 class-wc-robokassa.php:595
 msgid "Shop pass 2"
 msgstr "Пароль магазина #2"
 
-#: class-wc-robokassa.php:433
+#: class-wc-robokassa.php:531
 msgid "Please write Shop pass 2."
 msgstr "Пожалуйста введите второй пароль магазина."
 
-#: class-wc-robokassa.php:437
-msgid "Settings for test payments"
-msgstr "Настройки для тестовых платежей"
+#: class-wc-robokassa.php:536
+msgid "Enable logging?"
+msgstr "Включить логирование?"
 
-#: class-wc-robokassa.php:443
-msgid "Test mode"
-msgstr "Тестовый режим"
+#: class-wc-robokassa.php:538
+msgid ""
+"You can enable gateway logging, specify the level of error that you want to "
+"benefit from logging. You can send reports to developer manually by pressing "
+"the button. All sensitive data in the report are deleted.\n"
+"By default, the error rate should not be less than ERROR."
+msgstr ""
+"Вы можете включить ведение журнала шлюза, указав уровень ошибок, которые вы "
+"хотите записывать. Вы так же можете отправить отчеты разработчику, нажав "
+"кнопку отправки отчета. Все конфиденциальные данные в отчете будут удалены.\n"
+"По умолчанию, уровень ошибок не должен быть меньше, чем ERROR."
 
-#: class-wc-robokassa.php:445
-msgid "Activate testing mode for admins."
-msgstr "Активация тестового режима для админов."
-
-#: class-wc-robokassa.php:449
+#: class-wc-robokassa.php:543 class-wc-robokassa.php:567
 msgid "Off"
 msgstr "Отключить"
 
-#: class-wc-robokassa.php:450
+#: class-wc-robokassa.php:555
+msgid "Settings for test payments"
+msgstr "Настройки для тестовых платежей"
+
+#: class-wc-robokassa.php:561
+msgid "Test mode"
+msgstr "Тестовый режим"
+
+#: class-wc-robokassa.php:563
+msgid "Activate testing mode for admins."
+msgstr "Активация тестового режима для админов."
+
+#: class-wc-robokassa.php:568
 msgid "On"
 msgstr "Включить"
 
-#: class-wc-robokassa.php:472
+#: class-wc-robokassa.php:590
 msgid "Please write Shop pass 1 for testing payments."
 msgstr "Пожалуйста введите первый пароль магазина для тестовых платежей."
 
-#: class-wc-robokassa.php:479
+#: class-wc-robokassa.php:597
 msgid "Please write Shop pass 2 for testing payments."
 msgstr "Пожалуйста введите второй пароль магазина для тестовых платежей."
 
-#: class-wc-robokassa.php:565
+#: class-wc-robokassa.php:688
 msgid "Product number: "
 msgstr "Номер товара: "
 
-#: class-wc-robokassa.php:677
+#: class-wc-robokassa.php:797
 msgid "Cancel & return to cart"
 msgstr "Отменить и вернутся в корзину"
 
-#: class-wc-robokassa.php:691
+#: class-wc-robokassa.php:851
 msgid "The client started to pay."
 msgstr "Клиент начал оплату."
 
-#: class-wc-robokassa.php:714
+#: class-wc-robokassa.php:879
 msgid "Thank you for your order, please press the button below to pay."
 msgstr ""
 "Спасибо за ваш заказ, пожалуйста, нажмите ниже на кнопку, чтобы заплатить."
 
-#: class-wc-robokassa.php:851
+#: class-wc-robokassa.php:998
+msgid "Order not found."
+msgstr "Заказ не найден."
+
+#: class-wc-robokassa.php:1010
+#, php-format
+msgid ""
+"Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s"
+msgstr ""
+"Запрос от Робокассы принят. Сумма: %1$s Подпись: %2$s Удаленная подпись: %3$s"
+
+#: class-wc-robokassa.php:1037
 #, php-format
 msgid "Validate hash error. Local: %1$s Remote: %2$s"
 msgstr "Ошибка валидации хеша. Локальный: %1$s Удаленный: %2$s"
 
-#: class-wc-robokassa.php:867
+#: class-wc-robokassa.php:1063
 msgid "Order successfully paid (TEST MODE)."
 msgstr "Счет успешно оплачен (ТЕСТОВЫЙ ПЛАТЕЖ)"
 
-#: class-wc-robokassa.php:877
+#: class-wc-robokassa.php:1078
 msgid "Order successfully paid."
 msgstr "Счет успешно оплачен."
 
-#: class-wc-robokassa.php:891 class-wc-robokassa.php:897
+#: class-wc-robokassa.php:1106
 msgid "Payment error, please pay other time."
 msgstr "Ошибка платежа, пожалуйста повторите попытку позже."
 
-#: class-wc-robokassa.php:922
+#: class-wc-robokassa.php:1116
+msgid "Client return to success page."
+msgstr "Клиент вернулся на страницу успешной оплаты."
+
+#: class-wc-robokassa.php:1142
 msgid "The order has not been paid."
 msgstr "Счет не был оплачен."
+
+#: class-wc-robokassa.php:1169
+msgid "Api request error. Action not found."
+msgstr "Ошибка запроса к API. Действие не найдено."
+
+#: class-wc-robokassa.php:1179 class-wc-robokassa.php:1192
+msgid "here"
+msgstr "сюда"
+
+#: class-wc-robokassa.php:1180
+#, php-format
+msgid ""
+"Robokassa test mode is enabled. Click %s -  to disable it when you want to "
+"start accepting live payment on your site."
+msgstr ""
+"В шлюзе Робокасса активирован тестовый режим. Нажмите %s - для отключения "
+"режима и включения приема реальных платежей на вашем сайте."
+
+#: class-wc-robokassa.php:1193
+#, php-format
+msgid "Robokassa debug tool is enabled. Click %s -  to disable."
+msgstr "Отлов ошибок Робокассы включен. Кликните %s -  для выключения."
+
+#: wc-robokassa.php:126
+msgid "Report is sended! Thank you."
+msgstr "Отчет отправлен! Спасибо."
+
+#: wc-robokassa.php:130
+msgid "Report is NOT sended! Please reload page and resend."
+msgstr ""
+"Отчет не отправлен! Пожалуйста перезагрузите страницу  отправьте заново."
 
 #. Plugin Name of the plugin/theme
 msgid "WooCommerce - Robokassa Payment Gateway"
@@ -243,6 +315,9 @@ msgstr "Мофси"
 #. Author URI of the plugin/theme
 msgid "https://mofsy.ru"
 msgstr "https://mofsy.ru"
+
+#~ msgid "Setting receiving payments through Robokassa Merchant."
+#~ msgstr "Настройка приема платежей с использованием Робокассы."
 
 #~ msgid "The field is used only in the test mode."
 #~ msgstr "Данное поле используется только в тестовом режиме."
