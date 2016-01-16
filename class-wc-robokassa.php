@@ -1001,40 +1001,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
             /**
              * Local signature
              */
-            if ($_GET['action'] === 'success')
-            {
-                $signature_payload = $sum.':'.$order_id.':'.$signature_pass;
-            }
-            else
-            {
-                /**
-                 * Rewrite currency from order
-                 */
-                $this->currency = $order->order_currency;
-
-                /**
-                 * Set currency to robokassa
-                 */
-                $OutSumCurrency = '';
-                if($this->currency === 'USD')
-                {
-                    $OutSumCurrency = 'USD';
-                }
-                elseif($this->currency === 'EUR')
-                {
-                    $OutSumCurrency = 'EUR';
-                }
-
-                if($OutSumCurrency === '')
-                {
-                    $signature_payload = $sum.':'.$order_id.':'.$signature_pass;
-                }
-                else
-                {
-                    $signature_payload = $sum.':'.$order_id.':'.':'.$OutSumCurrency.':'.$signature_pass;
-                }
-            }
-
+            $signature_payload = $sum.':'.$order_id.':'.$signature_pass;
             $local_signature = $this->get_signature($signature_payload, $signature_method);
 
             /**
@@ -1124,7 +1091,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                     /**
                      * Set status is payment
                      */
-                    $order->payment_complete($order_id);
+                    $order->payment_complete();
                     die('OK'.$order_id);
                 }
 
