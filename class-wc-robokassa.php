@@ -888,7 +888,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         /**
          * Insert $_REQUEST into debug mode
          */
-        $this->logger->addDebug(print_r($_REQUEST,true));
+        $this->logger->addDebug(print_r($_REQUEST, true));
 
         /**
          * Hook wc_robokassa
@@ -916,8 +916,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
             /**
              * Test mode
              */
-            if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
-            {
+            if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1')) {
                 /**
                  * Test flag
                  */
@@ -926,7 +925,14 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                 /**
                  * Signature pass for testing
                  */
-                $signature_pass = $this->test_shop_pass_2;
+                if ($_GET['action'] === 'success')
+                {
+                    $signature_pass = $this->test_shop_pass_1;
+                }
+                else
+                {
+                    $signature_pass = $this->test_shop_pass_2;
+                }
 
                 /**
                  * Sign method
@@ -946,7 +952,14 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                 /**
                  * Signature pass for real payments
                  */
-                $signature_pass = $this->shop_pass_2;
+                if ($_GET['action'] === 'success')
+                {
+                    $signature_pass = $this->shop_pass_1;
+                }
+                else
+                {
+                    $signature_pass = $this->shop_pass_2;
+                }
 
                 /**
                  * Sign method
@@ -963,11 +976,6 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                 $signature = $_REQUEST['SignatureValue'];
             }
 
-            /**
-             * Local signature
-             */
-            $signature_payload = $sum.':'.$order_id.':'.$signature_pass;
-            $local_signature = $this->get_signature($signature_payload, $signature_method);
 
             /**
              * Get order object
@@ -989,6 +997,45 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                  */
                 wp_die(__('Order not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
             }
+
+            /**
+             * Local signature
+             */
+            if ($_GET['action'] === 'success')
+            {
+                $signature_payload = $sum.':'.$order_id.':'.$signature_pass;
+            }
+            else
+            {
+                /**
+                 * Rewrite currency from order
+                 */
+                $this->currency = $order->order_currency;
+
+                /**
+                 * Set currency to robokassa
+                 */
+                $OutSumCurrency = '';
+                if($this->currency === 'USD')
+                {
+                    $OutSumCurrency = 'USD';
+                }
+                elseif($this->currency === 'EUR')
+                {
+                    $OutSumCurrency = 'EUR';
+                }
+
+                if($OutSumCurrency === '')
+                {
+                    $signature_payload = $sum.':'.$order_id.':'.$signature_pass;
+                }
+                else
+                {
+                    $signature_payload = $sum.':'.$order_id.':'.':'.$OutSumCurrency.':'.$signature_pass;
+                }
+            }
+
+            $local_signature = $this->get_signature($signature_payload, $signature_method);
 
             /**
              * Add order note
@@ -1096,6 +1143,11 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
              */
             else if ($_GET['action'] === 'success')
             {
+                /**
+                 * Add order note
+                 */
+                $order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
+
                 /**
                  * Logger info
                  */
