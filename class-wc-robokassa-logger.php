@@ -155,8 +155,8 @@ class WC_Robokassa_Logger
         $content = array
         (
             $level,
-            $this->levels[$level],
             $this->dt->format(DATE_ATOM),
+            $this->levels[$level],
             $message
         );
 
@@ -168,7 +168,7 @@ class WC_Robokassa_Logger
         /**
          * Content
          */
-        $content = implode(' -|||- ', $content);
+        $content = implode(' -|- ', $content);
 
         file_put_contents
         (
