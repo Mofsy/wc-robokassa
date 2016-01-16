@@ -15,11 +15,15 @@ Donate link: https://mofsy.ru/about/help
 Allows you to use Robokassa payment gateway with the WooCommerce plugin.
 This is the best payment gateway plugin for Robokassa, because it is the most integrated with Robokassa Merchant capabilities and is available for most versions WooCommerce and Wordpress.
 
+Support currency: RUB, USD, EUR
+
 Found a bug? Send it with the page in the plugin settings one click :)
 
 = Russian =
 Позволяет использовать платежный шлюз Робокасса с плагином WooCommerce.
 Это самый лучший плагин платежного шлюза для Робокассы, т.к. он максимально интегрирован с возможностями Робокассы и доступен под большинство версий WooCommerce и Wordpress.
+
+Поддерживаемые валюты: RUB, USD, EUR
 
 Нашли ошибку? Отправьте её со страницы настроек в плагине одник кликом :)
 
