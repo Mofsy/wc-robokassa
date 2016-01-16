@@ -15,25 +15,21 @@ Donate link: https://mofsy.ru/about/help
 Allows you to use Robokassa payment gateway with the WooCommerce plugin.
 This is the best payment gateway plugin for Robokassa, because it is the most integrated with Robokassa Merchant capabilities and is available for most versions WooCommerce and Wordpress.
 
-Error found? [bug report](https://mofsy.ru/contacts/email)
-
-Localization support:
-<ul style="list-style:none;">
-<li>English</li>
-<li>Russian</li>
-</ul>
+Found a bug? Send it with the page in the plugin settings one click :)
 
 = Russian =
 Позволяет использовать платежный шлюз Робокасса с плагином WooCommerce.
 Это самый лучший плагин платежного шлюза для Робокассы, т.к. он максимально интегрирован с возможностями Робокассы и доступен под большинство версий WooCommerce и Wordpress.
 
-Нашли ошибку? [напишите об этом](https://mofsy.ru/contacts/email)
+Нашли ошибку? Отправьте её со страницы настроек в плагине одник кликом :)
 
-Поддерживаемые языки:
-<ul style="list-style:none;">
-<li>Английский</li>
-<li>Русский</li>
-</ul>
+== Translations ==
+
+* English - default, always included
+* Russian - always included
+
+*Note:* All my plugins are localized/ translateable by default. This is very important for all users worldwide.
+So please contribute your language to the plugin to make it even more useful. For translating I recommend the awesome for validating the ["Poedit Editor"](http://www.poedit.net/).
 
 == Installation ==
 = English =
@@ -63,13 +59,6 @@ For http://partner.robokassa.ru/?culture=en settings:
 <li>Метод запросов: POST</li>
 <li>Метод формирования контрольной подписи: sha256</li>
 </ul>
-
-== Upgrade Notice ==
-= English =
-New settings save
-
-= Russian =
-Просто пере-сохраните настройки
 
 == Changelog ==
 
