@@ -17,7 +17,7 @@ This is the best payment gateway plugin for Robokassa, because it is the most in
 
 Support currency: RUB, USD, EUR
 
-Found a bug? Send it with the page in the plugin settings one click :)
+Found a bug? Send it with the settings page in the plugin one click :)
 
 = Russian =
 Позволяет использовать платежный шлюз Робокасса с плагином WooCommerce.
@@ -65,6 +65,10 @@ For http://partner.robokassa.ru/?culture=en settings:
 </ul>
 
 == Changelog ==
+
+= 0.1.2.1 =
+* Test mode fix, now works.
+* Update plugin uri
 
 = 0.1.0.1 =
 * Init release
