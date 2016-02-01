@@ -381,7 +381,7 @@ class WC_Robokassa extends WC_Payment_Gateway
         /**
          * Check test mode and admin rights
          */
-        if ($this->test !== '' && !current_user_can( 'manage_options' ))
+        if ($this->test === 'yes' && !current_user_can( 'manage_options' ))
         {
             $return = false;
 
@@ -561,7 +561,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                 'title' => __( 'Test mode', 'wc-robokassa' ),
                 'type'        => 'select',
                 'description'	=>  __( 'Activate testing mode for admins.', 'wc-robokassa' ),
-                'default'	=> '2',
+                'default'	=> 'On',
                 'options'     => array
                 (
                     'no' => __( 'Off', 'wc-robokassa' ),
