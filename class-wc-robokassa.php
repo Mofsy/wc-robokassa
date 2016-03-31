@@ -561,7 +561,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                 'title' => __( 'Test mode', 'wc-robokassa' ),
                 'type'        => 'select',
                 'description'	=>  __( 'Activate testing mode for admins.', 'wc-robokassa' ),
-                'default'	=> 'yes',
+                'default'	=> 'On',
                 'options'     => array
                 (
                     'no' => __( 'Off', 'wc-robokassa' ),

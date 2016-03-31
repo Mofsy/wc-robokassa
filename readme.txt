@@ -2,7 +2,7 @@
 Contributors: Mofsy
 Tags: robokassa, payment gateway, woo commerce, woocommerce, ecommerce, gateway, woo robokassa, robo, merchant, woo, woo robo
 Requires at least: 3.0
-Tested up to: 4.4.1
+Tested up to: 4.5
 Stable tag: trunk
 WC requires at least: 2.2
 WC tested up to: 2.5
@@ -65,6 +65,9 @@ For http://partner.robokassa.ru/?culture=en settings:
 </ul>
 
 == Changelog ==
+
+= 0.1.3.1 =
+* Test WP 4.5, now works.
 
 = 0.1.2.1 =
 * Test mode fix, now works.
