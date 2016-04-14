@@ -1,0 +1,9 @@
+<wpml-config>
+	<admin-texts>
+		<key name="woocommerce_webmoney_settings">
+			<key name="title" />
+			<key name="order_button_text" />
+			<key name="description" />
+		</key>
+	</admin-texts>
+</wpml-config>

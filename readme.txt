@@ -66,6 +66,9 @@ For http://partner.robokassa.ru/?culture=en settings:
 
 == Changelog ==
 
+= 0.2.0.1 =
+* Add WPML support
+
 = 0.1.3.1 =
 * Test WP 4.5, now works.
 
