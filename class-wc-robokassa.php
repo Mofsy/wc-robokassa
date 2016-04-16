@@ -1204,6 +1204,11 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         $subject = 'wc-robokassa';
         $body = 'Report url: ' . $this->logger_path['url'];
 
+        if(!file_exists($this->logger_path['dir']))
+        {
+            die('fnf');
+        }
+        
         if(function_exists('get_plugins'))
         {
             $all_plugins = get_plugins();
@@ -1215,11 +1220,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         }
 
         $this->logger->addInfo('PHP version: ' . PHP_VERSION);
-        
-        if(!file_exists($this->logger_path['dir']))
-        {
-            die('fnf');
-        }
+
 
         if(function_exists('wp_mail'))
         {
