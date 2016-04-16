@@ -1203,6 +1203,18 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         $to = 'report@mofsy.ru';
         $subject = 'wc-robokassa';
         $body = 'Report url: ' . $this->logger_path['url'];
+
+        if(function_exists('get_plugins'))
+        {
+            $all_plugins = get_plugins();
+
+            foreach ($all_plugins as $key => $value)
+            {
+                $this->logger->addInfo('Plugin: ' . $value['Name'] . ' ('. $value['Version'] . ')');
+            }
+        }
+
+        $this->logger->addInfo('PHP version: ' . PHP_VERSION);
         
         if(!file_exists($this->logger_path['dir']))
         {
