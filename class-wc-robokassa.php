@@ -753,8 +753,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         /**
          * Signature
          */
-
-        if(array_key_exists('OutSumCurrency',$args))
+        if(array_key_exists('OutSumCurrency', $args))
         {
             $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].':'.$args['OutSumCurrency'].':'.$signature_pass;
         }
@@ -975,8 +974,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
             {
                 $signature = $_REQUEST['SignatureValue'];
             }
-
-
+            
             /**
              * Get order object
              */
@@ -1205,6 +1203,11 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         $to = 'report@mofsy.ru';
         $subject = 'wc-robokassa';
         $body = 'Report url: ' . $this->logger_path['url'];
+        
+        if(!file_exists($this->logger_path['dir']))
+        {
+            die('fnf');
+        }
 
         if(function_exists('wp_mail'))
         {

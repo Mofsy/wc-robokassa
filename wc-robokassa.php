@@ -125,6 +125,10 @@ function wc_robokassa_report_javascript() { ?>
                         {
                             $('.robokassa-report').html('<?php _e('Report is sended! Thank you.', 'wc-robokassa'); ?>');
                         }
+                        else if(response == 'fnf')
+                        {
+                            $('.robokassa-report').html('<?php _e('Report file NOT found! Please activate DEBUG mode and reuse error situation.', 'wc-robokassa'); ?>');
+                        }
                         else
                         {
                             $('.robokassa-report').html('<?php _e('Report is NOT sended! Please reload page and resend.', 'wc-robokassa'); ?>');
