@@ -1208,7 +1208,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         {
             die('fnf');
         }
-        
+
         if(function_exists('get_plugins'))
         {
             $all_plugins = get_plugins();
@@ -1220,11 +1220,13 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         }
 
         $this->logger->addInfo('PHP version: ' . PHP_VERSION);
-
-
+        
         if(function_exists('wp_mail'))
         {
-            wp_mail( $to, $subject, $body );
+            $admin_email = get_option('admin_email');
+            $headers['from'] = $admin_email;
+
+            wp_mail( $to, $subject, $body, $headers );
             die('ok');
         }
         die('error');
