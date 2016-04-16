@@ -142,3 +142,18 @@ function wc_robokassa_report_javascript() { ?>
     </script>
     <?php
 }
+
+/**
+ * Plugin links
+ */
+add_filter('plugin_row_meta',  'wc_robokassa_register_plugins_links', 10, 2);
+
+function wc_robokassa_register_plugins_links ($links, $file)
+{
+    $base = plugin_basename(__FILE__);
+    if ($file === $base)
+    {
+        $links[] = '<a href="admin.php?page=wc-settings&tab=checkout&section=wc_robokassa">' . __('Settings') . '</a>';
+    }
+    return $links;
+}

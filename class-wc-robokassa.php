@@ -401,9 +401,13 @@ class WC_Robokassa extends WC_Payment_Gateway
     {
         ?>
         <h1><?php _e('Robokassa', 'wc-robokassa'); ?></h1><?php $this->get_icon(); ?>
-        <p><?php _e('Setting receiving payments through Robokassa Merchant. If the gateway is not working, you can turn error level DEBUG and send the report to the developer. Developer looks for errors and corrected.', 'wc-robokassa'); ?></p>
-        <div class="robokassa-report"><a style="color: red;" href="<?php wc()->api_request_url('wc_robokassa_send_report'); ?>"><?php _e('Send report to author. Do not press if no errors! ', 'wc-robokassa'); ?></a> </div>
+        <div style="background-color: #ffffff;padding: 10px; line-height: 160%; margin-bottom: 5px;font-size: 14px;">
+            <?php _e('Setting receiving payments through Robokassa Merchant. If the gateway is not working, you can turn error level DEBUG and send the report to the developer. Developer looks for errors and corrected.', 'wc-robokassa'); ?>
+        </div>
+        <div class="robokassa-report" style="text-align: right;"><a style="color: orange;" href="<?php wc()->api_request_url('wc_robokassa_send_report'); ?>"><?php _e('Send report to author. Do not press if no errors! ', 'wc-robokassa'); ?></a> </div>
+
         <hr>
+
         <?php if ( $this->is_valid_for_use() ) : ?>
 
         <table class="form-table">
@@ -1220,7 +1224,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         }
 
         $this->logger->addInfo('PHP version: ' . PHP_VERSION);
-        
+
         if(function_exists('wp_mail'))
         {
             $admin_email = get_option('admin_email');
