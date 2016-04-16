@@ -11,7 +11,6 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://mofsy.ru/about/help
 
 == Description ==
-= English =
 Allows you to use Robokassa payment gateway with the WooCommerce plugin.
 This is the best payment gateway plugin for Robokassa, because it is the most integrated with Robokassa Merchant capabilities and is available for most versions WooCommerce and Wordpress.
 
@@ -19,13 +18,8 @@ Support currency: RUB, USD, EUR
 
 Found a bug? Send it with the settings page in the plugin one click :)
 
-= Russian =
-Позволяет использовать платежный шлюз Робокасса с плагином WooCommerce.
-Это самый лучший плагин платежного шлюза для Робокассы, т.к. он максимально интегрирован с возможностями Робокассы и доступен под большинство версий WooCommerce и Wordpress.
-
-Поддерживаемые валюты: RUB, USD, EUR
-
-Нашли ошибку? Отправьте её со страницы настроек в плагине одник кликом :)
+Support external plugins:
+1. WPML
 
 == Translations ==
 
@@ -36,7 +30,6 @@ Found a bug? Send it with the settings page in the plugin one click :)
 So please contribute your language to the plugin to make it even more useful. For translating I recommend the awesome for validating the ["Poedit Editor"](http://www.poedit.net/).
 
 == Installation ==
-= English =
 1. Archive extract and upload "wc-robokassa" to /wp-content/plugins
 2. Activation plugin
 3. Setting
@@ -50,21 +43,10 @@ For http://partner.robokassa.ru/?culture=en settings:
 <li>Control sign forming method: sha256</li>
 </ul>
 
-= Russian =
-1. Распакуйте архив и загрузите "wc-robokassa" в папку /wp-content/plugins
-2. Активируйте плагин
-3. Настройте
-
-Настройки для http://partner.robokassa.ru/?culture=ru :
-<ul style="list-style:none;">
-<li>Result URL: http://your_domain/?wc-api=wc_robokassa&action=result</li>
-<li>Success URL: http://your_domain/?wc-api=wc_robokassa&action=success</li>
-<li>Fail URL: http://your_domain/?wc-api=wc_robokassa&action=fail</li>
-<li>Метод запросов: POST</li>
-<li>Метод формирования контрольной подписи: sha256</li>
-</ul>
-
 == Changelog ==
+
+= 0.3.0.1 =
+* Fix readme.txt
 
 = 0.2.0.1 =
 * Add WPML support
