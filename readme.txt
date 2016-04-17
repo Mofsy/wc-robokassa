@@ -19,7 +19,7 @@ Support currency: RUB, USD, EUR
 Found a bug? Send it with the settings page in the plugin one click :)
 
 Support external plugins:
-1. WPML
+1. WPML (http://wpml.org)
 
 == Translations ==
 
@@ -47,6 +47,10 @@ For http://partner.robokassa.ru/?culture=en settings:
 
 = 0.3.0.1 =
 * Fix readme.txt
+* Add more notices
+* Fix design in admin panel
+* Add more information for log
+* More minor fix
 
 = 0.2.0.1 =
 * Add WPML support
