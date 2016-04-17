@@ -150,6 +150,11 @@ class WC_Robokassa extends WC_Payment_Gateway
 
         $this->logger = new WC_Robokassa_Logger($this->logger_path['dir'], $this->get_option('logger'));
 
+        if($this->get_option('logger') < '400')
+        {
+            add_action( 'admin_notices', array($this, 'debug_notice') );
+        }
+
         /**
          * Get currency
          */
@@ -208,6 +213,10 @@ class WC_Robokassa extends WC_Payment_Gateway
          * Testing?
          */
         $this->test = $this->get_option('test');
+        if($this->test === 'yes')
+        {
+            add_action( 'admin_notices', array($this, 'test_notice') );
+        }
 
         /**
          * Default language for Robokassa interface
