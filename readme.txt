@@ -45,6 +45,9 @@ For http://partner.robokassa.ru/?culture=en settings:
 
 == Changelog ==
 
+= 0.3.0.3 =
+* Minor fix
+
 = 0.3.0.2 =
 * Test on WP 4.7 and WooCommerce 2.6.9
 
