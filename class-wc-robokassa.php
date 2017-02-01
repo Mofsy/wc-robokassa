@@ -903,7 +903,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 
             default:
 
-                $signature = md5($string);
+                $signature = strtoupper(md5($string));
         }
 
         return $signature;

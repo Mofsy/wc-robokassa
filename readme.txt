@@ -5,7 +5,7 @@ Requires at least: 3.0
 Tested up to: 4.7
 Stable tag: trunk
 WC requires at least: 2.2
-WC tested up to: 2.6
+WC tested up to: 2.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://mofsy.ru/about/help
@@ -44,6 +44,9 @@ For http://partner.robokassa.ru/?culture=en settings:
 </ul>
 
 == Changelog ==
+
+= 0.3.1.1 =
+* Hash fix for md5
 
 = 0.3.0.3 =
 * Minor fix
