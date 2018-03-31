@@ -333,11 +333,6 @@ class WC_Robokassa extends WC_Payment_Gateway
         add_action('woocommerce_api_wc_' . $this->id, array($this, 'check_ipn'));
 
         /**
-         * Send report API hook
-         */
-        add_action('woocommerce_api_wc_' . $this->id . '_send_report', array($this, 'send_report_callback'));
-
-        /**
          * Gate allow?
          */
         if ($this->is_valid_for_use())
@@ -451,7 +446,6 @@ class WC_Robokassa extends WC_Payment_Gateway
             <?php _e('Universal solution to the problem of accepting payments from your customers. Started in 2003, ROBOKASSA has established itself as a highly reliable service for receiving payments. Our clients are more than 50 000 companies, including major Russian companies, small and medium-sized businesses, government agencies, as well as foreign companies.', 'wc-robokassa'); ?>
             <br /><?php _e('If the gateway is not working, you can turn error level DEBUG and send the report to the developer. Developer looks for errors and corrected.', 'wc-robokassa'); ?>
         </div>
-        <div class="robokassa-report" style="text-align: right;font-size: 14px;"><a style="color: orange;" href="<?php wc()->api_request_url('wc_robokassa_send_report'); ?>"><?php _e('Send report to author. Do not press if no errors! ', 'wc-robokassa'); ?></a> </div>
 
         <hr>
 
@@ -1281,44 +1275,5 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
             echo sprintf( __( 'Robokassa debug tool is enabled. Click %s -  to disable.', 'wc-robokassa' ), $link ) ?>
         </div>
         <?php
-    }
-
-    /**
-     * Send report to author
-     *
-     * @return bool
-     */
-    public function send_report_callback()
-    {
-        $to = 'report@mofsy.ru';
-        $subject = 'wc-robokassa';
-        $body = 'Report url: ' . $this->logger_path['url'];
-
-        if(!file_exists($this->logger_path['dir']))
-        {
-            die('fnf');
-        }
-
-        if(function_exists('get_plugins'))
-        {
-            $all_plugins = get_plugins();
-
-            foreach ($all_plugins as $key => $value)
-            {
-                $this->logger->addInfo('Plugin: ' . $value['Name'] . ' ('. $value['Version'] . ')');
-            }
-        }
-
-        $this->logger->addInfo('PHP version: ' . PHP_VERSION);
-
-        if(function_exists('wp_mail'))
-        {
-            $admin_email = get_option('admin_email');
-            $headers['from'] = $admin_email;
-
-            wp_mail( $to, $subject, $body, $headers );
-            die('ok');
-        }
-        die('error');
     }
 }
