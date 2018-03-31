@@ -148,7 +148,7 @@ class WC_Robokassa extends WC_Payment_Gateway
             'url' => $wp_dir['baseurl'] . '/wc-robokassa.txt'
         );
 
-        $this->logger = new WC_Robokassa_Logger($this->logger_path['dir'], $this->get_option('logger'));
+        $this->logger = new WC_Gatework_Logger($this->logger_path['dir'], $this->get_option('logger'));
 
         /**
          * Get currency
