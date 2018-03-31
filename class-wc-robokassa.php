@@ -732,7 +732,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         /**
          * Sum
          */
-        $out_sum = number_format($order->order_total, 2, '.', '');
+        $out_sum = number_format($order->get_total(), 2, '.', '');
         $args['OutSum'] = $out_sum;
 
         /**
