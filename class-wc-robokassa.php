@@ -1253,6 +1253,18 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         wp_die(__('Api request error. Action not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
     }
 
+	/**
+	 * Check if the gateway is available for use.
+	 *
+	 * @since 1.0.0.1
+	 *
+	 * @return bool
+	 */
+	public function is_available()
+	{
+		return parent::is_available();
+	}
+
     /**
      * Display the test notice
      **/
