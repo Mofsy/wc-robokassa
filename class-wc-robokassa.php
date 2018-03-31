@@ -153,22 +153,22 @@ class WC_Robokassa extends WC_Payment_Gateway
         /**
          * Get currency
          */
-        $this->currency = get_woocommerce_currency();
+        $this->currency = gatework_get_wc_currency();
 
         /**
          * Logger debug
          */
-        $this->logger->addDebug('Current currency: '.$this->currency);
+        $this->logger->addDebug('Current currency: ' . $this->currency);
 
         /**
          * Set WooCommerce version
          */
-        $this->wc_version = woocommerce_robokassa_get_version();
+        $this->wc_version = gatework_wc_get_version_active();
 
         /**
          * Logger debug
          */
-        $this->logger->addDebug('WooCommerce version: '.$this->wc_version);
+        $this->logger->addDebug('WooCommerce version: ' . $this->wc_version);
 
         /**
          * Set unique id
