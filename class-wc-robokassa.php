@@ -116,7 +116,7 @@ class WC_Robokassa extends WC_Payment_Gateway
     /**
      * Logger
      *
-     * @var WC_Robokassa_Logger
+     * @var WC_Gatework_Logger
      */
     public $logger;
 
@@ -1259,6 +1259,33 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 	{
 		return parent::is_available();
 	}
+
+	/**
+	 * Расчет сумм оплаты в различных валютах
+     *
+     *
+	 */
+	public function xml_calc_out_sum()
+    {
+
+    }
+
+	/**
+	 * Получение списка валют, доступных магазину
+     *
+	 */
+    public function xml_get_currencies()
+    {
+
+    }
+
+	/**
+	 * Получение списка способов оплаты, доступных магазину
+	 */
+    public function xml_get_payment_methods()
+    {
+
+    }
 
     /**
      * Display the test notice
