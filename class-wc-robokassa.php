@@ -925,7 +925,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 
     /**
      * Process the payment and return the result
-     **/
+     */
     public function process_payment($order_id)
     {
         $order = wc_get_order($order_id);
@@ -940,25 +940,19 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
          */
         $this->logger->addNotice('The client started to pay.');
 
-        if ( !version_compare( $this->wc_version, '2.1.0', '<' ) )
-        {
-            return array
-            (
-                'result' => 'success',
-                'redirect' => $order->get_checkout_payment_url( true )
-            );
-        }
-
+	    /**
+	     * Return data
+	     */
         return array
         (
             'result' => 'success',
-            'redirect'	=> add_query_arg('order-pay', $order->id, add_query_arg('key', $order->order_key, get_permalink(woocommerce_get_page_id('pay'))))
+            'redirect' => $order->get_checkout_payment_url( true )
         );
     }
 
     /**
      * receipt_page
-     **/
+     */
     public function receipt_page($order)
     {
         echo '<p>'.__('Thank you for your order, please press the button below to pay.', 'wc-robokassa').'</p>';
@@ -967,7 +961,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 
     /**
      * Check instant payment notification
-     **/
+     */
     public function check_ipn()
     {
         /**
@@ -1001,7 +995,8 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
             /**
              * Test mode
              */
-            if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1')) {
+            if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
+            {
                 /**
                  * Test flag
                  */
