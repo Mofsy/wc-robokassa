@@ -755,10 +755,28 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         {
             $description .= $item['name'];
         }
-        if(count($description) > 99)
+
+	    /**
+	     * Description count
+	     */
+	    if(function_exists('mb_strlen'))
+	    {
+		    $description_count = mb_strlen($description);
+	    }
+        elseif (function_exists('iconv_strlen'))
+	    {
+		    $description_count = iconv_strlen($description);
+	    }
+	    else
+	    {
+		    $description_count = strlen($description);
+	    }
+
+        if($description_count > 99)
         {
             $description = __('Product number: ' . $order_id, 'wc-robokassa');
         }
+
         $args['InvDesc'] = $description;
 
         /**
