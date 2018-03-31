@@ -829,10 +829,12 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         /**
          * Billing email
          */
-        if(!empty($order->billing_email))
+        $billing_email = $order->get_billing_email();
+        if(!empty($billing_email))
         {
-            $args['Email'] = $order->billing_email;
+            $args['Email'] = $billing_email;
         }
+        unset($billing_email);
 
         /**
          * Signature
