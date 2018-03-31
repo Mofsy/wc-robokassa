@@ -66,7 +66,7 @@ function woocommerce_robokassa_gateway_init()
 	 *
 	 * @return array
 	 */
-    function woocommerce_add_robokassa_gateway($methods)
+    function woocommerce_robokassa_gateway_add($methods)
     {
         $methods[] = 'WC_Robokassa';
 
