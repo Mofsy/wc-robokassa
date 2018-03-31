@@ -20,7 +20,7 @@ if(!defined('ABSPATH'))
 /**
  * Run
  *
- * @action woocommerce_robokassa_init
+ * @action woocommerce_robokassa_gateway_init
  */
 add_action('plugins_loaded', 'woocommerce_robokassa_gateway_init', 0);
 
