@@ -747,7 +747,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         $items = $order->get_items();
         foreach ( $items as $item )
         {
-            $description .= $item['name'];
+            $description .= ' ' . $item['name'];
         }
 
 	    /**
