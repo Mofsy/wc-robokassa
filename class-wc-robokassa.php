@@ -776,7 +776,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         /**
          * Rewrite currency from order
          */
-        $this->currency = $order->order_currency;
+        $this->currency = $order->get_currency();
 
         /**
          * Set currency to robokassa
