@@ -453,6 +453,7 @@ class WC_Robokassa extends WC_Payment_Gateway
         if($donate_status === false)
         {
             $current_user = wp_get_current_user();
+
         ?>
         <div class="donation" style="font-size:16px;line-height:160%;background-color:#fff;border:gold 2px dashed;border-right:gold 5px solid;border-left:gold 5px solid;padding: 10px;margin-top:10px;margin-bottom: 10px;">
 
@@ -1269,10 +1270,52 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
      *
      * @param $IncCurrLabel string Код валюты, для которой нужно произвести расчет суммы к оплате.
      * @param $IncSum mixed Сумма, которую должен будет заплатить пользователь.
+     *
+     * @return mixed
 	 */
 	public function xml_calc_out_sum($IncCurrLabel, $IncSum)
     {
+	    /**
+	     * Check SimpleXMLElement installed
+	     */
+        if(!class_exists('SimpleXMLElement'))
+        {
+            return false;
+        }
 
+	    /**
+	     * Request args
+	     */
+	    $args = array
+	    (
+		    'timeout' => 20,
+		    'body' => ''
+	    );
+
+	    /**
+	     * Request execute
+	     */
+	    $response = wp_remote_post('https://auth.robokassa.ru/Merchant/WebService/Service.asmx/CalcOutSumm?MerchantLogin=' . $this->shop_login . '&IncCurrLabel='.$IncCurrLabel.'&IncSum=' . $IncSum, $args);
+
+	    /**
+	     * Response get
+	     */
+	    $response_body = wp_remote_retrieve_body($response);
+
+	    /**
+         * Response normalize
+         */
+	    $response_data = new SimpleXMLElement($response_body);
+
+	    /**
+	     * Check error
+	     */
+	    if($response_data->Result->Code != 0)
+        {
+            return false;
+        }
+
+	    return $response_data->OutSum;
     }
 
 	/**
@@ -1287,6 +1330,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
     {
 
     }
+
 	/**
 	 * Интерфейс получения состояния оплаты счета (расширенный)
 	 *
@@ -1347,6 +1391,16 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 	 */
     public function xml_get_limit()
     {
+    }
+
+	/**
+     * Convert xml to array
+     *
+	 * @param $xml
+	 */
+    public function xml_to_array($xml)
+    {
+
     }
 
     /**
