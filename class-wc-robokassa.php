@@ -16,7 +16,6 @@ class WC_Robokassa extends WC_Payment_Gateway
      * @var
      */
     public $wc_version;
-
     /**
      * Current currency
      *
