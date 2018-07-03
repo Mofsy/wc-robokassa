@@ -16,6 +16,7 @@ class WC_Robokassa extends WC_Payment_Gateway
      * @var
      */
     public $wc_version;
+
     /**
      * Current currency
      *
@@ -616,6 +617,39 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                     '550' => 'ALERT',
                     '600' => 'EMERGENCY'
                 )
+            ),
+            'ofd_status' => array(
+	            'title' => __('Передача корзины товаров', 'woocommerce'),
+	            'type' => 'checkbox',
+	            'label' => __('Включена', 'woocommerce'),
+	            'description' => __('При выборе опции, будет сформирован и отправлен в налоговую и клиенту чек. При использовании необходимо настроить НДС продаваемых товаров. НДС рассчитывается согласно законодательству РФ, возможны расхождения в размере НДС с суммой рассчитанной магазином.', 'woocommerce'),
+	            'default' => 'no'
+            ),
+            'ofd_taxSystem' => array(
+	            'title' => __('Система налогообложения', 'woocommerce'),
+	            'type' => 'select',
+	            'default' => '0',
+	            'options' => array(
+		            '0' => __('Общая', 'woocommerce'),
+		            '1' => __('Упрощённая, доход', 'woocommerce'),
+		            '2' => __('Упрощённая, доход минус расход', 'woocommerce'),
+		            '3' => __('Eдиный налог на вменённый доход', 'woocommerce'),
+		            '4' => __('Eдиный сельскохозяйственный налог', 'woocommerce'),
+		            '5' => __('Патентная система налогообложения', 'woocommerce'),
+	            ),
+            ),
+            'ofd_taxType' => array(
+	            'title' => __('Ставка НДС по умолчанию', 'woocommerce'),
+	            'type' => 'select',
+	            'default' => '0',
+	            'options' => array(
+		            '0' => __('Без НДС', 'woocommerce'),
+		            '1' => __('НДС по ставке 0%', 'woocommerce'),
+		            '2' => __('НДС чека по ставке 10%', 'woocommerce'),
+		            '3' => __('НДС чека по ставке 18%', 'woocommerce'),
+		            '4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
+		            '5' => __('НДС чека по расчетной ставке 10/118', 'woocommerce'),
+	            ),
             ),
             'test_payments' => array(
                 'title'       => __( 'Settings for test payments', 'wc-robokassa' ),
