@@ -113,6 +113,21 @@ class WC_Robokassa extends WC_Payment_Gateway
      */
     public $test_sign_method = 'sha256';
 
+	/**
+	 * @var bool
+	 */
+	public $ofd_status = false;
+
+	/**
+	 * @var string
+	 */
+	public $ofd_sno = 'usn';
+
+	/**
+	 * @var string
+	 */
+	public $ofd_nds = 'none';
+
     /**
      * Logger
      *
@@ -258,6 +273,91 @@ class WC_Robokassa extends WC_Payment_Gateway
          * Set order button text
          */
         $this->order_button_text = $this->get_option('order_button_text');
+
+	    /**
+	     * Ofd
+	     */
+	    if($this->get_option('ofd_status') == 'yes')
+	    {
+		    $this->ofd_status = true;
+
+		    /**
+		     * Logger notice
+		     */
+		    $this->logger->addDebug('ofd_status = yes');
+	    }
+
+	    /**
+	     * Ofd sno
+	     */
+	    $ofd_sno_code = $this->get_option('ofd_sno');
+	    if($ofd_sno_code !== '')
+	    {
+		    $ofd_sno = 'osn';
+
+		    if($ofd_sno_code == '1')
+		    {
+			    $ofd_sno = 'usn_income';
+		    }
+
+		    if($ofd_sno_code == '2')
+		    {
+			    $ofd_sno = 'usn_income_outcome';
+		    }
+
+		    if($ofd_sno_code == '3')
+		    {
+			    $ofd_sno = 'envd';
+		    }
+
+		    if($ofd_sno_code == '4')
+		    {
+			    $ofd_sno = 'esn';
+		    }
+
+		    if($ofd_sno_code == '5')
+		    {
+			    $ofd_sno = 'patent';
+		    }
+
+		    $this->ofd_sno = $ofd_sno;
+	    }
+
+	    /**
+	     * Ofd nds
+	     */
+	    $ofd_nds_code = $this->get_option('ofd_nds');
+	    if($ofd_nds_code !== '')
+	    {
+		    $ofd_nds = 'none';
+
+		    if($ofd_nds_code == '1')
+		    {
+			    $ofd_nds = 'vat0';
+		    }
+
+		    if($ofd_nds_code == '2')
+		    {
+			    $ofd_nds = 'vat10';
+		    }
+
+		    if($ofd_nds_code == '3')
+		    {
+			    $ofd_nds = 'vat18';
+		    }
+
+		    if($ofd_nds_code == '4')
+		    {
+			    $ofd_nds = 'vat110';
+		    }
+
+		    if($ofd_nds_code == '5')
+		    {
+			    $ofd_nds = 'vat118';
+		    }
+
+		    $this->ofd_nds = $ofd_nds;
+	    }
 
         /**
          * Set shop pass 1
@@ -562,9 +662,54 @@ class WC_Robokassa extends WC_Payment_Gateway
                 'description' => __( 'Description of the method of payment that the customer will see on our website.', 'wc-robokassa' ),
                 'default' => __( 'Payment by Robokassa.', 'wc-robokassa' )
             ),
-            'technical' => array(
-                'title'       => __( 'Technical details', 'wc-robokassa' ),
-                'type'        => 'title',
+            'ofd' => array
+            (
+	            'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
+	            'type' => 'title',
+	            'description' => '',
+            ),
+            'ofd_status' => array
+            (
+	            'title' => __('Передача корзины товаров', 'woocommerce'),
+	            'type' => 'checkbox',
+	            'label' => __('Включена', 'woocommerce'),
+	            'description' => __('При выборе опции, будет сформирован и отправлен в налоговую и клиенту чек. При использовании необходимо настроить НДС продаваемых товаров. НДС рассчитывается согласно законодательству РФ, возможны расхождения в размере НДС с суммой рассчитанной магазином.', 'woocommerce'),
+	            'default' => 'off'
+            ),
+            'ofd_sno' => array
+            (
+	            'title' => __('Система налогообложения', 'woocommerce'),
+	            'type' => 'select',
+	            'default' => '0',
+	            'options' => array
+                (
+		            '0' => __('Общая', 'woocommerce'),
+		            '1' => __('Упрощённая, доход', 'woocommerce'),
+		            '2' => __('Упрощённая, доход минус расход', 'woocommerce'),
+		            '3' => __('Eдиный налог на вменённый доход', 'woocommerce'),
+		            '4' => __('Eдиный сельскохозяйственный налог', 'woocommerce'),
+		            '5' => __('Патентная система налогообложения', 'woocommerce'),
+	            ),
+            ),
+            'ofd_nds' => array
+            (
+	            'title' => __('Ставка НДС по умолчанию', 'woocommerce'),
+	            'type' => 'select',
+	            'default' => '0',
+	            'options' => array
+                (
+		            '0' => __('Без НДС', 'woocommerce'),
+		            '1' => __('НДС по ставке 0%', 'woocommerce'),
+		            '2' => __('НДС чека по ставке 10%', 'woocommerce'),
+		            '3' => __('НДС чека по ставке 18%', 'woocommerce'),
+		            '4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
+		            '5' => __('НДС чека по расчетной ставке 10/118', 'woocommerce'),
+	            ),
+            ),
+            'technical' => array
+            (
+                'title' => __( 'Technical details', 'wc-robokassa' ),
+                'type' => 'title',
                 'description' => '',
             ),
             'sign_method' => array
@@ -622,39 +767,6 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                     '550' => 'ALERT',
                     '600' => 'EMERGENCY'
                 )
-            ),
-            'ofd_status' => array(
-	            'title' => __('Передача корзины товаров', 'woocommerce'),
-	            'type' => 'checkbox',
-	            'label' => __('Включена', 'woocommerce'),
-	            'description' => __('При выборе опции, будет сформирован и отправлен в налоговую и клиенту чек. При использовании необходимо настроить НДС продаваемых товаров. НДС рассчитывается согласно законодательству РФ, возможны расхождения в размере НДС с суммой рассчитанной магазином.', 'woocommerce'),
-	            'default' => 'no'
-            ),
-            'ofd_taxSystem' => array(
-	            'title' => __('Система налогообложения', 'woocommerce'),
-	            'type' => 'select',
-	            'default' => '0',
-	            'options' => array(
-		            '0' => __('Общая', 'woocommerce'),
-		            '1' => __('Упрощённая, доход', 'woocommerce'),
-		            '2' => __('Упрощённая, доход минус расход', 'woocommerce'),
-		            '3' => __('Eдиный налог на вменённый доход', 'woocommerce'),
-		            '4' => __('Eдиный сельскохозяйственный налог', 'woocommerce'),
-		            '5' => __('Патентная система налогообложения', 'woocommerce'),
-	            ),
-            ),
-            'ofd_taxType' => array(
-	            'title' => __('Ставка НДС по умолчанию', 'woocommerce'),
-	            'type' => 'select',
-	            'default' => '0',
-	            'options' => array(
-		            '0' => __('Без НДС', 'woocommerce'),
-		            '1' => __('НДС по ставке 0%', 'woocommerce'),
-		            '2' => __('НДС чека по ставке 10%', 'woocommerce'),
-		            '3' => __('НДС чека по ставке 18%', 'woocommerce'),
-		            '4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
-		            '5' => __('НДС чека по расчетной ставке 10/118', 'woocommerce'),
-	            ),
             ),
             'test_payments' => array(
                 'title'       => __( 'Settings for test payments', 'wc-robokassa' ),
@@ -875,17 +987,147 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
         }
         unset($billing_email);
 
-        /**
-         * Signature
-         */
-        if(array_key_exists('OutSumCurrency', $args))
-        {
-            $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].':'.$args['OutSumCurrency'].':'.$signature_pass;
-        }
-        else
-        {
-            $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].':'.$signature_pass;
-        }
+	    /**
+	     * Receipt
+	     */
+	    $receipt_result = '';
+
+	    if($this->ofd_status)
+	    {
+		    /**
+		     * Container
+		     */
+		    $receipt = array();
+
+		    /**
+		     * Items
+		     */
+		    $receipt_items = array();
+
+		    foreach ($order->get_items() as $receipt_items_key => $receipt_items_value)
+		    {
+			    $item_quantity = $receipt_items_value->get_quantity(); // Get the item quantity
+
+			    $item_total = $receipt_items_value->get_total(); // Get the item line total
+
+			    /**
+			     * Build positions
+			     */
+			    $receipt_items[] = array
+			    (
+				    /**
+				     * Название товара
+				     *
+				     * максимальная длина 128 символов
+				     */
+				    'name' => $receipt_items_value['name'],
+
+				    /**
+				     * Стоимость предмета расчета с учетом скидок и наценок
+				     *
+				     * Цена в рублях:
+				     *  целая часть не более 8 знаков;
+				     *  дробная часть не более 2 знаков.
+				     */
+				    'sum' => intval($item_total),
+
+				    /**
+				     * Количество/вес
+				     *
+				     * максимальная длина 128 символов
+				     */
+				    'quantity' => intval($item_quantity),
+
+				    /**
+				     * Tax
+				     */
+				    'tax' => $this->ofd_nds
+			    );
+		    }
+
+		    // DELIVERY POSITION
+		    if ($order->shipping_total > 0)
+		    {
+			    /**
+			     * Build positions
+			     */
+			    $receipt_items[] = array
+			    (
+				    /**
+				     * Название товара
+				     *
+				     * максимальная длина 128 символов
+				     */
+				    'name' => 'Доставка',
+
+				    /**
+				     * Стоимость предмета расчета с учетом скидок и наценок
+				     *
+				     * Цена в рублях:
+				     *  целая часть не более 8 знаков;
+				     *  дробная часть не более 2 знаков.
+				     */
+				    'sum' => intval($order->shipping_total),
+
+				    /**
+				     * Количество/вес
+				     *
+				     * максимальная длина 128 символов
+				     */
+				    'quantity' => 1,
+
+				    /**
+				     * Tax
+				     */
+				    'tax' => $this->ofd_nds
+			    );
+		    }
+
+		    /**
+		     * Sno
+		     */
+		    $receipt['sno'] = $this->ofd_sno;
+
+		    /**
+		     * Items
+		     */
+		    $receipt['items'] = $receipt_items;
+
+		    /**
+		     * Insert $receipt into debug mode
+		     */
+		    $this->logger->addDebug('$receipt', $receipt);
+
+		    /**
+		     * Result
+		     */
+		    $receipt_result = json_encode($receipt);
+
+		    /**
+		     * Insert $receipt_result into debug mode
+		     */
+		    $this->logger->addDebug('$receipt_result' . $receipt_result);
+	    }
+
+	    /**
+	     * Signature
+	     */
+	    $receipt_signature = '';
+	    if($receipt_result != '')
+	    {
+		    $receipt_signature = ':'.$receipt_result;
+
+		    $args['Receipt'] = $receipt_result;
+	    }
+
+	    if(array_key_exists('OutSumCurrency', $args))
+	    {
+		    $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].$receipt_signature.':'.$args['OutSumCurrency'].':'.$signature_pass;
+	    }
+	    else
+	    {
+		    $signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].$receipt_signature.':'.$signature_pass;
+	    }
         $args['SignatureValue'] = $this->get_signature($signature_payload, $signature_method);
 
         /**
@@ -964,7 +1206,11 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 
     /**
      * Process the payment and return the result
-     */
+     *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 */
     public function process_payment($order_id)
     {
         $order = wc_get_order($order_id);
