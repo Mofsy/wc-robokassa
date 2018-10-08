@@ -50,6 +50,7 @@ For http://partner.robokassa.ru/?culture=en settings:
 * Remove free report
 * Add support last WordPress & WooCommerce
 * Init Gatework
+* Fix admin title
 * Minor fix
 
 = 0.3.1.1 =
