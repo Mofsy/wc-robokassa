@@ -222,9 +222,14 @@ class WC_Robokassa extends WC_Payment_Gateway
 	    /**
 	     * Admin title
 	     */
-	    $this->method_title = 'RoboKassa';
+	    $this->method_title = __( 'Robokassa', 'wc-robokassa' );
 
-        /**
+	    /**
+	     * Admin method description
+	     */
+	    $this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
+
+	    /**
          * Testing?
          */
         $this->test = $this->get_option('test');
@@ -492,100 +497,6 @@ class WC_Robokassa extends WC_Payment_Gateway
         }
 
         return $return;
-    }
-
-    /**
-     * Admin Panel Options
-     **/
-    public function admin_options()
-    {
-        /**
-         * Show debug notice
-         */
-        if($this->get_option('logger') < '400')
-        {
-            $this->debug_notice();
-        }
-
-        /**
-         * Show test notice
-         */
-        if($this->test === 'yes')
-        {
-            $this->test_notice();
-        }
-
-        /**
-         * Donate action
-         */
-        $donate_status = get_option('donate_wc_robokassa');
-
-        if(array_key_exists('donate', $_POST))
-        {
-            if($_POST['donate'] === 'donation_send')
-            {
-                update_option( 'donate_wc_robokassa', 'send' );
-                $donate_status = 'send';
-            }
-            elseif($_POST['donate'] === 'donation_wait')
-            {
-                update_option( 'donate_wc_robokassa', 'wait:' . time() );
-                $donate_status = 'wait:' . time();
-            }
-        }
-
-        if($donate_status !== 'send' && $donate_status !== false)
-        {
-            $donate_time_array = explode(':', $donate_status);
-            $donate_time = $donate_time_array[1];
-
-            if(time() > $donate_time + 604800)
-            {
-                delete_option('donate_wc_robokassa');
-            }
-        }
-
-        ?>
-        <h1><?php _e('Robokassa', 'wc-robokassa'); ?></h1><?php $this->get_icon(); ?>
-        <div style="background-color: #ffffff;padding: 10px; line-height: 160%; margin-bottom: 5px;font-size: 16px;">
-            <?php _e('Universal solution to the problem of accepting payments from your customers. Started in 2003, ROBOKASSA has established itself as a highly reliable service for receiving payments. Our clients are more than 50 000 companies, including major Russian companies, small and medium-sized businesses, government agencies, as well as foreign companies.', 'wc-robokassa'); ?>
-            <br /><?php _e('If the gateway is not working, you can turn error level DEBUG and send the report to the developer. Developer looks for errors and corrected.', 'wc-robokassa'); ?>
-        </div>
-
-        <hr>
-
-        <?php
-        if($donate_status === false)
-        {
-            $current_user = wp_get_current_user();
-
-        ?>
-        <div class="donation" style="font-size:16px;line-height:160%;background-color:#fff;border:gold 2px dashed;border-right:gold 5px solid;border-left:gold 5px solid;padding: 10px;margin-top:10px;margin-bottom: 10px;">
-
-            <?php echo sprintf(__('Hello %1$s, if the plugin useful and you have a little spare cash, please send them to me. This money allows me to support plugin on actual state and the surplus will help to produce new ones.', 'wc-robokassa'), $current_user->display_name) ?>
-            <br>
-            <?php _e('Details on which you can send money are located at the end of the page:', 'wc-robokassa'); ?> <a href="https://mofsy.ru/about/help" target="_blank">https://mofsy.ru/about/help</a><br>
-            <?php _e('Development takes a lot of time and health (vision, spine, sleepless nights). You sacrifice a little bit, I sacrifice to many - as a result get a great free product for all open source.', 'wc-robokassa'); ?>
-            <div class="robokassa-report" style="text-align: right;margin-top: 10px;font-size: 14px;">
-                <button name="donate" value="donation_send" style="background-color: gainsboro;padding:5px;cursor: pointer;border: 0 solid #000;"><?php _e('Thanks for the plugin, i am sent a little money', 'wc-robokassa'); ?></button>
-                <button name="donate" value="donation_wait" style="background-color: gainsboro;padding:5px;cursor: pointer;border: 0 solid #000;"><?php _e('Little money now, remind me later', 'wc-robokassa'); ?></button>
-            </div>
-
-        </div>
-
-        <hr>
-        <?php } ?>
-
-        <?php if ( $this->is_valid_for_use() ) : ?>
-
-        <table class="form-table">
-            <?php $this->generate_settings_html(); ?>
-        </table>
-
-    <?php else : ?>
-        <div class="inline error"><p><strong><?php _e('Gateway offline', 'wc-robokassa'); ?></strong>: <?php _e('Robokassa does not support the currency your store.', 'wc-robokassa' ); ?></p></div>
-        <?php
-    endif;
     }
 
     /**
