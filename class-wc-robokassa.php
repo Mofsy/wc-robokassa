@@ -573,55 +573,49 @@ class WC_Robokassa extends WC_Payment_Gateway
                 'description' => __( 'Description of the method of payment that the customer will see on our website.', 'wc-robokassa' ),
                 'default' => __( 'Payment by Robokassa.', 'wc-robokassa' )
             ),
-            'ofd' => array
-            (
-	            'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
-	            'type' => 'title',
-	            'description' => '',
-            ),
-            'ofd_status' => array
-            (
-	            'title' => __('Передача корзины товаров', 'woocommerce'),
-	            'type' => 'checkbox',
-	            'label' => __('Включена', 'woocommerce'),
-	            'description' => __('При выборе опции, будет сформирован и отправлен в налоговую и клиенту чек. При использовании необходимо настроить НДС продаваемых товаров. НДС рассчитывается согласно законодательству РФ, возможны расхождения в размере НДС с суммой рассчитанной магазином.', 'woocommerce'),
-	            'default' => 'off'
-            ),
-            'ofd_sno' => array
-            (
-	            'title' => __('Система налогообложения', 'woocommerce'),
-	            'type' => 'select',
-	            'default' => '0',
-	            'options' => array
-                (
-		            '0' => __('Общая', 'woocommerce'),
-		            '1' => __('Упрощённая, доход', 'woocommerce'),
-		            '2' => __('Упрощённая, доход минус расход', 'woocommerce'),
-		            '3' => __('Eдиный налог на вменённый доход', 'woocommerce'),
-		            '4' => __('Eдиный сельскохозяйственный налог', 'woocommerce'),
-		            '5' => __('Патентная система налогообложения', 'woocommerce'),
-	            ),
-            ),
-            'ofd_nds' => array
-            (
-	            'title' => __('Ставка НДС по умолчанию', 'woocommerce'),
-	            'type' => 'select',
-	            'default' => '0',
-	            'options' => array
-                (
-		            '0' => __('Без НДС', 'woocommerce'),
-		            '1' => __('НДС по ставке 0%', 'woocommerce'),
-		            '2' => __('НДС чека по ставке 10%', 'woocommerce'),
-		            '3' => __('НДС чека по ставке 18%', 'woocommerce'),
-		            '4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
-		            '5' => __('НДС чека по расчетной ставке 10/118', 'woocommerce'),
-	            ),
-            ),
             'technical' => array
             (
                 'title' => __( 'Technical details', 'wc-robokassa' ),
                 'type' => 'title',
                 'description' => '',
+            ),
+            'test' => array
+            (
+	            'title' => __( 'Test mode', 'wc-robokassa' ),
+	            'type'        => 'select',
+	            'description'	=>  __( 'Activate testing mode for admins.', 'wc-robokassa' ),
+	            'default'	=> 'yes',
+	            'options'     => array
+	            (
+		            'no' => __( 'Off', 'wc-robokassa' ),
+		            'yes' => __( 'On', 'wc-robokassa' ),
+	            )
+            ),
+            'logger' => array
+            (
+	            'title' => __( 'Enable logging?', 'wc-robokassa' ),
+	            'type'        => 'select',
+	            'description'	=>  __( 'You can enable gateway logging, specify the level of error that you want to benefit from logging. You can send reports to developer manually by pressing the button. All sensitive data in the report are deleted.
+By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
+	            'default'	=> '400',
+	            'options'     => array
+	            (
+		            '' => __( 'Off', 'wc-robokassa' ),
+		            '100' => 'DEBUG',
+		            '200' => 'INFO',
+		            '250' => 'NOTICE',
+		            '300' => 'WARNING',
+		            '400' => 'ERROR',
+		            '500' => 'CRITICAL',
+		            '550' => 'ALERT',
+		            '600' => 'EMERGENCY'
+	            )
+            ),
+            'real' => array
+            (
+	            'title' => __( 'Settings for real payments', 'wc-robokassa' ),
+	            'type' => 'title',
+	            'description' => '',
             ),
             'sign_method' => array
             (
@@ -659,42 +653,11 @@ class WC_Robokassa extends WC_Payment_Gateway
                 'description' => __( 'Please write Shop pass 2.', 'wc-robokassa' ),
                 'default' => ''
             ),
-            'logger' => array
+            'test_payments' => array
             (
-                'title' => __( 'Enable logging?', 'wc-robokassa' ),
-                'type'        => 'select',
-                'description'	=>  __( 'You can enable gateway logging, specify the level of error that you want to benefit from logging. You can send reports to developer manually by pressing the button. All sensitive data in the report are deleted.
-By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
-                'default'	=> '400',
-                'options'     => array
-                (
-                    '' => __( 'Off', 'wc-robokassa' ),
-                    '100' => 'DEBUG',
-                    '200' => 'INFO',
-                    '250' => 'NOTICE',
-                    '300' => 'WARNING',
-                    '400' => 'ERROR',
-                    '500' => 'CRITICAL',
-                    '550' => 'ALERT',
-                    '600' => 'EMERGENCY'
-                )
-            ),
-            'test_payments' => array(
                 'title'       => __( 'Settings for test payments', 'wc-robokassa' ),
                 'type'        => 'title',
                 'description' => '',
-            ),
-            'test' => array
-            (
-                'title' => __( 'Test mode', 'wc-robokassa' ),
-                'type'        => 'select',
-                'description'	=>  __( 'Activate testing mode for admins.', 'wc-robokassa' ),
-                'default'	=> 'yes',
-                'options'     => array
-                (
-                    'no' => __( 'Off', 'wc-robokassa' ),
-                    'yes' => __( 'On', 'wc-robokassa' ),
-                )
             ),
             'test_sign_method' => array
             (
@@ -724,6 +687,50 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
                 'type' => 'text',
                 'description' => __( 'Please write Shop pass 2 for testing payments.', 'wc-robokassa' ),
                 'default' => ''
+            ),
+            'ofd' => array
+            (
+	            'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
+	            'type' => 'title',
+	            'description' => '',
+            ),
+            'ofd_status' => array
+            (
+	            'title' => __('Передача корзины товаров', 'woocommerce'),
+	            'type' => 'checkbox',
+	            'label' => __('Включена', 'woocommerce'),
+	            'description' => __('При выборе опции, будет сформирован и отправлен в налоговую и клиенту чек. При использовании необходимо настроить НДС продаваемых товаров. НДС рассчитывается согласно законодательству РФ, возможны расхождения в размере НДС с суммой рассчитанной магазином.', 'woocommerce'),
+	            'default' => 'off'
+            ),
+            'ofd_sno' => array
+            (
+	            'title' => __('Система налогообложения', 'woocommerce'),
+	            'type' => 'select',
+	            'default' => '0',
+	            'options' => array
+	            (
+		            '0' => __('Общая', 'woocommerce'),
+		            '1' => __('Упрощённая, доход', 'woocommerce'),
+		            '2' => __('Упрощённая, доход минус расход', 'woocommerce'),
+		            '3' => __('Eдиный налог на вменённый доход', 'woocommerce'),
+		            '4' => __('Eдиный сельскохозяйственный налог', 'woocommerce'),
+		            '5' => __('Патентная система налогообложения', 'woocommerce'),
+	            ),
+            ),
+            'ofd_nds' => array
+            (
+	            'title' => __('Ставка НДС по умолчанию', 'woocommerce'),
+	            'type' => 'select',
+	            'default' => '0',
+	            'options' => array
+	            (
+		            '0' => __('Без НДС', 'woocommerce'),
+		            '1' => __('НДС по ставке 0%', 'woocommerce'),
+		            '2' => __('НДС чека по ставке 10%', 'woocommerce'),
+		            '3' => __('НДС чека по ставке 18%', 'woocommerce'),
+		            '4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
+		            '5' => __('НДС чека по расчетной ставке 10/118', 'woocommerce'),
+	            ),
             )
         );
     }
