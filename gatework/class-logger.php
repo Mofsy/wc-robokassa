@@ -160,10 +160,14 @@ class WC_Gatework_Logger
             $message
         );
 
-        if(is_object($object))
-        {
-            $content[print_r($object, true)];
-        }
+	    if(is_object($object) || is_array($object))
+	    {
+		    $content['content'] = print_r($object, true);
+	    }
+	    else
+	    {
+		    $content['content'] = $object;
+	    }
 
         /**
          * Content
