@@ -204,6 +204,11 @@ class WC_Robokassa extends WC_Payment_Gateway
          */
         $this->title = $this->get_option('title');
 
+	    /**
+	     * Admin title
+	     */
+	    $this->method_title = 'RoboKassa';
+
         /**
          * Testing?
          */
