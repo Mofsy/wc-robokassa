@@ -50,6 +50,7 @@ For http://partner.robokassa.ru/?culture=en settings:
 * Remove free report
 * Add support last WordPress & WooCommerce
 * Init Gatework
+* Sending content cart (54fz)
 * Fix admin title
 * Minor fix
 
