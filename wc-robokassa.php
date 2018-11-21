@@ -16,7 +16,7 @@
 */
 if(!defined('ABSPATH'))
 {
-    exit;
+	exit;
 }
 
 /**
@@ -31,18 +31,18 @@ add_action('plugins_loaded', 'woocommerce_robokassa_gateway_init', 0);
  */
 function woocommerce_robokassa_gateway_init()
 {
-    /**
-     * Main check
-     */
-    if (!class_exists('WC_Payment_Gateway') || class_exists('WC_Robokassa'))
-    {
-        return;
-    }
+	/**
+	 * Main check
+	 */
+	if (!class_exists('WC_Payment_Gateway') || class_exists('WC_Robokassa'))
+	{
+		return;
+	}
 
-    /**
-     * Define plugin url
-     */
-    define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
+	/**
+	 * Define plugin url
+	 */
+	define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
 
 	/**
 	 * GateWork
@@ -55,11 +55,11 @@ function woocommerce_robokassa_gateway_init()
 	include_once __DIR__ . '/class-wc-robokassa.php';
 
 	/**
-     * Load language
-     *
-     * todo: optimize load
-     */
-    load_plugin_textdomain( 'wc-robokassa',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	 * Load language
+	 *
+	 * todo: optimize load
+	 */
+	load_plugin_textdomain( 'wc-robokassa',  false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 	/**
 	 * Add the gateway to WooCommerce
@@ -68,19 +68,19 @@ function woocommerce_robokassa_gateway_init()
 	 *
 	 * @return array
 	 */
-    function woocommerce_robokassa_gateway_add($methods)
-    {
-        $methods[] = 'WC_Robokassa';
+	function woocommerce_robokassa_gateway_add($methods)
+	{
+		$methods[] = 'WC_Robokassa';
 
-        return $methods;
-    }
+		return $methods;
+	}
 
 	/**
 	 * Add payment method
 	 *
 	 * @filter woocommerce_robokassa_gateway_add
 	 */
-    add_filter('woocommerce_payment_gateways', 'woocommerce_robokassa_gateway_add');
+	add_filter('woocommerce_payment_gateways', 'woocommerce_robokassa_gateway_add');
 }
 
 /**
@@ -90,12 +90,12 @@ add_filter('plugin_row_meta',  'wc_robokassa_register_plugins_links_right', 10, 
 
 function wc_robokassa_register_plugins_links_right($links, $file)
 {
-    $base = plugin_basename(__FILE__);
-    if ($file === $base)
-    {
-        $links[] = '<a href="'.admin_url('admin.php?page=wc-settings&tab=checkout&section=wc_robokassa').'">' . __('Settings') . '</a>';
-    }
-    return $links;
+	$base = plugin_basename(__FILE__);
+	if ($file === $base)
+	{
+		$links[] = '<a href="'.admin_url('admin.php?page=wc-settings&tab=checkout&section=wc_robokassa').'">' . __('Settings') . '</a>';
+	}
+	return $links;
 }
 
 /**
@@ -105,5 +105,5 @@ add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wc_robokassa_
 
 function wc_robokassa_register_plugins_links_left( $links )
 {
-    return array_merge(array('settings' => '<a href="https://mofsy.ru/about/help">' . __('Donate for author', 'wc-robokassa') . '</a>'), $links);
+	return array_merge(array('settings' => '<a href="https://mofsy.ru/about/help">' . __('Donate for author', 'wc-robokassa') . '</a>'), $links);
 }
