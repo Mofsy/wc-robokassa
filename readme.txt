@@ -49,6 +49,7 @@ For http://partner.robokassa.ru/?culture=en settings:
 == Changelog ==
 
 = 1.1.0.1 =
+* Fix VAT 20/120
 * Order description optimized
 * Test on latest WordPress and WooCommerce
 * More fix
