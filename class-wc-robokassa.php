@@ -830,6 +830,10 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 		{
 			$args['OutSumCurrency'] = 'EUR';
 		}
+		elseif($this->currency === 'KZT')
+		{
+			$args['OutSumCurrency'] = 'KZT';
+		}
 
 		/**
 		 * Test mode
