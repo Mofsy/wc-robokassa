@@ -5,15 +5,16 @@
     Description: Allows you to use Robokassa payment gateway with the WooCommerce plugin.
     Version: 1.0.0.1
 	WC requires at least: 3.0
-	WC tested up to: 3.5
+	WC tested up to: 3.6
     Author: Mofsy
     Author URI: https://mofsy.ru
     Text Domain: wc-robokassa
     Domain Path: /languages
-    Copyright: © 2015-2018 Mofsy.
+    Copyright: © 2015-2019 Mofsy.
 	License: GNU General Public License v3.0
 	License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
+
 if(!defined('ABSPATH'))
 {
 	exit;
