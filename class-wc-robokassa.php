@@ -348,7 +348,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 
 			if($ofd_nds_code == '3')
 			{
-				$ofd_nds = 'vat18';
+				$ofd_nds = 'vat20';
 			}
 
 			if($ofd_nds_code == '4')
@@ -358,7 +358,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 
 			if($ofd_nds_code == '5')
 			{
-				$ofd_nds = 'vat118';
+				$ofd_nds = 'vat120';
 			}
 
 			$this->ofd_nds = $ofd_nds;
@@ -729,7 +729,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 					'2' => __('НДС чека по ставке 10%', 'woocommerce'),
 					'3' => __('НДС чека по ставке 18%', 'woocommerce'),
 					'4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
-					'5' => __('НДС чека по расчетной ставке 10/118', 'woocommerce'),
+					'5' => __('НДС чека по расчетной ставке 20/120', 'woocommerce'),
 				),
 			)
 		);
