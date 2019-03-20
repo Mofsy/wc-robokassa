@@ -48,6 +48,9 @@ For http://partner.robokassa.ru/?culture=en settings:
 
 == Changelog ==
 
+= 1.1.1.1 =
+* Fix language phrase
+
 = 1.1.0.1 =
 * Fix VAT 20/120
 * Order description optimized
