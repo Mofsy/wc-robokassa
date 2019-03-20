@@ -480,7 +480,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 			/**
 			 * Logger notice
 			 */
-			$this->logger->addDebug('Currency not support:'.$this->currency);
+			$this->logger->addInfo('Currency not support: ' . $this->currency);
 		}
 
 		/**
