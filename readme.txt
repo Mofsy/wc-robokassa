@@ -1,6 +1,6 @@
 === WooCommerce - Robokassa Payment Gateway===
 Contributors: Mofsy
-Tags: robokassa, payment gateway, woo commerce, woocommerce, ecommerce, gateway, woo robokassa, robo, merchant, woo, woo robo, робокасса
+Tags: robokassa, payment gateway, woo commerce, woocommerce, ecommerce, gateway, woo robokassa, robo, merchant, woo, woo robo, робокасса, робочеки
 Requires at least: 3.0
 Tested up to: 5.1
 Requires PHP: 5.4
