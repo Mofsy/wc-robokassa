@@ -736,6 +736,20 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 	}
 
 	/**
+	 * Output the gateway settings screen.
+	 */
+	public function admin_options()
+    {
+		echo '<h2>' . esc_html( $this->get_method_title() );
+		wc_back_link( __( 'Return to payments', 'woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+		echo '</h2>';
+
+		echo wp_kses_post( wpautop( $this->get_method_description() ) );
+
+	    echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table>'; // WPCS: XSS ok.
+	}
+
+	/**
 	 * There are no payment fields for sprypay, but we want to show the description if set.
 	 **/
 	public function payment_fields()
