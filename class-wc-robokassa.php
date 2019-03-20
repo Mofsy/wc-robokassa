@@ -812,35 +812,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 		/**
 		 * Product description
 		 */
-		$description = '';
-		$items = $order->get_items();
-		foreach ( $items as $item )
-		{
-			$description .= ' ' . $item['name'];
-		}
-
-		/**
-		 * Description count
-		 */
-		if(function_exists('mb_strlen'))
-		{
-			$description_count = mb_strlen($description);
-		}
-        elseif (function_exists('iconv_strlen'))
-		{
-			$description_count = iconv_strlen($description);
-		}
-		else
-		{
-			$description_count = strlen($description);
-		}
-
-		if($description_count > 99)
-		{
-			$description = __('Order number: ' . $order_id, 'wc-robokassa');
-		}
-
-		$args['InvDesc'] = $description;
+		$args['InvDesc'] = __('Order number: ' . $order_id, 'wc-robokassa');
 
 		/**
 		 * Rewrite currency from order
