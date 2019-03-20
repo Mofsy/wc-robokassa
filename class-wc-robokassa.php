@@ -1131,6 +1131,9 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 	 */
 	public function process_payment($order_id)
 	{
+		/**
+		 * Get order object
+		 */
 		$order = wc_get_order($order_id);
 
 		/**
