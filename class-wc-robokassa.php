@@ -514,7 +514,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 				'title' => __('Online/Offline gateway', 'wc-robokassa'),
 				'type' => 'checkbox',
 				'label' => __('Online', 'wc-robokassa'),
-				'default' => 'no'
+				'default' => 'off'
 			),
 			'interface' => array(
 				'title'       => __( 'Interface', 'wc-robokassa' ),
