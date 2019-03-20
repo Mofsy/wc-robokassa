@@ -46,6 +46,11 @@ For http://partner.robokassa.ru/?culture=en settings:
 
 == Changelog ==
 
+= 1.1.0.1 =
+* Order description optimized
+* Test on latest WordPress and WooCommerce
+* More fix
+
 = 1.0.0.1 =
 * Remove free report
 * Add support last WordPress & WooCommerce
