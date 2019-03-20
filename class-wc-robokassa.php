@@ -837,7 +837,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 
 		if($description_count > 99)
 		{
-			$description = __('Product number: ' . $order_id, 'wc-robokassa');
+			$description = __('Order number: ' . $order_id, 'wc-robokassa');
 		}
 
 		$args['InvDesc'] = $description;
