@@ -2,11 +2,11 @@
 Contributors: Mofsy
 Tags: robokassa, payment gateway, woo commerce, woocommerce, ecommerce, gateway, woo robokassa, robo, merchant, woo, woo robo, робокасса
 Requires at least: 3.0
-Tested up to: 4.9
+Tested up to: 5.1
 Requires PHP: 5.4
 Stable tag: trunk
 WC requires at least: 3.0
-WC tested up to: 3.5
+WC tested up to: 3.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://mofsy.ru/others/help
