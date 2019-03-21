@@ -72,7 +72,7 @@ function woocommerce_robokassa_gateway_init()
 	/**
 	 * Gateway main class
 	 */
-	include_once __DIR__ . '/class-wc-robokassa.php';
+	include_once __DIR__ . '/includes/class-wc-robokassa.php';
 
 	/**
 	 * Run
