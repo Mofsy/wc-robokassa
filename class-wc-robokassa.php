@@ -153,315 +153,335 @@ class WC_Robokassa extends WC_Payment_Gateway
 	 */
 	public function __construct()
 	{
-		/**
-		 * Logger?
-		 */
-		$wp_dir = wp_upload_dir();
-		$this->logger_path = array
-		(
-			'dir' => $wp_dir['basedir'] . '/wc-robokassa.txt',
-			'url' => $wp_dir['baseurl'] . '/wc-robokassa.txt'
-		);
+		// hook
+		do_action( 'wc_robokassa_loading' );
 
-		$this->logger = new WC_Gatework_Logger($this->logger_path['dir'], $this->get_option('logger'));
+		$this->includes();
+	    $this->hooks();
 
-		/**
-		 * Get currency
-		 */
-		$this->currency = gatework_get_wc_currency();
-
-		/**
-		 * Logger debug
-		 */
-		$this->logger->addDebug('Current currency: ' . $this->currency);
-
-		/**
-		 * Set WooCommerce version
-		 */
-		$this->wc_version = gatework_wc_get_version_active();
-
-		/**
-		 * Logger debug
-		 */
-		$this->logger->addDebug('WooCommerce version: ' . $this->wc_version);
-
-		/**
-		 * Set unique id
-		 */
-		$this->id = 'robokassa';
-
-		/**
-		 * What?
-		 */
-		$this->has_fields = false;
-
-		/**
-		 * Load settings
-		 */
-		$this->init_form_fields();
-		$this->init_settings();
-
-		/**
-		 * Gateway enabled?
-		 */
-		if($this->get_option('enabled') !== 'yes')
-		{
-			$this->enabled = false;
-
-			/**
-			 * Logger notice
-			 */
-			$this->logger->addNotice('Gateway is NOT enabled.');
-		}
-
-		/**
-		 * Title for user interface
-		 */
-		$this->title = $this->get_option('title');
-
-		/**
-		 * Admin title
-		 */
-		$this->method_title = __( 'Robokassa', 'wc-robokassa' );
-
-		/**
-		 * Admin method description
-		 */
-		$this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
-
-		/**
-		 * Testing?
-		 */
-		$this->test = $this->get_option('test');
-
-		/**
-		 * Default language for Robokassa interface
-		 */
-		$this->language = $this->get_option('language');
-
-		/**
-		 * Automatic language
-		 */
-		if($this->get_option('language_auto') === 'yes')
-		{
-			/**
-			 * Logger notice
-			 */
-			$this->logger->addNotice('Language auto is enable.');
-
-			$lang = get_locale();
-			switch($lang)
-			{
-				case 'en_EN':
-					$this->language = 'en';
-					break;
-				case 'ru_RU':
-					$this->language = 'ru';
-					break;
-				default:
-					$this->language = 'ru';
-					break;
-			}
-		}
-
-		/**
-		 * Logger debug
-		 */
-		$this->logger->addDebug('Language: ' . $this->language);
-
-		/**
-		 * Set description
-		 */
-		$this->description = $this->get_option('description');
-
-		/**
-		 * Set order button text
-		 */
-		$this->order_button_text = $this->get_option('order_button_text');
-
-		/**
-		 * Ofd
-		 */
-		if($this->get_option('ofd_status') == 'yes')
-		{
-			$this->ofd_status = true;
-
-			/**
-			 * Logger notice
-			 */
-			$this->logger->addDebug('ofd_status = yes');
-		}
-
-		/**
-		 * Ofd sno
-		 */
-		$ofd_sno_code = $this->get_option('ofd_sno');
-		if($ofd_sno_code !== '')
-		{
-			$ofd_sno = 'osn';
-
-			if($ofd_sno_code == '1')
-			{
-				$ofd_sno = 'usn_income';
-			}
-
-			if($ofd_sno_code == '2')
-			{
-				$ofd_sno = 'usn_income_outcome';
-			}
-
-			if($ofd_sno_code == '3')
-			{
-				$ofd_sno = 'envd';
-			}
-
-			if($ofd_sno_code == '4')
-			{
-				$ofd_sno = 'esn';
-			}
-
-			if($ofd_sno_code == '5')
-			{
-				$ofd_sno = 'patent';
-			}
-
-			$this->ofd_sno = $ofd_sno;
-		}
-
-		/**
-		 * Ofd nds
-		 */
-		$ofd_nds_code = $this->get_option('ofd_nds');
-		if($ofd_nds_code !== '')
-		{
-			$ofd_nds = 'none';
-
-			if($ofd_nds_code == '1')
-			{
-				$ofd_nds = 'vat0';
-			}
-
-			if($ofd_nds_code == '2')
-			{
-				$ofd_nds = 'vat10';
-			}
-
-			if($ofd_nds_code == '3')
-			{
-				$ofd_nds = 'vat20';
-			}
-
-			if($ofd_nds_code == '4')
-			{
-				$ofd_nds = 'vat110';
-			}
-
-			if($ofd_nds_code == '5')
-			{
-				$ofd_nds = 'vat120';
-			}
-
-			$this->ofd_nds = $ofd_nds;
-		}
-
-		/**
-		 * Set shop pass 1
-		 */
-		if($this->get_option('shop_pass_1') !== '')
-		{
-			$this->shop_pass_1 = $this->get_option('shop_pass_1');
-		}
-
-		/**
-		 * Set shop pass 2
-		 */
-		if($this->get_option('shop_pass_2') !== '')
-		{
-			$this->shop_pass_2 = $this->get_option('shop_pass_2');
-		}
-
-		/**
-		 * Load shop login
-		 */
-		$this->shop_login = $this->get_option('shop_login');
-
-		/**
-		 * Load sign method
-		 */
-		$this->sign_method = $this->get_option('sign_method');
-
-		/**
-		 * Set shop pass 1 for testing
-		 */
-		if($this->get_option('test_shop_pass_1') !== '')
-		{
-			$this->test_shop_pass_1 = $this->get_option('test_shop_pass_1');
-		}
-
-		/**
-		 * Set shop pass 2 for testing
-		 */
-		if($this->get_option('test_shop_pass_2') !== '')
-		{
-			$this->test_shop_pass_2 = $this->get_option('test_shop_pass_2');
-		}
-
-		/**
-		 * Load sign method for testing
-		 */
-		$this->test_sign_method = $this->get_option('test_sign_method');
-
-		/**
-		 * Set icon
-		 */
-		if($this->get_option('enable_icon') === 'yes')
-		{
-			$this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . '/assets/img/robokassa.png');
-		}
-
-		/**
-		 * Save admin options
-		 */
-		if(current_user_can( 'manage_options' ))
-		{
-			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-
-			/**
-			 * Logger notice
-			 */
-			$this->logger->addDebug('Manage options is allow.');
-		}
-
-		/**
-		 * Receipt page
-		 */
-		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
-
-		/**
-		 * Payment listener/API hook
-		 */
-		add_action('woocommerce_api_wc_' . $this->id, array($this, 'check_ipn'));
-
-		/**
-		 * Gate allow?
-		 */
-		if ($this->is_valid_for_use())
-		{
-			/**
-			 * Logger notice
-			 */
-			$this->logger->addInfo('Is valid for use.');
-		}
-		else
-		{
-			$this->enabled = false;
-
-			/**
-			 * Logger notice
-			 */
-			$this->logger->addInfo('Is NOT valid for use.');
-		}
+		// hook
+		do_action( 'wc_robokassa_loaded' );
 	}
+
+	/**
+	 * Initialization
+	 */
+	public function init()
+    {
+        /**
+         * Load languages
+         */
+        $this->load_plugin_textdomain();
+
+	    /**
+	     * Logger?
+	     */
+	    $wp_dir = wp_upload_dir();
+	    $this->logger_path = array
+	    (
+		    'dir' => $wp_dir['basedir'] . '/wc-robokassa.txt',
+		    'url' => $wp_dir['baseurl'] . '/wc-robokassa.txt'
+	    );
+
+	    $this->logger = new WC_Gatework_Logger($this->logger_path['dir'], $this->get_option('logger'));
+
+	    /**
+	     * Get currency
+	     */
+	    $this->currency = gatework_get_wc_currency();
+
+	    /**
+	     * Logger debug
+	     */
+	    $this->logger->addDebug('Current currency: ' . $this->currency);
+
+	    /**
+	     * Set WooCommerce version
+	     */
+	    $this->wc_version = gatework_wc_get_version_active();
+
+	    /**
+	     * Logger debug
+	     */
+	    $this->logger->addDebug('WooCommerce version: ' . $this->wc_version);
+
+	    /**
+	     * Set unique id
+	     */
+	    $this->id = 'robokassa';
+
+	    /**
+	     * What?
+	     */
+	    $this->has_fields = false;
+
+	    /**
+	     * Load settings
+	     */
+	    $this->init_form_fields();
+	    $this->init_settings();
+
+	    /**
+	     * Gateway enabled?
+	     */
+	    if($this->get_option('enabled') !== 'yes')
+	    {
+		    $this->enabled = false;
+
+		    /**
+		     * Logger notice
+		     */
+		    $this->logger->addNotice('Gateway is NOT enabled.');
+	    }
+
+	    /**
+	     * Title for user interface
+	     */
+	    $this->title = $this->get_option('title');
+
+	    /**
+	     * Admin title
+	     */
+	    $this->method_title = __( 'Robokassa', 'wc-robokassa' );
+
+	    /**
+	     * Admin method description
+	     */
+	    $this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
+
+	    /**
+	     * Testing?
+	     */
+	    $this->test = $this->get_option('test');
+
+	    /**
+	     * Default language for Robokassa interface
+	     */
+	    $this->language = $this->get_option('language');
+
+	    /**
+	     * Automatic language
+	     */
+	    if($this->get_option('language_auto') === 'yes')
+	    {
+		    /**
+		     * Logger notice
+		     */
+		    $this->logger->addNotice('Language auto is enable.');
+
+		    $lang = get_locale();
+		    switch($lang)
+		    {
+			    case 'en_EN':
+				    $this->language = 'en';
+				    break;
+			    case 'ru_RU':
+				    $this->language = 'ru';
+				    break;
+			    default:
+				    $this->language = 'ru';
+				    break;
+		    }
+	    }
+
+	    /**
+	     * Logger debug
+	     */
+	    $this->logger->addDebug('Language: ' . $this->language);
+
+	    /**
+	     * Set description
+	     */
+	    $this->description = $this->get_option('description');
+
+	    /**
+	     * Set order button text
+	     */
+	    $this->order_button_text = $this->get_option('order_button_text');
+
+	    /**
+	     * Ofd
+	     */
+	    if($this->get_option('ofd_status') == 'yes')
+	    {
+		    $this->ofd_status = true;
+
+		    /**
+		     * Logger notice
+		     */
+		    $this->logger->addDebug('ofd_status = yes');
+	    }
+
+	    /**
+	     * Ofd sno
+	     */
+	    $ofd_sno_code = $this->get_option('ofd_sno');
+	    if($ofd_sno_code !== '')
+	    {
+		    $ofd_sno = 'osn';
+
+		    if($ofd_sno_code == '1')
+		    {
+			    $ofd_sno = 'usn_income';
+		    }
+
+		    if($ofd_sno_code == '2')
+		    {
+			    $ofd_sno = 'usn_income_outcome';
+		    }
+
+		    if($ofd_sno_code == '3')
+		    {
+			    $ofd_sno = 'envd';
+		    }
+
+		    if($ofd_sno_code == '4')
+		    {
+			    $ofd_sno = 'esn';
+		    }
+
+		    if($ofd_sno_code == '5')
+		    {
+			    $ofd_sno = 'patent';
+		    }
+
+		    $this->ofd_sno = $ofd_sno;
+	    }
+
+	    /**
+	     * Ofd nds
+	     */
+	    $ofd_nds_code = $this->get_option('ofd_nds');
+	    if($ofd_nds_code !== '')
+	    {
+		    $ofd_nds = 'none';
+
+		    if($ofd_nds_code == '1')
+		    {
+			    $ofd_nds = 'vat0';
+		    }
+
+		    if($ofd_nds_code == '2')
+		    {
+			    $ofd_nds = 'vat10';
+		    }
+
+		    if($ofd_nds_code == '3')
+		    {
+			    $ofd_nds = 'vat20';
+		    }
+
+		    if($ofd_nds_code == '4')
+		    {
+			    $ofd_nds = 'vat110';
+		    }
+
+		    if($ofd_nds_code == '5')
+		    {
+			    $ofd_nds = 'vat120';
+		    }
+
+		    $this->ofd_nds = $ofd_nds;
+	    }
+
+	    /**
+	     * Set shop pass 1
+	     */
+	    if($this->get_option('shop_pass_1') !== '')
+	    {
+		    $this->shop_pass_1 = $this->get_option('shop_pass_1');
+	    }
+
+	    /**
+	     * Set shop pass 2
+	     */
+	    if($this->get_option('shop_pass_2') !== '')
+	    {
+		    $this->shop_pass_2 = $this->get_option('shop_pass_2');
+	    }
+
+	    /**
+	     * Load shop login
+	     */
+	    $this->shop_login = $this->get_option('shop_login');
+
+	    /**
+	     * Load sign method
+	     */
+	    $this->sign_method = $this->get_option('sign_method');
+
+	    /**
+	     * Set shop pass 1 for testing
+	     */
+	    if($this->get_option('test_shop_pass_1') !== '')
+	    {
+		    $this->test_shop_pass_1 = $this->get_option('test_shop_pass_1');
+	    }
+
+	    /**
+	     * Set shop pass 2 for testing
+	     */
+	    if($this->get_option('test_shop_pass_2') !== '')
+	    {
+		    $this->test_shop_pass_2 = $this->get_option('test_shop_pass_2');
+	    }
+
+	    /**
+	     * Load sign method for testing
+	     */
+	    $this->test_sign_method = $this->get_option('test_sign_method');
+
+	    /**
+	     * Set icon
+	     */
+	    if($this->get_option('enable_icon') === 'yes')
+	    {
+		    $this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . '/assets/img/robokassa.png');
+	    }
+
+	    /**
+	     * Save admin options
+	     */
+	    if(current_user_can( 'manage_options' ))
+	    {
+		    add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+
+		    /**
+		     * Logger notice
+		     */
+		    $this->logger->addDebug('Manage options is allow.');
+	    }
+
+	    /**
+	     * Receipt page
+	     */
+	    add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
+
+	    /**
+	     * Payment listener/API hook
+	     */
+	    add_action('woocommerce_api_wc_' . $this->id, array($this, 'check_ipn'));
+
+	    /**
+	     * Gate allow?
+	     */
+	    if ($this->is_valid_for_use())
+	    {
+		    /**
+		     * Logger notice
+		     */
+		    $this->logger->addInfo('Is valid for use.');
+	    }
+	    else
+	    {
+		    $this->enabled = false;
+
+		    /**
+		     * Logger notice
+		     */
+		    $this->logger->addInfo('Is NOT valid for use.');
+	    }
+    }
 
 	/**
 	 * Check if this gateway is enabled and available in the user's country
@@ -497,6 +517,92 @@ class WC_Robokassa extends WC_Payment_Gateway
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Hook into actions and filters
+	 */
+	private function hooks()
+	{
+		/**
+		 * Init
+		 */
+		add_action( 'init', array( $this, 'init' ), 0 );
+
+		/**
+		 * Add payment method
+		 */
+		add_filter('woocommerce_payment_gateways',  array( $this, 'woocommerce_gateway_method_add' ));
+
+		/**
+		 * Admin
+		 */
+		if(is_admin())
+		{
+			add_filter( 'plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array( $this, 'links_left' ) );
+			add_filter( 'plugin_row_meta', array( $this, 'links_right' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * Add the gateway to WooCommerce
+	 *
+	 * @param $methods
+	 *
+	 * @return array
+	 */
+	public function woocommerce_gateway_method_add($methods)
+	{
+		$methods[] = 'WC_Robokassa';
+
+		return $methods;
+	}
+
+	/**
+	 * Setup left links
+	 *
+	 * @param $links
+	 *
+	 * @return array
+	 */
+	public function links_left($links)
+	{
+		return array_merge(array('settings' => '<a href="https://mofsy.ru/about/help">' . __('Donate for author', 'wc-robokassa') . '</a>'), $links);
+	}
+
+	/**
+	 * Setup right links
+	 *
+	 * @param $links
+	 * @param $file
+	 *
+	 * @return array
+	 */
+	public function links_right($links, $file)
+	{
+		if ( $file === WC_ROBOKASSA_PLUGIN_NAME )
+		{
+			$links[] = '<a href="'.admin_url('admin.php?page=wc-settings&tab=checkout&section=wc_robokassa').'">' . __('Settings') . '</a>';
+		}
+
+		return $links;
+	}
+
+	/**
+	 * Include required files.
+	 */
+	public function includes()
+	{
+		// hook
+		do_action('wc_robokassa_includes_start');
+
+		/**
+		 * Core
+		 */
+		//include_once WC_ROBOKASSA_PLUGIN_DIR . '/includes/class-wc-robokassa-api.php';
+
+		// hook
+		do_action('wc_robokassa_includes_end');
 	}
 
 	/**
@@ -1110,6 +1216,19 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 		}
 
 		return $signature;
+	}
+
+	/**
+	 * Load localisation files
+	 */
+	public function load_plugin_textdomain()
+	{
+		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+		$locale = apply_filters( 'plugin_locale', $locale, 'wc-robokassa' );
+
+		unload_textdomain( 'wc-robokassa' );
+		load_textdomain( 'wc-robokassa', WP_LANG_DIR . '/wc-robokassa/wc-robokassa-' . $locale . '.mo' );
+		load_textdomain( 'wc-robokassa', dirname( plugin_basename( __FILE__ ) ) . '/languages/wc-robokassa-' . $locale . '.mo' );
 	}
 
 	/**
