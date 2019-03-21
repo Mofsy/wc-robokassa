@@ -77,5 +77,5 @@ function woocommerce_robokassa_gateway_init()
 	/**
 	 * Run
 	 */
-	new WC_Robokassa();
+	WC_Robokassa::instance();
 }
