@@ -48,6 +48,11 @@ For http://partner.robokassa.ru/?culture=en settings:
 
 == Changelog ==
 
+= 2.0.0.1 =
+* Global refactoring
+* Fix localization files
+* More fix
+
 = 1.1.1.1 =
 * Fix language phrase
 
