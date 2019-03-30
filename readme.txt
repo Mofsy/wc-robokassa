@@ -51,6 +51,7 @@ For http://partner.robokassa.ru/?culture=en settings:
 = 2.0.0.1 =
 * Global refactoring
 * Fix localization files
+* Add licence.txt
 * More fix
 
 = 1.1.1.1 =
