@@ -43,7 +43,7 @@ function woocommerce_robokassa_gateway_init()
 	/**
 	 * Define plugin url
 	 */
-	if ( !defined( 'WC_ROBOKASSA_URL' ) )
+	if (!defined( 'WC_ROBOKASSA_URL' ))
 	{
 		define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
 	}
@@ -51,7 +51,7 @@ function woocommerce_robokassa_gateway_init()
 	/**
 	 * Plugin Dir
 	 */
-	if ( !defined( 'WC_ROBOKASSA_PLUGIN_DIR' ) )
+	if (!defined( 'WC_ROBOKASSA_PLUGIN_DIR' ))
 	{
 		define( 'WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 	}
@@ -59,7 +59,7 @@ function woocommerce_robokassa_gateway_init()
 	/**
 	 * Plugin Name
 	 */
-	if ( !defined( 'WC_ROBOKASSA_PLUGIN_NAME' ) )
+	if (!defined( 'WC_ROBOKASSA_PLUGIN_NAME' ))
 	{
 		define( 'WC_ROBOKASSA_PLUGIN_NAME', plugin_basename( __FILE__ ) );
 	}

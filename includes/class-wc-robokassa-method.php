@@ -671,14 +671,14 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 		/**
 		 * Check allow currency
 		 */
-		if (!in_array(WC_Robokassa::instance()->get_currency(), $this->currency_all, false))
+		if (!in_array(WC_Robokassa::instance()->get_wc_currency(), $this->currency_all, false))
 		{
 			$return = false;
 
 			/**
 			 * Logger notice
 			 */
-			WC_Robokassa::instance()->get_logger()->addInfo('Currency not support: ' . WC_Robokassa::instance()->get_currency());
+			WC_Robokassa::instance()->get_logger()->addInfo('Currency not support: ' . WC_Robokassa::instance()->get_wc_currency());
 		}
 
 		/**
@@ -810,20 +810,20 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 		/**
 		 * Rewrite currency from order
 		 */
-		WC_Robokassa::instance()->set_currency($order->get_currency());
+		WC_Robokassa::instance()->set_wc_currency($order->get_currency());
 
 		/**
 		 * Set currency to robokassa
 		 */
-		if(WC_Robokassa::instance()->get_currency() === 'USD')
+		if( WC_Robokassa::instance()->get_wc_currency() === 'USD')
 		{
 			$args['OutSumCurrency'] = 'USD';
 		}
-		elseif(WC_Robokassa::instance()->get_currency() === 'EUR')
+		elseif( WC_Robokassa::instance()->get_wc_currency() === 'EUR')
 		{
 			$args['OutSumCurrency'] = 'EUR';
 		}
-		elseif(WC_Robokassa::instance()->get_currency() === 'KZT')
+		elseif( WC_Robokassa::instance()->get_wc_currency() === 'KZT')
 		{
 			$args['OutSumCurrency'] = 'KZT';
 		}

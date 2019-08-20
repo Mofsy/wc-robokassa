@@ -8,7 +8,7 @@
   +----------------------------------------------------------+
 */
 
-class WC_Robokassa extends WC_Payment_Gateway
+class WC_Robokassa
 {
 	/**
 	 * The single instance of the class.
@@ -36,20 +36,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 	 *
 	 * @var string
 	 */
-	public $currency;
-
-	/**
-	 * Logger path
-	 *
-	 * array
-	 * (
-	 *  'dir' => 'C:\path\to\wordpress\wp-content\uploads\logname.log',
-	 *  'url' => 'http://example.com/wp-content/uploads/logname.log'
-	 * )
-	 *
-	 * @var array
-	 */
-	public $logger_path;
+	public $wc_currency;
 
 	/**
 	 * WC_Robokassa constructor
@@ -105,20 +92,40 @@ class WC_Robokassa extends WC_Payment_Gateway
      *
 	 * @return string
 	 */
-	public function get_currency()
+	public function get_wc_currency()
     {
-        return $this->currency;
+        return $this->wc_currency;
     }
 
 	/**
      * Set current currency
      *
-	 * @param $currency
+	 * @param $wc_currency
 	 */
-    public function set_currency($currency)
+    public function set_wc_currency($wc_currency)
     {
-        $this->currency = $currency;
+        $this->wc_currency = $wc_currency;
     }
+
+	/**
+     * Get current WooCommerce version installed
+     *
+	 * @return mixed
+	 */
+	public function get_wc_version()
+    {
+		return $this->wc_version;
+	}
+
+	/**
+     * Set current WooCommerce version installed
+     *
+	 * @param mixed $wc_version
+	 */
+	public function set_wc_version($wc_version)
+    {
+		$this->wc_version = $wc_version;
+	}
 
 	/**
 	 * Hook into actions and filters
@@ -133,14 +140,21 @@ class WC_Robokassa extends WC_Payment_Gateway
 		/**
 		 * Add payment method
 		 */
-		add_filter('woocommerce_payment_gateways',  array( $this, 'woocommerce_gateway_method_add' ));
+		add_filter('woocommerce_payment_gateways',  array( $this, 'wc_gateway_method_add' ));
 
 		/**
 		 * Admin
 		 */
 		if(is_admin())
 		{
+			/**
+			 * Admin styles
+			 */
 			add_action('admin_enqueue_scripts', array( $this, 'admin_style' ));
+
+			/**
+			 * Copyright & links
+			 */
 			add_filter( 'plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array( $this, 'links_left' ) );
 			add_filter( 'plugin_row_meta', array( $this, 'links_right' ), 10, 2 );
 		}
@@ -159,33 +173,55 @@ class WC_Robokassa extends WC_Payment_Gateway
 		/**
 		 * Load languages
 		 */
-		$this->load_plugin_textdomain();
+		$this->load_plugin_text_domain();
 
 		/**
-		 * Set WooCommerce version
+		 * Load WooCommerce version
 		 */
-		$this->wc_version = gatework_wc_get_version_active();
+		$this->load_wc_version();
 
 		/**
-		 * Logger debug
+		 * Load WooCommerce currency
 		 */
-		$this->get_logger()->addDebug('WooCommerce version: ' . $this->wc_version);
-
-		/**
-		 * Get currency
-		 */
-		$this->currency = gatework_get_wc_currency();
-
-		/**
-		 * Logger debug
-		 */
-		$this->get_logger()->addDebug('Current currency: ' . $this->currency);
+		$this->load_currency();
 	}
+
+	/**
+	 * Load WooCommerce current currency
+	 */
+	public function load_currency()
+    {
+	    /**
+	     * Get currency
+	     */
+	    $this->set_wc_currency(gatework_get_wc_currency());
+
+	    /**
+	     * Logger debug
+	     */
+	    $this->get_logger()->addDebug('Current WooCommerce currency: ' . $this->get_wc_currency());
+    }
+
+	/**
+	 * Load current WC version
+	 */
+	public function load_wc_version()
+    {
+	    /**
+	     * Set WooCommerce version
+	     */
+	    $this->set_wc_version(gatework_wc_get_version_active());
+
+	    /**
+	     * Logger debug
+	     */
+	    $this->get_logger()->addDebug('Current WooCommerce version: ' . $this->get_wc_version());
+    }
 
 	/**
 	 * Load localisation files
 	 */
-	public function load_plugin_textdomain()
+	public function load_plugin_text_domain()
 	{
 		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
 		$locale = apply_filters( 'plugin_locale', $locale, 'wc-robokassa' );
@@ -202,7 +238,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 	 *
 	 * @return array
 	 */
-	public function woocommerce_gateway_method_add($methods)
+	public function wc_gateway_method_add($methods)
 	{
 		/**
 		 * Default method
@@ -227,7 +263,7 @@ class WC_Robokassa extends WC_Payment_Gateway
 				$level = 50;
 			}
 
-			$this->set_logger(new WC_Gatework_Logger( $wp_dir['basedir'] . '/wc1c.txt', $level));
+			$this->set_logger(new WC_Gatework_Logger( $wp_dir['basedir'] . '/wc-robokassa.txt', $level));
 		}
 	}
 
