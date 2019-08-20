@@ -189,9 +189,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				case 'en_EN':
 					$this->language = 'en';
 					break;
-				case 'ru_RU':
-					$this->language = 'ru';
-					break;
 				default:
 					$this->language = 'ru';
 					break;
