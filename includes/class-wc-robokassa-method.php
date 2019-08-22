@@ -57,7 +57,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @var string
 	 */
-	public $form_url = 'https://merchant.roboxchange.com/Index.aspx';
+	public $form_url = 'https://auth.robokassa.ru/Merchant/Index.aspx';
 
 	/**
 	 * User language
