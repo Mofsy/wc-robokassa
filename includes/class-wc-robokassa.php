@@ -324,7 +324,7 @@ class WC_Robokassa
 	 */
 	public function admin_style()
     {
-		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_PLUGIN_DIR . '/assets/css/main.css');
+		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_PLUGIN_DIR . 'assets/css/main.css');
 	}
 
 	/**
