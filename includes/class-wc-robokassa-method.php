@@ -439,6 +439,83 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'label' => __('Online', 'wc-robokassa'),
 				'default' => 'off'
 			),
+			'shop_login' => array
+			(
+				'title' => __('Shop login', 'wc-robokassa'),
+				'type' => 'text',
+				'description' => __( 'Unique identification for shop.', 'wc-robokassa' ),
+				'default' => ''
+			),
+			'real' => array
+			(
+				'title' => __( 'Settings for real payments', 'wc-robokassa' ),
+				'type' => 'title',
+				'description' => '',
+			),
+			'shop_pass_1' => array
+			(
+				'title' => __('Shop pass 1', 'wc-robokassa'),
+				'type' => 'text',
+				'description' => __( 'Please write Shop pass 1.', 'wc-robokassa' ),
+				'default' => ''
+			),
+			'shop_pass_2' => array
+			(
+				'title' => __('Shop pass 2', 'wc-robokassa'),
+				'type' => 'text',
+				'description' => __( 'Please write Shop pass 2.', 'wc-robokassa' ),
+				'default' => ''
+			),
+			'sign_method' => array
+			(
+				'title' => __( 'Signature method', 'wc-robokassa' ),
+				'type' => 'select',
+				'options' => array
+				(
+					'md5' => 'md5',
+					'ripemd160' => 'RIPEMD160',
+					'sha1' => 'SHA1',
+					'sha256' => 'SHA256',
+					'sha384' => 'SHA384',
+					'sha512' => 'SHA512'
+				),
+				'default' => 'sha256'
+			),
+			'test_payments' => array
+			(
+				'title'       => __( 'Settings for test payments', 'wc-robokassa' ),
+				'type'        => 'title',
+				'description' => '',
+			),
+			'test_shop_pass_1' => array
+			(
+				'title' => __('Shop pass 1', 'wc-robokassa'),
+				'type' => 'text',
+				'description' => __( 'Please write Shop pass 1 for testing payments.', 'wc-robokassa' ),
+				'default' => ''
+			),
+			'test_shop_pass_2' => array
+			(
+				'title' => __('Shop pass 2', 'wc-robokassa'),
+				'type' => 'text',
+				'description' => __( 'Please write Shop pass 2 for testing payments.', 'wc-robokassa' ),
+				'default' => ''
+			),
+			'test_sign_method' => array
+			(
+				'title' => __( 'Signature method', 'wc-robokassa' ),
+				'type' => 'select',
+				'options' => array
+				(
+					'md5' => 'md5',
+					'ripemd160' => 'RIPEMD160',
+					'sha1' => 'SHA1',
+					'sha256' => 'SHA256',
+					'sha384' => 'SHA384',
+					'sha512' => 'SHA512'
+				),
+				'default' => 'sha256'
+			),
 			'interface' => array(
 				'title'       => __( 'Interface', 'wc-robokassa' ),
 				'type'        => 'title',
@@ -533,83 +610,6 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 					'550' => 'ALERT',
 					'600' => 'EMERGENCY'
 				)
-			),
-			'real' => array
-			(
-				'title' => __( 'Settings for real payments', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => '',
-			),
-			'sign_method' => array
-			(
-				'title' => __( 'Signature method', 'wc-robokassa' ),
-				'type' => 'select',
-				'options' => array
-				(
-					'md5' => 'md5',
-					'ripemd160' => 'RIPEMD160',
-					'sha1' => 'SHA1',
-					'sha256' => 'SHA256',
-					'sha384' => 'SHA384',
-					'sha512' => 'SHA512'
-				),
-				'default' => 'sha256'
-			),
-			'shop_login' => array
-			(
-				'title' => __('Shop login', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Unique identification for shop.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'shop_pass_1' => array
-			(
-				'title' => __('Shop pass 1', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 1.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'shop_pass_2' => array
-			(
-				'title' => __('Shop pass 2', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 2.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'test_payments' => array
-			(
-				'title'       => __( 'Settings for test payments', 'wc-robokassa' ),
-				'type'        => 'title',
-				'description' => '',
-			),
-			'test_sign_method' => array
-			(
-				'title' => __( 'Signature method', 'wc-robokassa' ),
-				'type' => 'select',
-				'options' => array
-				(
-					'md5' => 'md5',
-					'ripemd160' => 'RIPEMD160',
-					'sha1' => 'SHA1',
-					'sha256' => 'SHA256',
-					'sha384' => 'SHA384',
-					'sha512' => 'SHA512'
-				),
-				'default' => 'sha256'
-			),
-			'test_shop_pass_1' => array
-			(
-				'title' => __('Shop pass 1', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 1 for testing payments.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'test_shop_pass_2' => array
-			(
-				'title' => __('Shop pass 2', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 2 for testing payments.', 'wc-robokassa' ),
-				'default' => ''
 			),
 			'ofd' => array
 			(
