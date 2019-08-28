@@ -699,13 +699,31 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 	 */
 	public function admin_options()
 	{
+		// hook
+		do_action('wc_robokassa_admin_options_before_show');
+
 		echo '<h2>' . esc_html( $this->get_method_title() );
 		wc_back_link( __( 'Return to payments', 'woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 
+		// hook
+		do_action('wc_robokassa_admin_options_method_description_before_show');
+
 		echo wp_kses_post( wpautop( $this->get_method_description() ) );
 
-		echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table>'; // WPCS: XSS ok.
+		// hook
+		do_action('wc_robokassa_admin_options_method_description_after_show');
+
+		// hook
+		do_action('wc_robokassa_admin_options_form_before_show');
+
+		echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table>';
+
+		// hook
+		do_action('wc_robokassa_admin_options_form_after_show');
+
+		// hook
+		do_action('wc_robokassa_admin_options_after_show');
 	}
 
 	/**
@@ -760,8 +778,14 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 	 */
 	public function receipt_page($order)
 	{
+		// hook
+		do_action('wc_robokassa_receipt_page_before_show');
+
 		echo '<p>'.__('Thank you for your order, please press the button below to pay.', 'wc-robokassa').'</p>';
 		echo $this->generate_form($order);
+
+		// hook
+		do_action('wc_robokassa_receipt_page_after_show');
 	}
 
 	/**
