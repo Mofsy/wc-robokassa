@@ -322,7 +322,10 @@ class WC_Robokassa
 	 */
 	public function admin_style()
     {
-		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
+        if(isset($_GET['section']) && $_GET['section'] == 'robokassa')
+        {
+            wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
+        }
 	}
 
 	/**
