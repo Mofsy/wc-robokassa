@@ -1,9 +1,7 @@
 <?php
 /*
   +----------------------------------------------------------+
-  | Woocommerce - Robokassa Payment Gateway                  |
-  +----------------------------------------------------------+
-  | Author: Oleg Budrin (Mofsy) <support@mofsy.ru>           |
+  | Author: Mofsy <support@mofsy.ru>                         |
   | Author website: https://mofsy.ru                         |
   +----------------------------------------------------------+
 */
