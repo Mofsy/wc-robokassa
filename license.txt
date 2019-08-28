@@ -1,4 +1,4 @@
-WooCommerce - Robokassa Payment Gateway
+Robokassa - Payment gateway for WooCommerce
 
 Copyright © 2015-2019 by Mofsy (Oleg Budrin - mofsy.ru)
 
