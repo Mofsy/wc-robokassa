@@ -23,6 +23,13 @@ class WC_Robokassa
 	public $logger;
 
 	/**
+     * Api Robokassa
+     *
+	 * @var Wc_Robokassa_Api
+	 */
+	public $robokassa_api;
+
+	/**
 	 * Current WooCommerce version
 	 *
 	 * @var
@@ -182,6 +189,44 @@ class WC_Robokassa
 		 * Load WooCommerce currency
 		 */
 		$this->load_currency();
+
+		/**
+         * Load Robokassa Api
+         */
+		$this->load_robokassa_api();
+	}
+
+	/**
+	 * Load robokassa api
+	 */
+	public function load_robokassa_api()
+    {
+	    $robokassa_api_class_name = apply_filters('wc_robokassa_api_class_name_load', 'Wc_Robokassa_Api');
+
+	    if(!class_exists($robokassa_api_class_name))
+        {
+	        $robokassa_api_class_name = 'Wc_Robokassa_Api';
+        }
+
+        $robokassa_api = new $robokassa_api_class_name();
+
+        $this->set_robokassa_api($robokassa_api);
+    }
+
+	/**
+	 * @return Wc_Robokassa_Api
+	 */
+	public function get_robokassa_api()
+    {
+		return $this->robokassa_api;
+	}
+
+	/**
+	 * @param Wc_Robokassa_Api $robokassa_api
+	 */
+	public function set_robokassa_api($robokassa_api )
+    {
+		$this->robokassa_api = $robokassa_api;
 	}
 
 	/**
