@@ -369,7 +369,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Payment listener/API hook
 		 */
-		add_action('woocommerce_api_wc_' . $this->id, array($this, 'check_ipn'));
+		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications' ));
 
 		/**
 		 * Gate allow?
@@ -1113,7 +1113,7 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 	/**
 	 * Check instant payment notification
 	 */
-	public function check_ipn()
+	public function input_payment_notifications()
 	{
 		/**
 		 * Insert $_REQUEST into debug mode
