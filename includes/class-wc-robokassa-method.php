@@ -70,13 +70,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $test = 'no';
 
 	/**
-	 * @var string
-	 *
-	 * deprecated
-	 */
-	public $test_form_url = 'http://test.robokassa.ru/Index.aspx';
-
-	/**
 	 * Test shop pass 1
 	 *
 	 * @var string
