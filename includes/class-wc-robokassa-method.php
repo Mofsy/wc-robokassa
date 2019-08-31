@@ -118,21 +118,59 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function __construct()
 	{
 		/**
-		 * Set unique id
-		 */
-		$this->id = 'robokassa';
-
-		/**
 		 * What?
 		 */
 		$this->has_fields = false;
+
+		/**
+		 * Admin title
+		 */
+		$this->method_title = __( 'Robokassa', 'wc-robokassa' );
+
+		/**
+		 * Admin method description
+		 */
+		$this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
 
 		/**
 		 * Load settings
 		 */
 		$this->init_form_fields();
 		$this->init_settings();
+		$this->init_options();
 
+		/**
+		 * Save admin options
+		 */
+		if(current_user_can( 'manage_options' ))
+		{
+			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		}
+
+		/**
+		 * Receipt page
+		 */
+		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
+
+		/**
+		 * Payment listener/API hook
+		 */
+		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications' ));
+
+		/**
+		 * Gateway allowed?
+		 */
+		if ($this->is_valid_for_use() == false)
+		{
+			$this->enabled = false;
+		}
+	}
+
+	/**
+	 * Init gateway options
+	 */
+	private function init_options()
+	{
 		/**
 		 * Gateway not enabled?
 		 */
@@ -152,16 +190,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->title = $this->get_option('title');
 
 		/**
-		 * Admin title
-		 */
-		$this->method_title = __( 'Robokassa', 'wc-robokassa' );
-
-		/**
-		 * Admin method description
-		 */
-		$this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
-
-		/**
 		 * Testing?
 		 */
 		$this->test = $this->get_option('test');
@@ -176,11 +204,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('language_auto') === 'yes')
 		{
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addNotice('Language auto is enable.');
-
 			$lang = get_locale();
 			switch($lang)
 			{
@@ -192,11 +215,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					break;
 			}
 		}
-
-		/**
-		 * Logger debug
-		 */
-		WC_Robokassa::instance()->get_logger()->addDebug('Language: ' . $this->language);
 
 		/**
 		 * Set description
@@ -214,11 +232,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('ofd_status') == 'yes')
 		{
 			$this->ofd_status = true;
-
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addDebug('ofd_status = yes');
 		}
 
 		/**
@@ -346,49 +359,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('enable_icon') === 'yes')
 		{
 			$this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . '/assets/img/robokassa.png');
-		}
-
-		/**
-		 * Save admin options
-		 */
-		if(current_user_can( 'manage_options' ))
-		{
-			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addDebug('Manage options is allow.');
-		}
-
-		/**
-		 * Receipt page
-		 */
-		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
-
-		/**
-		 * Payment listener/API hook
-		 */
-		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications' ));
-
-		/**
-		 * Gate allow?
-		 */
-		if ($this->is_valid_for_use())
-		{
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addInfo('Is valid for use.');
-		}
-		else
-		{
-			$this->enabled = false;
-
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addInfo('Is NOT valid for use.');
 		}
 	}
 
