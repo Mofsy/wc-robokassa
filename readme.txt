@@ -43,6 +43,7 @@ So please contribute your language to the plugin to make it even more useful. Fo
 * Plugin rename
 * Global refactoring
 * Fix localization files
+* Add support last WordPress & WooCommerce
 * Add licence.txt
 * More fix
 
