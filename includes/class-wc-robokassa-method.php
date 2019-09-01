@@ -398,6 +398,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'title' => __('Online/Offline gateway', 'wc-robokassa'),
 				'type' => 'checkbox',
 				'label' => __('Online', 'wc-robokassa'),
+				'description' => __( 'If the checkbox is not checked, the payment gateway will not be available for selection on the site.', 'wc-robokassa' ),
 				'default' => 'off'
 			),
 			'shop_login' => array
@@ -489,50 +490,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				),
 				'default' => 'sha256'
 			),
-			'ofd' => array
-			(
-				'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => '',
-			),
-			'ofd_status' => array
-			(
-				'title' => __('Передача корзины товаров', 'woocommerce'),
-				'type' => 'checkbox',
-				'label' => __('Включена', 'woocommerce'),
-				'description' => __('При выборе опции, будет сформирован и отправлен в налоговую и клиенту чек. При использовании необходимо настроить НДС продаваемых товаров. НДС рассчитывается согласно законодательству РФ, возможны расхождения в размере НДС с суммой рассчитанной магазином.', 'woocommerce'),
-				'default' => 'off'
-			),
-			'ofd_sno' => array
-			(
-				'title' => __('Система налогообложения', 'woocommerce'),
-				'type' => 'select',
-				'default' => '0',
-				'options' => array
-				(
-					'0' => __('Общая', 'woocommerce'),
-					'1' => __('Упрощённая, доход', 'woocommerce'),
-					'2' => __('Упрощённая, доход минус расход', 'woocommerce'),
-					'3' => __('Eдиный налог на вменённый доход', 'woocommerce'),
-					'4' => __('Eдиный сельскохозяйственный налог', 'woocommerce'),
-					'5' => __('Патентная система налогообложения', 'woocommerce'),
-				),
-			),
-			'ofd_nds' => array
-			(
-				'title' => __('Ставка НДС по умолчанию', 'woocommerce'),
-				'type' => 'select',
-				'default' => '0',
-				'options' => array
-				(
-					'0' => __('Без НДС', 'woocommerce'),
-					'1' => __('НДС по ставке 0%', 'woocommerce'),
-					'2' => __('НДС чека по ставке 10%', 'woocommerce'),
-					'3' => __('НДС чека по ставке 20%', 'woocommerce'),
-					'4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
-					'5' => __('НДС чека по расчетной ставке 20/120', 'woocommerce'),
-				),
-			),
 			'interface' => array(
 				'title'       => __( 'Interface', 'wc-robokassa' ),
 				'type'        => 'title',
@@ -589,6 +546,50 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'type' => 'textarea',
 				'description' => __( 'Description of the method of payment that the customer will see on our website.', 'wc-robokassa' ),
 				'default' => __( 'Payment by Robokassa.', 'wc-robokassa' )
+			),
+			'ofd' => array
+			(
+				'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
+				'type' => 'title',
+				'description' => '',
+			),
+			'ofd_status' => array
+			(
+				'title' => __('Передача корзины товаров', 'woocommerce'),
+				'type' => 'checkbox',
+				'label' => __('Включена', 'woocommerce'),
+				'description' => __('При выборе опции, будет сформирован и отправлен в налоговую и клиенту чек. При использовании необходимо настроить НДС продаваемых товаров. НДС рассчитывается согласно законодательству РФ, возможны расхождения в размере НДС с суммой рассчитанной магазином.', 'woocommerce'),
+				'default' => 'off'
+			),
+			'ofd_sno' => array
+			(
+				'title' => __('Система налогообложения', 'woocommerce'),
+				'type' => 'select',
+				'default' => '0',
+				'options' => array
+				(
+					'0' => __('Общая', 'woocommerce'),
+					'1' => __('Упрощённая, доход', 'woocommerce'),
+					'2' => __('Упрощённая, доход минус расход', 'woocommerce'),
+					'3' => __('Eдиный налог на вменённый доход', 'woocommerce'),
+					'4' => __('Eдиный сельскохозяйственный налог', 'woocommerce'),
+					'5' => __('Патентная система налогообложения', 'woocommerce'),
+				),
+			),
+			'ofd_nds' => array
+			(
+				'title' => __('Ставка НДС по умолчанию', 'woocommerce'),
+				'type' => 'select',
+				'default' => '0',
+				'options' => array
+				(
+					'0' => __('Без НДС', 'woocommerce'),
+					'1' => __('НДС по ставке 0%', 'woocommerce'),
+					'2' => __('НДС чека по ставке 10%', 'woocommerce'),
+					'3' => __('НДС чека по ставке 20%', 'woocommerce'),
+					'4' => __('НДС чека по расчетной ставке 10/110', 'woocommerce'),
+					'5' => __('НДС чека по расчетной ставке 20/120', 'woocommerce'),
+				),
 			),
 			'technical' => array
 			(
