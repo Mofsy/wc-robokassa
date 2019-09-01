@@ -409,28 +409,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			),
 			'shop_login' => array
 			(
-				'title' => __('Shop login', 'wc-robokassa'),
+				'title' => __('Shop identifier', 'wc-robokassa'),
 				'type' => 'text',
-				'description' => __( 'Unique identification for shop.', 'wc-robokassa' ),
+				'description' => __( 'Unique identification for shop from Robokassa.', 'wc-robokassa' ),
 				'default' => ''
-			),
-			'test' => array
-			(
-				'title' => __( 'Test mode', 'wc-robokassa' ),
-				'type'        => 'select',
-				'description'	=>  __( 'Activate testing mode for admins.', 'wc-robokassa' ),
-				'default'	=> 'yes',
-				'options'     => array
-				(
-					'no' => __( 'Off', 'wc-robokassa' ),
-					'yes' => __( 'On', 'wc-robokassa' ),
-				)
-			),
-			'real' => array
-			(
-				'title' => __( 'Settings for real payments', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => '',
 			),
 			'shop_pass_1' => array
 			(
@@ -448,7 +430,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			),
 			'sign_method' => array
 			(
-				'title' => __( 'Signature method', 'wc-robokassa' ),
+				'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
 				'type' => 'select',
 				'options' => array
 				(
@@ -467,6 +449,18 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'type'        => 'title',
 				'description' => '',
 			),
+			'test' => array
+			(
+				'title' => __( 'Test mode', 'wc-robokassa' ),
+				'type' => 'select',
+				'description'	=>  __( 'Activate testing mode for admins.', 'wc-robokassa' ),
+				'default'	=> 'yes',
+				'options'     => array
+				(
+					'no' => __( 'Off', 'wc-robokassa' ),
+					'yes' => __( 'On', 'wc-robokassa' ),
+				)
+			),
 			'test_shop_pass_1' => array
 			(
 				'title' => __('Shop pass 1', 'wc-robokassa'),
@@ -483,7 +477,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			),
 			'test_sign_method' => array
 			(
-				'title' => __( 'Signature method', 'wc-robokassa' ),
+				'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
 				'type' => 'select',
 				'options' => array
 				(
