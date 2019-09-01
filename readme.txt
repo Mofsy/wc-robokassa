@@ -37,15 +37,6 @@ So please contribute your language to the plugin to make it even more useful. Fo
 2. Activation plugin
 3. Setting
 
-For http://partner.robokassa.ru/?culture=en settings:
-<ul style="list-style:none;">
-<li>Result URL: http://your_domain/?wc-api=wc_robokassa&action=result</li>
-<li>Success URL: http://your_domain/?wc-api=wc_robokassa&action=success</li>
-<li>Fail URL: http://your_domain/?wc-api=wc_robokassa&action=fail</li>
-<li>Request method for all: POST</li>
-<li>Control sign forming method: sha256</li>
-</ul>
-
 == Changelog ==
 
 = 2.0.0.1 =
