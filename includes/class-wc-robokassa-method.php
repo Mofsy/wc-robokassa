@@ -126,6 +126,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
 
 		/**
+		 * Add setting fields
+		 */
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_ofd'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'));
+
+		/**
 		 * Load settings
 		 */
 		$this->init_form_fields();
@@ -391,235 +400,324 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_form_fields()
 	{
-		$this->form_fields = array
+		$this->form_fields = apply_filters('wc_robokassa_init_form_fields', array());
+	}
+
+	/**
+	 * Add main settings
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_main($fields)
+	{
+		$fields['main'] = array
 		(
-			'main' => array
+			'title' => __( 'Main settings', 'wc-robokassa' ),
+			'type' => 'title',
+			'description' => 'Work is impossible without these settings. Carefully specify the correct data.',
+		);
+
+		$fields['enabled'] = array
+		(
+			'title' => __('Online / Offline gateway', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Online', 'wc-robokassa'),
+			'description' => __( 'If the checkbox is not checked, the payment gateway will not be available for selection on the site.', 'wc-robokassa' ),
+			'default' => 'off'
+		);
+
+		$fields['shop_login'] = array
+		(
+			'title' => __('Shop identifier', 'wc-robokassa'),
+			'type' => 'text',
+			'description' => __( 'Unique identification for shop from Robokassa.', 'wc-robokassa' ),
+			'default' => ''
+		);
+
+		$fields['sign_method'] = array
+		(
+			'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
+			'description' => __( 'The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
+			'type' => 'select',
+			'options' => array
 			(
-				'title' => __( 'Main settings', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => 'Work is impossible without these settings. Carefully specify the correct data.',
+				'md5' => 'md5',
+				'ripemd160' => 'RIPEMD160',
+				'sha1' => 'SHA1',
+				'sha256' => 'SHA256',
+				'sha384' => 'SHA384',
+				'sha512' => 'SHA512'
 			),
-			'enabled' => array
+			'default' => 'sha256'
+		);
+
+		$fields['shop_pass_1'] = array
+		(
+			'title' => __('Password #1', 'wc-robokassa'),
+			'type' => 'text',
+			'description' => __( 'Please write Shop pass 1. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
+			'default' => ''
+		);
+
+		$fields['shop_pass_2'] = array
+		(
+			'title' => __('Password #2', 'wc-robokassa'),
+			'type' => 'text',
+			'description' => __( 'Please write Shop pass 2. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
+			'default' => ''
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Add settings for test payments
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_test_payments($fields)
+	{
+		$fields['test_payments'] = array
+		(
+			'title' => __( 'Parameters of the test fees', 'wc-robokassa' ),
+			'type' => 'title',
+			'description' => 'Set up test payments. Passwords and counting method signature for test payments differ.',
+		);
+
+		$fields['test'] = array
+		(
+			'title' => __( 'Test mode', 'wc-robokassa' ),
+			'type' => 'select',
+			'description' => __( 'Activate testing mode for admins.', 'wc-robokassa' ),
+			'default' => 'yes',
+			'options' => array
 			(
-				'title' => __('Online / Offline gateway', 'wc-robokassa'),
-				'type' => 'checkbox',
-				'label' => __('Online', 'wc-robokassa'),
-				'description' => __( 'If the checkbox is not checked, the payment gateway will not be available for selection on the site.', 'wc-robokassa' ),
-				'default' => 'off'
-			),
-			'shop_login' => array
-			(
-				'title' => __('Shop identifier', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Unique identification for shop from Robokassa.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'sign_method' => array
-			(
-				'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
-				'description' => __( 'The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-				'type' => 'select',
-				'options' => array
-				(
-					'md5' => 'md5',
-					'ripemd160' => 'RIPEMD160',
-					'sha1' => 'SHA1',
-					'sha256' => 'SHA256',
-					'sha384' => 'SHA384',
-					'sha512' => 'SHA512'
-				),
-				'default' => 'sha256'
-			),
-			'shop_pass_1' => array
-			(
-				'title' => __('Password #1', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 1. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'shop_pass_2' => array
-			(
-				'title' => __('Password #2', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 2. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'test_payments' => array
-			(
-				'title' => __( 'Parameters of the test fees', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => 'Set up test payments. Passwords and counting method signature for test payments differ.',
-			),
-			'test' => array
-			(
-				'title' => __( 'Test mode', 'wc-robokassa' ),
-				'type' => 'select',
-				'description' => __( 'Activate testing mode for admins.', 'wc-robokassa' ),
-				'default' => 'yes',
-				'options' => array
-				(
-					'no' => __( 'Off', 'wc-robokassa' ),
-					'yes' => __( 'On', 'wc-robokassa' ),
-				)
-			),
-			'test_sign_method' => array
-			(
-				'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
-				'description' => __( 'The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-				'type' => 'select',
-				'options' => array
-				(
-					'md5' => 'md5',
-					'ripemd160' => 'RIPEMD160',
-					'sha1' => 'SHA1',
-					'sha256' => 'SHA256',
-					'sha384' => 'SHA384',
-					'sha512' => 'SHA512'
-				),
-				'default' => 'sha256'
-			),
-			'test_shop_pass_1' => array
-			(
-				'title' => __('Password #1', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 1 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'test_shop_pass_2' => array
-			(
-				'title' => __('Password #2', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'Please write Shop pass 2 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-				'default' => ''
-			),
-			'interface' => array(
-				'title' => __( 'Interface', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => 'Customize the appearance. Can leave it at that.',
-			),
-			'enable_icon' => array
-			(
-				'title' => __('Show gateway icon?', 'wc-robokassa'),
-				'type' => 'checkbox',
-				'label' => __('Show', 'wc-robokassa'),
-				'default' => 'yes'
-			),
-			'language' => array
-			(
-				'title' => __( 'Language interface', 'wc-robokassa' ),
-				'type' => 'select',
-				'options' => array
-				(
-					'ru' => __('Russian', 'wc-robokassa'),
-					'en' => __('English', 'wc-robokassa')
-				),
-				'description' => __( 'What language interface displayed for the customer on Robokassa?', 'wc-robokassa' ),
-				'default' => 'ru'
-			),
-			'language_auto' => array
-			(
-				'title' => __( 'Language based on the locale?', 'wc-robokassa' ),
-				'type' => 'select',
-				'options' => array
-				(
-					'yes' => __('Yes', 'wc-robokassa'),
-					'no' => __('No', 'wc-robokassa')
-				),
-				'description' => __( 'Trying to get the language based on the locale?', 'wc-robokassa' ),
-				'default' => 'ru'
-			),
-			'title' => array
-			(
-				'title' => __('Title', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'This is the name that the user sees during the payment.', 'wc-robokassa' ),
-				'default' => __('Robokassa', 'wc-robokassa')
-			),
-			'order_button_text' => array
-			(
-				'title' => __('Order button text', 'wc-robokassa'),
-				'type' => 'text',
-				'description' => __( 'This is the button text that the user sees during the payment.', 'wc-robokassa' ),
-				'default' => __('Goto pay', 'wc-robokassa')
-			),
-			'description' => array
-			(
-				'title' => __( 'Description', 'wc-robokassa' ),
-				'type' => 'textarea',
-				'description' => __( 'Description of the method of payment that the customer will see on our website.', 'wc-robokassa' ),
-				'default' => __( 'Payment via Robokassa.', 'wc-robokassa' )
-			),
-			'ofd' => array
-			(
-				'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => 'These settings are required only for legal entities in the absence of its cash machine.',
-			),
-			'ofd_status' => array
-			(
-				'title' => __('The transfer of goods', 'woocommerce'),
-				'type' => 'checkbox',
-				'label' => __('Enable', 'woocommerce'),
-				'description' => __('When you select the option, a check will be generated and sent to the tax and customer. When used, you must set up the VAT of the items sold. VAT is calculated according to the legislation of the Russian Federation. There may be differences in the amount of VAT with the amount calculated by the store.', 'woocommerce'),
-				'default' => 'off'
-			),
-			'ofd_sno' => array
-			(
-				'title' => __('Taxation system', 'woocommerce'),
-				'type' => 'select',
-				'default' => '0',
-				'options' => array
-				(
-					'0' => __('General', 'woocommerce'),
-					'1' => __('Simplified, income', 'woocommerce'),
-					'2' => __('Simplified, income minus consumption', 'woocommerce'),
-					'3' => __('Single tax on imputed income', 'woocommerce'),
-					'4' => __('Single agricultural tax', 'woocommerce'),
-					'5' => __('Patent system of taxation', 'woocommerce'),
-				),
-			),
-			'ofd_nds' => array
-			(
-				'title' => __('Default VAT rate', 'woocommerce'),
-				'type' => 'select',
-				'default' => '0',
-				'options' => array
-				(
-					'0' => __('Without the vat', 'woocommerce'),
-					'1' => __('VAT 0%', 'woocommerce'),
-					'2' => __('VAT 10%', 'woocommerce'),
-					'3' => __('VAT 20%', 'woocommerce'),
-					'4' => __('VAT receipt settlement rate 10/110', 'woocommerce'),
-					'5' => __('VAT receipt settlement rate 20/120', 'woocommerce'),
-				),
-			),
-			'technical' => array
-			(
-				'title' => __( 'Technical details', 'wc-robokassa' ),
-				'type' => 'title',
-				'description' => 'Setting technical parameters. Used by technical specialists. Can leave it at that.',
-			),
-			'logger' => array
-			(
-				'title' => __( 'Enable logging?', 'wc-robokassa' ),
-				'type' => 'select',
-				'description' => __( 'You can enable gateway logging, specify the level of error that you want to benefit from logging. You can send reports to developer manually by pressing the button. All sensitive data in the report are deleted.
-By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
-				'default' => '400',
-				'options' => array
-				(
-					'' => __( 'Off', 'wc-robokassa' ),
-					'100' => 'DEBUG',
-					'200' => 'INFO',
-					'250' => 'NOTICE',
-					'300' => 'WARNING',
-					'400' => 'ERROR',
-					'500' => 'CRITICAL',
-					'550' => 'ALERT',
-					'600' => 'EMERGENCY'
-				)
+				'no' => __( 'Off', 'wc-robokassa' ),
+				'yes' => __( 'On', 'wc-robokassa' ),
 			)
 		);
+
+		$fields['test_sign_method'] = array
+		(
+			'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
+			'description' => __( 'The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
+			'type' => 'select',
+			'options' => array
+			(
+				'md5' => 'md5',
+				'ripemd160' => 'RIPEMD160',
+				'sha1' => 'SHA1',
+				'sha256' => 'SHA256',
+				'sha384' => 'SHA384',
+				'sha512' => 'SHA512'
+			),
+			'default' => 'sha256'
+		);
+
+		$fields['test_shop_pass_1'] = array
+		(
+			'title' => __('Password #1', 'wc-robokassa'),
+			'type' => 'text',
+			'description' => __( 'Please write Shop pass 1 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
+			'default' => ''
+		);
+
+		$fields['test_shop_pass_2'] = array
+		(
+			'title' => __('Password #2', 'wc-robokassa'),
+			'type' => 'text',
+			'description' => __( 'Please write Shop pass 2 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
+			'default' => ''
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Add settings for interface
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_interface($fields)
+	{
+		$fields['test_payments'] = array
+		(
+			'title' => __( 'Parameters of the test fees', 'wc-robokassa' ),
+			'type' => 'title',
+			'description' => 'Set up test payments. Passwords and counting method signature for test payments differ.',
+		);
+
+		$fields['interface'] = array
+		(
+			'title' => __( 'Interface', 'wc-robokassa' ),
+			'type' => 'title',
+			'description' => 'Customize the appearance. Can leave it at that.',
+		);
+
+		$fields['enable_icon'] = array
+		(
+			'title' => __('Show gateway icon?', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Show', 'wc-robokassa'),
+			'default' => 'yes'
+		);
+
+		$fields['language'] = array
+		(
+			'title' => __( 'Language interface', 'wc-robokassa' ),
+			'type' => 'select',
+			'options' => array
+			(
+				'ru' => __('Russian', 'wc-robokassa'),
+				'en' => __('English', 'wc-robokassa')
+			),
+			'description' => __( 'What language interface displayed for the customer on Robokassa?', 'wc-robokassa' ),
+			'default' => 'ru'
+		);
+
+		$fields['language_auto'] = array
+		(
+			'title' => __( 'Language based on the locale?', 'wc-robokassa' ),
+			'type' => 'select',
+			'options' => array
+			(
+				'yes' => __('Yes', 'wc-robokassa'),
+				'no' => __('No', 'wc-robokassa')
+			),
+			'description' => __( 'Trying to get the language based on the locale?', 'wc-robokassa' ),
+			'default' => 'ru'
+		);
+
+		$fields['title'] = array
+		(
+			'title' => __('Title', 'wc-robokassa'),
+			'type' => 'text',
+			'description' => __( 'This is the name that the user sees during the payment.', 'wc-robokassa' ),
+			'default' => __('Robokassa', 'wc-robokassa')
+		);
+
+		$fields['order_button_text'] = array
+		(
+			'title' => __('Order button text', 'wc-robokassa'),
+			'type' => 'text',
+			'description' => __( 'This is the button text that the user sees during the payment.', 'wc-robokassa' ),
+			'default' => __('Goto pay', 'wc-robokassa')
+		);
+
+		$fields['description'] = array
+		(
+			'title' => __( 'Description', 'wc-robokassa' ),
+			'type' => 'textarea',
+			'description' => __( 'Description of the method of payment that the customer will see on our website.', 'wc-robokassa' ),
+			'default' => __( 'Payment via Robokassa.', 'wc-robokassa' )
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Add settings for OFD
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_ofd($fields)
+	{
+		$fields['ofd'] = array
+		(
+			'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
+			'type' => 'title',
+			'description' => 'These settings are required only for legal entities in the absence of its cash machine.',
+		);
+
+		$fields['ofd_status'] = array
+		(
+			'title' => __('The transfer of goods', 'woocommerce'),
+			'type' => 'checkbox',
+			'label' => __('Enable', 'woocommerce'),
+			'description' => __('When you select the option, a check will be generated and sent to the tax and customer. When used, you must set up the VAT of the items sold. VAT is calculated according to the legislation of the Russian Federation. There may be differences in the amount of VAT with the amount calculated by the store.', 'woocommerce'),
+			'default' => 'off'
+		);
+
+		$fields['ofd_sno'] = array
+		(
+			'title' => __('Taxation system', 'woocommerce'),
+			'type' => 'select',
+			'default' => '0',
+			'options' => array
+			(
+				'0' => __('General', 'woocommerce'),
+				'1' => __('Simplified, income', 'woocommerce'),
+				'2' => __('Simplified, income minus consumption', 'woocommerce'),
+				'3' => __('Single tax on imputed income', 'woocommerce'),
+				'4' => __('Single agricultural tax', 'woocommerce'),
+				'5' => __('Patent system of taxation', 'woocommerce'),
+			),
+		);
+
+		$fields['ofd_nds'] = array
+		(
+			'title' => __('Default VAT rate', 'woocommerce'),
+			'type' => 'select',
+			'default' => '0',
+			'options' => array
+			(
+				'0' => __('Without the vat', 'woocommerce'),
+				'1' => __('VAT 0%', 'woocommerce'),
+				'2' => __('VAT 10%', 'woocommerce'),
+				'3' => __('VAT 20%', 'woocommerce'),
+				'4' => __('VAT receipt settlement rate 10/110', 'woocommerce'),
+				'5' => __('VAT receipt settlement rate 20/120', 'woocommerce'),
+			),
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Add settings for technical
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_technical($fields)
+	{
+		$fields['technical'] = array
+		(
+			'title' => __( 'Technical details', 'wc-robokassa' ),
+			'type' => 'title',
+			'description' => 'Setting technical parameters. Used by technical specialists. Can leave it at that.',
+		);
+
+		$fields['logger'] = array
+		(
+			'title' => __( 'Enable logging?', 'wc-robokassa' ),
+			'type' => 'select',
+			'description' => __( 'You can enable gateway logging, specify the level of error that you want to benefit from logging. You can send reports to developer manually by pressing the button. All sensitive data in the report are deleted. By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
+			'default' => '400',
+			'options' => array
+			(
+				'' => __( 'Off', 'wc-robokassa' ),
+				'100' => 'DEBUG',
+				'200' => 'INFO',
+				'250' => 'NOTICE',
+				'300' => 'WARNING',
+				'400' => 'ERROR',
+				'500' => 'CRITICAL',
+				'550' => 'ALERT',
+				'600' => 'EMERGENCY'
+			)
+		);
+
+		return $fields;
 	}
 
 	/**
