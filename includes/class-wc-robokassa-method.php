@@ -393,6 +393,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$this->form_fields = array
 		(
+			'main' => array
+			(
+				'title' => __( 'Main settings', 'wc-robokassa' ),
+				'type' => 'title',
+				'description' => '',
+			),
 			'enabled' => array
 			(
 				'title' => __('Online/Offline gateway', 'wc-robokassa'),
