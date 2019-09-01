@@ -141,14 +141,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 
 		/**
-		 * Explode admin page
-		 */
-		if(is_admin())
-		{
-			$this->page_explode();
-		}
-
-		/**
 		 * Receipt page
 		 */
 		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
@@ -1368,76 +1360,6 @@ By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
 		 * Send Service unavailable
 		 */
 		wp_die(__('Api request error. Action not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
-	}
-
-	/**
-	 *  Add page explode actions
-	 */
-	public function page_explode()
-	{
-		add_action('wc_robokassa_admin_options_form_before_show', array($this, 'page_explode_table_before'));
-		add_action('wc_robokassa_admin_options_form_after_show', array($this, 'page_explode_table_after'));
-		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_one'));
-		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_two'));
-	}
-
-	/**
-	 * Page explode before table
-	 */
-	public function page_explode_table_before()
-	{
-		echo '<div class="row"><div class="col-17">';
-	}
-
-	/**
-	 * Page explode after table
-	 */
-	public function page_explode_table_after()
-	{
-		echo '</div><div class="col-6">';
-
-		do_action('wc_robokassa_admin_options_form_right_column_show');
-
-		echo '</div></div>';
-	}
-
-	/**
-	 * Widget one
-	 */
-	public function admin_right_widget_one()
-	{
-		echo '<div class="card border-light" style="margin-top: 0;padding: 0;">
-  <div class="card-header" style="padding: 10px;">
-    <h5 style="margin: 0;padding: 0;">Полезная информация</h5>
-  </div>
-  <ul class="list-group list-group-flush" style="margin: 0;">
-    <li class="list-group-item"><a href="https://mofsy.ru/projects/wc-robokassa">Официальная страница плагина</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/tag/robokassa">Новости по теме Робокасса</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/projects/tag/woocommerce">Плагины для WooCommerce</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/others/feedback">Связь с автором плагина</a></li>
-  </ul>
-</div>';
-	}
-
-	/**
-	 * Widget two
-	 */
-	public function admin_right_widget_two()
-	{
-		echo '
-<div class="card text-white border-light bg-dark" style="margin-top: 10px;padding: 0;">
-  <div class="card-header" style="padding: 10px;">
-    <h5 style="margin: 0;padding: 0;">Платное дополнение</h5>
-  </div> <a href="https://mofsy.ru/projects/wc-robokassa-premium">
-   	<img src="' . WC_ROBOKASSA_URL . 'assets/img/wc-robokassa-premium-icon.png" class="card-img-top">
-   </a>
-  <div class="card-body text-center">
-    Ещё больше возможностей для приема платежей. Повышение конверсии.
-    <p>
-    <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary">Официальная страница</a>
-    </p>
-  </div>
-</div>';
 	}
 
 	/**
