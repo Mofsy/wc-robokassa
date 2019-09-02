@@ -45,6 +45,9 @@ class WC_Robokassa
 
 	/**
 	 * WC_Robokassa constructor
+     *
+     * @action wc_robokassa_loading
+     * @action wc_robokassa_loaded
 	 */
 	public function __construct()
 	{
@@ -79,6 +82,9 @@ class WC_Robokassa
 
 	/**
 	 * Include required files.
+     *
+     * @action wc_robokassa_includes_start
+     * @action wc_robokassa_includes_end
 	 */
 	public function includes()
 	{
@@ -140,12 +146,12 @@ class WC_Robokassa
 		/**
 		 * Init
 		 */
-		add_action( 'woocommerce_init', array( $this, 'init' ), 0 );
+		add_action('woocommerce_init', array($this, 'init'), 0);
 
 		/**
 		 * Add payment method
 		 */
-		add_filter('woocommerce_payment_gateways',  array( $this, 'wc_gateway_method_add' ));
+		add_filter('woocommerce_payment_gateways', array($this, 'wc_gateway_method_add'));
 
 		/**
 		 * Admin
@@ -155,13 +161,13 @@ class WC_Robokassa
 			/**
 			 * Admin styles
 			 */
-			add_action('admin_enqueue_scripts', array( $this, 'admin_style' ));
+			add_action('admin_enqueue_scripts', array($this, 'admin_style'));
 
 			/**
 			 * Copyright & links
 			 */
-			add_filter( 'plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array( $this, 'links_left' ) );
-			add_filter( 'plugin_row_meta', array( $this, 'links_right' ), 10, 2 );
+			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'));
+			add_filter('plugin_row_meta', array( $this, 'links_right' ), 10, 2);
 
 			/**
 			 * Explode admin pages
@@ -203,6 +209,8 @@ class WC_Robokassa
 
 	/**
 	 * Load robokassa api
+     *
+     * @filter wc_robokassa_api_class_name_load
 	 */
 	public function load_robokassa_api()
     {
@@ -229,7 +237,7 @@ class WC_Robokassa
 	/**
 	 * @param Wc_Robokassa_Api $robokassa_api
 	 */
-	public function set_robokassa_api($robokassa_api )
+	public function set_robokassa_api($robokassa_api)
     {
 		$this->robokassa_api = $robokassa_api;
 	}
@@ -240,14 +248,9 @@ class WC_Robokassa
 	public function load_currency()
     {
 	    /**
-	     * Get currency
+	     * Set current WooCommerce currency
 	     */
 	    $this->set_wc_currency(gatework_get_wc_currency());
-
-	    /**
-	     * Logger debug
-	     */
-	    $this->get_logger()->addDebug('Current WooCommerce currency: ' . $this->get_wc_currency());
     }
 
 	/**
@@ -256,14 +259,9 @@ class WC_Robokassa
 	public function load_wc_version()
     {
 	    /**
-	     * Set WooCommerce version
+	     * Set current WooCommerce version
 	     */
 	    $this->set_wc_version(gatework_wc_get_version_active());
-
-	    /**
-	     * Logger debug
-	     */
-	    $this->get_logger()->addDebug('Current WooCommerce version: ' . $this->get_wc_version());
     }
 
 	/**
@@ -304,14 +302,8 @@ class WC_Robokassa
 		if(function_exists('wp_upload_dir'))
 		{
 			$wp_dir = wp_upload_dir();
-			$level = 50;
 
-			if($level == false || $level == '')
-			{
-				$level = 50;
-			}
-
-			$this->set_logger(new WC_Gatework_Logger( $wp_dir['basedir'] . '/wc-robokassa.txt', $level));
+			$this->set_logger(new WC_Gatework_Logger( $wp_dir['basedir'] . '/wc-robokassa.txt', 400));
 		}
 	}
 
@@ -346,7 +338,7 @@ class WC_Robokassa
 	 */
 	public function links_left($links)
 	{
-		return array_merge(array('settings' => '<a href="https://mofsy.ru/about/help">' . __('Donate for author', 'wc-robokassa') . '</a>'), $links);
+		return array_merge(array('settings' => '<a href="https://mofsy.ru/about/help">' . __('Donate for plugin', 'wc-robokassa') . '</a>'), $links);
 	}
 
 	/**
@@ -442,13 +434,13 @@ class WC_Robokassa
 	{
 		echo '<div class="card border-light" style="margin-top: 0;padding: 0;">
   <div class="card-header" style="padding: 10px;">
-    <h5 style="margin: 0;padding: 0;">Полезная информация</h5>
+    <h5 style="margin: 0;padding: 0;">' . __('Useful information', 'wc-robokassa') . '</h5>
   </div>
   <ul class="list-group list-group-flush" style="margin: 0;">
-    <li class="list-group-item"><a href="https://mofsy.ru/projects/wc-robokassa">Официальная страница плагина</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/tag/robokassa">Новости по теме Робокасса</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/projects/tag/woocommerce">Плагины для WooCommerce</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/others/feedback">Связь с автором плагина</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/projects/wc-robokassa">' . __('Official plugin page', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/tag/robokassa">' . __('Related news: ROBOKASSA', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/projects/tag/woocommerce">' . __('Plugins for WooCommerce', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/others/feedback">' . __('Feedback to author', 'wc-robokassa') . '</a></li>
   </ul>
 </div>';
 	}
@@ -458,19 +450,17 @@ class WC_Robokassa
 	 */
 	public function admin_right_widget_two()
 	{
-		echo '
-<div class="card text-white border-light bg-dark" style="margin-top: 10px;padding: 0;">
+		echo '<div class="card text-white border-light bg-dark" style="margin-top: 10px;padding: 0;">
   <div class="card-header" style="padding: 10px;">
-    <h5 style="margin: 0;padding: 0;">Платное дополнение</h5>
+    <h5 style="margin: 0;padding: 0;">' . __('Paid supplement', 'wc-robokassa') . '</h5>
   </div> <a href="https://mofsy.ru/projects/wc-robokassa-premium">
    	<img src="' . WC_ROBOKASSA_URL . 'assets/img/wc-robokassa-premium-icon.png" class="card-img-top">
    </a>
   <div class="card-body text-center">
-    Ещё больше возможностей для приема платежей. Повышение конверсии.
+    ' . __('Even more opportunities to accept payments. Increase conversion.', 'wc-robokassa') . '
     <p>
-    <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary">Официальная страница</a>
+    <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary">' . __('Official plugin page', 'wc-robokassa') . '</a>
     </p>
-  </div>
-</div>';
+  </div></div>';
 	}
 }
