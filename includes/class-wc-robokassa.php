@@ -274,7 +274,7 @@ class WC_Robokassa
 
 		unload_textdomain( 'wc-robokassa' );
 		load_textdomain( 'wc-robokassa', WP_LANG_DIR . '/wc-robokassa/wc-robokassa-' . $locale . '.mo' );
-		load_textdomain( 'wc-robokassa', dirname( plugin_basename( __FILE__ ) ) . '/languages/wc-robokassa-' . $locale . '.mo' );
+		load_textdomain( 'wc-robokassa', WC_ROBOKASSA_PLUGIN_DIR. '/languages/wc-robokassa-' . $locale . '.mo' );
 	}
 
 	/**
