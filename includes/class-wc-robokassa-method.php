@@ -13,7 +13,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @var array
 	 */
-	public $currency_all = array('RUB', 'USD', 'EUR');
+	public $currency_all = array('RUB', 'USD', 'EUR', 'KZT');
 
 	/**
 	 * Shop login
@@ -111,7 +111,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function __construct()
 	{
 		/**
-		 * What?
+		 * The gateway shows fields on the checkout OFF
 		 */
 		$this->has_fields = false;
 
@@ -170,6 +170,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 	/**
 	 * Init gateway options
+	 *
+	 * @filter woocommerce_robokassa_icon
 	 */
 	private function init_options()
 	{
@@ -179,11 +181,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('enabled') !== 'yes')
 		{
 			$this->enabled = false;
-
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addNotice('Gateway is NOT enabled.');
 		}
 
 		/**
@@ -742,6 +739,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		/**
 		 * Check test mode and admin rights
+		 *
+		 * @todo сделать возможность тестирования не только админами
 		 */
 		if ($this->test === 'yes' && !current_user_can( 'manage_options' ))
 		{
@@ -1111,9 +1110,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$args['Culture'] = $this->language;
 
 		/**
-		 * Execute filter woocommerce_robokassa_args
+		 * Execute filter wc_robokassa_form_args
 		 */
-		$args = apply_filters('woocommerce_robokassa_args', $args);
+		$args = apply_filters('wc_robokassa_payment_form_args', $args);
 
 		/**
 		 * Form inputs generic
@@ -1127,9 +1126,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Return full form
 		 */
-		return '<form action="'.esc_url($this->form_url).'" method="POST" id="robokassa_payment_form" accept-charset="utf-8">'."\n".
+		return '<form action="'.esc_url($this->form_url).'" method="POST" id="wc_robokassa_payment_form" accept-charset="utf-8">'."\n".
 		       implode("\n", $args_array).
-		       '<input type="submit" class="button alt" id="submit_robokassa_payment_form" value="'.__('Pay', 'wc-robokassa').
+		       '<input type="submit" class="button alt" id="submit_wc_robokassa_payment_form" value="'.__('Pay', 'wc-robokassa').
 		       '" /> <a class="button cancel" href="'.$order->get_cancel_order_url().'">'.__('Cancel & return to cart', 'wc-robokassa').'</a>'."\n".
 		       '</form>';
 	}
@@ -1434,13 +1433,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				 * Add order note
 				 */
 				$order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
+
 				/**
 				 * Logger info
 				 */
 				WC_Robokassa::instance()->get_logger()->addInfo('The order has not been paid.');
 
 				/**
-				 * Sen status is failed
+				 * Set status is failed
 				 */
 				$order->update_status('failed');
 
