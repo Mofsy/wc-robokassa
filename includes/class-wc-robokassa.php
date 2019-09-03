@@ -81,6 +81,26 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Cloning instances is forbidden due to singleton pattern.
+	 *
+	 * @since 2.0.0.1
+	 */
+	public function __clone()
+    {
+		_doing_it_wrong( __FUNCTION__, sprintf( 'You cannot clone instances of %s.', get_class( $this ) ), '1.0.0.1' );
+	}
+
+	/**
+	 * Unserializing instances is forbidden due to singleton pattern.
+	 *
+	 * @since 2.0.0
+	 */
+	public function __wakeup()
+    {
+		_doing_it_wrong( __FUNCTION__, sprintf( 'You cannot unserialize instances of %s.', get_class( $this ) ), '1.0.0.1' );
+	}
+	
+	/**
 	 * Include required files.
      *
      * @action wc_robokassa_includes_start
