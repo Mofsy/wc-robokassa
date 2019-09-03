@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2019-09-03 09:50+0300\n"
-"PO-Revision-Date: 2019-09-03 09:55+0300\n"
+"POT-Creation-Date: 2019-09-03 10:10+0300\n"
+"PO-Revision-Date: 2019-09-03 10:11+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language: ru_RU\n"
@@ -33,6 +33,13 @@ msgstr "Оплата через Робокассу."
 #: includes/class-wc-robokassa-method.php:414
 msgid "Main settings"
 msgstr "Основные настройки"
+
+#: includes/class-wc-robokassa-method.php:416
+msgid ""
+"Work is impossible without these settings. Carefully specify the correct "
+"data."
+msgstr ""
+"Работа невозможна без этих настроек. Тщательно укажите правильные данные."
 
 #: includes/class-wc-robokassa-method.php:421
 msgid "Online / Offline gateway"

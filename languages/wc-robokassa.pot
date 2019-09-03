@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2019-09-03 09:50+0300\n"
+"POT-Creation-Date: 2019-09-03 10:10+0300\n"
 "PO-Revision-Date: 2016-01-10 16:41+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
@@ -31,6 +31,12 @@ msgstr ""
 
 #: includes/class-wc-robokassa-method.php:414
 msgid "Main settings"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:416
+msgid ""
+"Work is impossible without these settings. Carefully specify the correct "
+"data."
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:421
