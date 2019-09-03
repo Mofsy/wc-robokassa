@@ -45,6 +45,7 @@ So please contribute your language to the plugin to make it even more useful. Fo
 * Fix localization files
 * Add support last WordPress & WooCommerce
 * Add licence.txt
+* Add KZT currency support
 * More fix
 
 = 1.1.1.1 =
