@@ -897,15 +897,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set currency to robokassa
 		 */
-		if( WC_Robokassa::instance()->get_wc_currency() === 'USD')
+		if(WC_Robokassa::instance()->get_wc_currency() === 'USD')
 		{
 			$args['OutSumCurrency'] = 'USD';
 		}
-		elseif( WC_Robokassa::instance()->get_wc_currency() === 'EUR')
+		elseif(WC_Robokassa::instance()->get_wc_currency() === 'EUR')
 		{
 			$args['OutSumCurrency'] = 'EUR';
 		}
-		elseif( WC_Robokassa::instance()->get_wc_currency() === 'KZT')
+		elseif(WC_Robokassa::instance()->get_wc_currency() === 'KZT')
 		{
 			$args['OutSumCurrency'] = 'KZT';
 		}
