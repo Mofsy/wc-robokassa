@@ -482,7 +482,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __( 'Parameters of the test fees', 'wc-robokassa' ),
 			'type' => 'title',
-			'description' => 'Set up test payments. Passwords and counting method signature for test payments differ.',
+			'description' => __( 'Set up test payments. Passwords and counting method signature for test payments differ.', 'wc-robokassa' ),
 		);
 
 		$fields['test'] = array
@@ -547,14 +547,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __( 'Parameters of the test fees', 'wc-robokassa' ),
 			'type' => 'title',
-			'description' => 'Set up test payments. Passwords and counting method signature for test payments differ.',
+			'description' => __( 'Set up test payments. Passwords and counting method signature for test payments differ.', 'wc-robokassa' ),
 		);
 
 		$fields['interface'] = array
 		(
 			'title' => __( 'Interface', 'wc-robokassa' ),
 			'type' => 'title',
-			'description' => 'Customize the appearance. Can leave it at that.',
+			'description' => __( 'Customize the appearance. Can leave it at that.', 'wc-robokassa' ),
 		);
 
 		$fields['enable_icon'] = array
@@ -631,7 +631,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
 			'type' => 'title',
-			'description' => 'These settings are required only for legal entities in the absence of its cash machine.',
+			'description' => __( 'These settings are required only for legal entities in the absence of its cash machine.', 'wc-robokassa' ),
 		);
 
 		$fields['ofd_status'] = array
@@ -691,7 +691,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __( 'Technical details', 'wc-robokassa' ),
 			'type' => 'title',
-			'description' => 'Setting technical parameters. Used by technical specialists. Can leave it at that.',
+			'description' => __( 'Setting technical parameters. Used by technical specialists. Can leave it at that.', 'wc-robokassa' ),
 		);
 
 		$fields['logger'] = array
@@ -764,7 +764,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		do_action('wc_robokassa_admin_options_before_show');
 
 		echo '<h2>' . esc_html( $this->get_method_title() );
-		wc_back_link( __( 'Return to payments', 'woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+		wc_back_link( __( 'Return to payment gateways', 'wc-robokassa' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 
 		// hook
