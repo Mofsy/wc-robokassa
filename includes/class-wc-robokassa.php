@@ -93,7 +93,7 @@ class WC_Robokassa
 	/**
 	 * Unserializing instances is forbidden due to singleton pattern.
 	 *
-	 * @since 2.0.0
+	 * @since 2.0.0.1
 	 */
 	public function __wakeup()
     {
