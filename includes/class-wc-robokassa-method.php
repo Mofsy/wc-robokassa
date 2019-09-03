@@ -413,7 +413,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __( 'Main settings', 'wc-robokassa' ),
 			'type' => 'title',
-			'description' => 'Work is impossible without these settings. Carefully specify the correct data.',
+			'description' => __( 'Work is impossible without these settings. Carefully specify the correct data.', 'wc-robokassa' ),
 		);
 
 		$fields['enabled'] = array
@@ -636,42 +636,42 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['ofd_status'] = array
 		(
-			'title' => __('The transfer of goods', 'woocommerce'),
+			'title' => __('The transfer of goods', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable', 'woocommerce'),
+			'label' => __('Enable', 'wc-robokassa'),
 			'description' => __('When you select the option, a check will be generated and sent to the tax and customer. When used, you must set up the VAT of the items sold. VAT is calculated according to the legislation of the Russian Federation. There may be differences in the amount of VAT with the amount calculated by the store.', 'woocommerce'),
 			'default' => 'off'
 		);
 
 		$fields['ofd_sno'] = array
 		(
-			'title' => __('Taxation system', 'woocommerce'),
+			'title' => __('Taxation system', 'wc-robokassa'),
 			'type' => 'select',
 			'default' => '0',
 			'options' => array
 			(
-				'0' => __('General', 'woocommerce'),
-				'1' => __('Simplified, income', 'woocommerce'),
-				'2' => __('Simplified, income minus consumption', 'woocommerce'),
-				'3' => __('Single tax on imputed income', 'woocommerce'),
-				'4' => __('Single agricultural tax', 'woocommerce'),
-				'5' => __('Patent system of taxation', 'woocommerce'),
+				'0' => __('General', 'wc-robokassa'),
+				'1' => __('Simplified, income', 'wc-robokassa'),
+				'2' => __('Simplified, income minus consumption', 'wc-robokassa'),
+				'3' => __('Single tax on imputed income', 'wc-robokassa'),
+				'4' => __('Single agricultural tax', 'wc-robokassa'),
+				'5' => __('Patent system of taxation', 'wc-robokassa'),
 			),
 		);
 
 		$fields['ofd_nds'] = array
 		(
-			'title' => __('Default VAT rate', 'woocommerce'),
+			'title' => __('Default VAT rate', 'wc-robokassa'),
 			'type' => 'select',
 			'default' => '0',
 			'options' => array
 			(
-				'0' => __('Without the vat', 'woocommerce'),
-				'1' => __('VAT 0%', 'woocommerce'),
-				'2' => __('VAT 10%', 'woocommerce'),
-				'3' => __('VAT 20%', 'woocommerce'),
-				'4' => __('VAT receipt settlement rate 10/110', 'woocommerce'),
-				'5' => __('VAT receipt settlement rate 20/120', 'woocommerce'),
+				'0' => __('Without the vat', 'wc-robokassa'),
+				'1' => __('VAT 0%', 'wc-robokassa'),
+				'2' => __('VAT 10%', 'wc-robokassa'),
+				'3' => __('VAT 20%', 'wc-robokassa'),
+				'4' => __('VAT receipt settlement rate 10/110', 'wc-robokassa'),
+				'5' => __('VAT receipt settlement rate 20/120', 'wc-robokassa'),
 			),
 		);
 
