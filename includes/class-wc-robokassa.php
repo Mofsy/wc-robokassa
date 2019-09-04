@@ -202,7 +202,7 @@ class WC_Robokassa
 			/**
 			 * Admin styles
 			 */
-			add_action('admin_enqueue_scripts', array($this, 'admin_styles' ));
+			add_action('admin_enqueue_scripts', array($this, 'wc_robokassa_admin_styles'));
 
 			/**
 			 * Copyright & links
@@ -414,7 +414,7 @@ class WC_Robokassa
 	/**
 	 * Add admin css styles
 	 */
-	public function admin_styles()
+	public function wc_robokassa_admin_styles()
     {
         if(isset($_GET['section']) && $_GET['section'] == 'robokassa')
         {
