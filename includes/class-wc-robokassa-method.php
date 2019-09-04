@@ -160,6 +160,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications' ));
 
 		/**
+		 * Payment fields description show
+		 */
+		add_action('wc_robokassa_payment_fields_show', array($this, 'payment_fields_description_show'));
+
+		/**
 		 * Gateway allowed?
 		 */
 		if ($this->is_valid_for_use() == false)
@@ -816,8 +821,27 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 	/**
 	 * There are no payment fields for sprypay, but we want to show the description if set.
+	 *
+	 * @action wc_robokassa_payment_fields_before_show
+	 * @action wc_robokassa_payment_fields_show
+	 * @action wc_robokassa_payment_fields_after_show
 	 **/
 	public function payment_fields()
+	{
+		// hook
+		do_action('wc_robokassa_payment_fields_before_show');
+
+		// hook
+		do_action('wc_robokassa_payment_fields_show');
+
+		// hook
+		do_action('wc_robokassa_payment_fields_after_show');
+	}
+
+	/**
+	 * Show description on site
+	 */
+	public function payment_fields_description_show()
 	{
 		if ($this->description)
 		{
