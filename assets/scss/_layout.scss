@@ -12,6 +12,18 @@
     color: #000000!important;
     background-color: rgb(229, 229, 229)!important;
   }
+
+  #woocommerce_robokassa_result_url, #woocommerce_robokassa_success_url, #woocommerce_robokassa_fail_url
+  {
+    display: none!important;
+  }
+
+  .robokassa_urls
+  {
+    color: #000000!important;
+    background-color: rgb(229, 229, 229)!important;
+    padding: 10px;
+  }
 }
 
 .woocommerce table.form-table th
