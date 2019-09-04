@@ -384,6 +384,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 * Initialise Gateway Settings Form Fields
 	 *
 	 * @access public
+	 * @filter wc_robokassa_init_form_fields
+	 *
 	 * @return void
 	 */
 	public function init_form_fields()
