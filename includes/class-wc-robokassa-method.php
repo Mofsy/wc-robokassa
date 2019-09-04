@@ -381,34 +381,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * @param $statuses
-	 * @param $order
-	 * @return mixed
-	 */
-	public static function valid_order_statuses_for_payment($statuses, $order)
-	{
-		if($order->payment_method !== 'robokassa')
-		{
-			return $statuses;
-		}
-
-		$option_value = get_option( 'woocommerce_payment_status_action_pay_button_controller', array() );
-
-		if(!is_array($option_value))
-		{
-			$option_value = array('pending', 'failed');
-		}
-
-		if( is_array($option_value) && !in_array('pending', $option_value, false) )
-		{
-			$pending = array('pending');
-			$option_value = array_merge($option_value, $pending);
-		}
-
-		return $option_value;
-	}
-
-	/**
 	 * Initialise Gateway Settings Form Fields
 	 *
 	 * @access public
