@@ -29,9 +29,15 @@ add_action('plugins_loaded', 'wc_robokassa_gateway_init', 0);
 
 /**
  * Init plugin gateway
+ *
+ * @action wc_robokassa_gateway_init_before
+ * @action wc_robokassa_gateway_init_after
  */
 function wc_robokassa_gateway_init()
 {
+	// hook
+	do_action('wc_robokassa_gateway_init_before');
+
 	/**
 	 * Main check
 	 */
@@ -78,4 +84,7 @@ function wc_robokassa_gateway_init()
 	 * Run
 	 */
 	WC_Robokassa::instance();
+
+	// hook
+	do_action('wc_robokassa_gateway_init_after');
 }
