@@ -1,6 +1,17 @@
 .woocommerce table.form-table
 {
   background-color: #ffffff;
+
+  input.regular-input
+  {
+    width: 100%!important;
+  }
+
+  input.disabled, input:disabled
+  {
+    color: #000000!important;
+    background-color: rgb(229, 229, 229)!important;
+  }
 }
 
 .woocommerce table.form-table th
