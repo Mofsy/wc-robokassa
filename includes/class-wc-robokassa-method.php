@@ -165,6 +165,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_action('wc_robokassa_payment_fields_show', array($this, 'payment_fields_description_show'));
 
 		/**
+		 * Payment fields test mode show
+		 */
+		add_action('wc_robokassa_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'));
+
+		/**
 		 * Gateway allowed?
 		 */
 		if ($this->is_valid_for_use() == false)
@@ -846,6 +851,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if ($this->description)
 		{
 			echo wpautop(wptexturize($this->description));
+		}
+	}
+
+	/**
+	 * Show test mode on site
+	 */
+	public function payment_fields_test_mode_show()
+	{
+		if ($this->test == 'yes')
+		{
+			echo '<div style="padding:10px; background-color: #ff8982;text-align: center;">';
+			echo __('TEST mode is active. Payment will not be charged. After checking, disable this mode.', 'wc-robokassa');
+			echo '</div>';
 		}
 	}
 
