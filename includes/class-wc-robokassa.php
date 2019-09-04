@@ -301,15 +301,21 @@ class WC_Robokassa
 	 * Add the gateway to WooCommerce
 	 *
 	 * @param $methods
+     *
+     * @filter wc_robokassa_method_class_name_add
 	 *
 	 * @return array
 	 */
 	public function wc_gateway_method_add($methods)
 	{
-		/**
-		 * Default method
-		 */
-		$methods[] = 'Wc_Robokassa_Method';
+		$robokassa_method_class_name = apply_filters('wc_robokassa_method_class_name_add', 'Wc_Robokassa_Method');
+
+		if(!class_exists($robokassa_method_class_name))
+		{
+			$robokassa_method_class_name = 'Wc_Robokassa_Method';
+		}
+
+		$methods[] = $robokassa_method_class_name;
 
 		return $methods;
 	}
