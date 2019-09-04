@@ -140,6 +140,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->init_form_fields();
 		$this->init_settings();
 		$this->init_options();
+		$this->init_actions();
 
 		/**
 		 * Save admin options
@@ -159,7 +160,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Payment listener/API hook
 		 */
 		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications' ));
+	}
 
+	/**
+	 * Init actions
+	 */
+	public function init_actions()
+	{
 		/**
 		 * Payment fields description show
 		 */
@@ -169,14 +176,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Payment fields test mode show
 		 */
 		add_action('wc_robokassa_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'));
-
-		/**
-		 * Gateway allowed?
-		 */
-		if ($this->is_valid_for_use() == false)
-		{
-			$this->enabled = false;
-		}
 	}
 
 	/**
@@ -377,6 +376,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('enable_icon') === 'yes')
 		{
 			$this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . '/assets/img/robokassa.png');
+		}
+		
+		/**
+		 * Gateway allowed?
+		 */
+		if ($this->is_valid_for_use() == false)
+		{
+			$this->enabled = false;
 		}
 	}
 
