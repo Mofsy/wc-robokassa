@@ -205,6 +205,11 @@ class WC_Robokassa
 			add_action('admin_enqueue_scripts', array($this, 'wc_robokassa_admin_styles'));
 
 			/**
+			 * Show admin notices
+			 */
+			add_action( 'admin_notices', array( $this, 'wc_robokassa_admin_notices' ), 10 );
+
+			/**
 			 * Copyright & links
 			 */
 			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'));
@@ -423,30 +428,26 @@ class WC_Robokassa
 	}
 
 	/**
-	 * Display the test notice
-	 **/
-	public function test_notice()
-	{
-		?>
-        <div class="update-nag" style="">
-			<?php $link = '<a href="'. admin_url('admin.php?page=wc-settings&tab=checkout&section=wc_robokassa') .'">'.__('here', 'wc-robokassa').'</a>';
-			echo sprintf( __( 'Robokassa test mode is enabled. Click %s -  to disable it when you want to start accepting live payment on your site.', 'wc-robokassa' ), $link ) ?>
-        </div>
-		<?php
-	}
-
-	/**
-	 * Display the debug notice
-	 **/
-	public function debug_notice()
-	{
-		?>
-        <div class="update-nag">
-			<?php $link = '<a href="'. admin_url('admin.php?page=wc-settings&tab=checkout&section=wc_robokassa') .'">'.__('here', 'wc-robokassa').'</a>';
-			echo sprintf( __( 'Robokassa debug tool is enabled. Click %s -  to disable.', 'wc-robokassa' ), $link ) ?>
-        </div>
-		<?php
-	}
+	 * Show admin notices
+	 */
+	public function wc_robokassa_admin_notices()
+    {
+        /**
+         * Global notice: Require update settings
+         */
+        if(get_option('wc_robokassa_last_settings_update_version') != '2.0' && $_GET['section'] != 'robokassa')
+        {
+	        ?>
+            <div class="notice notice-warning" style="font-size: 16px;padding-top: 10px; padding-bottom: 10px; line-height: 170%;">
+		        <?php
+                echo __('The plugin for accepting payments through ROBOKASSA for WooCommerce has been updated to a version that requires additional configuration.', 'wc-robokassa');
+                echo '<br />';
+                $link = '<a href="'. admin_url('admin.php?page=wc-settings&tab=checkout&section=robokassa') .'">'.__('here', 'wc-robokassa').'</a>';
+		        echo sprintf( __( 'Press %s (to go to payment gateway settings).', 'wc-robokassa' ), $link ) ?>
+            </div>
+	        <?php
+        }
+    }
 
 	/**
 	 *  Add page explode actions

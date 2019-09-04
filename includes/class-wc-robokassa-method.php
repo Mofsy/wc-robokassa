@@ -146,7 +146,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if(current_user_can( 'manage_options' ))
 		{
-			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
+			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'wc_robokassa_last_settings_update_version'));
 		}
 
 		/**
@@ -176,6 +177,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$this->enabled = false;
 		}
+	}
+
+	/**
+	 * Last settings update version
+	 */
+	public function wc_robokassa_last_settings_update_version()
+	{
+		update_option('wc_robokassa_last_settings_update_version', '2.0');
 	}
 
 	/**
