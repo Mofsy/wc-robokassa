@@ -420,8 +420,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __('Online / Offline gateway', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Online', 'wc-robokassa'),
-			'description' => __( 'If the checkbox is not checked, the payment gateway will not be available for selection on the site.', 'wc-robokassa' ),
+			'label' => __('Enable display of the payment gateway on the website', 'wc-robokassa'),
+			'description' => '',
 			'default' => 'off'
 		);
 
@@ -471,7 +471,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title' => __('Result Url', 'wc-robokassa'),
 			'type' => 'text',
 			'disabled' => true,
-			'description' => __( '', 'wc-robokassa' ),
+			'description' => __( 'Address to notify the site of the results of operations in the background. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST.', 'wc-robokassa' ),
 			'default' => WC_Robokassa::instance()->get_result_url()
 		);
 
@@ -480,16 +480,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title' => __('Success Url', 'wc-robokassa'),
 			'type' => 'text',
 			'disabled' => true,
-			'description' => __( '', 'wc-robokassa' ),
+			'description' => __( 'The address for the user to go to the site after successful payment. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa' ),
 			'default' => WC_Robokassa::instance()->get_success_url()
 		);
-		
+
 		$fields['fail_url'] = array
 		(
 			'title' => __('Fail Url', 'wc-robokassa'),
 			'type' => 'text',
 			'disabled' => true,
-			'description' => __( '', 'wc-robokassa' ),
+			'description' => __( 'The address for the user to go to the site, after payment with an error. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa' ),
 			'default' => WC_Robokassa::instance()->get_fail_url()
 		);
 
