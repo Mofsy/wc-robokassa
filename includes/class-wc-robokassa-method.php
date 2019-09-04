@@ -176,6 +176,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Payment fields test mode show
 		 */
 		add_action('wc_robokassa_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'));
+
+		/**
+		 * Receipt form show
+		 */
+		add_action('wc_robokassa_receipt_page_show', array($this, 'wc_robokassa_receipt_page_show_form'), 10);
 	}
 
 	/**
@@ -377,7 +382,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . '/assets/img/robokassa.png');
 		}
-		
+
 		/**
 		 * Gateway allowed?
 		 */
@@ -868,6 +873,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @param int $order_id
 	 *
+	 * @action wc_robokassa_process_payment_start
+	 *
 	 * @return array
 	 */
 	public function process_payment($order_id)
@@ -877,15 +884,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		$order = wc_get_order($order_id);
 
+		// hook
+		do_action('wc_robokassa_process_payment_start', $order_id, $order);
+
 		/**
 		 * Add order note
 		 */
 		$order->add_order_note(__('The client started to pay.', 'wc-robokassa'));
-
-		/**
-		 * Logger notice
-		 */
-		WC_Robokassa::instance()->get_logger()->addNotice('The client started to pay.');
 
 		/**
 		 * Return data
@@ -898,20 +903,36 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * receipt_page
+	 * Receipt page
 	 *
 	 * @param $order
+	 *
+	 * @action wc_robokassa_receipt_page_before_show
+	 * @action wc_robokassa_receipt_page_show
+	 * @action wc_robokassa_receipt_page_after_show
+	 *
+	 * @return void
 	 */
 	public function receipt_page($order)
 	{
 		// hook
-		do_action('wc_robokassa_receipt_page_before_show');
-
-		echo '<p>'.__('Thank you for your order, please press the button below to pay.', 'wc-robokassa').'</p>';
-		echo $this->generate_form($order);
+		do_action('wc_robokassa_receipt_page_before_show', $order);
 
 		// hook
-		do_action('wc_robokassa_receipt_page_after_show');
+		do_action('wc_robokassa_receipt_page_show', $order);
+
+		// hook
+		do_action('wc_robokassa_receipt_page_after_show', $order);
+	}
+
+	/**
+	 * @param $order
+	 *
+	 * @return void
+	 */
+	public function wc_robokassa_receipt_page_show_form($order)
+	{
+		echo $this->generate_form($order);
 	}
 
 	/**
@@ -1240,9 +1261,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 	/**
 	 * Check instant payment notification
+	 *
+	 * @action wc_robokassa_input_payment_notifications
+	 *
+	 * @return void
 	 */
 	public function input_payment_notifications()
 	{
+		// hook
+		do_action('wc_robokassa_input_payment_notifications');
+
 		/**
 		 * Insert $_REQUEST into debug mode
 		 */
