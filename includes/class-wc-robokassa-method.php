@@ -466,6 +466,33 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default' => ''
 		);
 
+		$fields['result_url'] = array
+		(
+			'title' => __('Result Url', 'wc-robokassa'),
+			'type' => 'text',
+			'disabled' => true,
+			'description' => __( '', 'wc-robokassa' ),
+			'default' => WC_Robokassa::instance()->get_result_url()
+		);
+
+		$fields['success_url'] = array
+		(
+			'title' => __('Success Url', 'wc-robokassa'),
+			'type' => 'text',
+			'disabled' => true,
+			'description' => __( '', 'wc-robokassa' ),
+			'default' => WC_Robokassa::instance()->get_success_url()
+		);
+		
+		$fields['fail_url'] = array
+		(
+			'title' => __('Fail Url', 'wc-robokassa'),
+			'type' => 'text',
+			'disabled' => true,
+			'description' => __( '', 'wc-robokassa' ),
+			'default' => WC_Robokassa::instance()->get_fail_url()
+		);
+
 		return $fields;
 	}
 

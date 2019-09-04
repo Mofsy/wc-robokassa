@@ -44,6 +44,27 @@ class WC_Robokassa
 	public $wc_currency;
 
 	/**
+     * Result url
+     *
+	 * @var string
+	 */
+	private $result_url;
+
+	/**
+     * Fail url
+     *
+	 * @var string
+	 */
+	private $fail_url;
+
+	/**
+     * Success url
+     *
+	 * @var string
+	 */
+	private $success_url;
+
+	/**
 	 * WC_Robokassa constructor
      *
      * @action wc_robokassa_loading
@@ -210,6 +231,11 @@ class WC_Robokassa
 		 * Load languages
 		 */
 		$this->load_plugin_text_domain();
+
+		/**
+		 * Load URLs
+		 */
+		$this->load_urls();
 
 		/**
 		 * Load WooCommerce version
@@ -439,6 +465,67 @@ class WC_Robokassa
 	public function page_explode_table_before()
 	{
 		echo '<div class="row"><div class="col-17">';
+	}
+
+	/**
+	 * Load urls:
+     * - result
+     * - fail
+     * - success
+	 */
+	public function load_urls()
+    {
+	    $this->set_result_url(get_site_url( null, '/?wc-api=wc_robokassa&action=result'));
+	    $this->set_fail_url(get_site_url( null, '/?wc-api=wc_robokassa&action=fail'));
+	    $this->set_success_url(get_site_url( null, '/?wc-api=wc_robokassa&action=success'));
+    }
+
+	/**
+	 * @return string
+	 */
+	public function get_result_url()
+    {
+		return $this->result_url;
+	}
+
+	/**
+	 * @param string $result_url
+	 */
+	public function set_result_url($result_url)
+    {
+		$this->result_url = $result_url;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_fail_url()
+    {
+		return $this->fail_url;
+	}
+
+	/**
+	 * @param string $fail_url
+	 */
+	public function set_fail_url($fail_url)
+    {
+		$this->fail_url = $fail_url;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_success_url()
+    {
+		return $this->success_url;
+	}
+
+	/**
+	 * @param string $success_url
+	 */
+	public function set_success_url($success_url)
+    {
+		$this->success_url = $success_url;
 	}
 
 	/**
