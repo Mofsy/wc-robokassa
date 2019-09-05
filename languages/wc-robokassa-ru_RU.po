@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce - Robokassa Payment Gateway\n"
-"POT-Creation-Date: 2019-09-04 17:24+0300\n"
-"PO-Revision-Date: 2019-09-04 17:28+0300\n"
+"Project-Id-Version: Robokassa - Payment Gateway for WooCommerce\n"
+"POT-Creation-Date: 2019-09-05 10:35+0300\n"
+"PO-Revision-Date: 2019-09-05 10:36+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
-"Language-Team: Mofsy <ru.mofsy@yandex.ru>\n"
+"Language-Team: Mofsy <support@mofsy.ru>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: wc-robokassa.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -478,7 +478,6 @@ msgstr "сюда"
 
 #: includes/class-wc-robokassa.php:446
 #, php-format
-#| msgid "Return to payment gateways"
 msgid "Press %s (to go to payment gateway settings)."
 msgstr "Press %s (to go to payment gateway settings)."
 
@@ -519,8 +518,11 @@ msgid "https://mofsy.ru/projects/wc-robokassa"
 msgstr "https://mofsy.ru/projects/wc-robokassa"
 
 #. Description of the plugin/theme
+#, fuzzy
+#| msgid ""
+#| "Allows you to use Robokassa payment gateway with the WooCommerce plugin."
 msgid ""
-"Allows you to use Robokassa payment gateway with the WooCommerce plugin."
+"Allows you to use Robokassa with the WooCommerce as payment gateway plugin."
 msgstr "Позволяет использовать платежный шлюз Робокасса в плагине WooCommerce."
 
 #. Author of the plugin/theme
