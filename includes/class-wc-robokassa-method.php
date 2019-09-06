@@ -1275,11 +1275,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		do_action('wc_robokassa_input_payment_notifications');
 
 		/**
-		 * Insert $_REQUEST into debug mode
-		 */
-		WC_Robokassa::instance()->get_logger()->addDebug(print_r($_REQUEST, true));
-
-		/**
 		 * Hook wc_robokassa
 		 */
 		if ($_GET['wc-api'] === 'wc_robokassa')
