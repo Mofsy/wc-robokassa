@@ -1367,11 +1367,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($order === false)
 		{
 			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addNotice('Api RESULT request error. Order not found.');
-
-			/**
 			 * Send Service unavailable
 			 */
 			wp_die(__('Order not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
@@ -1387,11 +1382,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Add order note
 		 */
 		$order->add_order_note(sprintf(__('Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
-
-		/**
-		 * Logger info
-		 */
-		WC_Robokassa::instance()->get_logger()->addInfo('Robokassa request success.');
 
 		/**
 		 * Result
@@ -1493,11 +1483,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 * Add order note
 			 */
 			$order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
-
-			/**
-			 * Logger info
-			 */
-			WC_Robokassa::instance()->get_logger()->addInfo('Client return to success page.');
 
 			/**
 			 * Empty cart
