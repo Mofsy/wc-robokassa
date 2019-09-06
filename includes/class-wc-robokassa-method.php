@@ -1275,278 +1275,262 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		do_action('wc_robokassa_input_payment_notifications');
 
 		/**
-		 * Hook wc_robokassa
+		 * Order id
 		 */
-		if ($_GET['wc-api'] === 'wc_robokassa')
+		$order_id = 0;
+		if(array_key_exists('InvId', $_REQUEST))
+		{
+			$order_id = $_REQUEST['InvId'];
+		}
+
+		/**
+		 * Sum
+		 */
+		$sum = 0;
+		if(array_key_exists('OutSum', $_REQUEST))
+		{
+			$sum = $_REQUEST['OutSum'];
+		}
+
+		/**
+		 * Test mode
+		 */
+		if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
 		{
 			/**
-			 * Order id
+			 * Test flag
 			 */
-			$order_id = 0;
-			if(array_key_exists('InvId', $_REQUEST))
-			{
-				$order_id = $_REQUEST['InvId'];
-			}
+			$test = true;
 
 			/**
-			 * Sum
+			 * Signature pass for testing
 			 */
-			$sum = 0;
-			if(array_key_exists('OutSum', $_REQUEST))
+			if ($_GET['action'] === 'success')
 			{
-				$sum = $_REQUEST['OutSum'];
+				$signature_pass = $this->test_shop_pass_1;
 			}
-
-			/**
-			 * Test mode
-			 */
-			if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
-			{
-				/**
-				 * Test flag
-				 */
-				$test = true;
-
-				/**
-				 * Signature pass for testing
-				 */
-				if ($_GET['action'] === 'success')
-				{
-					$signature_pass = $this->test_shop_pass_1;
-				}
-				else
-				{
-					$signature_pass = $this->test_shop_pass_2;
-				}
-
-				/**
-				 * Sign method
-				 */
-				$signature_method = $this->test_sign_method;
-			}
-			/**
-			 * Real payments
-			 */
 			else
 			{
-				/**
-				 * Test flag
-				 */
-				$test = false;
-
-				/**
-				 * Signature pass for real payments
-				 */
-				if ($_GET['action'] === 'success')
-				{
-					$signature_pass = $this->shop_pass_1;
-				}
-				else
-				{
-					$signature_pass = $this->shop_pass_2;
-				}
-
-				/**
-				 * Sign method
-				 */
-				$signature_method = $this->sign_method;
+				$signature_pass = $this->test_shop_pass_2;
 			}
 
 			/**
-			 * Signature
+			 * Sign method
 			 */
-			$signature = '';
-			if(array_key_exists('SignatureValue', $_REQUEST))
+			$signature_method = $this->test_sign_method;
+		}
+		/**
+		 * Real payments
+		 */
+		else
+		{
+			/**
+			 * Test flag
+			 */
+			$test = false;
+
+			/**
+			 * Signature pass for real payments
+			 */
+			if ($_GET['action'] === 'success')
 			{
-				$signature = $_REQUEST['SignatureValue'];
+				$signature_pass = $this->shop_pass_1;
+			}
+			else
+			{
+				$signature_pass = $this->shop_pass_2;
 			}
 
 			/**
-			 * Get order object
+			 * Sign method
 			 */
-			$order = wc_get_order($order_id);
+			$signature_method = $this->sign_method;
+		}
+
+		/**
+		 * Signature
+		 */
+		$signature = '';
+		if(array_key_exists('SignatureValue', $_REQUEST))
+		{
+			$signature = $_REQUEST['SignatureValue'];
+		}
+
+		/**
+		 * Get order object
+		 */
+		$order = wc_get_order($order_id);
+
+		/**
+		 * Order not found
+		 */
+		if($order === false)
+		{
+			/**
+			 * Logger notice
+			 */
+			WC_Robokassa::instance()->get_logger()->addNotice('Api RESULT request error. Order not found.');
 
 			/**
-			 * Order not found
+			 * Send Service unavailable
 			 */
-			if($order === false)
+			wp_die(__('Order not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
+		}
+
+		/**
+		 * Local signature
+		 */
+		$signature_payload = $sum.':'.$order_id.':'.$signature_pass;
+		$local_signature = $this->get_signature($signature_payload, $signature_method);
+
+		/**
+		 * Add order note
+		 */
+		$order->add_order_note(sprintf(__('Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
+
+		/**
+		 * Logger info
+		 */
+		WC_Robokassa::instance()->get_logger()->addInfo('Robokassa request success.');
+
+		/**
+		 * Result
+		 */
+		if ($_GET['action'] === 'result')
+		{
+			/**
+			 * Validated flag
+			 */
+			$validate = true;
+
+			/**
+			 * Check signature
+			 */
+			if($signature !== $local_signature)
 			{
-				/**
-				 * Logger notice
-				 */
-				WC_Robokassa::instance()->get_logger()->addNotice('Api RESULT request error. Order not found.');
+				$validate = false;
 
 				/**
-				 * Send Service unavailable
+				 * Add order note
 				 */
-				wp_die(__('Order not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
+				$order->add_order_note(sprintf(__('Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa'), $local_signature, $signature));
+
+				/**
+				 * Logger info
+				 */
+				WC_Robokassa::instance()->get_logger()->addError('Validate secret key error. Local hash != remote hash.');
 			}
 
 			/**
-			 * Local signature
+			 * Validated
 			 */
-			$signature_payload = $sum.':'.$order_id.':'.$signature_pass;
-			$local_signature = $this->get_signature($signature_payload, $signature_method);
-
-			/**
-			 * Add order note
-			 */
-			$order->add_order_note(sprintf(__('Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
-
-			/**
-			 * Logger info
-			 */
-			WC_Robokassa::instance()->get_logger()->addInfo('Robokassa request success.');
-
-			/**
-			 * Result
-			 */
-			if ($_GET['action'] === 'result')
+			if($validate === true)
 			{
 				/**
-				 * Validated flag
+				 * Logger info
 				 */
-				$validate = true;
+				WC_Robokassa::instance()->get_logger()->addInfo('Result Validated success.');
 
 				/**
-				 * Check signature
+				 * Testing
 				 */
-				if($signature !== $local_signature)
+				if($test === true)
 				{
-					$validate = false;
-
 					/**
 					 * Add order note
 					 */
-					$order->add_order_note(sprintf(__('Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa'), $local_signature, $signature));
-
-					/**
-					 * Logger info
-					 */
-					WC_Robokassa::instance()->get_logger()->addError('Validate secret key error. Local hash != remote hash.');
-				}
-
-				/**
-				 * Validated
-				 */
-				if($validate === true)
-				{
-					/**
-					 * Logger info
-					 */
-					WC_Robokassa::instance()->get_logger()->addInfo('Result Validated success.');
-
-					/**
-					 * Testing
-					 */
-					if($test === true)
-					{
-						/**
-						 * Add order note
-						 */
-						$order->add_order_note(__('Order successfully paid (TEST MODE).', 'wc-robokassa'));
-
-						/**
-						 * Logger notice
-						 */
-						WC_Robokassa::instance()->get_logger()->addNotice('Order successfully paid (TEST MODE).');
-					}
-					/**
-					 * Real payment
-					 */
-					else
-					{
-						/**
-						 * Add order note
-						 */
-						$order->add_order_note(__('Order successfully paid.', 'wc-robokassa'));
-
-						/**
-						 * Logger notice
-						 */
-						WC_Robokassa::instance()->get_logger()->addNotice('Order successfully paid.');
-					}
+					$order->add_order_note(__('Order successfully paid (TEST MODE).', 'wc-robokassa'));
 
 					/**
 					 * Logger notice
 					 */
-					WC_Robokassa::instance()->get_logger()->addInfo('Payment complete.');
+					WC_Robokassa::instance()->get_logger()->addNotice('Order successfully paid (TEST MODE).');
+				}
+				/**
+				 * Real payment
+				 */
+				else
+				{
+					/**
+					 * Add order note
+					 */
+					$order->add_order_note(__('Order successfully paid.', 'wc-robokassa'));
 
 					/**
-					 * Set status is payment
+					 * Logger notice
 					 */
-					$order->payment_complete();
-					die('OK'.$order_id);
+					WC_Robokassa::instance()->get_logger()->addNotice('Order successfully paid.');
 				}
 
 				/**
 				 * Logger notice
 				 */
-				WC_Robokassa::instance()->get_logger()->addError('Result Validated error. Payment error, please pay other time.');
+				WC_Robokassa::instance()->get_logger()->addInfo('Payment complete.');
 
 				/**
-				 * Send Service unavailable
+				 * Set status is payment
 				 */
-				wp_die(__('Payment error, please pay other time.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
+				$order->payment_complete();
+				die('OK'.$order_id);
 			}
+
 			/**
-			 * Success
+			 * Logger notice
 			 */
-			else if ($_GET['action'] === 'success')
-			{
-				/**
-				 * Add order note
-				 */
-				$order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
+			WC_Robokassa::instance()->get_logger()->addError('Result Validated error. Payment error, please pay other time.');
 
-				/**
-				 * Logger info
-				 */
-				WC_Robokassa::instance()->get_logger()->addInfo('Client return to success page.');
-
-				/**
-				 * Empty cart
-				 */
-				WC()->cart->empty_cart();
-
-				/**
-				 * Redirect to success
-				 */
-				wp_redirect( $this->get_return_url( $order ) );
-				die();
-			}
 			/**
-			 * Fail
+			 * Send Service unavailable
 			 */
-			else if ($_GET['action'] === 'fail')
-			{
-				/**
-				 * Add order note
-				 */
-				$order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
-
-				/**
-				 * Logger info
-				 */
-				WC_Robokassa::instance()->get_logger()->addInfo('The order has not been paid.');
-
-				/**
-				 * Set status is failed
-				 */
-				$order->update_status('failed');
-
-				/**
-				 * Redirect to cancel
-				 */
-				wp_redirect( str_replace('&amp;', '&', $order->get_cancel_order_url() ) );
-				die();
-			}
+			wp_die(__('Payment error, please pay other time.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
 		}
-
 		/**
-		 * Logger notice
+		 * Success
 		 */
-		WC_Robokassa::instance()->get_logger()->addNotice('Api request error. Action not found.');
+		else if ($_GET['action'] === 'success')
+		{
+			/**
+			 * Add order note
+			 */
+			$order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
+
+			/**
+			 * Logger info
+			 */
+			WC_Robokassa::instance()->get_logger()->addInfo('Client return to success page.');
+
+			/**
+			 * Empty cart
+			 */
+			WC()->cart->empty_cart();
+
+			/**
+			 * Redirect to success
+			 */
+			wp_redirect( $this->get_return_url( $order ) );
+			die();
+		}
+		/**
+		 * Fail
+		 */
+		else if ($_GET['action'] === 'fail')
+		{
+			/**
+			 * Add order note
+			 */
+			$order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
+
+			/**
+			 * Set status is failed
+			 */
+			$order->update_status('failed');
+
+			/**
+			 * Redirect to cancel
+			 */
+			wp_redirect( str_replace('&amp;', '&', $order->get_cancel_order_url() ) );
+			die();
+		}
 
 		/**
 		 * Send Service unavailable
