@@ -1568,6 +1568,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function is_available()
 	{
-		return parent::is_available();
+		$is_available = parent::is_available();
+
+		return $is_available;
 	}
 }
