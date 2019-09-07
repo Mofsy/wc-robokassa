@@ -28,7 +28,7 @@ Support external plugins:
 
 = Premium available =
 More features for use payments
-https://mofsy.ru/projects/wc-robokassa-premium
+[https://mofsy.ru/projects/wc-robokassa-premium](https://mofsy.ru/projects/wc-robokassa-premium)
 
 == Translations ==
 
