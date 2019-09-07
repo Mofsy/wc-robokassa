@@ -23,6 +23,7 @@ Email - support@mofsy.ru
 
 Support external plugins:
 1. WPML (http://wpml.org)
+2. WooCommerce Currency Switcher (https://currency-switcher.com)
 
 == Translations ==
 
@@ -47,6 +48,7 @@ So please contribute your language to the plugin to make it even more useful. Fo
 * Add licence.txt
 * Add KZT currency support
 * Add new hooks
+* Add WooCommerce Currency Switcher support
 * More fix
 
 = 1.1.1.1 =
