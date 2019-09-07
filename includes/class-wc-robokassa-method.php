@@ -129,13 +129,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
 
 		/**
-		 * Add setting fields
+		 * Initialize filters
 		 */
-		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'));
-		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'));
-		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'));
-		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_ofd'));
-		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'));
+		$this->init_filters();
 
 		/**
 		 * Load settings
@@ -163,6 +159,21 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Payment listener/API hook
 		 */
 		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications' ));
+	}
+
+	/**
+	 * Initialize filters
+	 */
+	public function init_filters()
+	{
+		/**
+		 * Add setting fields
+		 */
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_ofd'));
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'));
 	}
 
 	/**
