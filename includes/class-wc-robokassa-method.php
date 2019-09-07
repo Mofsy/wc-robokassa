@@ -65,7 +65,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @var string
 	 */
-	public $language = 'ru';
+	public $user_interface_language = 'ru';
 
 	/**
 	 * @var mixed
@@ -210,7 +210,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @filter woocommerce_robokassa_icon
 	 */
-	private function init_options()
+	public function init_options()
 	{
 		/**
 		 * Gateway not enabled?
@@ -226,6 +226,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->title = $this->get_option('title');
 
 		/**
+		 * Set description
+		 */
+		$this->description = $this->get_option('description');
+
+		/**
 		 * Testing?
 		 */
 		$this->test = $this->get_option('test');
@@ -233,7 +238,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Default language for Robokassa interface
 		 */
-		$this->language = $this->get_option('language');
+		$this->user_interface_language = $this->get_option('language');
 
 		/**
 		 * Automatic language
@@ -244,18 +249,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			switch($lang)
 			{
 				case 'en_EN':
-					$this->language = 'en';
+					$this->user_interface_language = 'en';
 					break;
 				default:
-					$this->language = 'ru';
+					$this->user_interface_language = 'ru';
 					break;
 			}
 		}
-
-		/**
-		 * Set description
-		 */
-		$this->description = $this->get_option('description');
 
 		/**
 		 * Set order button text
@@ -1207,7 +1207,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Language (culture)
 		 */
-		$args['Culture'] = $this->language;
+		$args['Culture'] = $this->user_interface_language;
 
 		/**
 		 * Execute filter wc_robokassa_form_args
