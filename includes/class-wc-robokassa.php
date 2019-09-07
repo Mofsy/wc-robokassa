@@ -112,7 +112,7 @@ class WC_Robokassa
 	}
 
 	/**
-	 * Unserializing instances is forbidden due to singleton pattern.
+	 * Un-serializing instances is forbidden due to singleton pattern.
 	 *
 	 * @since 2.0.0.1
 	 */
