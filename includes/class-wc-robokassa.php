@@ -299,9 +299,24 @@ class WC_Robokassa
 	public function load_currency()
     {
 	    /**
-	     * Set current WooCommerce currency
+	     * WooCommerce Currency Switcher
 	     */
-	    $this->set_wc_currency(gatework_get_wc_currency());
+	    if (class_exists('WOOCS'))
+	    {
+		    global $WOOCS;
+
+		    /**
+		     * Set current WooCommerce Currency Switcher currency
+		     */
+		    $this->set_wc_currency(strtoupper($WOOCS->storage->get_val('woocs_current_currency')));
+	    }
+	    else
+	    {
+		    /**
+		     * Set current WooCommerce currency
+		     */
+		    $this->set_wc_currency(gatework_get_wc_currency());
+	    }
     }
 
 	/**
