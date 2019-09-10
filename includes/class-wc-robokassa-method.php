@@ -595,13 +595,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_form_fields_interface($fields)
 	{
-		$fields['test_payments'] = array
-		(
-			'title' => __( 'Parameters of the test fees', 'wc-robokassa' ),
-			'type' => 'title',
-			'description' => __( 'Set up test payments. Passwords and counting method signature for test payments differ.', 'wc-robokassa' ),
-		);
-
 		$fields['interface'] = array
 		(
 			'title' => __( 'Interface', 'wc-robokassa' ),
