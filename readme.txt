@@ -19,11 +19,11 @@ This is the best payment gateway plugin for Robokassa, because it is the most in
 Support Robochecks, Recurring payments, Individuals, Individual entrepreneurs and Legal entities.
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
-= Support currency =
-RUB, USD, EUR, KZT
-
 Questions and answers:
 Email - support@mofsy.ru
+
+= Support currency =
+RUB, USD, EUR, KZT
 
 = Support external plugins =
 1. WPML (http://wpml.org)
