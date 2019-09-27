@@ -12,11 +12,9 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://mofsy.ru/others/help
 
 == Description ==
-Allows you to use Robokassa with the WooCommerce as payment gateway plugin.
-
-This is the best payment gateway plugin for Robokassa, because it is the most integrated with Robokassa Merchant capabilities and is available for most versions WooCommerce and Wordpress.
-
-Support Robochecks, Recurring payments, Individuals, Individual entrepreneurs and Legal entities.
+Allows you to use The ROBOKASSA with WooCommerce as a payment gateway plugin.
+Created for individuals, individual entrepreneurs and legal entities.
+This is the best payment gateway plugin for Robokassa because it is the most integrated with the capabilities of Robokassa Merchant and is available for most versions of WooCommerce and WordPress.
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
 Questions and answers:
