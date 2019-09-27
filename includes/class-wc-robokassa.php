@@ -436,7 +436,7 @@ class WC_Robokassa
 	 */
 	public function wc_robokassa_admin_styles()
     {
-        if(isset($_GET['section']) && $_GET['section'] == 'robokassa')
+        if(isset($_GET['section']) && $_GET['section'] === 'robokassa')
         {
             wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
         }
