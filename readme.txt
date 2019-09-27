@@ -13,22 +13,31 @@ Donate link: https://mofsy.ru/others/help
 
 == Description ==
 Allows you to use Robokassa with the WooCommerce as payment gateway plugin.
+
 This is the best payment gateway plugin for Robokassa, because it is the most integrated with Robokassa Merchant capabilities and is available for most versions WooCommerce and Wordpress.
+
 Support Robochecks, Recurring payments, Individuals, Individual entrepreneurs and Legal entities.
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
-Support currency: RUB, USD, EUR, KZT
+= Support currency =
+RUB, USD, EUR, KZT
 
 Questions and answers:
 Email - support@mofsy.ru
 
-Support external plugins:
+= Support external plugins =
 1. WPML (http://wpml.org)
 2. WooCommerce Currency Switcher (https://currency-switcher.com)
 
 = Premium available =
 More features for use payments
 [https://mofsy.ru/projects/wc-robokassa-premium](https://mofsy.ru/projects/wc-robokassa-premium)
+
+== Screenshots ==
+
+1. One
+2. Two
+3. Three
 
 == Translations ==
 
@@ -44,6 +53,10 @@ So please contribute your language to the plugin to make it even more useful. Fo
 3. Setting
 
 == Changelog ==
+
+= 2.0.1.1 =
+* Fix icon
+* Other fix
 
 = 2.0.0.1 =
 * Plugin rename
