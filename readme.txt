@@ -53,6 +53,7 @@ So please contribute your language to the plugin to make it even more useful. Fo
 
 = 2.0.1.1 =
 * Fix icon
+* Fix description
 * Other fix
 
 = 2.0.0.1 =
