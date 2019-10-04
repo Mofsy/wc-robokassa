@@ -890,6 +890,21 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Get order object
 		 */
 		$order = wc_get_order($order_id);
+		
+		/**
+		 * Order fail
+		 */
+		if($order === false)
+		{
+			/**
+			 * Return data
+			 */
+			return array
+			(
+				'result' => 'failure',
+				'redirect' => ''
+			);
+		}
 
 		// hook
 		do_action('wc_robokassa_process_payment_start', $order_id, $order);
