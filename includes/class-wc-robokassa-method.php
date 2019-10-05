@@ -1198,7 +1198,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					/**
 					 * Tax
 					 */
-					'tax' => $this->ofd_nds
+					'tax' => $this->ofd_nds,
+
+					/**
+					 * Payment method
+					 */
+					'payment_method' => $this->ofd_payment_method,
+
+					/**
+					 * Payment object
+					 */
+					'payment_object' => $this->ofd_payment_object,
 				);
 			}
 
@@ -1238,7 +1248,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					/**
 					 * Tax
 					 */
-					'tax' => $this->ofd_nds
+					'tax' => $this->ofd_nds,
+
+					/**
+					 * Payment method
+					 */
+					'payment_method' => $this->ofd_payment_method,
+
+					/**
+					 * Payment object
+					 */
+					'payment_object' => $this->ofd_payment_object,
 				);
 			}
 
