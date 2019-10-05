@@ -109,6 +109,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $ofd_nds = 'none';
 
 	/**
+	 * @var string
+	 */
+	public $ofd_payment_method = '';
+
+	/**
+	 * @var string
+	 */
+	public $ofd_payment_object = '';
+
+	/**
 	 * WC_Robokassa constructor
 	 */
 	public function __construct()
@@ -340,6 +350,22 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			}
 
 			$this->ofd_nds = $ofd_nds;
+		}
+
+		/**
+		 * Set ofd_payment_method
+		 */
+		if($this->get_option('ofd_payment_method') !== '')
+		{
+			$this->ofd_payment_method = $this->get_option('ofd_payment_method');
+		}
+
+		/**
+		 * Set ofd_payment_object
+		 */
+		if($this->get_option('ofd_payment_object') !== '')
+		{
+			$this->ofd_payment_object = $this->get_option('ofd_payment_object');
 		}
 
 		/**
