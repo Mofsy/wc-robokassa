@@ -1143,8 +1143,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Receipt
 		 */
 		$receipt_result = '';
-
-		if($this->ofd_status)
+		if($this->ofd_status !== false)
 		{
 			/**
 			 * Container
@@ -1158,9 +1157,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			foreach ($order->get_items() as $receipt_items_key => $receipt_items_value)
 			{
-				$item_quantity = $receipt_items_value->get_quantity(); // Get the item quantity
+				/**
+				 * Quantity
+				 */
+				$item_quantity = $receipt_items_value->get_quantity();
 
-				$item_total = $receipt_items_value->get_total(); // Get the item line total
+				/**
+				 * Total item sum
+				 */
+				$item_total = $receipt_items_value->get_total();
 
 				/**
 				 * Build positions
@@ -1197,8 +1202,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				);
 			}
 
-			// DELIVERY POSITION
-			if ($order->shipping_total > 0)
+			/**
+			 * Delivery
+			 */
+			if ($order->get_shipping_total() > 0)
 			{
 				/**
 				 * Build positions
@@ -1219,7 +1226,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					 *  целая часть не более 8 знаков;
 					 *  дробная часть не более 2 знаков.
 					 */
-					'sum' => intval($order->shipping_total),
+					'sum' => intval($order->get_shipping_total()),
 
 					/**
 					 * Количество/вес
@@ -1244,11 +1251,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 * Items
 			 */
 			$receipt['items'] = $receipt_items;
-
-			/**
-			 * Insert $receipt into debug mode
-			 */
-			WC_Robokassa::instance()->get_logger()->addDebug('$receipt', $receipt);
 
 			/**
 			 * Result
