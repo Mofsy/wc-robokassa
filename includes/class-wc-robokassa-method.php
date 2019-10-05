@@ -1217,7 +1217,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					 *
 					 * максимальная длина 128 символов
 					 */
-					'name' => 'Доставка',
+					'name' => __('Delivery', 'wc-robokassa'),
 
 					/**
 					 * Стоимость предмета расчета с учетом скидок и наценок
