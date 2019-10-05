@@ -432,7 +432,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __( 'Main settings', 'wc-robokassa' ),
 			'type' => 'title',
-			'description' => __( 'Work is impossible without these settings. Carefully specify the correct data.', 'wc-robokassa' ),
+			'description' => __( 'Work is impossible without these settings.', 'wc-robokassa' ),
 		);
 
 		$fields['enabled'] = array
