@@ -2,7 +2,7 @@
 Contributors: Mofsy
 Tags: robokassa, робокасса, робочеки, payment, gateway, woo commerce, woocommerce, ecommerce, gateway, woo robokassa, shop, robo, merchant, woo, woo robo
 Requires at least: 3.0
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 5.4
 Stable tag: trunk
 WC requires at least: 3.0
@@ -50,6 +50,9 @@ So please contribute your language to the plugin to make it even more useful. Fo
 3. Setting
 
 == Changelog ==
+
+= 2.0.1.2 =
+* WP 5.3 support
 
 = 2.0.1.1 =
 * Fix icon
