@@ -6,7 +6,7 @@ Tested up to: 5.3
 Requires PHP: 5.4
 Stable tag: trunk
 WC requires at least: 3.0
-WC tested up to: 3.7
+WC tested up to: 3.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://mofsy.ru/others/help
@@ -52,7 +52,8 @@ So please contribute your language to the plugin to make it even more useful. Fo
 == Changelog ==
 
 = 2.0.1.2 =
-* WP 5.3 support
+* WordPress 5.3 support
+* WooCommerce 3.8 support
 
 = 2.0.1.1 =
 * Fix icon
