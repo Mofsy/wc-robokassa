@@ -433,6 +433,306 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_shop_login()
+	{
+		return $this->shop_login;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $shop_login
+	 */
+	public function set_shop_login( $shop_login )
+	{
+		$this->shop_login = $shop_login;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_shop_pass_1()
+	{
+		return $this->shop_pass_1;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $shop_pass_1
+	 */
+	public function set_shop_pass_1( $shop_pass_1 )
+	{
+		$this->shop_pass_1 = $shop_pass_1;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_shop_pass_2()
+	{
+		return $this->shop_pass_2;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $shop_pass_2
+	 */
+	public function set_shop_pass_2( $shop_pass_2 )
+	{
+		$this->shop_pass_2 = $shop_pass_2;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_sign_method()
+	{
+		return $this->sign_method;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $sign_method
+	 */
+	public function set_sign_method( $sign_method )
+	{
+		$this->sign_method = $sign_method;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_form_url()
+	{
+		return $this->form_url;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $form_url
+	 */
+	public function set_form_url( $form_url )
+	{
+		$this->form_url = $form_url;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_user_interface_language()
+	{
+		return $this->user_interface_language;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $user_interface_language
+	 */
+	public function set_user_interface_language( $user_interface_language )
+	{
+		$this->user_interface_language = $user_interface_language;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return mixed
+	 */
+	public function get_test()
+	{
+		return $this->test;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param mixed $test
+	 */
+	public function set_test( $test )
+	{
+		$this->test = $test;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_test_shop_pass_1()
+	{
+		return $this->test_shop_pass_1;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $test_shop_pass_1
+	 */
+	public function set_test_shop_pass_1( $test_shop_pass_1 )
+	{
+		$this->test_shop_pass_1 = $test_shop_pass_1;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_test_shop_pass_2()
+	{
+		return $this->test_shop_pass_2;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $test_shop_pass_2
+	 */
+	public function set_test_shop_pass_2( $test_shop_pass_2 )
+	{
+		$this->test_shop_pass_2 = $test_shop_pass_2;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_test_sign_method()
+	{
+		return $this->test_sign_method;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $test_sign_method
+	 */
+	public function set_test_sign_method( $test_sign_method )
+	{
+		$this->test_sign_method = $test_sign_method;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return bool
+	 */
+	public function is_ofd_status()
+	{
+		return $this->ofd_status;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param bool $ofd_status
+	 */
+	public function set_ofd_status( $ofd_status )
+	{
+		$this->ofd_status = $ofd_status;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_ofd_sno()
+	{
+		return $this->ofd_sno;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $ofd_sno
+	 */
+	public function set_ofd_sno( $ofd_sno )
+	{
+		$this->ofd_sno = $ofd_sno;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_ofd_nds()
+	{
+		return $this->ofd_nds;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $ofd_nds
+	 */
+	public function set_ofd_nds( $ofd_nds )
+	{
+		$this->ofd_nds = $ofd_nds;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_ofd_payment_method()
+	{
+		return $this->ofd_payment_method;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param string $ofd_payment_method
+	 */
+	public function set_ofd_payment_method( $ofd_payment_method )
+	{
+		$this->ofd_payment_method = $ofd_payment_method;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @return string
+	 */
+	public function get_ofd_payment_object()
+	{
+		return $this->ofd_payment_object;
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 * 
+	 * @param string $ofd_payment_object
+	 */
+	public function set_ofd_payment_object( $ofd_payment_object )
+	{
+		$this->ofd_payment_object = $ofd_payment_object;
+	}
+
+	/**
 	 * Initialise Gateway Settings Form Fields
 	 *
 	 * @access public
