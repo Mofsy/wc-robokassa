@@ -1459,11 +1459,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 * Result
 			 */
 			$receipt_result = json_encode($receipt);
-
-			/**
-			 * Insert $receipt_result into debug mode
-			 */
-			WC_Robokassa::instance()->get_logger()->addDebug('$receipt_result' . $receipt_result);
 		}
 
 		/**
@@ -1832,11 +1827,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				{
 					$order->add_order_note( sprintf( __( 'Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa' ), $local_signature, $signature ) );
 				}
-
-				/**
-				 * Logger info
-				 */
-				WC_Robokassa::instance()->get_logger()->addError('Validate secret key error. Local hash != remote hash.');
 			}
 
 			/**
@@ -1844,11 +1834,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 */
 			if($validate === true)
 			{
-				/**
-				 * Logger info
-				 */
-				WC_Robokassa::instance()->get_logger()->addInfo('Result Validated success.');
-
 				/**
 				 * Testing
 				 */
@@ -1861,11 +1846,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					{
 						$order->add_order_note( __( 'Order successfully paid (TEST MODE).', 'wc-robokassa' ) );
 					}
-
-					/**
-					 * Logger notice
-					 */
-					WC_Robokassa::instance()->get_logger()->addNotice('Order successfully paid (TEST MODE).');
 				}
 				/**
 				 * Real payment
@@ -1879,17 +1859,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					{
 						$order->add_order_note( __( 'Order successfully paid.', 'wc-robokassa' ) );
 					}
-
-					/**
-					 * Logger notice
-					 */
-					WC_Robokassa::instance()->get_logger()->addNotice('Order successfully paid.');
 				}
-
-				/**
-				 * Logger notice
-				 */
-				WC_Robokassa::instance()->get_logger()->addInfo('Payment complete.');
 
 				/**
 				 * Set status is payment
@@ -1897,11 +1867,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$order->payment_complete();
 				die('OK'.$order_id);
 			}
-
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addError('Result Validated error. Payment error, please pay other time.');
 
 			/**
 			 * Send Service unavailable
