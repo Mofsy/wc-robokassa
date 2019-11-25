@@ -356,11 +356,13 @@ class WC_Robokassa
 	 */
 	public function wc_gateway_method_add($methods)
 	{
-		$robokassa_method_class_name = apply_filters('wc_robokassa_method_class_name_add', 'Wc_Robokassa_Method');
+	    $default_class_name = 'Wc_Robokassa_Method';
+
+		$robokassa_method_class_name = apply_filters('wc_robokassa_method_class_name_add', $default_class_name);
 
 		if(!class_exists($robokassa_method_class_name))
 		{
-			$robokassa_method_class_name = 'Wc_Robokassa_Method';
+			$robokassa_method_class_name = $default_class_name;
 		}
 
 		$methods[] = $robokassa_method_class_name;
