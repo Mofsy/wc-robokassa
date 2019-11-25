@@ -1399,17 +1399,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Test mode
 		 */
-		if ($this->test === 'yes')
+		if ($this->get_test() === 'yes')
 		{
 			/**
 			 * Signature pass for testing
 			 */
-			$signature_pass = $this->test_shop_pass_1;
+			$signature_pass = $this->get_test_shop_pass_1();
 
 			/**
 			 * Sign method
 			 */
-			$signature_method = $this->test_sign_method;
+			$signature_method = $this->get_test_sign_method();
 
 			/**
 			 * Test flag
@@ -1424,12 +1424,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Signature pass for real payments
 			 */
-			$signature_pass = $this->shop_pass_1;
+			$signature_pass = $this->get_shop_pass_1();
 
 			/**
 			 * Sign method
 			 */
-			$signature_method = $this->sign_method;
+			$signature_method = $this->get_sign_method();
 		}
 
 		/**
@@ -1445,7 +1445,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Receipt
 		 */
 		$receipt_result = '';
-		if($this->ofd_status !== false)
+		if($this->is_ofd_status() === true)
 		{
 			/**
 			 * Container
@@ -1455,119 +1455,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Items
 			 */
-			$receipt_items = array();
-
-			foreach ($order->get_items() as $receipt_items_key => $receipt_items_value)
-			{
-				/**
-				 * Quantity
-				 */
-				$item_quantity = $receipt_items_value->get_quantity();
-
-				/**
-				 * Total item sum
-				 */
-				$item_total = $receipt_items_value->get_total();
-
-				/**
-				 * Build positions
-				 */
-				$receipt_items[] = array
-				(
-					/**
-					 * Название товара
-					 *
-					 * максимальная длина 128 символов
-					 */
-					'name' => $receipt_items_value['name'],
-
-					/**
-					 * Стоимость предмета расчета с учетом скидок и наценок
-					 *
-					 * Цена в рублях:
-					 *  целая часть не более 8 знаков;
-					 *  дробная часть не более 2 знаков.
-					 */
-					'sum' => intval($item_total),
-
-					/**
-					 * Количество/вес
-					 *
-					 * максимальная длина 128 символов
-					 */
-					'quantity' => intval($item_quantity),
-
-					/**
-					 * Tax
-					 */
-					'tax' => $this->ofd_nds,
-
-					/**
-					 * Payment method
-					 */
-					'payment_method' => $this->ofd_payment_method,
-
-					/**
-					 * Payment object
-					 */
-					'payment_object' => $this->ofd_payment_object,
-				);
-			}
-
-			/**
-			 * Delivery
-			 */
-			if ($order->get_shipping_total() > 0)
-			{
-				/**
-				 * Build positions
-				 */
-				$receipt_items[] = array
-				(
-					/**
-					 * Название товара
-					 *
-					 * максимальная длина 128 символов
-					 */
-					'name' => __('Delivery', 'wc-robokassa'),
-
-					/**
-					 * Стоимость предмета расчета с учетом скидок и наценок
-					 *
-					 * Цена в рублях:
-					 *  целая часть не более 8 знаков;
-					 *  дробная часть не более 2 знаков.
-					 */
-					'sum' => intval($order->get_shipping_total()),
-
-					/**
-					 * Количество/вес
-					 *
-					 * максимальная длина 128 символов
-					 */
-					'quantity' => 1,
-
-					/**
-					 * Tax
-					 */
-					'tax' => $this->ofd_nds,
-
-					/**
-					 * Payment method
-					 */
-					'payment_method' => $this->ofd_payment_method,
-
-					/**
-					 * Payment object
-					 */
-					'payment_object' => $this->ofd_payment_object,
-				);
-			}
+			$receipt_items = $this->generate_receipt_items($order);
 
 			/**
 			 * Sno
 			 */
-			$receipt['sno'] = $this->ofd_sno;
+			$receipt['sno'] = $this->get_ofd_sno();
 
 			/**
 			 * Items
@@ -1614,7 +1507,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Language (culture)
 		 */
-		$args['Culture'] = $this->user_interface_language;
+		$args['Culture'] = $this->get_user_interface_language();
 
 		/**
 		 * Execute filter wc_robokassa_form_args
@@ -1633,11 +1526,135 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Return full form
 		 */
-		return '<form action="'.esc_url($this->form_url).'" method="POST" id="wc_robokassa_payment_form" accept-charset="utf-8">'."\n".
+		return '<form action="'.esc_url($this->get_form_url()).'" method="POST" id="wc_robokassa_payment_form" accept-charset="utf-8">'."\n".
 		       implode("\n", $args_array).
 		       '<input type="submit" class="button alt" id="submit_wc_robokassa_payment_form" value="'.__('Pay', 'wc-robokassa').
 		       '" /> <a class="button cancel" href="'.$order->get_cancel_order_url().'">'.__('Cancel & return to cart', 'wc-robokassa').'</a>'."\n".
 		       '</form>';
+	}
+
+	/**
+	 * @since 2.2.0.1
+	 *
+	 * @param WC_Order $order
+	 *
+	 * @return array
+	 */
+	public function generate_receipt_items($order)
+	{
+		$receipt_items = array();
+
+		/**
+		 * Order items
+		 */
+		foreach ($order->get_items() as $receipt_items_key => $receipt_items_value)
+		{
+			/**
+			 * Quantity
+			 */
+			$item_quantity = $receipt_items_value->get_quantity();
+
+			/**
+			 * Total item sum
+			 */
+			$item_total = $receipt_items_value->get_total();
+
+			/**
+			 * Build positions
+			 */
+			$receipt_items[] = array
+			(
+				/**
+				 * Название товара
+				 *
+				 * максимальная длина 128 символов
+				 */
+				'name' => $receipt_items_value['name'],
+
+				/**
+				 * Стоимость предмета расчета с учетом скидок и наценок
+				 *
+				 * Цена в рублях:
+				 *  целая часть не более 8 знаков;
+				 *  дробная часть не более 2 знаков.
+				 */
+				'sum' => intval($item_total),
+
+				/**
+				 * Количество/вес
+				 *
+				 * максимальная длина 128 символов
+				 */
+				'quantity' => intval($item_quantity),
+
+				/**
+				 * Tax
+				 */
+				'tax' => $this->get_ofd_nds(),
+
+				/**
+				 * Payment method
+				 */
+				'payment_method' => $this->get_ofd_payment_method(),
+
+				/**
+				 * Payment object
+				 */
+				'payment_object' => $this->get_ofd_payment_object(),
+			);
+		}
+
+		/**
+		 * Delivery
+		 */
+		if ($order->get_shipping_total() > 0)
+		{
+			/**
+			 * Build positions
+			 */
+			$receipt_items[] = array
+			(
+				/**
+				 * Название товара
+				 *
+				 * максимальная длина 128 символов
+				 */
+				'name' => __('Delivery', 'wc-robokassa'),
+
+				/**
+				 * Стоимость предмета расчета с учетом скидок и наценок
+				 *
+				 * Цена в рублях:
+				 *  целая часть не более 8 знаков;
+				 *  дробная часть не более 2 знаков.
+				 */
+				'sum' => intval($order->get_shipping_total()),
+
+				/**
+				 * Количество/вес
+				 *
+				 * максимальная длина 128 символов
+				 */
+				'quantity' => 1,
+
+				/**
+				 * Tax
+				 */
+				'tax' => $this->get_ofd_nds(),
+
+				/**
+				 * Payment method
+				 */
+				'payment_method' => $this->get_ofd_payment_method(),
+
+				/**
+				 * Payment object
+				 */
+				'payment_object' => $this->get_ofd_payment_object(),
+			);
+		}
+
+		return $receipt_items;
 	}
 
 	/**
@@ -1673,7 +1690,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				break;
 
 			default:
-
 				$signature = strtoupper(md5($string));
 		}
 
@@ -1713,7 +1729,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Test mode
 		 */
-		if ($this->test === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
+		if ($this->get_test() === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
 		{
 			/**
 			 * Test flag
@@ -1723,19 +1739,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Signature pass for testing
 			 */
-			if ($_GET['action'] === 'success')
+			if ($_REQUEST['action'] === 'success')
 			{
-				$signature_pass = $this->test_shop_pass_1;
+				$signature_pass = $this->get_test_shop_pass_1();
 			}
 			else
 			{
-				$signature_pass = $this->test_shop_pass_2;
+				$signature_pass = $this->get_test_shop_pass_2();
 			}
 
 			/**
 			 * Sign method
 			 */
-			$signature_method = $this->test_sign_method;
+			$signature_method = $this->get_test_sign_method();
 		}
 		/**
 		 * Real payments
@@ -1752,17 +1768,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 */
 			if ($_GET['action'] === 'success')
 			{
-				$signature_pass = $this->shop_pass_1;
+				$signature_pass = $this->get_shop_pass_1();
 			}
 			else
 			{
-				$signature_pass = $this->shop_pass_2;
+				$signature_pass = $this->get_shop_pass_2();
 			}
 
 			/**
 			 * Sign method
 			 */
-			$signature_method = $this->sign_method;
+			$signature_method = $this->get_sign_method();
 		}
 
 		/**
@@ -1807,7 +1823,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Result
 		 */
-		if ($_GET['action'] === 'result')
+		if ($_REQUEST['action'] === 'result')
 		{
 			/**
 			 * Validated flag
@@ -1907,7 +1923,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Success
 		 */
-		else if ($_GET['action'] === 'success')
+		else if ($_REQUEST['action'] === 'success')
 		{
 			/**
 			 * Add order note
@@ -1925,13 +1941,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Redirect to success
 			 */
-			wp_redirect( $this->get_return_url( $order ) );
+			wp_redirect($this->get_return_url($order));
 			die();
 		}
 		/**
 		 * Fail
 		 */
-		else if ($_GET['action'] === 'fail')
+		else if ($_REQUEST['action'] === 'fail')
 		{
 			/**
 			 * Add order note
