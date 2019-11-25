@@ -1142,14 +1142,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function is_valid_for_use()
 	{
-		$return = true;
-
 		/**
 		 * Check allow currency
 		 */
 		if (!in_array(WC_Robokassa::instance()->get_wc_currency(), $this->currency_all, false))
 		{
-			$return = false;
+			return false;
 		}
 
 		/**
@@ -1159,10 +1157,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if ($this->test === 'yes' && !current_user_can('manage_options'))
 		{
-			$return = false;
+			return false;
 		}
 
-		return $return;
+		return true;
 	}
 
 	/**
