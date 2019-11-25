@@ -1287,7 +1287,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Add order note
 		 */
-		$order->add_order_note(__('The client started to pay.', 'wc-robokassa'));
+		if(method_exists($order, 'add_order_note'))
+		{
+			$order->add_order_note(__('The client started to pay.', 'wc-robokassa'));
+		}
 
 		/**
 		 * Return data
@@ -1797,7 +1800,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Add order note
 		 */
-		$order->add_order_note(sprintf(__('Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
+		if(method_exists($order, 'add_order_note'))
+		{
+			$order->add_order_note( sprintf( __( 'Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-robokassa' ), $sum, $local_signature, $signature ) );
+		}
 
 		/**
 		 * Result
@@ -1819,7 +1825,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				/**
 				 * Add order note
 				 */
-				$order->add_order_note(sprintf(__('Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa'), $local_signature, $signature));
+				if(method_exists($order, 'add_order_note'))
+				{
+					$order->add_order_note( sprintf( __( 'Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa' ), $local_signature, $signature ) );
+				}
 
 				/**
 				 * Logger info
@@ -1845,7 +1854,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					/**
 					 * Add order note
 					 */
-					$order->add_order_note(__('Order successfully paid (TEST MODE).', 'wc-robokassa'));
+					if(method_exists($order, 'add_order_note'))
+					{
+						$order->add_order_note( __( 'Order successfully paid (TEST MODE).', 'wc-robokassa' ) );
+					}
 
 					/**
 					 * Logger notice
@@ -1860,7 +1872,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					/**
 					 * Add order note
 					 */
-					$order->add_order_note(__('Order successfully paid.', 'wc-robokassa'));
+					if(method_exists($order, 'add_order_note'))
+					{
+						$order->add_order_note( __( 'Order successfully paid.', 'wc-robokassa' ) );
+					}
 
 					/**
 					 * Logger notice
@@ -1898,7 +1913,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Add order note
 			 */
-			$order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
+			if(method_exists($order, 'add_order_note'))
+			{
+				$order->add_order_note( __( 'Client return to success page.', 'wc-robokassa' ) );
+			}
 
 			/**
 			 * Empty cart
@@ -1919,7 +1937,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Add order note
 			 */
-			$order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
+			if(method_exists($order, 'add_order_note'))
+			{
+				$order->add_order_note( __( 'The order has not been paid.', 'wc-robokassa' ) );
+			}
 
 			/**
 			 * Set status is failed
