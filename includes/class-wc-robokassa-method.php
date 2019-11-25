@@ -1440,7 +1440,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$args['Email'] = $billing_email;
 		}
-		unset($billing_email);
 
 		/**
 		 * Receipt
