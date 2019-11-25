@@ -41,9 +41,6 @@ More features for use payments
 * English - default, always included
 * Russian - always included
 
-*Note:* All my plugins are localized/ translateable by default. This is very important for all users worldwide.
-So please contribute your language to the plugin to make it even more useful. For translating I recommend the awesome for validating the ["Poedit Editor"](http://www.poedit.net/).
-
 == Installation ==
 1. Archive extract and upload "wc-robokassa" to /wp-content/plugins
 2. Activation plugin
