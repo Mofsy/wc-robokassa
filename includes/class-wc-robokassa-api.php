@@ -39,6 +39,40 @@ class Wc_Robokassa_Api
 	}
 
 	/**
+	 * Available API
+	 *
+	 * @return int
+	 */
+	public function is_available()
+	{
+		/**
+		 * Check WP
+		 */
+		if(!function_exists('wp_remote_post') || !function_exists('wp_remote_retrieve_body'))
+		{
+			return 0;
+		}
+
+		/**
+		 * Check SimpleXMLElement installed
+		 */
+		if(class_exists('SimpleXMLElement'))
+		{
+			return 1;
+		}
+
+		/**
+		 * Check DOMDocument installed
+		 */
+		if(class_exists('DOMDocument'))
+		{
+			return 2;
+		}
+
+		return 0;
+	}
+
+	/**
 	 * Интерфейс расчёта суммы к получению магазином
 	 *
 	 * - Только для физических лиц.
@@ -55,9 +89,10 @@ class Wc_Robokassa_Api
 	public function xml_calc_out_sum($IncCurrLabel, $IncSum, $merchantLogin = 'demo')
 	{
 		/**
-		 * Check SimpleXMLElement installed
+		 * Check available
 		 */
-		if(!class_exists('SimpleXMLElement'))
+		$is_available = $this->is_available();
+		if($is_available === 0)
 		{
 			return false;
 		}
@@ -87,21 +122,46 @@ class Wc_Robokassa_Api
 		if($response_body != '')
 		{
 			/**
-			 * Response normalize
+			 * SimpleXMl
 			 */
-			$response_data = new SimpleXMLElement($response_body);
-
-			/**
-			 * Check error
-			 *
-			 * @todo refactoring
-			 */
-			if($response_data->Result->Code != 0)
+			if($is_available === 1)
 			{
-				return false;
+				/**
+				 * Response normalize
+				 */
+				$response_data = new SimpleXMLElement($response_body);
+
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+				{
+					return false;
+				}
+
+				return $response_data->OutSum;
 			}
 
-			return $response_data->OutSum;
+			/**
+			 * DOMDocument
+			 */
+			if($is_available === 2)
+			{
+				/**
+				 * Response normalize
+				 */
+				$response_data = $this->dom_xml_to_array($response_body);
+
+				/**
+				 * Check error
+				 */
+				if($response_data['CalcSummsResponseData']['Result']['Code'] != 0)
+				{
+					return false;
+				}
+
+				return $response_data['CalcSummsResponseData']['OutSum'];
+			}
 		}
 
 		return false;
@@ -127,9 +187,10 @@ class Wc_Robokassa_Api
 	public function xml_op_state($merchantLogin, $InvoiceID, $Signature)
 	{
 		/**
-		 * Check SimpleXMLElement installed
+		 * Check available
 		 */
-		if(!class_exists('SimpleXMLElement'))
+		$is_available = $this->is_available();
+		if($is_available === 0)
 		{
 			return false;
 		}
@@ -158,20 +219,104 @@ class Wc_Robokassa_Api
 		 */
 		if($response_body != '')
 		{
-			/**
-			 * Response normalize
-			 */
-			$response_data = new SimpleXMLElement($response_body);
+			$op_state_data = array();
 
 			/**
-			 * Check error
-			 *
-			 * @todo refactoring
+			 * SimpleXML
 			 */
-			if($response_data->Result->Code != 0)
+			if($is_available === 1)
 			{
-				return false;
+				/**
+				 * Response normalize
+				 */
+				$response_data = new SimpleXMLElement($response_body);
+
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+				{
+					return false;
+				}
+
+				/**
+				 * Текущее состояние оплаты.
+				 */
+				if(isset($response_data->State))
+				{
+					$op_state_data['state'] = array
+					(
+						'code'         => $response_data->State->Code,
+						'request_date' => $response_data->State->RequestDate,
+						'state_date'   => $response_data->State->StateDate,
+					);
+				}
+
+				/**
+				 * Информация об операции оплаты счета
+				 */
+				if(isset($response_data->Info))
+				{
+					$op_state_data['info'] = array
+					(
+						'inc_curr_label' => $response_data->Info->IncCurrLabel,
+						'inc_sum' => $response_data->Info->IncSum,
+						'inc_account' => $response_data->Info->IncAccount,
+						'payment_method_code' => $response_data->Info->PaymentMethod->Code,
+						'payment_method_description' => $response_data->Info->PaymentMethod->Description,
+						'out_curr_label' => $response_data->Info->OutCurrLabel,
+						'out_sum' => $response_data->Info->OutSum,
+					);
+				}
 			}
+
+			/**
+			 * DOMDocument
+			 */
+			if($is_available === 2)
+			{
+				$response_data = $this->dom_xml_to_array( $response_body );
+
+				/**
+				 * Check error
+				 */
+				if (!isset($response_data['OperationStateResponse']['Result']['Code']) || $response_data['CurrenciesList']['Result']['Code'] != 0)
+				{
+					return false;
+				}
+
+				/**
+				 * Текущее состояние оплаты.
+				 */
+				if(isset($response_data['OperationStateResponse']['State']))
+				{
+					$op_state_data['state'] = array
+					(
+						'code' => $response_data['OperationStateResponse']['State']['Code'],
+						'request_date' => $response_data['OperationStateResponse']['State']['RequestDate'],
+						'state_date' => $response_data['OperationStateResponse']['State']['StateDate'],
+					);
+				}
+
+				/**
+				 * Информация об операции оплаты счета
+				 */
+				if(isset($response_data['OperationStateResponse']['Info']))
+				{
+					$op_state_data['info'] = array
+					(
+						'inc_curr_label' => $response_data['OperationStateResponse']['Info']['IncCurrLabel'],
+						'inc_sum' => $response_data['OperationStateResponse']['Info']['IncSum'],
+						'inc_account' => $response_data['OperationStateResponse']['Info']['IncAccount'],
+						'payment_method_code' => $response_data['OperationStateResponse']['Info']['PaymentMethod']['Code'],
+						'payment_method_description' => $response_data['OperationStateResponse']['Info']['PaymentMethod']['Description'],
+						'out_curr_label' => $response_data['OperationStateResponse']['Info']['OutCurrLabel'],
+						'out_sum' => $response_data['OperationStateResponse']['Info']['OutSum'],
+					);
+				}
+			}
+
+			return $op_state_data;
 		}
 
 		return false;
@@ -196,9 +341,10 @@ class Wc_Robokassa_Api
 	public function xml_get_currencies($merchantLogin, $language)
 	{
 		/**
-		 * Check SimpleXMLElement installed
+		 * Check available
 		 */
-		if(!class_exists('SimpleXMLElement'))
+		$is_available = $this->is_available();
+		if($is_available === 0)
 		{
 			return false;
 		}
@@ -228,49 +374,121 @@ class Wc_Robokassa_Api
 		if($response_body != '')
 		{
 			/**
-			 * Response normalize
-			 */
-			$response_data = new SimpleXMLElement($response_body);
-
-			/**
-			 * Check error
-			 *
-			 * @todo refactoring
-			 */
-			if($response_data->Result->Code != 0)
-			{
-				return false;
-			}
-
-			/**
 			 * Данные валют
 			 */
 			$currencies_data = array();
 
 			/**
-			 * Перебираем данные
+			 * SimpleXML
 			 */
-			foreach($response_data->Groups->Group as $xml_group)
+			if($is_available === 1)
 			{
-				$xml_group_attributes = $xml_group->attributes();
+				/**
+				 * Response normalize
+				 */
+				$response_data = new SimpleXMLElement($response_body);
 
-				foreach($xml_group->Items->Currency as $xml_group_item)
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
 				{
-					$xml_group_item_attributes = $xml_group_item->attributes();
-
-					$currencies_data[] = array
-					(
-						'group_code' => (string)$xml_group_attributes['Code'],
-						'group_description' => (string)$xml_group_attributes['Description'],
-						'currency_label' => (string)$xml_group_item_attributes['Label'],
-						'currency_alias' => (string)$xml_group_item_attributes['Alias'],
-						'currency_name' => (string)$xml_group_item_attributes['Name'],
-						'language' => $language,
-					);
+					return false;
 				}
+
+				/**
+				 * Перебираем данные
+				 */
+				foreach($response_data->Groups->Group as $xml_group)
+				{
+					$xml_group_attributes = $xml_group->attributes();
+
+					foreach($xml_group->Items->Currency as $xml_group_item)
+					{
+						$xml_group_item_attributes = $xml_group_item->attributes();
+
+						$response_item = array
+						(
+							'group_code' => (string)$xml_group_attributes['Code'],
+							'group_description' => (string)$xml_group_attributes['Description'],
+							'currency_label' => (string)$xml_group_item_attributes['Label'],
+							'currency_alias' => (string)$xml_group_item_attributes['Alias'],
+							'currency_name' => (string)$xml_group_item_attributes['Name'],
+							'language' => $language,
+						);
+
+						if(isset($xml_group_item_attributes['MaxValue']))
+						{
+							$response_item['sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
+						}
+
+						if(isset($xml_group_item_attributes['MinValue']))
+						{
+							$response_item['sum_min'] = (string)$xml_group_item_attributes['MinValue'];
+						}
+
+						$currencies_data[] = $response_item;
+					}
+				}
+
+				return $currencies_data;
 			}
 
-			return $currencies_data;
+			/**
+			 * DOMDocument
+			 */
+			if($is_available === 2)
+			{
+				$response_data = $this->dom_xml_to_array($response_body);
+
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data['CurrenciesList']['Result']['Code']) || $response_data['CurrenciesList']['Result']['Code'] != 0)
+				{
+					return false;
+				}
+
+				/**
+				 * Перебираем данные
+				 */
+				foreach($response_data['CurrenciesList']['Groups']['Group'] as $array_group)
+				{
+					$array_group_attributes = $array_group['@attributes'];
+
+					foreach($array_group['Items']['Currency'] as $array_group_item)
+					{
+						if(isset($array_group_item['@attributes']))
+						{
+							$array_group_item = $array_group_item['@attributes'];
+						}
+
+						$response_item = array
+						(
+							'group_code' => $array_group_attributes['Code'],
+							'group_description' => $array_group_attributes['Description'],
+							'currency_label' => $array_group_item['Label'],
+							'currency_alias' => $array_group_item['Alias'],
+							'currency_name' => $array_group_item['Name'],
+							'language' => $language,
+						);
+
+						if(isset($array_group_item['MaxValue']))
+						{
+							$response_item['sum_max'] = $array_group_item['MaxValue'];
+						}
+
+						if(isset($array_group_item['MinValue']))
+						{
+							$response_item['sum_min'] = $array_group_item['MinValue'];
+						}
+
+						$currencies_data[] = $response_item;
+					}
+				}
+
+				return $currencies_data;
+			}
 		}
 
 		return false;
@@ -296,9 +514,10 @@ class Wc_Robokassa_Api
 	public function xml_get_payment_methods($merchantLogin, $language)
 	{
 		/**
-		 * Check SimpleXMLElement installed
+		 * Check available
 		 */
-		if(!class_exists('SimpleXMLElement'))
+		$is_available = $this->is_available();
+		if($is_available === 0)
 		{
 			return false;
 		}
@@ -328,38 +547,74 @@ class Wc_Robokassa_Api
 		if($response_body != '')
 		{
 			/**
-			 * Response normalize
-			 */
-			$response_data = new SimpleXMLElement($response_body);
-
-			/**
-			 * Check error
-			 *
-			 * @todo refactoring
-			 */
-			if($response_data->Result->Code != 0)
-			{
-				return false;
-			}
-
-			/**
 			 * Данные валют
 			 */
 			$methods_data = array();
 
 			/**
-			 * Перебираем данные
+			 * SimpleXML
 			 */
-			foreach($response_data->Methods->Method as $xml_method)
+			if($is_available === 1)
 			{
-				$xml_method_attributes = $xml_method->attributes();
+				/**
+				 * Response normalize
+				 */
+				$response_data = new SimpleXMLElement($response_body);
 
-				$methods_data[(string)$xml_method_attributes['Code']] = array
-				(
-					'method_code' => (string)$xml_method_attributes['Code'],
-					'method_description' => (string)$xml_method_attributes['Description'],
-					'language' => $language
-				);
+				/**
+				 * Check error
+				 */
+				if (!isset($response_data->Result) || $response_data->Result->Code != 0)
+				{
+					return false;
+				}
+
+				/**
+				 * Перебираем данные
+				 */
+				foreach ( $response_data->Methods->Method as $xml_method )
+				{
+					$xml_method_attributes = $xml_method->attributes();
+
+					$methods_data[ (string) $xml_method_attributes['Code'] ] = array
+					(
+						'method_code' => (string) $xml_method_attributes['Code'],
+						'method_description' => (string) $xml_method_attributes['Description'],
+						'language' => $language
+					);
+				}
+
+			}
+
+			/**
+			 * DOMDocument
+			 */
+			if($is_available === 2)
+			{
+				$response_data = $this->dom_xml_to_array($response_body);
+
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data['PaymentMethodsList']['Result']['Code']) || $response_data['PaymentMethodsList']['Result']['Code'] != 0)
+				{
+					return false;
+				}
+
+				/**
+				 * Перебираем данные
+				 */
+				foreach ($response_data['PaymentMethodsList']['Methods']['Method'] as $array_method)
+				{
+					$array_method_attributes = $array_method['@attributes'];
+
+					$methods_data[$array_method_attributes['Code']] = array
+					(
+						'method_code' => $array_method_attributes['Code'],
+						'method_description' => $array_method_attributes['Description'],
+						'language' => $language
+					);
+				}
 			}
 
 			return $methods_data;
@@ -391,9 +646,10 @@ class Wc_Robokassa_Api
 	public function xm_get_rates($merchantLogin, $OutSum, $IncCurrLabel = '', $language = 'ru')
 	{
 		/**
-		 * Check SimpleXMLElement installed
+		 * Check available
 		 */
-		if(!class_exists('SimpleXMLElement'))
+		$is_available = $this->is_available();
+		if($is_available === 0)
 		{
 			return false;
 		}
@@ -423,48 +679,143 @@ class Wc_Robokassa_Api
 		if($response_body != '')
 		{
 			/**
-			 * Response normalize
-			 */
-			$response_data = new SimpleXMLElement($response_body);
-
-			/**
-			 * Check error
-			 *
-			 * @todo refactoring
-			 */
-			if($response_data->Result->Code != 0)
-			{
-				return false;
-			}
-
-			/**
 			 * Данные валют
 			 */
 			$rates_data = array();
 
 			/**
-			 * Перебираем данные
+			 * SimpleXML
 			 */
-			foreach($response_data->Groups->Group as $xml_group)
+			if($is_available === 1)
 			{
-				$xml_group_attributes = $xml_group->attributes();
+				/**
+				 * Response normalize
+				 */
+				$response_data = new SimpleXMLElement($response_body);
 
-				foreach($xml_group->Items->Currency as $xml_group_item)
+				/**
+				 * Check error
+				 *
+				 * @todo refactoring
+				 */
+				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
 				{
-					$xml_group_item_attributes = $xml_group_item->attributes();
+					return false;
+				}
 
-					$xml_group_item_rate_attributes = $xml_group_item->Rate->attributes();
+				/**
+				 * Перебираем данные
+				 */
+				foreach($response_data->Groups->Group as $xml_group)
+				{
+					$xml_group_attributes = $xml_group->attributes();
 
-					$rates_data[] = array
-					(
-						'group_code' => (string)$xml_group_attributes['Code'],
-						'group_description' => (string)$xml_group_attributes['Description'],
-						'currency_label' => (string)$xml_group_item_attributes['Label'],
-						'currency_alias' => (string)$xml_group_item_attributes['Alias'],
-						'currency_name' => (string)$xml_group_item_attributes['Name'],
-						'rate_inc_sum' => (string)$xml_group_item_rate_attributes['IncSum'],
-						'language' => $language,
-					);
+					foreach($xml_group->Items->Currency as $xml_group_item)
+					{
+						$xml_group_item_attributes = $xml_group_item->attributes();
+						$xml_group_item_rate_attributes = $xml_group_item->Rate->attributes();
+
+						$rates_item =  array
+						(
+							'group_code' => (string)$xml_group_attributes['Code'],
+							'group_description' => (string)$xml_group_attributes['Description'],
+							'currency_label' => (string)$xml_group_item_attributes['Label'],
+							'currency_alias' => (string)$xml_group_item_attributes['Alias'],
+							'currency_name' => (string)$xml_group_item_attributes['Name'],
+							'rate_inc_sum' => (string)$xml_group_item_rate_attributes['IncSum'],
+							'language' => $language,
+						);
+
+						if(isset($xml_group_item_attributes['MaxValue']))
+						{
+							$rates_item['currency_sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
+						}
+
+						if(isset($xml_group_item_attributes['MinValue']))
+						{
+							$rates_item['currency_sum_min'] = (string)$xml_group_item_attributes['MinValue'];
+						}
+
+						$rates_data[] = $rates_item;
+					}
+				}
+			}
+
+			/**
+			 * DOMDocument
+			 */
+			if($is_available === 2)
+			{
+				$response_data = $this->dom_xml_to_array($response_body);
+
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data['RatesList']['Result']['Code']) || $response_data['RatesList']['Result']['Code'] != 0)
+				{
+					return false;
+				}
+
+				/**
+				 * Перебираем данные
+				 */
+				foreach($response_data['RatesList']['Groups']['Group'] as $xml_group)
+				{
+					$xml_group_attributes = $xml_group['@attributes'];
+
+					if(!isset($xml_group['Items']['Currency']['@attributes']))
+					{
+						foreach($xml_group['Items']['Currency'] as $xml_group_item_key => $xml_group_item)
+						{
+							$rates_item = array
+							(
+								'group_code' => $xml_group_attributes['Code'],
+								'group_description' => $xml_group_attributes['Description'],
+								'currency_label' => $xml_group_item['@attributes']['Label'],
+								'currency_alias' => $xml_group_item['@attributes']['Alias'],
+								'currency_name' => $xml_group_item['@attributes']['Name'],
+								'rate_inc_sum' => $xml_group_item['Rate']['@attributes']['IncSum'],
+								'language' => $language,
+							);
+
+							if(isset($xml_group_item['@attributes']['MaxValue']))
+							{
+								$rates_item['currency_sum_max'] = $xml_group_item['@attributes']['MaxValue'];
+							}
+
+							if(isset($xml_group_item['@attributes']['MinValue']))
+							{
+								$rates_item['currency_sum_min'] = $xml_group_item['@attributes']['MinValue'];
+							}
+
+							$rates_data[] = $rates_item;
+						}
+					}
+					else
+					{
+						$rates_item = array
+						(
+							'group_code' => $xml_group_attributes['Code'],
+							'group_description' => $xml_group_attributes['Description'],
+							'currency_label' => $xml_group['Items']['Currency']['@attributes']['Label'],
+							'currency_alias' => $xml_group['Items']['Currency']['@attributes']['Alias'],
+							'currency_name' => $xml_group['Items']['Currency']['@attributes']['Name'],
+							'rate_inc_sum' => $xml_group['Items']['Currency']['Rate']['@attributes']['IncSum'],
+							'language' => $language,
+						);
+
+						if(isset($xml_group['Items']['Currency']['@attributes']['MaxValue']))
+						{
+							$rates_item['currency_sum_max'] = $xml_group['Items']['Currency']['@attributes']['MaxValue'];
+						}
+
+						if(isset($xml_group['Items']['Currency']['@attributes']['MinValue']))
+						{
+							$rates_item['currency_sum_min'] = $xml_group['Items']['Currency']['@attributes']['MinValue'];
+						}
+
+						$rates_data[] = $rates_item;
+					}
 				}
 			}
 
@@ -484,9 +835,10 @@ class Wc_Robokassa_Api
 	public function xml_get_limit($merchantLogin)
 	{
 		/**
-		 * Check SimpleXMLElement installed
+		 * Check available
 		 */
-		if(!class_exists('SimpleXMLElement'))
+		$is_available = $this->is_available();
+		if($is_available === 0)
 		{
 			return false;
 		}
@@ -516,23 +868,106 @@ class Wc_Robokassa_Api
 		if($response_body != '')
 		{
 			/**
-			 * Response normalize
+			 * SimpleXMl
 			 */
-			$response_data = new SimpleXMLElement($response_body);
-
-			/**
-			 * Check error
-			 *
-			 * @todo refactoring
-			 */
-			if($response_data->Result->Code != 0)
+			if($is_available === 1)
 			{
-				return false;
+				/**
+				 * Response normalize
+				 */
+				$response_data = new SimpleXMLElement($response_body);
+
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+				{
+					return false;
+				}
+
+				return $response_data->Limit;
 			}
 
-			return $response_data->Limit;
+			/**
+			 * DOMDocument
+			 */
+			if($is_available === 2)
+			{
+				$response_data = $this->dom_xml_to_array($response_body);
+
+				/**
+				 * Check error
+				 */
+				if(!isset($response_data['LimitResponse']['Result']['Code']) || $response_data["LimitResponse"]['Result']['Code'] != 0)
+				{
+					return false;
+				}
+
+				return $response_data['LimitResponse']['Limit'];
+			}
 		}
 
 		return false;
+	}
+
+	/**
+	 * Dom_XML2Array
+	 *
+	 * @param $response_body
+	 *
+	 * @return mixed
+	 */
+	private function dom_xml_to_array($response_body)
+	{
+		$root = new DOMDocument();
+		$root->loadXml($response_body);
+
+		$result = array();
+
+		if ($root->hasAttributes())
+		{
+			$attrs = $root->attributes;
+			foreach ($attrs as $attr)
+			{
+				$result['@attributes'][$attr->name] = $attr->value;
+			}
+		}
+
+		if ($root->hasChildNodes())
+		{
+			$children = $root->childNodes;
+
+			if ($children->length == 1)
+			{
+				$child = $children->item(0);
+
+				if ($child->nodeType == XML_TEXT_NODE)
+				{
+					$result['_value'] = $child->nodeValue;
+					return count($result) == 1 ? $result['_value'] : $result;
+				}
+			}
+
+			$groups = array();
+			foreach ($children as $child)
+			{
+				if (!isset($result[$child->nodeName]))
+				{
+					$result[$child->nodeName] = $this->dom_xml_to_array($child);
+				}
+				else
+				{
+					if (!isset($groups[$child->nodeName]))
+					{
+						$result[$child->nodeName] = array($result[$child->nodeName]);
+						$groups[$child->nodeName] = 1;
+					}
+
+					$result[$child->nodeName][] = $this->dom_xml_to_array($child);
+				}
+			}
+		}
+
+		return $result;
 	}
 }
