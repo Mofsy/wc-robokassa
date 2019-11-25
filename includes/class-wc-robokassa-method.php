@@ -1357,7 +1357,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Shop login
 		 */
-		$args['MerchantLogin'] = $this->shop_login;
+		$args['MerchantLogin'] = $this->get_shop_login();
 
 		/**
 		 * Sum
