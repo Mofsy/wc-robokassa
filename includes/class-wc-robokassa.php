@@ -265,11 +265,13 @@ class WC_Robokassa
 	 */
 	public function load_robokassa_api()
     {
-	    $robokassa_api_class_name = apply_filters('wc_robokassa_api_class_name_load', 'Wc_Robokassa_Api');
+        $default_class_name = 'Wc_Robokassa_Api';
+
+	    $robokassa_api_class_name = apply_filters('wc_robokassa_api_class_name_load', $default_class_name);
 
 	    if(!class_exists($robokassa_api_class_name))
         {
-	        $robokassa_api_class_name = 'Wc_Robokassa_Api';
+	        $robokassa_api_class_name = $default_class_name;
         }
 
         $robokassa_api = new $robokassa_api_class_name();
