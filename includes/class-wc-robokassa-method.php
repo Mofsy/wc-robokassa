@@ -1155,7 +1155,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 *
 		 * @todo сделать возможность тестирования не только админами
 		 */
-		if ($this->test === 'yes' && !current_user_can('manage_options'))
+		if ($this->get_test() === 'yes' && !current_user_can('manage_options'))
 		{
 			return false;
 		}
