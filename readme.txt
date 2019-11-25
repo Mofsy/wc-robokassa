@@ -51,6 +51,10 @@ So please contribute your language to the plugin to make it even more useful. Fo
 
 == Changelog ==
 
+= 2.2.0.1 =
+* API: simplexml, dom
+* More fix
+
 = 2.0.1.2 =
 * WordPress 5.3 support
 * WooCommerce 3.8 support
