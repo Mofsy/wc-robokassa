@@ -53,6 +53,7 @@ So please contribute your language to the plugin to make it even more useful. Fo
 
 = 2.2.0.1 =
 * API: simplexml, dom
+* Fix: language files
 * More fix
 
 = 2.0.1.2 =
