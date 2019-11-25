@@ -243,12 +243,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Testing?
 		 */
-		$this->test = $this->get_option('test');
+		$this->set_test($this->get_option('test'));
 
 		/**
 		 * Default language for Robokassa interface
 		 */
-		$this->user_interface_language = $this->get_option('language');
+		$this->set_user_interface_language($this->get_option('language'));
 
 		/**
 		 * Automatic language
@@ -259,10 +259,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			switch($lang)
 			{
 				case 'en_EN':
-					$this->user_interface_language = 'en';
+					$this->set_user_interface_language('en');
 					break;
 				default:
-					$this->user_interface_language = 'ru';
+					$this->set_user_interface_language('ru');
 					break;
 			}
 		}
@@ -277,7 +277,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('ofd_status') == 'yes')
 		{
-			$this->ofd_status = true;
+			$this->set_ofd_status(true);
 		}
 
 		/**
@@ -313,7 +313,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$ofd_sno = 'patent';
 			}
 
-			$this->ofd_sno = $ofd_sno;
+			$this->set_ofd_sno($ofd_sno);
 		}
 
 		/**
@@ -349,7 +349,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$ofd_nds = 'vat120';
 			}
 
-			$this->ofd_nds = $ofd_nds;
+			$this->set_ofd_nds($ofd_nds);
 		}
 
 		/**
@@ -357,7 +357,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('ofd_payment_method') !== '')
 		{
-			$this->ofd_payment_method = $this->get_option('ofd_payment_method');
+			$this->set_ofd_payment_method($this->get_option('ofd_payment_method'));
 		}
 
 		/**
@@ -365,7 +365,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('ofd_payment_object') !== '')
 		{
-			$this->ofd_payment_object = $this->get_option('ofd_payment_object');
+			$this->set_ofd_payment_object($this->get_option('ofd_payment_object'));
 		}
 
 		/**
@@ -373,7 +373,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('shop_pass_1') !== '')
 		{
-			$this->shop_pass_1 = $this->get_option('shop_pass_1');
+			$this->set_shop_pass_1($this->get_option('shop_pass_1'));
 		}
 
 		/**
@@ -381,25 +381,25 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('shop_pass_2') !== '')
 		{
-			$this->shop_pass_2 = $this->get_option('shop_pass_2');
+			$this->set_shop_pass_2($this->get_option('shop_pass_2'));
 		}
 
 		/**
 		 * Load shop login
 		 */
-		$this->shop_login = $this->get_option('shop_login');
+		$this->set_shop_login($this->get_option('shop_login'));
 
 		/**
 		 * Load sign method
 		 */
-		$this->sign_method = $this->get_option('sign_method');
+		$this->set_sign_method($this->get_option('sign_method'));
 
 		/**
 		 * Set shop pass 1 for testing
 		 */
 		if($this->get_option('test_shop_pass_1') !== '')
 		{
-			$this->test_shop_pass_1 = $this->get_option('test_shop_pass_1');
+			$this->set_test_shop_pass_1($this->get_option('test_shop_pass_1'));
 		}
 
 		/**
@@ -407,13 +407,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('test_shop_pass_2') !== '')
 		{
-			$this->test_shop_pass_2 = $this->get_option('test_shop_pass_2');
+			$this->set_test_shop_pass_2($this->get_option('test_shop_pass_2'));
 		}
 
 		/**
 		 * Load sign method for testing
 		 */
-		$this->test_sign_method = $this->get_option('test_sign_method');
+		$this->set_test_sign_method($this->get_option('test_sign_method'));
 
 		/**
 		 * Set icon
@@ -724,7 +724,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 	/**
 	 * @since 2.2.0.1
-	 * 
+	 *
 	 * @param string $ofd_payment_object
 	 */
 	public function set_ofd_payment_object( $ofd_payment_object )
@@ -1162,7 +1162,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 *
 		 * @todo сделать возможность тестирования не только админами
 		 */
-		if ($this->test === 'yes' && !current_user_can( 'manage_options' ))
+		if ($this->test === 'yes' && !current_user_can('manage_options'))
 		{
 			$return = false;
 
