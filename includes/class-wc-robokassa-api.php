@@ -695,8 +695,6 @@ class Wc_Robokassa_Api
 
 				/**
 				 * Check error
-				 *
-				 * @todo refactoring
 				 */
 				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
 				{
