@@ -1150,11 +1150,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if (!in_array(WC_Robokassa::instance()->get_wc_currency(), $this->currency_all, false))
 		{
 			$return = false;
-
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addInfo('Currency not support: ' . WC_Robokassa::instance()->get_wc_currency());
 		}
 
 		/**
@@ -1165,11 +1160,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if ($this->test === 'yes' && !current_user_can('manage_options'))
 		{
 			$return = false;
-
-			/**
-			 * Logger notice
-			 */
-			WC_Robokassa::instance()->get_logger()->addNotice('Test mode only admins.');
 		}
 
 		return $return;
