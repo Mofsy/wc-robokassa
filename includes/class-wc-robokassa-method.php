@@ -1048,50 +1048,50 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['ofd_payment_method'] = array
 		(
-			'title' => __('Признак способа расчёта', 'wc-robokassa'),
-			'description' => __('Этот параметр необязательный. Если этот параметр не настроен, то в чеке будет указано значение параметра по умолчанию из Личного кабинета.', 'wc-robokassa'),
+			'title' => __('Indication of the calculation method', 'wc-robokassa'),
+			'description' => __('The parameter is optional. If this parameter is not configured, the check will indicate the default value of the parameter from the Personal account.', 'wc-robokassa'),
 			'type' => 'select',
 			'default' => '',
 			'options' => array
 			(
 				'' => __('Default in Robokassa', 'wc-robokassa'),
-				'full_prepayment' => __('Предоплата 100%', 'wc-robokassa'),
-				'prepayment' => __('Частичная предоплата', 'wc-robokassa'),
-				'advance' => __('Аванс', 'wc-robokassa'),
-				'full_payment' => __('Полный расчет', 'wc-robokassa'),
-				'partial_payment' => __('Частичный расчёт и кредит', 'wc-robokassa'),
-				'credit' => __('Передача в кредит', 'wc-robokassa'),
-				'credit_payment' => __('Оплата кредита', 'wc-robokassa')
+				'full_prepayment' => __('Prepayment 100%', 'wc-robokassa'),
+				'prepayment' => __('Partial prepayment', 'wc-robokassa'),
+				'advance' => __('Advance', 'wc-robokassa'),
+				'full_payment' => __('Full settlement', 'wc-robokassa'),
+				'partial_payment' => __('Partial settlement and credit', 'wc-robokassa'),
+				'credit' => __('Transfer on credit', 'wc-robokassa'),
+				'credit_payment' => __('Credit payment', 'wc-robokassa')
 			),
 		);
 
 		$fields['ofd_payment_object'] = array
 		(
-			'title' => __('Признак предмета расчёта', 'wc-robokassa'),
-			'description' => __('Этот параметр необязательный. Если этот параметр не настроен, то в чеке будет указано значение параметра по умолчанию из Личного кабинета.', 'wc-robokassa'),
+			'title' => __('Sign of the subject of calculation', 'wc-robokassa'),
+			'description' => __('The parameter is optional. If this parameter is not configured, the check will indicate the default value of the parameter from the Personal account.', 'wc-robokassa'),
 			'type' => 'select',
 			'default' => '',
 			'options' => array
 			(
 				'' => __('Default in Robokassa', 'wc-robokassa'),
-				'commodity' => __('Товар', 'wc-robokassa'),
-				'excise' => __('Подакцизный товар', 'wc-robokassa'),
-				'job' => __('Работа', 'wc-robokassa'),
-				'service' => __('Услуга', 'wc-robokassa'),
-				'gambling_bet' => __('Ставка азартной игры', 'wc-robokassa'),
-				'gambling_prize' => __('Выигрыш азартной игры', 'wc-robokassa'),
-				'lottery' => __('Лотерейный билет', 'wc-robokassa'),
-				'lottery_prize' => __('Выигрыш лотереи', 'wc-robokassa'),
-				'intellectual_activity' => __('Результаты интеллектуальной деятельности', 'wc-robokassa'),
-				'payment' => __('Платеж', 'wc-robokassa'),
-				'agent_commission' => __('Агентское вознаграждение', 'wc-robokassa'),
-				'composite' => __('Составной предмет расчета', 'wc-robokassa'),
-				'another' => __('Иной предмет расчета', 'wc-robokassa'),
-				'property_right' => __('Имущественное право', 'wc-robokassa'),
-				'non-operating_gain' => __('Внереализационный доход', 'wc-robokassa'),
-				'insurance_premium' => __('Страховые взносы', 'wc-robokassa'),
-				'sales_tax' => __('Торговый сбор', 'wc-robokassa'),
-				'resort_fee' => __('Курортный сбор', 'wc-robokassa')
+				'commodity' => __('Product', 'wc-robokassa'),
+				'excise' => __('Excisable goods', 'wc-robokassa'),
+				'job' => __('Work', 'wc-robokassa'),
+				'service' => __('Service', 'wc-robokassa'),
+				'gambling_bet' => __('Gambling rate', 'wc-robokassa'),
+				'gambling_prize' => __('Gambling win', 'wc-robokassa'),
+				'lottery' => __('Lottery ticket', 'wc-robokassa'),
+				'lottery_prize' => __('Winning the lottery', 'wc-robokassa'),
+				'intellectual_activity' => __('Results of intellectual activity', 'wc-robokassa'),
+				'payment' => __('Payment', 'wc-robokassa'),
+				'agent_commission' => __('Agency fee', 'wc-robokassa'),
+				'composite' => __('Compound subject of calculation', 'wc-robokassa'),
+				'another' => __('Another object of the calculation', 'wc-robokassa'),
+				'property_right' => __('Property right', 'wc-robokassa'),
+				'non-operating_gain' => __('Extraordinary income', 'wc-robokassa'),
+				'insurance_premium' => __('Insurance premium', 'wc-robokassa'),
+				'sales_tax' => __('Sales tax', 'wc-robokassa'),
+				'resort_fee' => __('Resort fee', 'wc-robokassa')
 			),
 		);
 
