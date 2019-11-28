@@ -643,7 +643,7 @@ class Wc_Robokassa_Api
 	 *
 	 * @return mixed
 	 */
-	public function xm_get_rates($merchantLogin, $OutSum, $IncCurrLabel = '', $language = 'ru')
+	public function xml_get_rates($merchantLogin, $OutSum, $IncCurrLabel = '', $language = 'ru')
 	{
 		/**
 		 * Check available
@@ -821,6 +821,21 @@ class Wc_Robokassa_Api
 		}
 
 		return false;
+	}
+
+	/**
+	 * @deprecated 2.3.0.1
+	 *
+	 * @param $merchantLogin
+	 * @param $OutSum
+	 * @param string $IncCurrLabel
+	 * @param string $language
+	 *
+	 * @return mixed
+	 */
+	public function xm_get_rates($merchantLogin, $OutSum, $IncCurrLabel = '', $language = 'ru')
+	{
+		return $this->xml_get_rates($merchantLogin, $OutSum, $IncCurrLabel, $language);
 	}
 
 	/**
