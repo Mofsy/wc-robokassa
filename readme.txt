@@ -49,6 +49,7 @@ More features for use payments
 == Changelog ==
 
 = 2.3.0.1 =
+* Plugin rename
 * API: new stable algorithm
 * Fix: language files
 * More fix
