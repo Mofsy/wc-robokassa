@@ -414,7 +414,7 @@ class WC_Robokassa
 	 */
 	public function links_left($links)
 	{
-		return array_merge(array('settings' => '<a href="https://mofsy.ru/projects/wc-robokassa-premium" target="_blank">' . __('Buy Premium addon', 'wc-robokassa') . '</a>'), $links);
+		return array_merge(array('settings' => '<a href="https://mofsy.ru/projects/wc-robokassa-premium" target="_blank">' . __('Premium addon', 'wc-robokassa') . '</a>'), $links);
 	}
 
 	/**
