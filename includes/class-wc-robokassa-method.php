@@ -1230,7 +1230,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function payment_fields_test_mode_show()
 	{
-		if ($this->test == 'yes')
+		if ($this->get_test() == 'yes')
 		{
 			echo '<div style="padding:10px; background-color: #ff8982;text-align: center;">';
 			echo __('TEST mode is active. Payment will not be charged. After checking, disable this mode.', 'wc-robokassa');
