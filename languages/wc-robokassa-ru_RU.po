@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Robokassa - Payment Gateway for WooCommerce\n"
-"POT-Creation-Date: 2019-11-25 16:07+0300\n"
-"PO-Revision-Date: 2019-11-25 16:31+0300\n"
+"Project-Id-Version: Payment gateway - Robokassa for WooCommerce\n"
+"POT-Creation-Date: 2019-12-05 21:15+0300\n"
+"PO-Revision-Date: 2019-12-05 21:16+0300\n"
 "Last-Translator: Mofsy <ru.mofsy@yandex.ru>\n"
 "Language-Team: Mofsy <support@mofsy.ru>\n"
 "Language: ru_RU\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: wc-robokassa.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -505,11 +505,11 @@ msgstr ""
 "кнопку отправки отчета. Все конфиденциальные данные в отчете будут удалены.\n"
 "По умолчанию, уровень ошибок не должен быть меньше, чем ERROR."
 
-#: includes/class-wc-robokassa-method.php:1187
+#: includes/class-wc-robokassa-method.php:1175
 msgid "Return to payment gateways"
 msgstr "Вернутся к платежным шлюзам"
 
-#: includes/class-wc-robokassa-method.php:1248
+#: includes/class-wc-robokassa-method.php:1236
 msgid ""
 "TEST mode is active. Payment will not be charged. After checking, disable "
 "this mode."
@@ -517,69 +517,69 @@ msgstr ""
 "Тестовый режим активен. Оплата не взимается. После проверки, отключите этот "
 "режим."
 
-#: includes/class-wc-robokassa-method.php:1292
+#: includes/class-wc-robokassa-method.php:1280
 msgid "The client started to pay."
 msgstr "Клиент начал оплату."
 
-#: includes/class-wc-robokassa-method.php:1376
+#: includes/class-wc-robokassa-method.php:1364
 msgid "Order number: "
 msgstr "Номер заказа: "
 
-#: includes/class-wc-robokassa-method.php:1533
-msgid "Delivery"
-msgstr "Доставка"
-
-#: includes/class-wc-robokassa-method.php:1639
+#: includes/class-wc-robokassa-method.php:1514
 msgid "Pay"
 msgstr "Оплатить"
 
-#: includes/class-wc-robokassa-method.php:1640
+#: includes/class-wc-robokassa-method.php:1515
 msgid "Cancel & return to cart"
 msgstr "Отменить и вернутся в корзину"
 
-#: includes/class-wc-robokassa-method.php:1791
+#: includes/class-wc-robokassa-method.php:1605
+msgid "Delivery"
+msgstr "Доставка"
+
+#: includes/class-wc-robokassa-method.php:1789
 msgid "Order not found."
 msgstr "Заказ не найден."
 
-#: includes/class-wc-robokassa-method.php:1805
+#: includes/class-wc-robokassa-method.php:1803
 #, php-format
 msgid ""
 "Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s"
 msgstr ""
 "Запрос от Робокассы принят. Сумма: %1$s Подпись: %2$s Удаленная подпись: %3$s"
 
-#: includes/class-wc-robokassa-method.php:1830
+#: includes/class-wc-robokassa-method.php:1828
 #, php-format
 msgid "Validate hash error. Local: %1$s Remote: %2$s"
 msgstr "Ошибка валидации хеша. Локальный: %1$s Удаленный: %2$s"
 
-#: includes/class-wc-robokassa-method.php:1859
+#: includes/class-wc-robokassa-method.php:1847
 msgid "Order successfully paid (TEST MODE)."
 msgstr "Счет успешно оплачен (ТЕСТОВЫЙ ПЛАТЕЖ)"
 
-#: includes/class-wc-robokassa-method.php:1877
+#: includes/class-wc-robokassa-method.php:1860
 msgid "Order successfully paid."
 msgstr "Счет успешно оплачен."
 
-#: includes/class-wc-robokassa-method.php:1906
+#: includes/class-wc-robokassa-method.php:1874
 msgid "Payment error, please pay other time."
 msgstr "Ошибка платежа, пожалуйста повторите попытку позже."
 
-#: includes/class-wc-robokassa-method.php:1918
+#: includes/class-wc-robokassa-method.php:1886
 msgid "Client return to success page."
 msgstr "Клиент вернулся на страницу успешной оплаты."
 
-#: includes/class-wc-robokassa-method.php:1942
+#: includes/class-wc-robokassa-method.php:1910
 msgid "The order has not been paid."
 msgstr "Счет не был оплачен."
 
-#: includes/class-wc-robokassa-method.php:1960
+#: includes/class-wc-robokassa-method.php:1928
 msgid "Api request error. Action not found."
 msgstr "Ошибка запроса к API. Действие не найдено."
 
 #: includes/class-wc-robokassa.php:417
-msgid "Buy Premium addon"
-msgstr "Купить премиум аддон"
+msgid "Premium addon"
+msgstr "Премиум дополнение"
 
 #: includes/class-wc-robokassa.php:432
 msgid "Settings"
@@ -631,8 +631,8 @@ msgid "Even more opportunities to accept payments. Increase conversion."
 msgstr "Еще больше возможностей принимать платежи. Увеличьте конверсию."
 
 #. Plugin Name of the plugin/theme
-msgid "Robokassa - Payment gateway for WooCommerce"
-msgstr "Робокасса - платежный шлюз для WooCommerce"
+msgid "Payment gateway - Robokassa for WooCommerce"
+msgstr "Платежный шлюз - Робокасса для WooCommerce"
 
 #. Plugin URI of the plugin/theme
 msgid "https://mofsy.ru/projects/wc-robokassa"
