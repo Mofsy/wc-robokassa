@@ -16,6 +16,20 @@ class Wc_Robokassa_Api
 	private $base_api_url = 'https://auth.robokassa.ru/Merchant/WebService/Service.asmx';
 
 	/**
+	 * Last response
+	 *
+	 * @var WP_Error|array The response or WP_Error on failure.
+	 */
+	private $last_response;
+
+	/**
+	 * Last response body
+	 *
+	 * @var string
+	 */
+	private $last_response_body = '';
+
+	/**
 	 * Wc_Robokassa_Api constructor
 	 */
 	public function __construct()
@@ -36,6 +50,46 @@ class Wc_Robokassa_Api
 	public function set_base_api_url($base_api_url)
 	{
 		$this->base_api_url = $base_api_url;
+	}
+
+	/**
+	 * @return WP_Error|array The response or WP_Error on failure.
+	 *
+	 * @since 2.3.0.1
+	 */
+	public function get_last_response()
+	{
+		return $this->last_response;
+	}
+
+	/**
+	 * @param $last_response WP_Error|array The response or WP_Error on failure.
+	 *
+	 * @since 2.3.0.1
+	 */
+	public function set_last_response($last_response)
+	{
+		$this->last_response = $last_response;
+	}
+
+	/**
+	 * @return string
+	 *
+	 * @since 2.3.0.1
+	 */
+	public function get_last_response_body()
+	{
+		return $this->last_response_body;
+	}
+
+	/**
+	 * @param string $last_response_body
+	 *
+	 * @since 2.3.0.1
+	 */
+	public function set_last_response_body($last_response_body)
+	{
+		$this->last_response_body = $last_response_body;
 	}
 
 	/**
@@ -92,10 +146,7 @@ class Wc_Robokassa_Api
 		 * Check available
 		 */
 		$is_available = $this->is_available();
-		if($is_available === 0)
-		{
-			return false;
-		}
+		if($is_available === 0) { return false; }
 
 		/**
 		 * Request args
@@ -107,19 +158,24 @@ class Wc_Robokassa_Api
 		);
 
 		/**
-		 * Request execute
+		 * URL
 		 */
-		$response = wp_remote_post($this->get_base_api_url() . '/CalcOutSumm?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&IncSum=' . $IncSum, $args);
+		$url = $this->get_base_api_url() . '/CalcOutSumm?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&IncSum=' . $IncSum;
 
 		/**
-		 * Response get
+		 * Request execute
 		 */
-		$response_body = wp_remote_retrieve_body($response);
+		$this->set_last_response(wp_remote_post($url, $args));
+
+		/**
+		 * Last response set body
+		 */
+		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
 
 		/**
 		 * Response is very good
 		 */
-		if($response_body != '')
+		if($this->get_last_response_body() != '')
 		{
 			/**
 			 * SimpleXMl
@@ -129,7 +185,14 @@ class Wc_Robokassa_Api
 				/**
 				 * Response normalize
 				 */
-				$response_data = new SimpleXMLElement($response_body);
+				try
+				{
+					$response_data = new SimpleXMLElement($this->get_last_response_body());
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
 
 				/**
 				 * Check error
@@ -139,7 +202,15 @@ class Wc_Robokassa_Api
 					return false;
 				}
 
-				return $response_data->OutSum;
+				/**
+				 * OutSum
+				 */
+				if(isset($response_data->OutSum))
+				{
+					return $response_data->OutSum;
+				}
+
+				return false;
 			}
 
 			/**
@@ -150,17 +221,25 @@ class Wc_Robokassa_Api
 				/**
 				 * Response normalize
 				 */
-				$response_data = $this->dom_xml_to_array($response_body);
+				$response_data = $this->dom_xml_to_array($this->get_last_response_body());
 
 				/**
 				 * Check error
 				 */
-				if($response_data['CalcSummsResponseData']['Result']['Code'] != 0)
+				if(isset($response_data['CalcSummsResponseData']['Result']['Code']) && $response_data['CalcSummsResponseData']['Result']['Code'] != 0)
 				{
 					return false;
 				}
 
-				return $response_data['CalcSummsResponseData']['OutSum'];
+				/**
+				 * OutSum
+				 */
+				if(isset($response_data['CalcSummsResponseData']['OutSum']))
+				{
+					return $response_data['CalcSummsResponseData']['OutSum'];
+				}
+
+				return false;
 			}
 		}
 
@@ -190,10 +269,7 @@ class Wc_Robokassa_Api
 		 * Check available
 		 */
 		$is_available = $this->is_available();
-		if($is_available === 0)
-		{
-			return false;
-		}
+		if($is_available === 0) { return false; }
 
 		/**
 		 * Request args
@@ -205,19 +281,24 @@ class Wc_Robokassa_Api
 		);
 
 		/**
-		 * Request execute
+		 * URL
 		 */
-		$response = wp_remote_post($this->get_base_api_url() . '/OpState?MerchantLogin=' . $merchantLogin . '&InvoiceID=' . $InvoiceID . '&Signature=' . $Signature, $args);
+		$url = $this->get_base_api_url() . '/OpState?MerchantLogin=' . $merchantLogin . '&InvoiceID=' . $InvoiceID . '&Signature=' . $Signature;
 
 		/**
-		 * Response get
+		 * Request execute
 		 */
-		$response_body = wp_remote_retrieve_body($response);
+		$this->set_last_response(wp_remote_post($url, $args));
+
+		/**
+		 * Last response set body
+		 */
+		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
 
 		/**
 		 * Response is very good
 		 */
-		if($response_body != '')
+		if($this->get_last_response_body() != '')
 		{
 			$op_state_data = array();
 
@@ -229,7 +310,14 @@ class Wc_Robokassa_Api
 				/**
 				 * Response normalize
 				 */
-				$response_data = new SimpleXMLElement($response_body);
+				try
+				{
+					$response_data = new SimpleXMLElement($this->get_last_response_body());
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
 
 				/**
 				 * Check error
@@ -246,9 +334,9 @@ class Wc_Robokassa_Api
 				{
 					$op_state_data['state'] = array
 					(
-						'code'         => $response_data->State->Code,
+						'code' => $response_data->State->Code,
 						'request_date' => $response_data->State->RequestDate,
-						'state_date'   => $response_data->State->StateDate,
+						'state_date' => $response_data->State->StateDate,
 					);
 				}
 
@@ -268,6 +356,8 @@ class Wc_Robokassa_Api
 						'out_sum' => $response_data->Info->OutSum,
 					);
 				}
+
+				return $op_state_data;
 			}
 
 			/**
@@ -275,7 +365,10 @@ class Wc_Robokassa_Api
 			 */
 			if($is_available === 2)
 			{
-				$response_data = $this->dom_xml_to_array( $response_body );
+				/**
+				 * Response normalize
+				 */
+				$response_data = $this->dom_xml_to_array($this->get_last_response_body());
 
 				/**
 				 * Check error
@@ -314,9 +407,9 @@ class Wc_Robokassa_Api
 						'out_sum' => $response_data['OperationStateResponse']['Info']['OutSum'],
 					);
 				}
-			}
 
-			return $op_state_data;
+				return $op_state_data;
+			}
 		}
 
 		return false;
@@ -344,10 +437,7 @@ class Wc_Robokassa_Api
 		 * Check available
 		 */
 		$is_available = $this->is_available();
-		if($is_available === 0)
-		{
-			return false;
-		}
+		if($is_available === 0) { return false; }
 
 		/**
 		 * Request args
@@ -359,19 +449,24 @@ class Wc_Robokassa_Api
 		);
 
 		/**
-		 * Request execute
+		 * URL
 		 */
-		$response = wp_remote_post($this->get_base_api_url() . '/GetCurrencies?MerchantLogin=' . $merchantLogin . '&language=' . $language, $args);
+		$url = $this->get_base_api_url() . '/GetCurrencies?MerchantLogin=' . $merchantLogin . '&language=' . $language;
 
 		/**
-		 * Response get
+		 * Request execute
 		 */
-		$response_body = wp_remote_retrieve_body($response);
+		$this->set_last_response(wp_remote_post($url, $args));
+
+		/**
+		 * Last response set body
+		 */
+		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
 
 		/**
 		 * Response is very good
 		 */
-		if($response_body != '')
+		if($this->get_last_response_body() != '')
 		{
 			/**
 			 * Данные валют
@@ -386,12 +481,19 @@ class Wc_Robokassa_Api
 				/**
 				 * Response normalize
 				 */
-				$response_data = new SimpleXMLElement($response_body);
+				try
+				{
+					$response_data = new SimpleXMLElement($this->get_last_response_body());
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
 
 				/**
 				 * Check error
 				 */
-				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+				if(!isset($response_data->Result) || $response_data->Result->Code != 0 || !isset($response_data->Groups))
 				{
 					return false;
 				}
@@ -439,7 +541,10 @@ class Wc_Robokassa_Api
 			 */
 			if($is_available === 2)
 			{
-				$response_data = $this->dom_xml_to_array($response_body);
+				/**
+				 * Response normalize
+				 */
+				$response_data = $this->dom_xml_to_array($this->get_last_response_body());
 
 				/**
 				 * Check error
@@ -517,10 +622,7 @@ class Wc_Robokassa_Api
 		 * Check available
 		 */
 		$is_available = $this->is_available();
-		if($is_available === 0)
-		{
-			return false;
-		}
+		if($is_available === 0) { return false; }
 
 		/**
 		 * Request args
@@ -532,19 +634,24 @@ class Wc_Robokassa_Api
 		);
 
 		/**
-		 * Request execute
+		 * URL
 		 */
-		$response = wp_remote_post($this->get_base_api_url() . '/GetPaymentMethods?MerchantLogin=' . $merchantLogin . '&language=' . $language, $args);
+		$url = $this->get_base_api_url() . '/GetPaymentMethods?MerchantLogin=' . $merchantLogin . '&language=' . $language;
 
 		/**
-		 * Response get
+		 * Request execute
 		 */
-		$response_body = wp_remote_retrieve_body($response);
+		$this->set_last_response(wp_remote_post($url, $args));
+
+		/**
+		 * Last response set body
+		 */
+		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
 
 		/**
 		 * Response is very good
 		 */
-		if($response_body != '')
+		if($this->get_last_response_body() != '')
 		{
 			/**
 			 * Данные валют
@@ -559,7 +666,14 @@ class Wc_Robokassa_Api
 				/**
 				 * Response normalize
 				 */
-				$response_data = new SimpleXMLElement($response_body);
+				try
+				{
+					$response_data = new SimpleXMLElement($this->get_last_response_body());
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
 
 				/**
 				 * Check error
@@ -584,6 +698,7 @@ class Wc_Robokassa_Api
 					);
 				}
 
+				return $methods_data;
 			}
 
 			/**
@@ -591,7 +706,10 @@ class Wc_Robokassa_Api
 			 */
 			if($is_available === 2)
 			{
-				$response_data = $this->dom_xml_to_array($response_body);
+				/**
+				 * Response normalize
+				 */
+				$response_data = $this->dom_xml_to_array($this->get_last_response_body());
 
 				/**
 				 * Check error
@@ -615,9 +733,9 @@ class Wc_Robokassa_Api
 						'language' => $language
 					);
 				}
-			}
 
-			return $methods_data;
+				return $methods_data;
+			}
 		}
 
 		return false;
@@ -642,6 +760,8 @@ class Wc_Robokassa_Api
 	 * @param string $language Язык для локализованных значений в ответе (названий валют, методов оплаты и т. д.).
 	 *
 	 * @return mixed
+	 *
+	 * @since 2.3.0.1
 	 */
 	public function xml_get_rates($merchantLogin, $OutSum, $IncCurrLabel = '', $language = 'ru')
 	{
@@ -649,10 +769,7 @@ class Wc_Robokassa_Api
 		 * Check available
 		 */
 		$is_available = $this->is_available();
-		if($is_available === 0)
-		{
-			return false;
-		}
+		if($is_available === 0) { return false; }
 
 		/**
 		 * Request args
@@ -664,19 +781,24 @@ class Wc_Robokassa_Api
 		);
 
 		/**
-		 * Request execute
+		 * URL
 		 */
-		$response = wp_remote_post($this->get_base_api_url() . '/GetRates?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&OutSum=' . $OutSum . '&Language=' . $language, $args);
+		$url = $this->get_base_api_url() . '/GetRates?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&OutSum=' . $OutSum . '&Language=' . $language;
 
 		/**
-		 * Response get
+		 * Request execute
 		 */
-		$response_body = wp_remote_retrieve_body($response);
+		$this->set_last_response(wp_remote_post($url, $args));
+
+		/**
+		 * Last response set body
+		 */
+		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
 
 		/**
 		 * Response is very good
 		 */
-		if($response_body != '')
+		if($this->get_last_response_body() != '')
 		{
 			/**
 			 * Данные валют
@@ -691,7 +813,14 @@ class Wc_Robokassa_Api
 				/**
 				 * Response normalize
 				 */
-				$response_data = new SimpleXMLElement($response_body);
+				try
+				{
+					$response_data = new SimpleXMLElement($this->get_last_response_body());
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
 
 				/**
 				 * Check error
@@ -737,6 +866,8 @@ class Wc_Robokassa_Api
 						$rates_data[] = $rates_item;
 					}
 				}
+
+				return $rates_data;
 			}
 
 			/**
@@ -744,7 +875,10 @@ class Wc_Robokassa_Api
 			 */
 			if($is_available === 2)
 			{
-				$response_data = $this->dom_xml_to_array($response_body);
+				/**
+				 * Response normalize
+				 */
+				$response_data = $this->dom_xml_to_array($this->get_last_response_body());
 
 				/**
 				 * Check error
@@ -815,9 +949,9 @@ class Wc_Robokassa_Api
 						$rates_data[] = $rates_item;
 					}
 				}
-			}
 
-			return $rates_data;
+				return $rates_data;
+			}
 		}
 
 		return false;
@@ -851,10 +985,7 @@ class Wc_Robokassa_Api
 		 * Check available
 		 */
 		$is_available = $this->is_available();
-		if($is_available === 0)
-		{
-			return false;
-		}
+		if($is_available === 0) { return false; }
 
 		/**
 		 * Request args
@@ -866,19 +997,24 @@ class Wc_Robokassa_Api
 		);
 
 		/**
-		 * Request execute
+		 * URL
 		 */
-		$response = wp_remote_post($this->get_base_api_url() . '/GetLimit?MerchantLogin=' . $merchantLogin, $args);
+		$url = $this->get_base_api_url() . '/GetLimit?MerchantLogin=' . $merchantLogin;
 
 		/**
-		 * Response get
+		 * Request execute
 		 */
-		$response_body = wp_remote_retrieve_body($response);
+		$this->set_last_response(wp_remote_post($url, $args));
+
+		/**
+		 * Last response set body
+		 */
+		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
 
 		/**
 		 * Response is very good
 		 */
-		if($response_body != '')
+		if($this->get_last_response_body() != '')
 		{
 			/**
 			 * SimpleXMl
@@ -888,7 +1024,14 @@ class Wc_Robokassa_Api
 				/**
 				 * Response normalize
 				 */
-				$response_data = new SimpleXMLElement($response_body);
+				try
+				{
+					$response_data = new SimpleXMLElement($this->get_last_response_body());
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
 
 				/**
 				 * Check error
@@ -898,7 +1041,15 @@ class Wc_Robokassa_Api
 					return false;
 				}
 
-				return $response_data->Limit;
+				/**
+				 * Limit exists
+				 */
+				if(isset($response_data->Limit))
+				{
+					return $response_data->Limit;
+				}
+
+				return false;
 			}
 
 			/**
@@ -906,7 +1057,10 @@ class Wc_Robokassa_Api
 			 */
 			if($is_available === 2)
 			{
-				$response_data = $this->dom_xml_to_array($response_body);
+				/**
+				 * Response normalize
+				 */
+				$response_data = $this->dom_xml_to_array($this->get_last_response_body());
 
 				/**
 				 * Check error
@@ -916,7 +1070,15 @@ class Wc_Robokassa_Api
 					return false;
 				}
 
-				return $response_data['LimitResponse']['Limit'];
+				/**
+				 * Limit
+				 */
+				if(isset($response_data['LimitResponse']['Limit']))
+				{
+					return $response_data['LimitResponse']['Limit'];
+				}
+
+				return false;
 			}
 		}
 
@@ -932,51 +1094,52 @@ class Wc_Robokassa_Api
 	 */
 	private function dom_xml_to_array($response_body)
 	{
-		$root = new DOMDocument();
-		$root->loadXml($response_body);
-
 		$result = array();
+		$root = new DOMDocument();
 
-		if ($root->hasAttributes())
+		if($root->loadXml($response_body))
 		{
-			$attrs = $root->attributes;
-			foreach ($attrs as $attr)
+			if ($root->hasAttributes())
 			{
-				$result['@attributes'][$attr->name] = $attr->value;
-			}
-		}
-
-		if ($root->hasChildNodes())
-		{
-			$children = $root->childNodes;
-
-			if ($children->length == 1)
-			{
-				$child = $children->item(0);
-
-				if ($child->nodeType == XML_TEXT_NODE)
+				$attrs = $root->attributes;
+				foreach ($attrs as $attr)
 				{
-					$result['_value'] = $child->nodeValue;
-					return count($result) == 1 ? $result['_value'] : $result;
+					$result['@attributes'][$attr->name] = $attr->value;
 				}
 			}
 
-			$groups = array();
-			foreach ($children as $child)
+			if ($root->hasChildNodes())
 			{
-				if (!isset($result[$child->nodeName]))
+				$children = $root->childNodes;
+
+				if ($children->length == 1)
 				{
-					$result[$child->nodeName] = $this->dom_xml_to_array($child);
-				}
-				else
-				{
-					if (!isset($groups[$child->nodeName]))
+					$child = $children->item(0);
+
+					if ($child->nodeType == XML_TEXT_NODE)
 					{
-						$result[$child->nodeName] = array($result[$child->nodeName]);
-						$groups[$child->nodeName] = 1;
+						$result['_value'] = $child->nodeValue;
+						return count($result) == 1 ? $result['_value'] : $result;
 					}
+				}
 
-					$result[$child->nodeName][] = $this->dom_xml_to_array($child);
+				$groups = array();
+				foreach ($children as $child)
+				{
+					if (!isset($result[$child->nodeName]))
+					{
+						$result[$child->nodeName] = $this->dom_xml_to_array($child);
+					}
+					else
+					{
+						if (!isset($groups[$child->nodeName]))
+						{
+							$result[$child->nodeName] = array($result[$child->nodeName]);
+							$groups[$child->nodeName] = 1;
+						}
+
+						$result[$child->nodeName][] = $this->dom_xml_to_array($child);
+					}
 				}
 			}
 		}
