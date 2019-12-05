@@ -48,6 +48,11 @@ More features for use payments
 
 == Changelog ==
 
+= 2.3.0.1 =
+* API: new stable algorithm
+* Fix: language files
+* More fix
+
 = 2.2.0.1 =
 * API: simplexml, dom
 * Fix: language files
