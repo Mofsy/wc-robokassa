@@ -102,7 +102,7 @@ class Wc_Robokassa_Api
 		/**
 		 * Check WP
 		 */
-		if(!function_exists('wp_remote_post') || !function_exists('wp_remote_retrieve_body'))
+		if(!function_exists('wp_remote_get') || !function_exists('wp_remote_retrieve_body'))
 		{
 			return 0;
 		}
@@ -165,7 +165,7 @@ class Wc_Robokassa_Api
 		/**
 		 * Request execute
 		 */
-		$this->set_last_response(wp_remote_post($url, $args));
+		$this->set_last_response(wp_remote_get($url, $args));
 
 		/**
 		 * Last response set body
@@ -288,7 +288,7 @@ class Wc_Robokassa_Api
 		/**
 		 * Request execute
 		 */
-		$this->set_last_response(wp_remote_post($url, $args));
+		$this->set_last_response(wp_remote_get($url, $args));
 
 		/**
 		 * Last response set body
@@ -456,7 +456,7 @@ class Wc_Robokassa_Api
 		/**
 		 * Request execute
 		 */
-		$this->set_last_response(wp_remote_post($url, $args));
+		$this->set_last_response(wp_remote_get($url, $args));
 
 		/**
 		 * Last response set body
@@ -641,7 +641,7 @@ class Wc_Robokassa_Api
 		/**
 		 * Request execute
 		 */
-		$this->set_last_response(wp_remote_post($url, $args));
+		$this->set_last_response(wp_remote_get($url, $args));
 
 		/**
 		 * Last response set body
@@ -788,7 +788,7 @@ class Wc_Robokassa_Api
 		/**
 		 * Request execute
 		 */
-		$this->set_last_response(wp_remote_post($url, $args));
+		$this->set_last_response(wp_remote_get($url, $args));
 
 		/**
 		 * Last response set body
@@ -1004,7 +1004,7 @@ class Wc_Robokassa_Api
 		/**
 		 * Request execute
 		 */
-		$this->set_last_response(wp_remote_post($url, $args));
+		$this->set_last_response(wp_remote_get($url, $args));
 
 		/**
 		 * Last response set body
