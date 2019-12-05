@@ -414,7 +414,7 @@ class WC_Robokassa
 	 */
 	public function links_left($links)
 	{
-		return array_merge(array('settings' => '<a href="https://mofsy.ru/projects/wc-robokassa-premium">' . __('Buy Premium addon', 'wc-robokassa') . '</a>'), $links);
+		return array_merge(array('settings' => '<a href="https://mofsy.ru/projects/wc-robokassa-premium" target="_blank">' . __('Buy Premium addon', 'wc-robokassa') . '</a>'), $links);
 	}
 
 	/**
@@ -570,10 +570,10 @@ class WC_Robokassa
     <h5 style="margin: 0;padding: 0;">' . __('Useful information', 'wc-robokassa') . '</h5>
   </div>
   <ul class="list-group list-group-flush" style="margin: 0;">
-    <li class="list-group-item"><a href="https://mofsy.ru/projects/wc-robokassa">' . __('Official plugin page', 'wc-robokassa') . '</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/tag/robokassa">' . __('Related news: ROBOKASSA', 'wc-robokassa') . '</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/projects/tag/woocommerce">' . __('Plugins for WooCommerce', 'wc-robokassa') . '</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/others/feedback">' . __('Feedback to author', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/projects/wc-robokassa" target="_blank">' . __('Official plugin page', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/tag/robokassa" target="_blank">' . __('Related news: ROBOKASSA', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/projects/tag/woocommerce" target="_blank">' . __('Plugins for WooCommerce', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/others/feedback" target="_blank">' . __('Feedback to author', 'wc-robokassa') . '</a></li>
   </ul>
 </div>';
 	}
@@ -586,13 +586,13 @@ class WC_Robokassa
 		echo '<div class="card text-white border-light bg-dark" style="margin-top: 10px;padding: 0;">
   <div class="card-header" style="padding: 10px;">
     <h5 style="margin: 0;padding: 0;">' . __('Paid supplement', 'wc-robokassa') . '</h5>
-  </div> <a href="https://mofsy.ru/projects/wc-robokassa-premium">
+  </div> <a href="https://mofsy.ru/projects/wc-robokassa-premium" target="_blank">
    	<img src="' . WC_ROBOKASSA_URL . 'assets/img/wc-robokassa-premium-icon.png" class="card-img-top">
    </a>
   <div class="card-body text-center">
     ' . __('Even more opportunities to accept payments. Increase conversion.', 'wc-robokassa') . '
     <p>
-    <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary">' . __('Official plugin page', 'wc-robokassa') . '</a>
+    <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary" target="_blank">' . __('Official plugin page', 'wc-robokassa') . '</a>
     </p>
   </div></div>';
 	}
