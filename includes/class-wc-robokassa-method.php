@@ -1712,7 +1712,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Test mode
 		 */
-		if ($this->get_test() === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
+		if($this->get_test() === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
 		{
 			/**
 			 * Test flag
@@ -1806,7 +1806,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Result
 		 */
-		if ($_REQUEST['action'] === 'result')
+		if($_REQUEST['action'] === 'result')
 		{
 			/**
 			 * Validated flag
