@@ -16,9 +16,6 @@ Allows you to use The ROBOKASSA with WooCommerce as a payment gateway plugin.
 Created for individuals, individual entrepreneurs and legal entities.
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
-Questions and answers:
-Email - support@mofsy.ru
-
 = Support currency =
 RUB, USD, EUR, KZT
 
