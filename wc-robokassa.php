@@ -1,20 +1,19 @@
 <?php
-/*
-    Plugin Name: Payment gateway - Robokassa for WooCommerce
-    Plugin URI: https://mofsy.ru/projects/wc-robokassa
-    Description: Allows you to use Robokassa with the WooCommerce as payment gateway plugin.
-    Version: 2.3.0.1
-	WC requires at least: 3.0
-	WC tested up to: 3.9
-    Author: Mofsy
-    Author URI: https://mofsy.ru
-    Text Domain: wc-robokassa
-    Domain Path: /languages
-    Copyright: © 2015-2019 Mofsy.
-	License: GNU General Public License v3.0
-	License URI: http://www.gnu.org/licenses/gpl-3.0.html
-*/
-
+/**
+ * Plugin Name: Payment gateway - Robokassa for WooCommerce
+ * Description: Allows you to use Robokassa with the WooCommerce as payment gateway plugin.
+ * Plugin URI: https://mofsy.ru/projects/wc-robokassa
+ * Version: 2.4.0
+ * WC requires at least: 3.0
+ * WC tested up to: 3.9
+ * Text Domain: wc-robokassa
+ * Domain Path: /languages
+ * Author: Mofsy
+ * Author URI: https://mofsy.ru
+ * Copyright: © 2015-2020 Mofsy
+ * License: GNU General Public License v3.0
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ */
 if(!defined('ABSPATH'))
 {
 	exit;
@@ -49,7 +48,7 @@ function wc_robokassa_gateway_init()
 	/**
 	 * Define plugin url
 	 */
-	if (!defined( 'WC_ROBOKASSA_URL' ))
+	if(!defined('WC_ROBOKASSA_URL'))
 	{
 		define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
 	}
@@ -57,17 +56,17 @@ function wc_robokassa_gateway_init()
 	/**
 	 * Plugin Dir
 	 */
-	if (!defined( 'WC_ROBOKASSA_PLUGIN_DIR' ))
+	if(!defined('WC_ROBOKASSA_PLUGIN_DIR'))
 	{
-		define( 'WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+		define('WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 	}
 
 	/**
 	 * Plugin Name
 	 */
-	if (!defined( 'WC_ROBOKASSA_PLUGIN_NAME' ))
+	if(!defined('WC_ROBOKASSA_PLUGIN_NAME'))
 	{
-		define( 'WC_ROBOKASSA_PLUGIN_NAME', plugin_basename( __FILE__ ) );
+		define('WC_ROBOKASSA_PLUGIN_NAME', plugin_basename(__FILE__));
 	}
 
 	/**
