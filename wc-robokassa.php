@@ -5,7 +5,7 @@
     Description: Allows you to use Robokassa with the WooCommerce as payment gateway plugin.
     Version: 2.3.0.1
 	WC requires at least: 3.0
-	WC tested up to: 3.8
+	WC tested up to: 3.9
     Author: Mofsy
     Author URI: https://mofsy.ru
     Text Domain: wc-robokassa

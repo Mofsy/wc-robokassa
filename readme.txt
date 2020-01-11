@@ -43,6 +43,10 @@ More features for use payments
 
 == Changelog ==
 
+= 2.4.0 =
+* Test: WooCommerce 3.9
+* More fix
+
 = 2.3.0.1 =
 * Plugin rename
 * API: new stable algorithm
