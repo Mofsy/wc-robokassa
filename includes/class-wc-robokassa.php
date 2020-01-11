@@ -9,7 +9,7 @@
 class WC_Robokassa
 {
 	/**
-	 * The single instance of the class.
+	 * The single instance of the class
 	 *
 	 * @var WC_Robokassa
 	 */
@@ -73,27 +73,32 @@ class WC_Robokassa
 	public function __construct()
 	{
 		// hook
-		do_action( 'wc_robokassa_loading' );
+		do_action('wc_robokassa_loading');
 
+		/**
+		 * Include files
+		 */
 		$this->includes();
+
+		/**
+		 * Add actions & filters
+		 */
 		$this->hooks();
 
 		// hook
-		do_action( 'wc_robokassa_loaded' );
+		do_action('wc_robokassa_loaded');
 	}
 
 	/**
-	 * Main WC_Robokassa Instance.
-	 *
-	 * Ensures only one instance is loaded or can be loaded.
+	 * Main WC_Robokassa instance
 	 *
 	 * @static
 	 *
-	 * @return WC_Robokassa - Main instance.
+	 * @return WC_Robokassa
 	 */
 	public static function instance()
 	{
-		if ( is_null( self::$_instance ) )
+		if (is_null(self::$_instance))
 		{
 			self::$_instance = new self();
 		}
@@ -102,7 +107,7 @@ class WC_Robokassa
 	}
 
 	/**
-	 * Cloning instances is forbidden due to singleton pattern.
+	 * Cloning instances is forbidden due to singleton pattern
 	 *
 	 * @since 2.0.0.1
 	 */
@@ -112,7 +117,7 @@ class WC_Robokassa
 	}
 
 	/**
-	 * Un-serializing instances is forbidden due to singleton pattern.
+	 * Un-serializing instances is forbidden due to singleton pattern
 	 *
 	 * @since 2.0.0.1
 	 */
@@ -122,7 +127,7 @@ class WC_Robokassa
 	}
 	
 	/**
-	 * Include required files.
+	 * Include required files
      *
      * @action wc_robokassa_includes_start
      * @action wc_robokassa_includes_end
