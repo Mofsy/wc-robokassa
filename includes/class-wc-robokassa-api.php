@@ -1,10 +1,10 @@
 <?php
-/*
-  +----------------------------------------------------------+
-  | Author: Mofsy <support@mofsy.ru>                         |
-  | Author website: https://mofsy.ru                         |
-  +----------------------------------------------------------+
-*/
+/**
+ * Main API class
+ *
+ * @package Mofsy/WC_Robokassa/Api
+ */
+defined('ABSPATH') || exit;
 
 class Wc_Robokassa_Api
 {
@@ -37,6 +37,8 @@ class Wc_Robokassa_Api
 	}
 
 	/**
+	 * Get base api URL
+	 *
 	 * @return string
 	 */
 	public function get_base_api_url()
@@ -45,6 +47,8 @@ class Wc_Robokassa_Api
 	}
 
 	/**
+	 * Set base api URL
+	 *
 	 * @param string $base_api_url
 	 */
 	public function set_base_api_url($base_api_url)
@@ -53,9 +57,11 @@ class Wc_Robokassa_Api
 	}
 
 	/**
-	 * @return WP_Error|array The response or WP_Error on failure.
+	 * Get last response
 	 *
 	 * @since 2.3.0.1
+	 *
+	 * @return WP_Error|array The response or WP_Error on failure.
 	 */
 	public function get_last_response()
 	{
@@ -63,9 +69,12 @@ class Wc_Robokassa_Api
 	}
 
 	/**
-	 * @param $last_response WP_Error|array The response or WP_Error on failure.
+	 * Set last response
 	 *
 	 * @since 2.3.0.1
+	 *
+	 * @param $last_response WP_Error|array The response or WP_Error on failure.
+	 *
 	 */
 	public function set_last_response($last_response)
 	{
@@ -73,9 +82,11 @@ class Wc_Robokassa_Api
 	}
 
 	/**
-	 * @return string
+	 * Get last response body
 	 *
 	 * @since 2.3.0.1
+	 *
+	 * @return string
 	 */
 	public function get_last_response_body()
 	{
@@ -83,9 +94,11 @@ class Wc_Robokassa_Api
 	}
 
 	/**
-	 * @param string $last_response_body
+	 * Set last response body
 	 *
 	 * @since 2.3.0.1
+	 *
+	 * @param string $last_response_body
 	 */
 	public function set_last_response_body($last_response_body)
 	{
@@ -172,7 +185,7 @@ class Wc_Robokassa_Api
 				{
 					$response_data = new SimpleXMLElement($this->get_last_response_body());
 				}
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					return false;
 				}
@@ -259,7 +272,7 @@ class Wc_Robokassa_Api
 				{
 					$response_data = new SimpleXMLElement($this->get_last_response_body());
 				}
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					return false;
 				}
@@ -273,7 +286,7 @@ class Wc_Robokassa_Api
 				}
 
 				/**
-				 * Текущее состояние оплаты.
+				 * Current payment state
 				 */
 				if(isset($response_data->State))
 				{
@@ -533,6 +546,8 @@ class Wc_Robokassa_Api
 	 * Может быть использован как для внутренних расчётов,
 	 * так и для дополнительного информирования клиентов на сайте.
 	 *
+	 * @since 2.3.0.1
+	 *
 	 * @param string $merchantLogin Идентификатор магазина, строка. Подробнее см. Создание Магазина.
 	 * @param string $OutSum Сумма, которую хочет получить магазин. Исходя из этой суммы и текущих курсов валют для каждой валюты/варианта
 	 * оплаты в списке будет рассчитана сумма, которую должен будет заплатить клиент.
@@ -541,8 +556,6 @@ class Wc_Robokassa_Api
 	 * @param string $language Язык для локализованных значений в ответе (названий валют, методов оплаты и т. д.).
 	 *
 	 * @return mixed
-	 *
-	 * @since 2.3.0.1
 	 */
 	public function xml_get_rates($merchantLogin, $OutSum, $IncCurrLabel = '', $language = 'ru')
 	{
@@ -589,7 +602,7 @@ class Wc_Robokassa_Api
 				{
 					$response_data = new SimpleXMLElement($this->get_last_response_body());
 				}
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					return false;
 				}
@@ -708,7 +721,7 @@ class Wc_Robokassa_Api
 				{
 					$response_data = new SimpleXMLElement($this->get_last_response_body());
 				}
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					return false;
 				}
