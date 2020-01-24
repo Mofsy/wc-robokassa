@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Donate link: https://mofsy.ru/others/help
 
 == Description ==
-Allows you to use The ROBOKASSA with WooCommerce as a payment gateway plugin.
+Integration Robokassa in WooCommerce as payment gateway plugin.
 Created for individuals, individual entrepreneurs and legal entities.
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
@@ -45,6 +45,7 @@ More features for use payments
 
 = 2.4.0 =
 * Test: WooCommerce 3.9
+* New: bootstrap 4.4.1
 * More fix
 
 = 2.3.0.1 =
