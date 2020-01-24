@@ -13,24 +13,18 @@
  * Copyright: © 2015-2020 Mofsy
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * @package Mofsy/WC_Robokassa
  */
-if(!defined('ABSPATH'))
-{
-	exit;
-}
+defined('ABSPATH') || exit;
 
 /**
  * Run
- *
- * @action wc_robokassa_gateway_init
  */
 add_action('plugins_loaded', 'wc_robokassa_gateway_init', 0);
 
 /**
  * Init plugin gateway
- *
- * @action wc_robokassa_gateway_init_before
- * @action wc_robokassa_gateway_init_after
  */
 function wc_robokassa_gateway_init()
 {

@@ -1,10 +1,10 @@
 <?php
-/*
-  +----------------------------------------------------------+
-  | Author: Mofsy <support@mofsy.ru>                         |
-  | Author website: https://mofsy.ru                         |
-  +----------------------------------------------------------+
-*/
+/**
+ * Main method class
+ *
+ * @package Mofsy/WC_Robokassa
+ */
+defined('ABSPATH') || exit;
 
 class Wc_Robokassa_Method extends WC_Payment_Gateway
 {
