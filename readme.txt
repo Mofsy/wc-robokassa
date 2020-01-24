@@ -1,13 +1,13 @@
 === Payment gateway - Robokassa for WooCommerce ===
 Contributors: Mofsy
 Tags: robokassa, робокасса, робочеки, payment, gateway, woo commerce, woocommerce, ecommerce, gateway, woo robokassa, shop, robo, merchant, woo, woo robo
-Requires at least: 3.0
+Requires at least: 4.2
 Tested up to: 5.3
-Requires PHP: 5.4
+Requires PHP: 5.6
 Stable tag: trunk
+Donate link: https://mofsy.ru/others/help
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Donate link: https://mofsy.ru/others/help
 
 == Description ==
 Integration Robokassa in WooCommerce as payment gateway plugin.
@@ -45,6 +45,8 @@ More features for use payments
 
 = 2.4.0 =
 * Test: WooCommerce 3.9
+* Change: WordPress requires at least 4.2
+* Change: PHP requires at least 5.6
 * New: bootstrap 4.4.1
 * More fix
 
