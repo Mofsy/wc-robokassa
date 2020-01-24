@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Payment gateway - Robokassa for WooCommerce
- * Description: Allows you to use Robokassa with the WooCommerce as payment gateway plugin.
+ * Description: Integration Robokassa in WooCommerce as payment gateway plugin.
  * Plugin URI: https://mofsy.ru/projects/wc-robokassa
  * Version: 2.4.0
  * WC requires at least: 3.0
