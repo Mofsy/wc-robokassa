@@ -329,12 +329,31 @@ class WC_Robokassa
 	 */
 	public function load_plugin_text_domain()
 	{
-		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
-		$locale = apply_filters( 'plugin_locale', $locale, 'wc-robokassa' );
+		/**
+		 * WP 5.x or later
+		 */
+		if(function_exists('determine_locale'))
+		{
+			$locale = determine_locale();
+		}
+		else
+		{
+			$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+		}
 
-		unload_textdomain( 'wc-robokassa' );
-		load_textdomain( 'wc-robokassa', WP_LANG_DIR . '/wc-robokassa/wc-robokassa-' . $locale . '.mo' );
-		load_textdomain( 'wc-robokassa', WC_ROBOKASSA_PLUGIN_DIR. '/languages/wc-robokassa-' . $locale . '.mo' );
+		/**
+		 * Change locale from external code
+		 *
+		 * @since 2.4.0
+		 */
+		$locale = apply_filters('plugin_locale', $locale, 'wc-robokassa');
+
+		/**
+		 * Unload & load
+		 */
+		unload_textdomain('wc-robokassa');
+		load_textdomain('wc-robokassa', WP_LANG_DIR . '/wc-robokassa/wc-robokassa-' . $locale . '.mo');
+		load_textdomain('wc-robokassa', WC_ROBOKASSA_PLUGIN_DIR . 'languages/wc-robokassa-' . $locale . '.mo');
 	}
 
 	/**
