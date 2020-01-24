@@ -66,9 +66,6 @@ class WC_Robokassa
 
 	/**
 	 * WC_Robokassa constructor
-     *
-     * @action wc_robokassa_loading
-     * @action wc_robokassa_loaded
 	 */
 	public function __construct()
 	{
@@ -91,8 +88,6 @@ class WC_Robokassa
 
 	/**
 	 * Main WC_Robokassa instance
-	 *
-	 * @static
 	 *
 	 * @return WC_Robokassa
 	 */
@@ -128,9 +123,6 @@ class WC_Robokassa
 	
 	/**
 	 * Include required files
-     *
-     * @action wc_robokassa_includes_start
-     * @action wc_robokassa_includes_end
 	 */
 	public function includes()
 	{
@@ -285,6 +277,8 @@ class WC_Robokassa
     }
 
 	/**
+	 * Get Robokassa api
+	 *
 	 * @return Wc_Robokassa_Api
 	 */
 	public function get_robokassa_api()
@@ -293,6 +287,8 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Set Robokassa api
+	 *
 	 * @param Wc_Robokassa_Api $robokassa_api
 	 */
 	public function set_robokassa_api($robokassa_api)
@@ -308,20 +304,14 @@ class WC_Robokassa
 	    /**
 	     * WooCommerce Currency Switcher
 	     */
-	    if (class_exists('WOOCS'))
+	    if(class_exists('WOOCS'))
 	    {
 		    global $WOOCS;
 
-		    /**
-		     * Set current WooCommerce Currency Switcher currency
-		     */
 		    $this->set_wc_currency(strtoupper($WOOCS->storage->get_val('woocs_current_currency')));
 	    }
 	    else
 	    {
-		    /**
-		     * Set current WooCommerce currency
-		     */
 		    $this->set_wc_currency(gatework_get_wc_currency());
 	    }
     }
@@ -331,9 +321,6 @@ class WC_Robokassa
 	 */
 	public function load_wc_version()
     {
-	    /**
-	     * Set current WooCommerce version
-	     */
 	    $this->set_wc_version(gatework_wc_get_version_active());
     }
 
@@ -389,6 +376,8 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Set logger
+	 *
 	 * @param $logger
 	 *
 	 * @return $this
@@ -432,9 +421,9 @@ class WC_Robokassa
 	 */
 	public function links_right($links, $file)
 	{
-		if ( $file === WC_ROBOKASSA_PLUGIN_NAME )
+		if($file === WC_ROBOKASSA_PLUGIN_NAME)
 		{
-			$links[] = '<a href="'.admin_url('admin.php?page=wc-settings&tab=checkout&section=robokassa').'">' . __('Settings') . '</a>';
+			$links[] = '<a href="' . admin_url('admin.php?page=wc-settings&tab=checkout&section=robokassa') . '">' . __('Settings') . '</a>';
 		}
 
 		return $links;
@@ -506,6 +495,8 @@ class WC_Robokassa
     }
 
 	/**
+	 * Get result url
+	 *
 	 * @return string
 	 */
 	public function get_result_url()
@@ -514,6 +505,8 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Set result url
+	 *
 	 * @param string $result_url
 	 */
 	public function set_result_url($result_url)
@@ -522,6 +515,8 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Get fail url
+	 *
 	 * @return string
 	 */
 	public function get_fail_url()
@@ -530,6 +525,8 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Set fail url
+	 *
 	 * @param string $fail_url
 	 */
 	public function set_fail_url($fail_url)
@@ -538,6 +535,8 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Get success url
+	 *
 	 * @return string
 	 */
 	public function get_success_url()
@@ -546,6 +545,8 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Set success url
+	 *
 	 * @param string $success_url
 	 */
 	public function set_success_url($success_url)
@@ -576,7 +577,7 @@ class WC_Robokassa
   </div>
   <ul class="list-group list-group-flush" style="margin: 0;">
     <li class="list-group-item"><a href="https://mofsy.ru/projects/wc-robokassa" target="_blank">' . __('Official plugin page', 'wc-robokassa') . '</a></li>
-    <li class="list-group-item"><a href="https://mofsy.ru/tag/robokassa" target="_blank">' . __('Related news: ROBOKASSA', 'wc-robokassa') . '</a></li>
+    <li class="list-group-item"><a href="https://mofsy.ru/blog/tag/robokassa" target="_blank">' . __('Related news: ROBOKASSA', 'wc-robokassa') . '</a></li>
     <li class="list-group-item"><a href="https://mofsy.ru/projects/tag/woocommerce" target="_blank">' . __('Plugins for WooCommerce', 'wc-robokassa') . '</a></li>
     <li class="list-group-item"><a href="https://mofsy.ru/others/feedback" target="_blank">' . __('Feedback to author', 'wc-robokassa') . '</a></li>
   </ul>
