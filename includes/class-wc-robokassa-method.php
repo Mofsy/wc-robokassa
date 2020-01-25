@@ -87,18 +87,22 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $test_shop_pass_2 = '';
 
 	/**
-	 * Hashing signature for test mode
+	 * Hashing for signature with test mode
 	 *
 	 * @var string
 	 */
 	public $test_sign_method = 'sha256';
 
 	/**
+	 * Receipt status
+	 *
 	 * @var bool
 	 */
 	public $ofd_status = false;
 
 	/**
+	 * Tax system
+	 *
 	 * @var string
 	 */
 	public $ofd_sno = 'usn';
