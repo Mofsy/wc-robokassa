@@ -23,7 +23,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @var string
 	 */
-	public $shop_login;
+	public $shop_login = '';
 
 	/**
 	 * Shop pass 1
