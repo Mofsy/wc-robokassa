@@ -910,16 +910,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['test_payments'] = array
 		(
-			'title'       => __('Parameters of the test fees', 'wc-robokassa'),
+			'title'       => __('Parameters for test payments', 'wc-robokassa'),
 			'type'        => 'title',
-			'description' => __('Set up test payments. Passwords and counting method signature for test payments differ.', 'wc-robokassa'),
+			'description' => __('Passwords and hashing algorithms for test payments differ from those specified for real payments.', 'wc-robokassa'),
 		);
 
 		$fields['test'] = array
 		(
 			'title'       => __('Test mode', 'wc-robokassa'),
 			'type'        => 'select',
-			'description' => __('Activate testing mode for admins.', 'wc-robokassa'),
+			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
 			'default'     => 'yes',
 			'options'     => array
 			(
