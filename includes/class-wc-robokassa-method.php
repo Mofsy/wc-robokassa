@@ -68,6 +68,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $user_interface_language = 'ru';
 
 	/**
+	 * Flag for test mode
+	 *
 	 * @var mixed
 	 */
 	public $test = 'no';
