@@ -135,12 +135,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Admin title
 		 */
-		$this->method_title = __( 'Robokassa', 'wc-robokassa' );
+		$this->method_title = __('Robokassa', 'wc-robokassa');
 
 		/**
 		 * Admin method description
 		 */
-		$this->method_description = __( 'Pay via Robokassa.', 'wc-robokassa' );
+		$this->method_description = __('Pay via Robokassa.', 'wc-robokassa');
 
 		/**
 		 * Initialize filters
@@ -158,21 +158,34 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Save admin options
 		 */
-		if(current_user_can( 'manage_options' ))
+		if(current_user_can('manage_options'))
 		{
-			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
-			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'wc_robokassa_last_settings_update_version'));
+			/**
+			 * Options save
+			 */
+			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(
+				$this,
+				'process_admin_options'
+			), 10);
+
+			/**
+			 * Update last version
+			 */
+			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(
+				$this,
+				'wc_robokassa_last_settings_update_version'
+			), 10);
 		}
 
 		/**
 		 * Receipt page
 		 */
-		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
+		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
 
 		/**
 		 * Payment listener/API hook
 		 */
-		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications' ));
+		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
 	}
 
 	/**
@@ -198,12 +211,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Payment fields description show
 		 */
-		add_action('wc_robokassa_payment_fields_show', array($this, 'payment_fields_description_show'));
+		add_action('wc_robokassa_payment_fields_show', array($this, 'payment_fields_description_show'), 10);
 
 		/**
 		 * Payment fields test mode show
 		 */
-		add_action('wc_robokassa_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'));
+		add_action('wc_robokassa_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'), 10);
 
 		/**
 		 * Receipt form show
@@ -212,17 +225,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * Last settings update version
+	 * Update plugin version at settings update
 	 */
 	public function wc_robokassa_last_settings_update_version()
 	{
-		update_option('wc_robokassa_last_settings_update_version', '2.0');
+		update_option('wc_robokassa_last_settings_update_version', '2.4');
 	}
 
 	/**
 	 * Init gateway options
-	 *
-	 * @filter woocommerce_robokassa_icon
 	 */
 	public function init_options()
 	{
@@ -430,13 +441,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Gateway allowed?
 		 */
-		if ($this->is_valid_for_use() == false)
+		if ($this->is_valid_for_use() === false)
 		{
 			$this->enabled = false;
 		}
 	}
 
 	/**
+	 * Get shop login
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -447,16 +460,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set shop login
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $shop_login
 	 */
-	public function set_shop_login( $shop_login )
+	public function set_shop_login($shop_login)
 	{
 		$this->shop_login = $shop_login;
 	}
 
 	/**
+	 * Get shop pass 1
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -467,16 +484,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set shop pass 1
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $shop_pass_1
 	 */
-	public function set_shop_pass_1( $shop_pass_1 )
+	public function set_shop_pass_1($shop_pass_1)
 	{
 		$this->shop_pass_1 = $shop_pass_1;
 	}
 
 	/**
+	 * Get shop pass 2
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -487,16 +508,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set shop pass 2
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $shop_pass_2
 	 */
-	public function set_shop_pass_2( $shop_pass_2 )
+	public function set_shop_pass_2($shop_pass_2)
 	{
 		$this->shop_pass_2 = $shop_pass_2;
 	}
 
 	/**
+	 * Get signature method for real payments
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -507,16 +532,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set signature method for real payments
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $sign_method
 	 */
-	public function set_sign_method( $sign_method )
+	public function set_sign_method($sign_method)
 	{
 		$this->sign_method = $sign_method;
 	}
 
 	/**
+	 * Get form url for send
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -527,16 +556,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set form url for send
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $form_url
 	 */
-	public function set_form_url( $form_url )
+	public function set_form_url($form_url)
 	{
 		$this->form_url = $form_url;
 	}
 
 	/**
+	 * Get user interface language
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -547,16 +580,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set user interface language
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $user_interface_language
 	 */
-	public function set_user_interface_language( $user_interface_language )
+	public function set_user_interface_language($user_interface_language)
 	{
 		$this->user_interface_language = $user_interface_language;
 	}
 
 	/**
+	 * Get flag for test mode
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return mixed
@@ -567,16 +604,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set flag for test mode
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param mixed $test
 	 */
-	public function set_test( $test )
+	public function set_test($test)
 	{
 		$this->test = $test;
 	}
 
 	/**
+	 * Get test shop pass 1
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -587,16 +628,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set test shop pass 1
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $test_shop_pass_1
 	 */
-	public function set_test_shop_pass_1( $test_shop_pass_1 )
+	public function set_test_shop_pass_1($test_shop_pass_1)
 	{
 		$this->test_shop_pass_1 = $test_shop_pass_1;
 	}
 
 	/**
+	 * Get test shop pass 2
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -607,16 +652,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set test shop pass 2
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $test_shop_pass_2
 	 */
-	public function set_test_shop_pass_2( $test_shop_pass_2 )
+	public function set_test_shop_pass_2($test_shop_pass_2)
 	{
 		$this->test_shop_pass_2 = $test_shop_pass_2;
 	}
 
 	/**
+	 * Get test signature method
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @return string
@@ -627,11 +676,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set test signature method
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param string $test_sign_method
 	 */
-	public function set_test_sign_method( $test_sign_method )
+	public function set_test_sign_method($test_sign_method)
 	{
 		$this->test_sign_method = $test_sign_method;
 	}
@@ -671,7 +722,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @param string $ofd_sno
 	 */
-	public function set_ofd_sno( $ofd_sno )
+	public function set_ofd_sno($ofd_sno)
 	{
 		$this->ofd_sno = $ofd_sno;
 	}
@@ -691,7 +742,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @param string $ofd_nds
 	 */
-	public function set_ofd_nds( $ofd_nds )
+	public function set_ofd_nds($ofd_nds)
 	{
 		$this->ofd_nds = $ofd_nds;
 	}
@@ -711,7 +762,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @param string $ofd_payment_method
 	 */
-	public function set_ofd_payment_method( $ofd_payment_method )
+	public function set_ofd_payment_method($ofd_payment_method)
 	{
 		$this->ofd_payment_method = $ofd_payment_method;
 	}
@@ -731,16 +782,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @param string $ofd_payment_object
 	 */
-	public function set_ofd_payment_object( $ofd_payment_object )
+	public function set_ofd_payment_object($ofd_payment_object)
 	{
 		$this->ofd_payment_object = $ofd_payment_object;
 	}
 
 	/**
 	 * Initialise Gateway Settings Form Fields
-	 *
-	 * @access public
-	 * @filter wc_robokassa_init_form_fields
 	 *
 	 * @return void
 	 */
@@ -760,92 +808,92 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['main'] = array
 		(
-			'title' => __( 'Main settings', 'wc-robokassa' ),
-			'type' => 'title',
-			'description' => __( 'Work is impossible without these settings.', 'wc-robokassa' ),
+			'title'       => __('Main settings', 'wc-robokassa'),
+			'type'        => 'title',
+			'description' => __('Work is impossible without these settings.', 'wc-robokassa'),
 		);
 
 		$fields['enabled'] = array
 		(
-			'title' => __('Online / Offline gateway', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Enable display of the payment gateway on the website', 'wc-robokassa'),
+			'title'       => __('Online / Offline gateway', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable display of the payment gateway on the website', 'wc-robokassa'),
 			'description' => '',
-			'default' => 'off'
+			'default'     => 'off'
 		);
 
 		$fields['shop_login'] = array
 		(
-			'title' => __('Shop identifier', 'wc-robokassa'),
-			'type' => 'text',
-			'description' => __( 'Unique identification for shop from Robokassa.', 'wc-robokassa' ),
-			'default' => ''
+			'title'       => __('Shop identifier', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('Unique identification for shop from Robokassa.', 'wc-robokassa'),
+			'default'     => ''
 		);
 
 		$fields['sign_method'] = array
 		(
-			'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
-			'description' => __( 'The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-			'type' => 'select',
-			'options' => array
+			'title'       => __('Hash calculation algorithm', 'wc-robokassa'),
+			'description' => __('The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'type'        => 'select',
+			'options'     => array
 			(
-				'md5' => 'md5',
+				'md5'       => 'md5',
 				'ripemd160' => 'RIPEMD160',
-				'sha1' => 'SHA1',
-				'sha256' => 'SHA256',
-				'sha384' => 'SHA384',
-				'sha512' => 'SHA512'
+				'sha1'      => 'SHA1',
+				'sha256'    => 'SHA256',
+				'sha384'    => 'SHA384',
+				'sha512'    => 'SHA512'
 			),
-			'default' => 'sha256'
+			'default'     => 'sha256'
 		);
 
 		$fields['shop_pass_1'] = array
 		(
-			'title' => __('Password #1', 'wc-robokassa'),
-			'type' => 'text',
-			'description' => __( 'Please write Shop pass 1. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-			'default' => ''
+			'title'       => __('Password #1', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('Please write Shop pass 1. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'default'     => ''
 		);
 
 		$fields['shop_pass_2'] = array
 		(
-			'title' => __('Password #2', 'wc-robokassa'),
-			'type' => 'text',
-			'description' => __( 'Please write Shop pass 2. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-			'default' => ''
+			'title'       => __('Password #2', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('Please write Shop pass 2. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'default'     => ''
 		);
 
-		$result_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_result_url() . '</p>' . __( 'Address to notify the site of the results of operations in the background. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST.', 'wc-robokassa' );
+		$result_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_result_url() . '</p>' . __('Address to notify the site of the results of operations in the background. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST.', 'wc-robokassa');
 
 		$fields['result_url'] = array
 		(
-			'title' => __('Result Url', 'wc-robokassa'),
-			'type' => 'text',
-			'disabled' => true,
+			'title'       => __('Result Url', 'wc-robokassa'),
+			'type'        => 'text',
+			'disabled'    => true,
 			'description' => $result_url_description,
-			'default' => ''
+			'default'     => ''
 		);
 
-		$success_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_success_url() . '</p>' . __( 'The address for the user to go to the site after successful payment. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa' );
+		$success_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_success_url() . '</p>' . __('The address for the user to go to the site after successful payment. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa');
 
 		$fields['success_url'] = array
 		(
-			'title' => __('Success Url', 'wc-robokassa'),
-			'type' => 'text',
-			'disabled' => true,
+			'title'       => __('Success Url', 'wc-robokassa'),
+			'type'        => 'text',
+			'disabled'    => true,
 			'description' => $success_url_description,
-			'default' => ''
+			'default'     => ''
 		);
 
-		$fail_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_fail_url() . '</p>' . __( 'The address for the user to go to the site, after payment with an error. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa' );
+		$fail_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_fail_url() . '</p>' . __('The address for the user to go to the site, after payment with an error. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa');
 
 		$fields['fail_url'] = array
 		(
-			'title' => __('Fail Url', 'wc-robokassa'),
-			'type' => 'text',
-			'disabled' => true,
+			'title'       => __('Fail Url', 'wc-robokassa'),
+			'type'        => 'text',
+			'disabled'    => true,
 			'description' => $fail_url_description,
-			'default' => ''
+			'default'     => ''
 		);
 
 		return $fields;
@@ -862,55 +910,55 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['test_payments'] = array
 		(
-			'title' => __( 'Parameters of the test fees', 'wc-robokassa' ),
-			'type' => 'title',
-			'description' => __( 'Set up test payments. Passwords and counting method signature for test payments differ.', 'wc-robokassa' ),
+			'title'       => __('Parameters of the test fees', 'wc-robokassa'),
+			'type'        => 'title',
+			'description' => __('Set up test payments. Passwords and counting method signature for test payments differ.', 'wc-robokassa'),
 		);
 
 		$fields['test'] = array
 		(
-			'title' => __( 'Test mode', 'wc-robokassa' ),
-			'type' => 'select',
-			'description' => __( 'Activate testing mode for admins.', 'wc-robokassa' ),
-			'default' => 'yes',
-			'options' => array
+			'title'       => __('Test mode', 'wc-robokassa'),
+			'type'        => 'select',
+			'description' => __('Activate testing mode for admins.', 'wc-robokassa'),
+			'default'     => 'yes',
+			'options'     => array
 			(
-				'no' => __( 'Off', 'wc-robokassa' ),
-				'yes' => __( 'On', 'wc-robokassa' ),
+				'no'  => __('Off', 'wc-robokassa'),
+				'yes' => __('On', 'wc-robokassa'),
 			)
 		);
 
 		$fields['test_sign_method'] = array
 		(
-			'title' => __( 'Hash calculation algorithm', 'wc-robokassa' ),
-			'description' => __( 'The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-			'type' => 'select',
-			'options' => array
+			'title'       => __('Hash calculation algorithm', 'wc-robokassa'),
+			'description' => __('The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'type'        => 'select',
+			'options'     => array
 			(
-				'md5' => 'md5',
+				'md5'       => 'md5',
 				'ripemd160' => 'RIPEMD160',
-				'sha1' => 'SHA1',
-				'sha256' => 'SHA256',
-				'sha384' => 'SHA384',
-				'sha512' => 'SHA512'
+				'sha1'      => 'SHA1',
+				'sha256'    => 'SHA256',
+				'sha384'    => 'SHA384',
+				'sha512'    => 'SHA512'
 			),
-			'default' => 'sha256'
+			'default'     => 'sha256'
 		);
 
 		$fields['test_shop_pass_1'] = array
 		(
-			'title' => __('Password #1', 'wc-robokassa'),
-			'type' => 'text',
-			'description' => __( 'Please write Shop pass 1 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-			'default' => ''
+			'title'       => __('Password #1', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('Please write Shop pass 1 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'default'     => ''
 		);
 
 		$fields['test_shop_pass_2'] = array
 		(
-			'title' => __('Password #2', 'wc-robokassa'),
-			'type' => 'text',
-			'description' => __( 'Please write Shop pass 2 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa' ),
-			'default' => ''
+			'title'       => __('Password #2', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('Please write Shop pass 2 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'default'     => ''
 		);
 
 		return $fields;
@@ -927,67 +975,67 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['interface'] = array
 		(
-			'title' => __( 'Interface', 'wc-robokassa' ),
-			'type' => 'title',
-			'description' => __( 'Customize the appearance. Can leave it at that.', 'wc-robokassa' ),
+			'title'       => __('Interface', 'wc-robokassa'),
+			'type'        => 'title',
+			'description' => __('Customize the appearance. Can leave it at that.', 'wc-robokassa'),
 		);
 
 		$fields['enable_icon'] = array
 		(
-			'title' => __('Show gateway icon?', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Show', 'wc-robokassa'),
+			'title'   => __('Show gateway icon?', 'wc-robokassa'),
+			'type'    => 'checkbox',
+			'label'   => __('Show', 'wc-robokassa'),
 			'default' => 'yes'
 		);
 
 		$fields['language'] = array
 		(
-			'title' => __( 'Language interface', 'wc-robokassa' ),
-			'type' => 'select',
-			'options' => array
+			'title'       => __('Language interface', 'wc-robokassa'),
+			'type'        => 'select',
+			'options'     => array
 			(
 				'ru' => __('Russian', 'wc-robokassa'),
 				'en' => __('English', 'wc-robokassa')
 			),
-			'description' => __( 'What language interface displayed for the customer on Robokassa?', 'wc-robokassa' ),
-			'default' => 'ru'
+			'description' => __('What language interface displayed for the customer on Robokassa?', 'wc-robokassa'),
+			'default'     => 'ru'
 		);
 
 		$fields['language_auto'] = array
 		(
-			'title' => __( 'Language based on the locale?', 'wc-robokassa' ),
-			'type' => 'select',
-			'options' => array
+			'title'       => __('Language based on the locale?', 'wc-robokassa'),
+			'type'        => 'select',
+			'options'     => array
 			(
 				'yes' => __('Yes', 'wc-robokassa'),
-				'no' => __('No', 'wc-robokassa')
+				'no'  => __('No', 'wc-robokassa')
 			),
-			'description' => __( 'Trying to get the language based on the locale?', 'wc-robokassa' ),
-			'default' => 'ru'
+			'description' => __('Trying to get the language based on the locale?', 'wc-robokassa'),
+			'default'     => 'ru'
 		);
 
 		$fields['title'] = array
 		(
-			'title' => __('Title', 'wc-robokassa'),
-			'type' => 'text',
-			'description' => __( 'This is the name that the user sees during the payment.', 'wc-robokassa' ),
-			'default' => __('Robokassa', 'wc-robokassa')
+			'title'       => __('Title', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('This is the name that the user sees during the payment.', 'wc-robokassa'),
+			'default'     => __('Robokassa', 'wc-robokassa')
 		);
 
 		$fields['order_button_text'] = array
 		(
-			'title' => __('Order button text', 'wc-robokassa'),
-			'type' => 'text',
-			'description' => __( 'This is the button text that the user sees during the payment.', 'wc-robokassa' ),
-			'default' => __('Goto pay', 'wc-robokassa')
+			'title'       => __('Order button text', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('This is the button text that the user sees during the payment.', 'wc-robokassa'),
+			'default'     => __('Goto pay', 'wc-robokassa')
 		);
 
 		$fields['description'] = array
 		(
-			'title' => __( 'Description', 'wc-robokassa' ),
-			'type' => 'textarea',
-			'description' => __( 'Description of the method of payment that the customer will see on our website.', 'wc-robokassa' ),
-			'default' => __( 'Payment via Robokassa.', 'wc-robokassa' )
+			'title'       => __('Description', 'wc-robokassa'),
+			'type'        => 'textarea',
+			'description' => __('Description of the method of payment that the customer will see on our website.', 'wc-robokassa'),
+			'default'     => __('Payment via Robokassa.', 'wc-robokassa')
 		);
 
 		return $fields;
@@ -1004,24 +1052,24 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['ofd'] = array
 		(
-			'title' => __( 'Cart content sending (54fz)', 'wc-robokassa' ),
-			'type' => 'title',
-			'description' => __( 'These settings are required only for legal entities in the absence of its cash machine.', 'wc-robokassa' ),
+			'title'       => __('Cart content sending (54fz)', 'wc-robokassa'),
+			'type'        => 'title',
+			'description' => __('These settings are required only for legal entities in the absence of its cash machine.', 'wc-robokassa'),
 		);
 
 		$fields['ofd_status'] = array
 		(
-			'title' => __('The transfer of goods', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Enable', 'wc-robokassa'),
+			'title'       => __('The transfer of goods', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
 			'description' => __('When you select the option, a check will be generated and sent to the tax and customer. When used, you must set up the VAT of the items sold. VAT is calculated according to the legislation of the Russian Federation. There may be differences in the amount of VAT with the amount calculated by the store.', 'wc-robokassa'),
-			'default' => 'off'
+			'default'     => 'off'
 		);
 
 		$fields['ofd_sno'] = array
 		(
-			'title' => __('Taxation system', 'wc-robokassa'),
-			'type' => 'select',
+			'title'   => __('Taxation system', 'wc-robokassa'),
+			'type'    => 'select',
 			'default' => '0',
 			'options' => array
 			(
@@ -1036,8 +1084,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['ofd_nds'] = array
 		(
-			'title' => __('Default VAT rate', 'wc-robokassa'),
-			'type' => 'select',
+			'title'   => __('Default VAT rate', 'wc-robokassa'),
+			'type'    => 'select',
 			'default' => '0',
 			'options' => array
 			(
@@ -1052,50 +1100,50 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['ofd_payment_method'] = array
 		(
-			'title' => __('Indication of the calculation method', 'wc-robokassa'),
+			'title'       => __('Indication of the calculation method', 'wc-robokassa'),
 			'description' => __('The parameter is optional. If this parameter is not configured, the check will indicate the default value of the parameter from the Personal account.', 'wc-robokassa'),
-			'type' => 'select',
-			'default' => '',
-			'options' => array
+			'type'        => 'select',
+			'default'     => '',
+			'options'     => array
 			(
-				'' => __('Default in Robokassa', 'wc-robokassa'),
+				''                => __('Default in Robokassa', 'wc-robokassa'),
 				'full_prepayment' => __('Prepayment 100%', 'wc-robokassa'),
-				'prepayment' => __('Partial prepayment', 'wc-robokassa'),
-				'advance' => __('Advance', 'wc-robokassa'),
-				'full_payment' => __('Full settlement', 'wc-robokassa'),
+				'prepayment'      => __('Partial prepayment', 'wc-robokassa'),
+				'advance'         => __('Advance', 'wc-robokassa'),
+				'full_payment'    => __('Full settlement', 'wc-robokassa'),
 				'partial_payment' => __('Partial settlement and credit', 'wc-robokassa'),
-				'credit' => __('Transfer on credit', 'wc-robokassa'),
-				'credit_payment' => __('Credit payment', 'wc-robokassa')
+				'credit'          => __('Transfer on credit', 'wc-robokassa'),
+				'credit_payment'  => __('Credit payment', 'wc-robokassa')
 			),
 		);
 
 		$fields['ofd_payment_object'] = array
 		(
-			'title' => __('Sign of the subject of calculation', 'wc-robokassa'),
+			'title'       => __('Sign of the subject of calculation', 'wc-robokassa'),
 			'description' => __('The parameter is optional. If this parameter is not configured, the check will indicate the default value of the parameter from the Personal account.', 'wc-robokassa'),
-			'type' => 'select',
-			'default' => '',
-			'options' => array
+			'type'        => 'select',
+			'default'     => '',
+			'options'     => array
 			(
-				'' => __('Default in Robokassa', 'wc-robokassa'),
-				'commodity' => __('Product', 'wc-robokassa'),
-				'excise' => __('Excisable goods', 'wc-robokassa'),
-				'job' => __('Work', 'wc-robokassa'),
-				'service' => __('Service', 'wc-robokassa'),
-				'gambling_bet' => __('Gambling rate', 'wc-robokassa'),
-				'gambling_prize' => __('Gambling win', 'wc-robokassa'),
-				'lottery' => __('Lottery ticket', 'wc-robokassa'),
-				'lottery_prize' => __('Winning the lottery', 'wc-robokassa'),
+				''                      => __('Default in Robokassa', 'wc-robokassa'),
+				'commodity'             => __('Product', 'wc-robokassa'),
+				'excise'                => __('Excisable goods', 'wc-robokassa'),
+				'job'                   => __('Work', 'wc-robokassa'),
+				'service'               => __('Service', 'wc-robokassa'),
+				'gambling_bet'          => __('Gambling rate', 'wc-robokassa'),
+				'gambling_prize'        => __('Gambling win', 'wc-robokassa'),
+				'lottery'               => __('Lottery ticket', 'wc-robokassa'),
+				'lottery_prize'         => __('Winning the lottery', 'wc-robokassa'),
 				'intellectual_activity' => __('Results of intellectual activity', 'wc-robokassa'),
-				'payment' => __('Payment', 'wc-robokassa'),
-				'agent_commission' => __('Agency fee', 'wc-robokassa'),
-				'composite' => __('Compound subject of calculation', 'wc-robokassa'),
-				'another' => __('Another object of the calculation', 'wc-robokassa'),
-				'property_right' => __('Property right', 'wc-robokassa'),
-				'non-operating_gain' => __('Extraordinary income', 'wc-robokassa'),
-				'insurance_premium' => __('Insurance premium', 'wc-robokassa'),
-				'sales_tax' => __('Sales tax', 'wc-robokassa'),
-				'resort_fee' => __('Resort fee', 'wc-robokassa')
+				'payment'               => __('Payment', 'wc-robokassa'),
+				'agent_commission'      => __('Agency fee', 'wc-robokassa'),
+				'composite'             => __('Compound subject of calculation', 'wc-robokassa'),
+				'another'               => __('Another object of the calculation', 'wc-robokassa'),
+				'property_right'        => __('Property right', 'wc-robokassa'),
+				'non-operating_gain'    => __('Extraordinary income', 'wc-robokassa'),
+				'insurance_premium'     => __('Insurance premium', 'wc-robokassa'),
+				'sales_tax'             => __('Sales tax', 'wc-robokassa'),
+				'resort_fee'            => __('Resort fee', 'wc-robokassa')
 			),
 		);
 
@@ -1113,20 +1161,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['technical'] = array
 		(
-			'title' => __( 'Technical details', 'wc-robokassa' ),
-			'type' => 'title',
-			'description' => __( 'Setting technical parameters. Used by technical specialists. Can leave it at that.', 'wc-robokassa' ),
+			'title'       => __('Technical details', 'wc-robokassa'),
+			'type'        => 'title',
+			'description' => __('Setting technical parameters. Used by technical specialists. Can leave it at that.', 'wc-robokassa'),
 		);
 
 		$fields['logger'] = array
 		(
-			'title' => __( 'Enable logging?', 'wc-robokassa' ),
-			'type' => 'select',
-			'description' => __( 'You can enable gateway logging, specify the level of error that you want to benefit from logging. You can send reports to developer manually by pressing the button. All sensitive data in the report are deleted. By default, the error rate should not be less than ERROR.', 'wc-robokassa' ),
-			'default' => '400',
-			'options' => array
+			'title'       => __('Enable logging?', 'wc-robokassa'),
+			'type'        => 'select',
+			'description' => __('You can enable gateway logging, specify the level of error that you want to benefit from logging. You can send reports to developer manually by pressing the button. All sensitive data in the report are deleted. By default, the error rate should not be less than ERROR.', 'wc-robokassa'),
+			'default'     => '400',
+			'options'     => array
 			(
-				'' => __( 'Off', 'wc-robokassa' ),
+				''    => __('Off', 'wc-robokassa'),
 				'100' => 'DEBUG',
 				'200' => 'INFO',
 				'250' => 'NOTICE',
@@ -1149,7 +1197,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Check allow currency
 		 */
-		if (!in_array(WC_Robokassa::instance()->get_wc_currency(), $this->currency_all, false))
+		if(!in_array(WC_Robokassa::instance()->get_wc_currency(), $this->currency_all, false))
 		{
 			return false;
 		}
@@ -1159,7 +1207,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 *
 		 * @todo сделать возможность тестирования не только админами
 		 */
-		if ($this->get_test() === 'yes' && !current_user_can('manage_options'))
+		if($this->get_test() === 'yes' && !current_user_can('manage_options'))
 		{
 			return false;
 		}
@@ -1168,21 +1216,21 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * Output the gateway settings screen.
+	 * Output settings screen
 	 */
 	public function admin_options()
 	{
 		// hook
 		do_action('wc_robokassa_admin_options_before_show');
 
-		echo '<h2>' . esc_html( $this->get_method_title() );
-		wc_back_link( __( 'Return to payment gateways', 'wc-robokassa' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+		echo '<h2>' . esc_html($this->get_method_title());
+		wc_back_link(__('Return to payment gateways', 'wc-robokassa'), admin_url('admin.php?page=wc-settings&tab=checkout'));
 		echo '</h2>';
 
 		// hook
 		do_action('wc_robokassa_admin_options_method_description_before_show');
 
-		echo wp_kses_post( wpautop( $this->get_method_description() ) );
+		echo wp_kses_post(wpautop($this->get_method_description()));
 
 		// hook
 		do_action('wc_robokassa_admin_options_method_description_after_show');
@@ -1190,7 +1238,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		// hook
 		do_action('wc_robokassa_admin_options_form_before_show');
 
-		echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table>';
+		echo '<table class="form-table">' . $this->generate_settings_html($this->get_form_fields(), false) . '</table>';
 
 		// hook
 		do_action('wc_robokassa_admin_options_form_after_show');
@@ -1200,11 +1248,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * There are no payment fields for sprypay, but we want to show the description if set.
-	 *
-	 * @action wc_robokassa_payment_fields_before_show
-	 * @action wc_robokassa_payment_fields_show
-	 * @action wc_robokassa_payment_fields_after_show
+	 * There are no payment fields for sprypay, but we want to show the description if set
 	 **/
 	public function payment_fields()
 	{
@@ -1234,7 +1278,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function payment_fields_test_mode_show()
 	{
-		if ($this->get_test() == 'yes')
+		if($this->get_test() == 'yes')
 		{
 			echo '<div style="padding:10px; background-color: #ff8982;text-align: center;">';
 			echo __('TEST mode is active. Payment will not be charged. After checking, disable this mode.', 'wc-robokassa');
@@ -1246,8 +1290,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 * Process the payment and return the result
 	 *
 	 * @param int $order_id
-	 *
-	 * @action wc_robokassa_process_payment_start
 	 *
 	 * @return array
 	 */
@@ -1298,10 +1340,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 * Receipt page
 	 *
 	 * @param $order
-	 *
-	 * @action wc_robokassa_receipt_page_before_show
-	 * @action wc_robokassa_receipt_page_show
-	 * @action wc_robokassa_receipt_page_after_show
 	 *
 	 * @return void
 	 */
@@ -1933,7 +1971,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * Check if the gateway is available for use.
+	 * Check if the gateway is available for use
 	 *
 	 * @since 1.0.0.1
 	 *
@@ -1942,6 +1980,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function is_available()
 	{
 		$is_available = parent::is_available();
+
+		/**
+		 * Change status from external code
+		 *
+		 * @since 2.4.0
+		 */
+		$is_available = apply_filters('wc_robokassa_main_method_get_available', $is_available);
 
 		return $is_available;
 	}
