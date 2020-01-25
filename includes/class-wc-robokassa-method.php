@@ -798,7 +798,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * Add main settings
+	 * Add fields for main settings
 	 *
 	 * @param $fields
 	 *
