@@ -176,7 +176,7 @@ class WC_Robokassa
 	}
 
 	/**
-	 * Hook into actions and filters
+	 * Hooks (actions & filters)
 	 */
 	private function init_hooks()
 	{
@@ -195,6 +195,11 @@ class WC_Robokassa
 		 */
 		if(is_admin())
 		{
+			/**
+			 * Admin init
+			 */
+			add_action('init', array($this, 'admin_init'), 0);
+
 			/**
 			 * Admin styles
 			 */
@@ -259,19 +264,6 @@ class WC_Robokassa
 	    $this->load_logger();
 
 		/**
-		 * Localisation
-		 */
-		if(true === is_admin())
-		{
-			$this->load_plugin_text_domain();
-		}
-
-		/**
-		 * Load URLs
-		 */
-		$this->load_urls();
-
-		/**
 		 * Load WooCommerce version
 		 */
 		$this->load_wc_version();
@@ -288,9 +280,23 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Admin initialization
+	 */
+	public function admin_init()
+	{
+        /**
+         * Localisation
+         */
+        $this->load_plugin_text_domain();
+
+		/**
+		 * Load URLs
+		 */
+		$this->load_urls();
+	}
+
+	/**
 	 * Load robokassa api
-     *
-     * @filter wc_robokassa_api_class_name_load
 	 */
 	public function load_robokassa_api()
     {
