@@ -1168,7 +1168,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['logger'] = array
 		(
-			'title'       => __('Enable logging?', 'wc-robokassa'),
+			'title'       => __('Logging', 'wc-robokassa'),
 			'type'        => 'select',
 			'description' => __('You can enable gateway logging, specify the level of error that you want to benefit from logging. All sensitive data in the report are deleted. By default, the error rate should not be less than ERROR.', 'wc-robokassa'),
 			'default'     => '400',
