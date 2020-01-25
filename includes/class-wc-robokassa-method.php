@@ -818,7 +818,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'       => __('Online / Offline gateway', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable display of the payment gateway on the website', 'wc-robokassa'),
-			'description' => '',
+			'description' => __('Disable it for user convenience, if use child payment methods from the premium add-on.', 'wc-robokassa'),
 			'default'     => 'off'
 		);
 
