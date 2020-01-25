@@ -339,13 +339,13 @@ class WC_Robokassa
 	 */
 	public function load_currency()
     {
-	    global $WOOCS;
-
 	    /**
 	     * WooCommerce Currency Switcher
 	     */
 	    if(class_exists('WOOCS'))
 	    {
+		    global $WOOCS;
+
 		    $this->set_wc_currency(strtoupper($WOOCS->storage->get_val('woocs_current_currency')));
 	    }
 	    else
