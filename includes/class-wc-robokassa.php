@@ -73,14 +73,14 @@ class WC_Robokassa
 		do_action('wc_robokassa_loading');
 
 		/**
-		 * Include files
+		 * Include required files for initializing
 		 */
-		$this->includes();
+		$this->init_includes();
 
 		/**
-		 * Add actions & filters
+		 * Initializing actions & filters
 		 */
-		$this->hooks();
+		$this->init_hooks();
 
 		// hook
 		do_action('wc_robokassa_loaded');
@@ -108,7 +108,7 @@ class WC_Robokassa
 	 */
 	public function __clone()
     {
-		_doing_it_wrong( __FUNCTION__, sprintf( 'You cannot clone instances of %s.', get_class( $this ) ), '1.0.0.1' );
+	    _doing_it_wrong(__FUNCTION__, sprintf('You cannot clone instances of %s.', get_class($this)), '2.0.0.1');
 	}
 
 	/**
@@ -118,19 +118,18 @@ class WC_Robokassa
 	 */
 	public function __wakeup()
     {
-		_doing_it_wrong( __FUNCTION__, sprintf( 'You cannot unserialize instances of %s.', get_class( $this ) ), '1.0.0.1' );
+	    _doing_it_wrong(__FUNCTION__, sprintf('You cannot unserialize instances of %s.', get_class($this)), '2.0.0.1');
 	}
 	
 	/**
-	 * Include required files
+	 * Init required files
 	 */
-	public function includes()
+	public function init_includes()
 	{
 		// hook
 		do_action('wc_robokassa_includes_start');
 
-		include_once WC_ROBOKASSA_PLUGIN_DIR . '/includes/class-wc-robokassa-api.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . '/includes/class-wc-robokassa-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-api.php';
 
 		// hook
 		do_action('wc_robokassa_includes_end');
@@ -179,17 +178,17 @@ class WC_Robokassa
 	/**
 	 * Hook into actions and filters
 	 */
-	private function hooks()
+	private function init_hooks()
 	{
 		/**
 		 * Init
 		 */
-		add_action('woocommerce_init', array($this, 'init'), 0);
+		add_action('init', array($this, 'init'), 0);
 
 		/**
-		 * Add payment method
+		 * Add action
 		 */
-		add_filter('woocommerce_payment_gateways', array($this, 'wc_gateway_method_add'));
+		add_action('plugins_loaded', array($this, 'wc_robokassa_gateway_init'), 10);
 
 		/**
 		 * Admin
@@ -199,24 +198,54 @@ class WC_Robokassa
 			/**
 			 * Admin styles
 			 */
-			add_action('admin_enqueue_scripts', array($this, 'wc_robokassa_admin_styles'));
+			add_action('admin_enqueue_scripts', array($this, 'wc_robokassa_admin_styles'), 10);
 
 			/**
 			 * Show admin notices
 			 */
-			add_action( 'admin_notices', array( $this, 'wc_robokassa_admin_notices' ), 10 );
+			add_action('admin_notices', array($this, 'wc_robokassa_admin_notices'), 10);
 
 			/**
 			 * Copyright & links
 			 */
-			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'));
-			add_filter('plugin_row_meta', array( $this, 'links_right' ), 10, 2);
+			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'), 10);
+			add_filter('plugin_row_meta', array($this, 'links_right'), 10, 2);
 
 			/**
 			 * Explode admin pages
 			 */
 			$this->page_explode();
 		}
+	}
+
+	/**
+	 * Init plugin gateway
+	 */
+	public function wc_robokassa_gateway_init()
+	{
+		// hook
+		do_action('wc_robokassa_gateway_init_before');
+
+		/**
+		 * WC_Payment_Gateway is not available
+		 */
+		if(!class_exists('WC_Payment_Gateway'))
+		{
+			return;
+		}
+
+		/**
+		 * Require main method class
+		 */
+		require_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
+
+		/**
+		 * Add payment method
+		 */
+		add_filter('woocommerce_payment_gateways', array($this, 'add_wc_gateway_method'), 10);
+
+		// hook
+		do_action('wc_robokassa_gateway_init_after');
 	}
 
 	/**
@@ -230,9 +259,12 @@ class WC_Robokassa
 	    $this->load_logger();
 
 		/**
-		 * Load languages
+		 * Localisation
 		 */
-		$this->load_plugin_text_domain();
+		if(true === is_admin())
+		{
+			$this->load_plugin_text_domain();
+		}
 
 		/**
 		 * Load URLs
@@ -264,8 +296,14 @@ class WC_Robokassa
     {
         $default_class_name = 'Wc_Robokassa_Api';
 
+	    /**
+	     * Load API class name from external code
+	     */
 	    $robokassa_api_class_name = apply_filters('wc_robokassa_api_class_name_load', $default_class_name);
 
+	    /**
+	     * Fallback
+	     */
 	    if(!class_exists($robokassa_api_class_name))
         {
 	        $robokassa_api_class_name = $default_class_name;
@@ -301,13 +339,13 @@ class WC_Robokassa
 	 */
 	public function load_currency()
     {
+	    global $WOOCS;
+
 	    /**
 	     * WooCommerce Currency Switcher
 	     */
 	    if(class_exists('WOOCS'))
 	    {
-		    global $WOOCS;
-
 		    $this->set_wc_currency(strtoupper($WOOCS->storage->get_val('woocs_current_currency')));
 	    }
 	    else
@@ -338,7 +376,7 @@ class WC_Robokassa
 		}
 		else
 		{
-			$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+			$locale = is_admin() && function_exists('get_user_locale') ? get_user_locale() : get_locale();
 		}
 
 		/**
@@ -359,13 +397,11 @@ class WC_Robokassa
 	/**
 	 * Add the gateway to WooCommerce
 	 *
-	 * @param $methods
-     *
-     * @filter wc_robokassa_method_class_name_add
+	 * @param $methods - all WooCommerce initialized gateways
 	 *
-	 * @return array
+	 * @return array - new WooCommerce initialized gateways
 	 */
-	public function wc_gateway_method_add($methods)
+	public function add_wc_gateway_method($methods)
 	{
 	    $default_class_name = 'Wc_Robokassa_Method';
 
@@ -508,9 +544,9 @@ class WC_Robokassa
 	 */
 	public function load_urls()
     {
-	    $this->set_result_url(get_site_url( null, '/?wc-api=wc_robokassa&action=result'));
-	    $this->set_fail_url(get_site_url( null, '/?wc-api=wc_robokassa&action=fail'));
-	    $this->set_success_url(get_site_url( null, '/?wc-api=wc_robokassa&action=success'));
+	    $this->set_result_url(get_site_url(null, '/?wc-api=wc_robokassa&action=result'));
+	    $this->set_fail_url(get_site_url(null, '/?wc-api=wc_robokassa&action=fail'));
+	    $this->set_success_url(get_site_url(null, '/?wc-api=wc_robokassa&action=success'));
     }
 
 	/**

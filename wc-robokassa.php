@@ -19,65 +19,46 @@
 defined('ABSPATH') || exit;
 
 /**
- * Run
+ * Plugin url
  */
-add_action('plugins_loaded', 'wc_robokassa_gateway_init', 0);
+if(!defined('WC_ROBOKASSA_URL'))
+{
+	define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
+}
 
 /**
- * Init plugin gateway
+ * Plugin Dir
  */
-function wc_robokassa_gateway_init()
+if(!defined('WC_ROBOKASSA_PLUGIN_DIR'))
 {
-	// hook
-	do_action('wc_robokassa_gateway_init_before');
+	define('WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path(__FILE__));
+}
 
-	/**
-	 * Main check
-	 */
-	if (!class_exists('WC_Payment_Gateway') || class_exists('WC_Robokassa'))
-	{
-		return;
-	}
+/**
+ * Plugin Name
+ */
+if(!defined('WC_ROBOKASSA_PLUGIN_NAME'))
+{
+	define('WC_ROBOKASSA_PLUGIN_NAME', plugin_basename(__FILE__));
+}
 
-	/**
-	 * Define plugin url
-	 */
-	if(!defined('WC_ROBOKASSA_URL'))
-	{
-		define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
-	}
+/**
+ * GateWork
+ */
+include_once __DIR__ . '/gatework/init.php';
 
-	/**
-	 * Plugin Dir
-	 */
-	if(!defined('WC_ROBOKASSA_PLUGIN_DIR'))
-	{
-		define('WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path(__FILE__));
-	}
-
-	/**
-	 * Plugin Name
-	 */
-	if(!defined('WC_ROBOKASSA_PLUGIN_NAME'))
-	{
-		define('WC_ROBOKASSA_PLUGIN_NAME', plugin_basename(__FILE__));
-	}
-
-	/**
-	 * GateWork
-	 */
-	include_once __DIR__ . '/gatework/init.php';
-
-	/**
-	 * Gateway main class
-	 */
+/**
+ * Gateway class
+ */
+if(!class_exists('WC_Robokassa'))
+{
 	include_once __DIR__ . '/includes/class-wc-robokassa.php';
+}
 
-	/**
-	 * Run
-	 */
+/**
+ * Run
+ */
+if(is_callable('WC_Robokassa::instance'))
+{
 	WC_Robokassa::instance();
-
-	// hook
-	do_action('wc_robokassa_gateway_init_after');
 }
