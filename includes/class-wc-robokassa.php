@@ -508,7 +508,7 @@ class WC_Robokassa
         /**
          * Global notice: Require update settings
          */
-        if(get_option('wc_robokassa_last_settings_update_version') !== false && $settings_version != $current_version && $_GET['section'] !== 'robokassa')
+        if(get_option('wc_robokassa_last_settings_update_version') !== false && $settings_version < $current_version && $_GET['section'] !== 'robokassa')
         {
 	        ?>
             <div class="notice notice-error" style="font-size: 15px;padding-top: 10px; padding-bottom: 10px;line-height: 140%; background-color: #23282d; color: #fff;">
