@@ -632,12 +632,17 @@ class WC_Robokassa
   <div class="card-header" style="padding: 10px;">
     <h5 style="margin: 0;padding: 0;">' . __('Useful information', 'wc-robokassa') . '</h5>
   </div>
-  <ul class="list-group list-group-flush" style="margin: 0;">
+    <div class="card-body" style="padding: 0;">
+      <ul class="list-group list-group-flush" style="margin: 0;">
     <li class="list-group-item"><a href="https://mofsy.ru/projects/wc-robokassa" target="_blank">' . __('Official plugin page', 'wc-robokassa') . '</a></li>
     <li class="list-group-item"><a href="https://mofsy.ru/blog/tag/robokassa" target="_blank">' . __('Related news: ROBOKASSA', 'wc-robokassa') . '</a></li>
     <li class="list-group-item"><a href="https://mofsy.ru/projects/tag/woocommerce" target="_blank">' . __('Plugins for WooCommerce', 'wc-robokassa') . '</a></li>
     <li class="list-group-item"><a href="https://mofsy.ru/others/feedback" target="_blank">' . __('Feedback to author', 'wc-robokassa') . '</a></li>
   </ul>
+  </div>
+  <div class="card-footer text-muted" style="padding: 10px;">
+    ' . __('This plugin is sponsored by the premium extension. Technical support and updates are provided on an irregular basis.', 'wc-robokassa') . '
+  </div>
 </div>';
 	}
 
@@ -648,12 +653,12 @@ class WC_Robokassa
 	{
 		echo '<div class="card text-white border-light bg-dark" style="margin-top: 10px;padding: 0;">
   <div class="card-header" style="padding: 10px;">
-    <h5 style="margin: 0;padding: 0;">' . __('Paid supplement', 'wc-robokassa') . '</h5>
+    <h5 style="margin: 0;padding: 0;">' . __('Extension', 'wc-robokassa') . '</h5>
   </div> <a href="https://mofsy.ru/projects/wc-robokassa-premium" target="_blank">
    	<img src="' . WC_ROBOKASSA_URL . 'assets/img/wc-robokassa-premium-icon.png" class="card-img-top">
    </a>
   <div class="card-body text-center">
-    ' . __('Even more opportunities to accept payments. Increase conversion.', 'wc-robokassa') . '
+    ' . __('Even more opportunities to accept payments. Increase conversion and stability of the algorithms.', 'wc-robokassa') . '
     <p>
     <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary" target="_blank">' . __('Official plugin page', 'wc-robokassa') . '</a>
     </p>
