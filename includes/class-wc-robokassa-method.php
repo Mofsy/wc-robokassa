@@ -1057,7 +1057,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'no'  => __('No', 'wc-robokassa')
 			),
 			'description' => __('Automatic detection of the users language from the WordPress environment.', 'wc-robokassa'),
-			'default'     => 'ru'
+			'default'     => 'no'
 		);
 
 		$fields['page_skipping'] = array
