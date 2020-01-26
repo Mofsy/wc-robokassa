@@ -48,6 +48,8 @@ More features for use payments
 * Change: WordPress requires at least 4.2
 * Change: PHP requires at least 5.6
 * New: bootstrap 4.4.1
+* Fix: admin styles
+* Optimize: loading & initializing
 * More fix
 
 = 2.3.0.1 =
