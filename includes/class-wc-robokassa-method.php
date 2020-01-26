@@ -1793,7 +1793,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * Автоматический редирект на робокассу методом отправки формы
+	 * Автоматический редирект на робокассу методом автоматической отправки формы
 	 */
 	public function wc_robokassa_input_payment_notifications_redirect_by_form()
 	{
