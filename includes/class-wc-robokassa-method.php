@@ -125,6 +125,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $ofd_payment_object = '';
 
 	/**
+	 * Page skipping
+	 *
+	 * @var string
+	 */
+	public $page_skipping = 'no';
+
+	/**
 	 * WC_Robokassa constructor
 	 */
 	public function __construct()
@@ -250,6 +257,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('enabled') !== 'yes')
 		{
 			$this->enabled = false;
+		}
+
+		/**
+		 * Page skipping enabled?
+		 */
+		if($this->get_option('page_skipping') === 'yes')
+		{
+			$this->set_page_skipping('yes');
 		}
 
 		/**
@@ -620,6 +635,30 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function set_test($test)
 	{
 		$this->test = $test;
+	}
+
+	/**
+	 * Get page skipping flag
+	 *
+	 * @since 2.4.0
+	 *
+	 * @return string
+	 */
+	public function get_page_skipping()
+	{
+		return $this->page_skipping;
+	}
+
+	/**
+	 * Set page skipping flag
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $page_skipping
+	 */
+	public function set_page_skipping($page_skipping)
+	{
+		$this->page_skipping = $page_skipping;
 	}
 
 	/**
@@ -1019,6 +1058,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			),
 			'description' => __('Automatic detection of the users language from the WordPress environment.', 'wc-robokassa'),
 			'default'     => 'ru'
+		);
+
+		$fields['page_skipping'] = array
+		(
+			'title'       => __('Skip the received order page?', 'wc-robokassa'),
+			'type'        => 'select',
+			'options'     => array
+			(
+				'yes' => __('Yes', 'wc-robokassa'),
+				'no'  => __('No', 'wc-robokassa')
+			),
+			'description' => __('This setting is used to reduce actions when users switch to payment.', 'wc-robokassa'),
+			'default'     => 'no'
 		);
 
 		$fields['title'] = array
