@@ -502,7 +502,7 @@ class WC_Robokassa
 	 */
 	public function wc_robokassa_admin_notices()
     {
-        $current_version = '2.5';
+        $current_version = '2.4';
         $settings_version = get_option('wc_robokassa_last_settings_update_version');
 
         /**
