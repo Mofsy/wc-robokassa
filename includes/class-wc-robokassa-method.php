@@ -1386,6 +1386,22 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 
 		/**
+		 * Page skipping enabled
+		 */
+		if($this->get_page_skipping() === 'yes')
+		{
+
+			/**
+			 * Return data
+			 */
+			return array
+			(
+				'result' => 'success',
+				'redirect' => $this->get_url_auto_redirect($order_id)
+			);
+		}
+
+		/**
 		 * Return data
 		 */
 		return array
@@ -1429,7 +1445,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @param $order_id
 	 *
-	 * @return string Payment form
+	 * @return string - payment form
 	 **/
 	public function generate_form($order_id)
 	{
@@ -1610,10 +1626,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Return full form
 		 */
-		return '<form action="'.esc_url($this->get_form_url()).'" method="POST" id="wc_robokassa_payment_form" accept-charset="utf-8">'."\n".
-		       implode("\n", $args_array).
-		       '<input type="submit" class="button alt" id="submit_wc_robokassa_payment_form" value="'.__('Pay', 'wc-robokassa').
-		       '" /> <a class="button cancel" href="'.$order->get_cancel_order_url().'">'.__('Cancel & return to cart', 'wc-robokassa').'</a>'."\n".
+		return '<form action="' . esc_url($this->get_form_url()) . '" method="POST" id="wc_robokassa_payment_form" accept-charset="utf-8">' . "\n" .
+		       implode("\n", $args_array) .
+		       '<input type="submit" class="button alt" id="submit_wc_robokassa_payment_form" value="' . __('Pay', 'wc-robokassa') .
+		       '" /> <a class="button cancel" href="' . $order->get_cancel_order_url() . '">' . __('Cancel & return to cart', 'wc-robokassa') . '</a>' . "\n" .
 		       '</form>';
 	}
 
