@@ -58,7 +58,11 @@ if(!class_exists('WC_Robokassa'))
 /**
  * Run
  */
-if(is_callable('WC_Robokassa::instance'))
+function wc_robokassa_run()
 {
-	WC_Robokassa::instance();
+	if(is_callable('WC_Robokassa::instance'))
+	{
+		WC_Robokassa::instance();
+	}
 }
+add_action('plugins_loaded', 'wc_robokassa_run', 0);

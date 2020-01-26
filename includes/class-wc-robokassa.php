@@ -130,6 +130,7 @@ class WC_Robokassa
 		do_action('wc_robokassa_includes_start');
 
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-api.php';
+		require_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
 
 		// hook
 		do_action('wc_robokassa_includes_end');
@@ -188,7 +189,7 @@ class WC_Robokassa
 		/**
 		 * Add action
 		 */
-		add_action('plugins_loaded', array($this, 'wc_robokassa_gateway_init'), 10);
+		add_action('woocommerce_init', array($this, 'wc_robokassa_gateway_init'), 10);
 
 		/**
 		 * Admin
@@ -238,11 +239,6 @@ class WC_Robokassa
 		{
 			return;
 		}
-
-		/**
-		 * Require main method class
-		 */
-		require_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
 
 		/**
 		 * Add payment method
