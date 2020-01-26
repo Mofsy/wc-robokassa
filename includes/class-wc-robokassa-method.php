@@ -185,6 +185,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
 
 		/**
+		 * Auto redirect
+		 */
+		add_action('wc_robokassa_input_payment_notifications', array($this, 'wc_robokassa_input_payment_notifications_redirect_by_form'), 20);
+
+		/**
 		 * Payment listener/API hook
 		 */
 		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
@@ -1012,7 +1017,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'yes' => __('Yes', 'wc-robokassa'),
 				'no'  => __('No', 'wc-robokassa')
 			),
-			'description' => __('Trying to get the language based on the locale?', 'wc-robokassa'),
+			'description' => __('Automatic detection of the users language from the WordPress environment.', 'wc-robokassa'),
 			'default'     => 'ru'
 		);
 
@@ -1724,9 +1729,62 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * Check instant payment notification
+	 * Получение ссылки на автоматический редирект в робокассу
 	 *
-	 * @action wc_robokassa_input_payment_notifications
+	 * @param $order_id
+	 *
+	 * @return string
+	 */
+	public function get_url_auto_redirect($order_id) // todo: more options
+	{
+		return get_site_url( null, '/?wc-api=wc_' . $this->id . '&action=redirect&order_id=' . $order_id);
+	}
+
+	/**
+	 * Автоматический редирект на робокассу методом отправки формы
+	 */
+	public function wc_robokassa_input_payment_notifications_redirect_by_form()
+	{
+		if(false == isset($_GET['action']))
+		{
+			return;
+		}
+
+		if(false == isset($_GET['order_id']))
+		{
+			return;
+		}
+
+		if($_GET['action'] !== 'redirect')
+		{
+			return;
+		}
+
+		if($_GET['order_id'] === '')
+		{
+			return;
+		}
+
+		$order_id = $_GET['order_id'];
+
+		/**
+		 * Form data
+		 */
+		$form_data = $this->generate_form($order_id);
+
+		/**
+		 * Page data
+		 */
+		$page_data = '<html lang="ru"><body style="display: none;" onload="document.forms.wc_robokassa_payment_form.submit()">' . $form_data .'</body></html>';
+
+		/**
+		 * Echo form an die :(
+		 */
+		die($page_data);
+	}
+
+	/**
+	 * Check instant payment notification
 	 *
 	 * @return void
 	 */
