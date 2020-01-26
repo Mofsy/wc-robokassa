@@ -4,7 +4,6 @@
  *
  * @package Mofsy/WC_Robokassa
  */
-defined('ABSPATH') || exit;
 defined('WP_UNINSTALL_PLUGIN') || exit;
 
 global $wpdb;
