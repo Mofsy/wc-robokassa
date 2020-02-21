@@ -1919,7 +1919,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Signature pass for real payments
 			 */
-			if ($_GET['action'] === 'success')
+			if($_REQUEST['action'] === 'success')
 			{
 				$signature_pass = $this->get_shop_pass_1();
 			}
