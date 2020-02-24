@@ -18,25 +18,16 @@
  */
 defined('ABSPATH') || exit;
 
-/**
- * Plugin url
- */
 if(!defined('WC_ROBOKASSA_URL'))
 {
 	define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
 }
 
-/**
- * Plugin Dir
- */
 if(!defined('WC_ROBOKASSA_PLUGIN_DIR'))
 {
 	define('WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
 
-/**
- * Plugin Name
- */
 if(!defined('WC_ROBOKASSA_PLUGIN_NAME'))
 {
 	define('WC_ROBOKASSA_PLUGIN_NAME', plugin_basename(__FILE__));
