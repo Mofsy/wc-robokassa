@@ -1,8 +1,8 @@
 === Payment gateway - Robokassa for WooCommerce ===
 Contributors: Mofsy
-Tags: robokassa, робокасса, робочеки, payment, gateway, woo commerce, woocommerce, ecommerce, gateway, woo robokassa, shop, robo, merchant, woo, woo robo
+Tags: robokassa, woocommerce, робокасса, робочеки, payment, gateway, woo commerce, ecommerce, gateway, woo robokassa, shop, robo, merchant, woo, woo robo
 Requires at least: 4.2
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: trunk
 Donate link: https://mofsy.ru/others/help
@@ -22,7 +22,7 @@ RUB, USD, EUR, KZT
 2. WooCommerce Currency Switcher (https://currency-switcher.com)
 
 = Premium available =
-More features for use payments
+More features
 [https://mofsy.ru/projects/wc-robokassa-premium](https://mofsy.ru/projects/wc-robokassa-premium)
 
 == Screenshots ==
@@ -45,6 +45,11 @@ More features for use payments
 3. Setting
 
 == Changelog ==
+
+= 2.5.0 =
+* Test: WordPress 5.4
+* Optimize: loading & initializing
+* More fix
 
 = 2.4.0 =
 * Test: WooCommerce 3.9
