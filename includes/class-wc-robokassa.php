@@ -187,7 +187,7 @@ class WC_Robokassa
 		add_action('init', array($this, 'init'), 0);
 
 		/**
-		 * Add action
+		 * Gateway init
 		 */
 		add_action('woocommerce_init', array($this, 'wc_robokassa_gateway_init'), 10);
 

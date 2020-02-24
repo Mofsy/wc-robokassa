@@ -1387,10 +1387,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_page_skipping() === 'yes')
 		{
-
-			/**
-			 * Return data
-			 */
 			return array
 			(
 				'result' => 'success',
@@ -1398,9 +1394,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			);
 		}
 
-		/**
-		 * Return data
-		 */
 		return array
 		(
 			'result' => 'success',
