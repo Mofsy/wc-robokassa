@@ -52,17 +52,11 @@ include_once __DIR__ . '/gatework/init.php';
  */
 if(!class_exists('WC_Robokassa'))
 {
+	include_once __DIR__ . '/includes/functions-wc-robokassa.php';
 	include_once __DIR__ . '/includes/class-wc-robokassa.php';
 }
 
 /**
  * Run
  */
-function wc_robokassa_run()
-{
-	if(is_callable('WC_Robokassa::instance'))
-	{
-		WC_Robokassa::instance();
-	}
-}
 add_action('plugins_loaded', 'wc_robokassa_run', 0);
