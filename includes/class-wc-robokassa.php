@@ -20,14 +20,14 @@ class WC_Robokassa
 	 *
 	 * @var WC_Gatework_Logger
 	 */
-	public $logger;
+	public $logger = false;
 
 	/**
      * Api Robokassa
      *
 	 * @var Wc_Robokassa_Api
 	 */
-	public $robokassa_api;
+	public $robokassa_api = false;
 
 	/**
 	 * Current WooCommerce version
@@ -48,21 +48,21 @@ class WC_Robokassa
      *
 	 * @var string
 	 */
-	private $result_url;
+	private $result_url = '';
 
 	/**
      * Fail url
      *
 	 * @var string
 	 */
-	private $fail_url;
+	private $fail_url = '';
 
 	/**
      * Success url
      *
 	 * @var string
 	 */
-	private $success_url;
+	private $success_url = '';
 
 	/**
 	 * WC_Robokassa constructor
