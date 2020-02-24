@@ -883,7 +883,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'type'        => 'select',
 			'options'     => array
 			(
-				'md5'       => 'md5',
+				'md5'       => 'MD5',
 				'ripemd160' => 'RIPEMD160',
 				'sha1'      => 'SHA1',
 				'sha256'    => 'SHA256',
