@@ -1364,9 +1364,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($order === false)
 		{
-			/**
-			 * Return data
-			 */
 			return array
 			(
 				'result' => 'failure',
