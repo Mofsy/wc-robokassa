@@ -258,6 +258,11 @@ class WC_Robokassa
 		 * Load logger
 		 */
 	    $this->load_logger();
+	    
+		/**
+		 * Localisation
+		 */
+		$this->load_plugin_text_domain();
 
 		/**
 		 * Load WooCommerce version
@@ -280,11 +285,6 @@ class WC_Robokassa
 	 */
 	public function admin_init()
 	{
-        /**
-         * Localisation
-         */
-        $this->load_plugin_text_domain();
-
 		/**
 		 * Load URLs
 		 */
