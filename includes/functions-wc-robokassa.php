@@ -7,7 +7,7 @@
  */
 function WC_Robokassa()
 {
-	if(is_callable('Wc1c::instance'))
+	if(is_callable('WC_Robokassa::instance'))
 	{
 		return WC_Robokassa::instance();
 	}

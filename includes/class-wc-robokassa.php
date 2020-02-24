@@ -254,30 +254,17 @@ class WC_Robokassa
 	 */
 	public function init()
 	{
-		/**
-		 * Load logger
-		 */
-	    $this->load_logger();
+		if($this->load_logger() === false)
+		{
+			return false;
+		}
 
-		/**
-		 * Localisation
-		 */
 		$this->load_plugin_text_domain();
-
-		/**
-		 * Load WooCommerce version
-		 */
 		$this->load_wc_version();
-
-		/**
-		 * Load WooCommerce currency
-		 */
 		$this->load_currency();
-
-		/**
-         * Load Robokassa Api
-         */
 		$this->load_robokassa_api();
+
+		return true;
 	}
 
 	/**
@@ -361,7 +348,7 @@ class WC_Robokassa
 	 */
 	public function load_wc_version()
     {
-	    $this->set_wc_version(gatework_wc_get_version_active());
+	    $this->set_wc_version(gatework_get_wc_version());
     }
 
 	/**
@@ -424,12 +411,25 @@ class WC_Robokassa
 	 */
 	public function load_logger()
 	{
+		try
+		{
+			$logger = new WC_Gatework_Logger();
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+
 		if(function_exists('wp_upload_dir'))
 		{
 			$wp_dir = wp_upload_dir();
 
-			$this->set_logger(new WC_Gatework_Logger( $wp_dir['basedir'] . '/wc-robokassa.txt', 400));
+			$logger->set_name('wc-robokassa.boot.log');
+			$logger->set_level(50);
+			$logger->set_path($wp_dir['basedir']);
 		}
+
+		return false;
 	}
 
 	/**
@@ -529,7 +529,7 @@ class WC_Robokassa
 	 */
 	public function page_explode_table_before()
 	{
-		echo '<div class="row"><div class="col-17">';
+		echo '<div class="row"><div class="col-24 col-md-17">';
 	}
 
 	/**
@@ -610,7 +610,7 @@ class WC_Robokassa
 	 */
 	public function page_explode_table_after()
 	{
-		echo '</div><div class="col-6">';
+		echo '</div><div class="col-24 col-md-6">';
 
 		do_action('wc_robokassa_admin_options_form_right_column_show');
 
