@@ -502,7 +502,7 @@ class WC_Robokassa
 	 */
 	public function wc_robokassa_admin_notices()
     {
-        $current_version = '2.4';
+        $current_version = '2.5';
         $settings_version = get_option('wc_robokassa_last_settings_update_version');
 
         /**
@@ -510,21 +510,6 @@ class WC_Robokassa
          */
         if(get_option('wc_robokassa_last_settings_update_version') !== false && $settings_version < $current_version && $_GET['section'] !== 'robokassa')
         {
-	        ?>
-            <div class="notice notice-error" style="font-size: 15px;padding-top: 10px; padding-bottom: 10px;line-height: 140%; background-color: #23282d; color: #fff;">
-		        <?php
-                echo __('The plugin for accepting payments through ROBOKASSA for WooCommerce has been updated to a version that requires additional configuration.', 'wc-robokassa');
-		        echo '<br />';
-		        echo __('This is a fairly large update with many bug fixes and added features. Robokassa started working on improving its API. The premium add-on will soon include payment without leaving the site.', 'wc-robokassa');
-		        echo '<br />';
-		        echo __('The premium update is now available for 9 months at the same price. In addition, the VARFHA5V discount coupon is valid until January 31.', 'wc-robokassa');
-		        echo '<br />';
-		        echo __('The discount is 400 rubles.', 'wc-robokassa');
-		        echo '<br />';
-		        $link = '<a style="color: red;" href="' . admin_url('admin.php?page=wc-settings&tab=checkout&section=robokassa') . '">' . __('here', 'wc-robokassa') . '</a>';
-		        echo sprintf( __( 'Press %s (to go to payment gateway settings). Examine the new settings and save them. This notification will disappear.', 'wc-robokassa' ), $link ) ?>
-            </div>
-	        <?php
         }
     }
 
