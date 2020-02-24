@@ -3,7 +3,7 @@
   +----------------------------------------------------------+
   | Gatework                                                 |
   +----------------------------------------------------------+
-  | Author: Oleg Budrin (Mofsy) <support@mofsy.ru>           |
+  | Author: Mofsy <support@mofsy.ru>                         |
   | Author website: https://mofsy.ru                         |
   +----------------------------------------------------------+
 */
@@ -11,14 +11,18 @@
 class WC_Gatework_Logger
 {
 	/**
-	 * @var array
+	 * Log name
+	 *
+	 * @var string
 	 */
-	public $buffer;
+	private $name = 'gatework.boot.log';
 
 	/**
 	 * Path
+	 *
+	 * @var string
 	 */
-	public $path;
+	public $path = '';
 
 	/**
 	 * Default level
@@ -30,7 +34,7 @@ class WC_Gatework_Logger
 	/**
 	 * Datetime
 	 */
-	public $dt;
+	public $date_time;
 
 	/**
 	 * Logging levels (RFC 5424)
@@ -50,15 +54,25 @@ class WC_Gatework_Logger
 	);
 
 	/**
-	 * Logger constructor.
+	 * WC_Gatework_Logger constructor
 	 *
 	 * @param $path
-	 * @param $level
+	 * @param int $level
+	 * @param string $name
+	 *
+	 * @throws Exception
 	 */
-	public function __construct($path, $level)
+	public function __construct($path = '', $level = 400, $name = '')
 	{
-		$this->path = $path;
-		$this->dt = new DateTime('now', new DateTimeZone( 'UTC' ));
+		if($name !== '')
+		{
+			$this->set_name($name);
+		}
+
+		if($path !== '')
+		{
+			$this->set_path($path);
+		}
 
 		if($level !== '')
 		{
@@ -67,9 +81,73 @@ class WC_Gatework_Logger
 	}
 
 	/**
+	 * @return string
+	 */
+	public function get_name()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * @param string $name
+	 */
+	public function set_name($name)
+	{
+		$this->name = $name;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function get_path()
+	{
+		return $this->path;
+	}
+
+	/**
+	 * @param mixed $path
+	 */
+	public function set_path($path)
+	{
+		$this->path = $path;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function get_level()
+	{
+		return $this->level;
+	}
+
+	/**
+	 * @param int $level
+	 */
+	public function set_level($level)
+	{
+		$this->level = $level;
+	}
+
+	/**
+	 * @return DateTime
+	 */
+	public function get_date_time()
+	{
+		return $this->date_time;
+	}
+
+	/**
+	 * @param DateTime $date_time
+	 */
+	public function set_date_time($date_time)
+	{
+		$this->date_time = $date_time;
+	}
+
+	/**
 	 * @param $message
 	 */
-	public function addWarn($message)
+	public function warning($message)
 	{
 		$this->add(300, $message);
 	}
@@ -78,7 +156,7 @@ class WC_Gatework_Logger
 	 * @param $message
 	 * @param null $object
 	 */
-	public function addError($message, $object = null)
+	public function error($message, $object = null)
 	{
 		$this->add(400, $message, $object);
 	}
@@ -87,7 +165,7 @@ class WC_Gatework_Logger
 	 * @param $message
 	 * @param null $object
 	 */
-	public function addDebug($message, $object = null)
+	public function debug($message, $object = null)
 	{
 		$this->add(100, $message, $object);
 	}
@@ -95,7 +173,7 @@ class WC_Gatework_Logger
 	/**
 	 * @param $message
 	 */
-	public function addInfo($message)
+	public function info($message)
 	{
 		$this->add(200, $message);
 	}
@@ -103,7 +181,7 @@ class WC_Gatework_Logger
 	/**
 	 * @param $message
 	 */
-	public function addNotice($message)
+	public function notice($message)
 	{
 		$this->add(250, $message);
 	}
@@ -112,7 +190,7 @@ class WC_Gatework_Logger
 	 * @param $message
 	 * @param null $object
 	 */
-	public function addCritical($message, $object = null)
+	public function critical($message, $object = null)
 	{
 		$this->add(500, $message, $object);
 	}
@@ -121,7 +199,7 @@ class WC_Gatework_Logger
 	 * @param $message
 	 * @param null $object
 	 */
-	public function addAlert($message, $object = null)
+	public function alert($message, $object = null)
 	{
 		$this->add(550, $message, $object);
 	}
@@ -130,12 +208,16 @@ class WC_Gatework_Logger
 	 * @param $message
 	 * @param null $object
 	 */
-	public function addEmergency($message, $object = null)
+	public function emergency($message, $object = null)
 	{
 		$this->add(600, $message, $object);
 	}
 
 	/**
+	 * Save to file
+	 *
+	 * @throws
+	 *
 	 * @param $level
 	 * @param $message
 	 * @param null $object
@@ -144,10 +226,16 @@ class WC_Gatework_Logger
 	 */
 	public function add($level, $message, $object = null)
 	{
-		/**
-		 * Check level
-		 */
-		if($this->level > $level)
+		if($this->get_level() > $level)
+		{
+			return false;
+		}
+
+		try
+		{
+			$this->set_date_time(new DateTime('now', new DateTimeZone('UTC')));
+		}
+		catch(Exception $e)
 		{
 			return false;
 		}
@@ -155,28 +243,32 @@ class WC_Gatework_Logger
 		$content = array
 		(
 			$level,
-			$this->dt->format(DATE_ATOM),
+			$this->get_date_time()->format(DATE_ATOM),
 			$this->levels[$level],
 			$message
 		);
 
 		if(is_object($object) || is_array($object))
 		{
-			$content['content'] = print_r($object, true);
+			$content['object'] = print_r($object, true);
 		}
 		else
 		{
-			$content['content'] = $object;
+			$content['object'] = $object;
 		}
 
-		/**
-		 * Content
-		 */
 		$content = implode(' -|- ', $content);
+
+		$file = $this->get_path() . DIRECTORY_SEPARATOR . $this->get_name();
+
+		if(!file_exists($this->get_path()) && !mkdir($this->get_path(), 0755, true))
+		{
+			return false;
+		}
 
 		file_put_contents
 		(
-			$this->path,
+			$file,
 			$content . PHP_EOL,
 			FILE_APPEND | LOCK_EX
 		);
