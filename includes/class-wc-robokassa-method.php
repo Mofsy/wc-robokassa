@@ -856,15 +856,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Main settings', 'wc-robokassa'),
 			'type'        => 'title',
-			'description' => __('Enter the data from the study from the website of ROBOKASSA. The payment gateway will not work without these settings.', 'wc-robokassa'),
+			'description' => __('The payment gateway will not work without these settings. Make the settings carefully.', 'wc-robokassa'),
 		);
 
 		$fields['enabled'] = array
 		(
-			'title'       => __('Online / Offline gateway', 'wc-robokassa'),
+			'title'       => __('Online / Offline', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable display of the payment gateway on the website', 'wc-robokassa'),
-			'description' => __('Disable it for user convenience, if use child payment methods from the premium add-on.', 'wc-robokassa'),
+			'label'       => __('Tick the checkbox if you need to activate the payment gateway.', 'wc-robokassa'),
+			'description' => __('On disconnection, the payment gateway will not be available for selection on the site. It is useful for payments through subsidiaries, or just in case of temporary disconnection.', 'wc-robokassa'),
 			'default'     => 'off'
 		);
 
@@ -872,14 +872,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Shop identifier', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Unique identification for shop from Robokassa.', 'wc-robokassa'),
+			'description' => __('Unique identifier for shop from Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
 		$fields['sign_method'] = array
 		(
 			'title'       => __('Hash calculation algorithm', 'wc-robokassa'),
-			'description' => __('The algorithm must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'description' => __('The algorithm must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'type'        => 'select',
 			'options'     => array
 			(
@@ -897,7 +897,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #1', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Please write Shop pass 1. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'description' => __('Please write Shop pass 1. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
@@ -905,7 +905,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #2', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Please write Shop pass 2. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'description' => __('Please write Shop pass 2. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
@@ -981,7 +981,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'type'        => 'select',
 			'options'     => array
 			(
-				'md5'       => 'md5',
+				'md5'       => 'MD5',
 				'ripemd160' => 'RIPEMD160',
 				'sha1'      => 'SHA1',
 				'sha256'    => 'SHA256',
