@@ -258,7 +258,7 @@ class WC_Robokassa
 		 * Load logger
 		 */
 	    $this->load_logger();
-	    
+
 		/**
 		 * Localisation
 		 */
@@ -286,7 +286,7 @@ class WC_Robokassa
 	public function admin_init()
 	{
 		/**
-		 * Load URLs
+		 * Load URLs for settings
 		 */
 		$this->load_urls();
 	}
