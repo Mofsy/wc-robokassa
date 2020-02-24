@@ -196,30 +196,12 @@ class WC_Robokassa
 		 */
 		if(is_admin())
 		{
-			/**
-			 * Admin init
-			 */
 			add_action('init', array($this, 'admin_init'), 0);
-
-			/**
-			 * Admin styles
-			 */
 			add_action('admin_enqueue_scripts', array($this, 'wc_robokassa_admin_styles'), 10);
-
-			/**
-			 * Show admin notices
-			 */
 			add_action('admin_notices', array($this, 'wc_robokassa_admin_notices'), 10);
-
-			/**
-			 * Copyright & links
-			 */
 			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'), 10);
 			add_filter('plugin_row_meta', array($this, 'links_right'), 10, 2);
 
-			/**
-			 * Explode admin pages
-			 */
 			$this->page_explode();
 		}
 	}
@@ -232,17 +214,11 @@ class WC_Robokassa
 		// hook
 		do_action('wc_robokassa_gateway_init_before');
 
-		/**
-		 * WC_Payment_Gateway is not available
-		 */
 		if(!class_exists('WC_Payment_Gateway'))
 		{
 			return;
 		}
 
-		/**
-		 * Add payment method
-		 */
 		add_filter('woocommerce_payment_gateways', array($this, 'add_wc_gateway_method'), 10);
 
 		// hook
