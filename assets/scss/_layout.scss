@@ -7,6 +7,11 @@
     width: 100%!important;
   }
 
+  select
+  {
+    width: 100%!important;
+  }
+
   input.disabled, input:disabled
   {
     color: #000000!important;
@@ -37,7 +42,7 @@
   padding: 10px!important;
 }
 
-.col-17
+.col-md-17
 {
   background-color: #f7f7f7;
   padding-bottom: 10px;

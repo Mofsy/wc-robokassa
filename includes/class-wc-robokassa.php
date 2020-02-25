@@ -586,7 +586,7 @@ class WC_Robokassa
 	 */
 	public function page_explode_table_after()
 	{
-		echo '</div><div class="col-24 col-md-6">';
+		echo '</div><div class="col-24 d-none d-md-block col-md-6">';
 
 		do_action('wc_robokassa_admin_options_form_right_column_show');
 
