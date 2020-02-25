@@ -46,7 +46,7 @@ More features
 
 == Changelog ==
 
-= 2.5.0 =
+= 3.0.0 =
 * Update: Gatework 0.2.0
 * Test: WordPress 5.4
 * Optimize: loading & initializing
