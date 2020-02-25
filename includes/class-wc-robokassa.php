@@ -456,13 +456,12 @@ class WC_Robokassa
 	 */
 	public function wc_robokassa_admin_notices()
     {
-        $current_version = '2.5';
         $settings_version = get_option('wc_robokassa_last_settings_update_version');
 
         /**
          * Global notice: Require update settings
          */
-        if(get_option('wc_robokassa_last_settings_update_version') !== false && $settings_version < $current_version && $_GET['section'] !== 'robokassa')
+        if(get_option('wc_robokassa_last_settings_update_version') !== false && $settings_version < WC_ROBOKASSA_VERSION && $_GET['section'] !== 'robokassa')
         {
         }
     }
