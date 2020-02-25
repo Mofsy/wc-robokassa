@@ -203,7 +203,6 @@ class WC_Robokassa
 		$this->load_plugin_text_domain();
 		$this->load_wc_version();
 		$this->load_currency();
-		$this->load_robokassa_api();
 
 		return true;
 	}
