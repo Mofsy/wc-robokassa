@@ -1256,7 +1256,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Check allow currency
 		 */
-		if(!in_array(WC_Robokassa::instance()->get_wc_currency(), $this->currency_all, false))
+		if(!in_array(WC_Robokassa()->get_wc_currency(), $this->currency_all, false))
 		{
 			return false;
 		}
@@ -1266,7 +1266,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 *
 		 * @todo сделать возможность тестирования не только админами
 		 */
-		if($this->get_test() === 'yes' && !current_user_can('manage_options'))
+		if($this->get_test() === 'yes' && false === current_user_can('manage_options'))
 		{
 			return false;
 		}

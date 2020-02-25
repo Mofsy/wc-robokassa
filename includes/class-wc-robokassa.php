@@ -73,7 +73,7 @@ class WC_Robokassa
 		do_action('wc_robokassa_loading');
 
 		/**
-		 * Include required files for initializing
+		 * Include required files
 		 */
 		$this->init_includes();
 
@@ -181,24 +181,14 @@ class WC_Robokassa
 	 */
 	private function init_hooks()
 	{
-		/**
-		 * Init
-		 */
 		add_action('init', array($this, 'init'), 0);
 
-		/**
-		 * Gateway init
-		 */
-		add_action('woocommerce_init', array($this, 'wc_robokassa_gateway_init'), 10);
-
-		/**
-		 * Admin
-		 */
 		if(is_admin())
 		{
 			add_action('init', array($this, 'admin_init'), 0);
 			add_action('admin_enqueue_scripts', array($this, 'wc_robokassa_admin_styles'), 10);
 			add_action('admin_notices', array($this, 'wc_robokassa_admin_notices'), 10);
+
 			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'), 10);
 			add_filter('plugin_row_meta', array($this, 'links_right'), 10, 2);
 
@@ -234,6 +224,8 @@ class WC_Robokassa
 		{
 			return false;
 		}
+
+		add_action('init', array($this, 'wc_robokassa_gateway_init'), 10);
 
 		$this->load_plugin_text_domain();
 		$this->load_wc_version();
@@ -384,6 +376,8 @@ class WC_Robokassa
 
 	/**
 	 * Load logger
+	 *
+	 * @return boolean
 	 */
 	public function load_logger()
 	{
@@ -403,6 +397,8 @@ class WC_Robokassa
 			$logger->set_name('wc-robokassa.boot.log');
 			$logger->set_level(50);
 			$logger->set_path($wp_dir['basedir']);
+
+			return true;
 		}
 
 		return false;
