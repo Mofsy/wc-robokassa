@@ -56,4 +56,4 @@ if(!class_exists('WC_Robokassa'))
 /**
  * Run
  */
-add_action('plugins_loaded', 'WC_Robokassa', 0);
+add_action('plugins_loaded', 'WC_Robokassa', 5);
