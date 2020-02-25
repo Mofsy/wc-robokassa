@@ -18,17 +18,23 @@
  */
 defined('ABSPATH') || exit;
 
-if(!defined('WC_ROBOKASSA_URL'))
+if(defined('WC_ROBOKASSA_VERSION') !== true)
+{
+	$plugin_data = get_file_data(__FILE__, array('Version' => 'Version'));
+	define('WC_ROBOKASSA_VERSION', $plugin_data['Version']);
+}
+
+if(defined('WC_ROBOKASSA_URL') !== true)
 {
 	define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
 }
 
-if(!defined('WC_ROBOKASSA_PLUGIN_DIR'))
+if(defined('WC_ROBOKASSA_PLUGIN_DIR') !== true)
 {
 	define('WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
 
-if(!defined('WC_ROBOKASSA_PLUGIN_NAME'))
+if(defined('WC_ROBOKASSA_PLUGIN_NAME') !== true)
 {
 	define('WC_ROBOKASSA_PLUGIN_NAME', plugin_basename(__FILE__));
 }
