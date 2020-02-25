@@ -30,18 +30,18 @@ class WC_Robokassa
 	public $robokassa_api = false;
 
 	/**
-	 * Current WooCommerce version
+	 * WooCommerce version
 	 *
 	 * @var
 	 */
-	public $wc_version;
+	public $wc_version = '';
 
 	/**
-	 * Current currency
+	 * WooCommerce currency
 	 *
 	 * @var string
 	 */
-	public $wc_currency;
+	public $wc_currency = 'RUB';
 
 	/**
      * Result url
@@ -72,14 +72,8 @@ class WC_Robokassa
 		// hook
 		do_action('wc_robokassa_loading');
 
-		/**
-		 * Include required files
-		 */
 		$this->init_includes();
 
-		/**
-		 * Initializing actions & filters
-		 */
 		$this->init_hooks();
 
 		// hook
