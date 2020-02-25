@@ -94,26 +94,6 @@ class WC_Robokassa
 
 		return self::$_instance;
 	}
-
-	/**
-	 * Cloning instances is forbidden due to singleton pattern
-	 *
-	 * @since 2.0.0.1
-	 */
-	public function __clone()
-    {
-	    _doing_it_wrong(__FUNCTION__, sprintf('You cannot clone instances of %s.', get_class($this)), '2.0.0.1');
-	}
-
-	/**
-	 * Un-serializing instances is forbidden due to singleton pattern
-	 *
-	 * @since 2.0.0.1
-	 */
-	public function __wakeup()
-    {
-	    _doing_it_wrong(__FUNCTION__, sprintf('You cannot unserialize instances of %s.', get_class($this)), '2.0.0.1');
-	}
 	
 	/**
 	 * Init required files
