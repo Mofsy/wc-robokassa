@@ -165,9 +165,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->init_actions();
 
 		/**
-		 * Save admin options
+		 * Admin options
 		 */
-		if(current_user_can('manage_options'))
+		if(current_user_can('manage_options') && is_admin())
 		{
 			/**
 			 * Options save
@@ -243,7 +243,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function wc_robokassa_last_settings_update_version()
 	{
-		update_option('wc_robokassa_last_settings_update_version', '2.4');
+		update_option('wc_robokassa_last_settings_update_version', '3.0');
 	}
 
 	/**
@@ -748,7 +748,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @param bool $ofd_status
 	 */
-	public function set_ofd_status( $ofd_status )
+	public function set_ofd_status($ofd_status)
 	{
 		$this->ofd_status = $ofd_status;
 	}
@@ -1279,6 +1279,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function admin_options()
 	{
+		/**
+		 * Styles
+		 */
+		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
+
 		// hook
 		do_action('wc_robokassa_admin_options_before_show');
 

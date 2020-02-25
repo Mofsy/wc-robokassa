@@ -186,7 +186,6 @@ class WC_Robokassa
 		if(is_admin())
 		{
 			add_action('init', array($this, 'admin_init'), 0);
-			add_action('admin_enqueue_scripts', array($this, 'wc_robokassa_admin_styles'), 10);
 			add_action('admin_notices', array($this, 'wc_robokassa_admin_notices'), 10);
 
 			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'), 10);
@@ -456,17 +455,6 @@ class WC_Robokassa
 		}
 
 		return $links;
-	}
-
-	/**
-	 * Add admin css styles
-	 */
-	public function wc_robokassa_admin_styles()
-    {
-        if(isset($_GET['section']) && $_GET['section'] === 'robokassa')
-        {
-            wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
-        }
 	}
 
 	/**
