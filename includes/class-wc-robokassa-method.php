@@ -1279,9 +1279,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function admin_options()
 	{
-		/**
-		 * Styles
-		 */
 		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
 
 		// hook
