@@ -1865,15 +1865,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_test() === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
 		{
-			/**
-			 * Test flag
-			 */
 			$test = true;
 
-			/**
-			 * Signature pass for testing
-			 */
-			if ($_REQUEST['action'] === 'success')
+			if($_REQUEST['action'] === 'success')
 			{
 				$signature_pass = $this->get_test_shop_pass_1();
 			}
@@ -1882,9 +1876,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$signature_pass = $this->get_test_shop_pass_2();
 			}
 
-			/**
-			 * Sign method
-			 */
 			$signature_method = $this->get_test_sign_method();
 		}
 		/**
@@ -1892,14 +1883,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		else
 		{
-			/**
-			 * Test flag
-			 */
 			$test = false;
 
-			/**
-			 * Signature pass for real payments
-			 */
 			if($_REQUEST['action'] === 'success')
 			{
 				$signature_pass = $this->get_shop_pass_1();
@@ -1909,9 +1894,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$signature_pass = $this->get_shop_pass_2();
 			}
 
-			/**
-			 * Sign method
-			 */
 			$signature_method = $this->get_sign_method();
 		}
 
@@ -1934,9 +1916,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($order === false)
 		{
-			/**
-			 * Send Service unavailable
-			 */
+			WC_Robokassa()->get_logger()->error('input_payment_notifications: order not found');
+
 			wp_die(__('Order not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
 		}
 
@@ -2027,7 +2008,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Success
 		 */
-		else if ($_REQUEST['action'] === 'success')
+		elseif($_REQUEST['action'] === 'success')
 		{
 			/**
 			 * Add order note
@@ -2054,7 +2035,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Fail
 		 */
-		else if ($_REQUEST['action'] === 'fail')
+		elseif($_REQUEST['action'] === 'fail')
 		{
 			/**
 			 * Add order note
