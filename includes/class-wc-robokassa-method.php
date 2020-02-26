@@ -157,7 +157,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('logger') !== '')
 		{
 			WC_Robokassa()->get_logger()->set_level($this->get_option('logger'));
-			WC_Robokassa()->get_logger()->set_name('wc-robokassa.log');
+
+			$file_name = get_option('wc_robokassa_log_file_name');
+			if($file_name === false)
+			{
+				$file_name = 'wc-robokassa.' . md5(mt_rand(1, 10) . 'MofsyMofsyMofsy' . mt_rand(1, 10)) . '.log';
+				update_option('wc_robokassa_log_file_name', $file_name, 'no');
+			}
+
+			WC_Robokassa()->get_logger()->set_name($file_name);
 		}
 
 		/**
@@ -1362,7 +1370,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function payment_fields_description_show()
 	{
-		if ($this->description)
+		if($this->description)
 		{
 			echo wpautop(wptexturize($this->description));
 		}
