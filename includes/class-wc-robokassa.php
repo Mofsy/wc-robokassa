@@ -272,6 +272,8 @@ class WC_Robokassa
 	 */
 	public function load_currency()
     {
+	    $wc_currency = gatework_get_wc_currency();
+
 	    /**
 	     * WooCommerce Currency Switcher
 	     */
@@ -279,12 +281,16 @@ class WC_Robokassa
 	    {
 		    global $WOOCS;
 
-		    $this->set_wc_currency(strtoupper($WOOCS->storage->get_val('woocs_current_currency')));
+		    // log
+		    $this->get_logger()->alert('load_currency WooCommerce Currency Switcher detect');
+
+		    $wc_currency = strtoupper($WOOCS->storage->get_val('woocs_current_currency'));
 	    }
-	    else
-	    {
-		    $this->set_wc_currency(gatework_get_wc_currency());
-	    }
+
+	    // log
+	    $this->get_logger()->debug('load_currency $wc_version', $wc_currency);
+
+	    $this->set_wc_currency($wc_currency);
     }
 
 	/**
@@ -292,7 +298,12 @@ class WC_Robokassa
 	 */
 	public function load_wc_version()
     {
-	    $this->set_wc_version(gatework_get_wc_version());
+    	$wc_version = gatework_get_wc_version();
+
+	    // log
+	    $this->get_logger()->debug('load_wc_version $wc_version', $wc_version);
+
+	    $this->set_wc_version($wc_version);
     }
 
 	/**
@@ -318,6 +329,9 @@ class WC_Robokassa
 		 * @since 2.4.0
 		 */
 		$locale = apply_filters('plugin_locale', $locale, 'wc-robokassa');
+
+		// log
+		$this->get_logger()->debug('load_plugin_text_domain $locale', $locale);
 
 		/**
 		 * Unload & load
