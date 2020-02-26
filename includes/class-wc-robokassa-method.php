@@ -228,6 +228,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_ofd'), 40);
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_order_notes'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'), 50);
 	}
 
@@ -1224,6 +1225,70 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Add settings for order notes
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_order_notes($fields)
+	{
+		$fields['orders_notes'] = array
+		(
+			'title'       => __('Orders notes', 'wc-robokassa'),
+			'type'        => 'title',
+			'description' => __('Settings for adding notes to orders. All are off by default.', 'wc-robokassa'),
+		);
+
+		$fields['orders_notes_robokassa_request'] = array
+		(
+			'title'       => __('Request from Robokassa', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
+			'description' => __('All requests from Robokassa for orders will be added to the notes.', 'wc-robokassa'),
+			'default'     => 'no'
+		);
+
+		$fields['orders_notes_robokassa_request_validate_error'] = array
+		(
+			'title'       => __('Validation errors of requests', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
+			'description' => __('Adding to the notes all the data related to the check for error requests.', 'wc-robokassa'),
+			'default'     => 'no'
+		);
+
+		$fields['orders_notes_robokassa_request_result'] = array
+		(
+			'title'       => __('Result requests', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
+			'description' => __('Adding payment result data to order notes.', 'wc-robokassa'),
+			'default'     => 'no'
+		);
+
+		$fields['orders_notes_robokassa_request_fail'] = array
+		(
+			'title'       => __('Failed requests', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
+			'description' => __('Adding customers return data to the cancellation page in the notes.', 'wc-robokassa'),
+			'default'     => 'no'
+		);
+
+		$fields['orders_notes_robokassa_request_success'] = array
+		(
+			'title'       => __('Success requests', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
+			'description' => __('Adding customers return data to the successful payment page in the notes.', 'wc-robokassa'),
+			'default'     => 'no'
+		);
+
+		return $fields;
+	}
+
+	/**
 	 * Add settings for technical
 	 *
 	 * @param $fields
@@ -1951,9 +2016,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Add order note
 		 */
-		if(method_exists($order, 'add_order_note'))
+		if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request') === 'yes')
 		{
-			$order->add_order_note( sprintf( __( 'Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s', 'wc-robokassa' ), $sum, $local_signature, $signature ) );
+			$order->add_order_note(sprintf(__('Robokassa request. Sum: %1$s. Signature: %2$s. Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
 		}
 
 		/**
@@ -1976,9 +2041,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				/**
 				 * Add order note
 				 */
-				if(method_exists($order, 'add_order_note'))
+				if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_validate_error') === 'yes')
 				{
-					$order->add_order_note( sprintf( __( 'Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa' ), $local_signature, $signature ) );
+					$order->add_order_note(sprintf(__('Validate hash error. Local: %1$s Remote: %2$s', 'wc-robokassa'), $local_signature, $signature));
 				}
 			}
 
@@ -1995,9 +2060,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					/**
 					 * Add order note
 					 */
-					if(method_exists($order, 'add_order_note'))
+					if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_result') === 'yes')
 					{
-						$order->add_order_note( __( 'Order successfully paid (TEST MODE).', 'wc-robokassa' ) );
+						$order->add_order_note(__('Order successfully paid (TEST MODE).', 'wc-robokassa'));
 					}
 				}
 				/**
@@ -2008,9 +2073,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 					/**
 					 * Add order note
 					 */
-					if(method_exists($order, 'add_order_note'))
+					if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_result') === 'yes')
 					{
-						$order->add_order_note( __( 'Order successfully paid.', 'wc-robokassa' ) );
+						$order->add_order_note(__('Order successfully paid.', 'wc-robokassa'));
 					}
 				}
 
@@ -2034,9 +2099,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Add order note
 			 */
-			if(method_exists($order, 'add_order_note'))
+			if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_success') === 'yes')
 			{
-				$order->add_order_note( __( 'Client return to success page.', 'wc-robokassa' ) );
+				$order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
 			}
 
 			/**
@@ -2061,9 +2126,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Add order note
 			 */
-			if(method_exists($order, 'add_order_note'))
+			if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_fail') === 'yes')
 			{
-				$order->add_order_note( __( 'The order has not been paid.', 'wc-robokassa' ) );
+				$order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
 			}
 
 			/**
