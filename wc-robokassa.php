@@ -47,7 +47,7 @@ include_once __DIR__ . '/gatework/init.php';
 /**
  * Gateway class
  */
-if(!class_exists('WC_Robokassa'))
+if(class_exists('WC_Robokassa') !== true)
 {
 	include_once __DIR__ . '/includes/functions-wc-robokassa.php';
 	include_once __DIR__ . '/includes/class-wc-robokassa.php';

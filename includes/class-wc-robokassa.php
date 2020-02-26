@@ -237,7 +237,7 @@ class WC_Robokassa
 	    /**
 	     * Fallback
 	     */
-	    if(!class_exists($robokassa_api_class_name))
+	    if(class_exists($robokassa_api_class_name) !== true)
         {
 	        $robokassa_api_class_name = $default_class_name;
         }
