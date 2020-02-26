@@ -1264,6 +1264,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			)
 		);
 
+		$fields['fail_set_order_status_failed'] = array
+		(
+			'title'       => __('Mark order as cancelled?', 'wc-robokassa'),
+			'type'        => 'select',
+			'description' => __('Change the status of the order to canceled when the user cancels the payment. The status changes when the user returns to the cancelled payment page.', 'wc-robokassa'),
+			'default'     => 'no',
+			'options'     => array
+			(
+				'yes'    => __('Yes', 'wc-robokassa'),
+				'no' => __('No', 'wc-robokassa'),
+			)
+		);
+
 		return $fields;
 	}
 
@@ -2048,7 +2061,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Set status is failed
 			 */
-			$order->update_status('failed');
+			if($this->get_option('fail_set_order_status_failed') === 'yes')
+			{
+				$order->update_status('failed');
+			}
 
 			/**
 			 * Redirect to cancel
