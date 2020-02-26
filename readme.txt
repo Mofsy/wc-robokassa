@@ -50,6 +50,7 @@ More features
 * Update: Gatework 0.2.0
 * Test: WordPress 5.4
 * Optimize: loading & initializing
+* Add new options
 * More fix
 
 = 2.4.0 =
