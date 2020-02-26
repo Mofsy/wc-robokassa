@@ -334,7 +334,7 @@ class WC_Robokassa
 		$locale = apply_filters('plugin_locale', $locale, 'wc-robokassa');
 
 		// log
-		$this->get_logger()->debug('load_plugin_text_domain $locale' . $locale);
+		$this->get_logger()->debug('load_plugin_text_domain $locale', $locale);
 
 		/**
 		 * Unload & load
