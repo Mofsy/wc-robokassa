@@ -41,13 +41,14 @@ More features
 
 == Installation ==
 1. Archive extract and upload "wc-robokassa" to /wp-content/plugins
-2. Activation plugin
-3. Setting
+2. Activation
+3. Configure
 
 == Changelog ==
 
 = 3.0.0 =
 * Update: Gatework 0.2.0
+* Fix: language files
 * Test: WordPress 5.4
 * Optimize: loading & initializing
 * Add new options
