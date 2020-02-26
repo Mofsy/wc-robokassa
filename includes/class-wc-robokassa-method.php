@@ -1621,6 +1621,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$receipt_items = array();
 
+		WC_Robokassa()->get_logger()->info('generate_receipt_items: start');
+
 		/**
 		 * Order items
 		 */
@@ -1730,6 +1732,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'payment_object' => $this->get_ofd_payment_object(),
 			);
 		}
+
+		WC_Robokassa()->get_logger()->info('generate_receipt_items: success');
 
 		return $receipt_items;
 	}
