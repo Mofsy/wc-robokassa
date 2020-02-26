@@ -207,9 +207,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_filters()
 	{
-		/**
-		 * Add setting fields
-		 */
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'), 10);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
@@ -243,7 +240,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function wc_robokassa_last_settings_update_version()
 	{
-		update_option('wc_robokassa_last_settings_update_version', '3.0');
+		update_option('wc_robokassa_last_settings_update_version', WC_ROBOKASSA_VERSION);
 	}
 
 	/**
