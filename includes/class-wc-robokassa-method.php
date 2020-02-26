@@ -1242,6 +1242,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			)
 		);
 
+		$fields['cart_clearing'] = array
+		(
+			'title'       => __('Cart clearing', 'wc-robokassa'),
+			'type'        => 'select',
+			'description' => __('Clean the customers cart if payment is successful? If so, the shopping cart will be cleaned. If not, the goods already purchased will most likely remain in the shopping cart.', 'wc-robokassa'),
+			'default'     => 'no',
+			'options'     => array
+			(
+				'yes'    => __('Yes', 'wc-robokassa'),
+				'no' => __('No', 'wc-robokassa'),
+			)
+		);
+
 		return $fields;
 	}
 
@@ -2014,7 +2027,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Empty cart
 			 */
-			WC()->cart->empty_cart();
+			if($this->get_option('cart_clearing') === 'yes')
+			{
+				WC()->cart->empty_cart();
+			}
 
 			/**
 			 * Redirect to success
