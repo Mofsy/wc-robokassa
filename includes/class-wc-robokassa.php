@@ -100,14 +100,18 @@ class WC_Robokassa
 	 */
 	public function init_includes()
 	{
-		// hook
-		do_action('wc_robokassa_includes_start');
+		/**
+		 * @since 3.0.0
+		 */
+		do_action('wc_robokassa_before_includes');
 
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-api.php';
 		require_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
 
-		// hook
-		do_action('wc_robokassa_includes_end');
+		/**
+		 * @since 3.0.0
+		 */
+		do_action('wc_robokassa_after_includes');
 	}
 
 	/**
@@ -195,7 +199,7 @@ class WC_Robokassa
 			return false;
 		}
 
-		if(!class_exists('WC_Payment_Gateway'))
+		if(class_exists('WC_Payment_Gateway') !== true)
 		{
 			$this->get_logger()->emergency('WC_Payment_Gateway not found');
 			return false;
@@ -206,7 +210,6 @@ class WC_Robokassa
 		$this->load_plugin_text_domain();
 		$this->load_wc_version();
 		$this->load_currency();
-		$this->load_robokassa_api();
 
 		return true;
 	}
@@ -331,7 +334,7 @@ class WC_Robokassa
 		$locale = apply_filters('plugin_locale', $locale, 'wc-robokassa');
 
 		// log
-		$this->get_logger()->debug('load_plugin_text_domain $locale', $locale);
+		$this->get_logger()->debug('load_plugin_text_domain $locale' . $locale);
 
 		/**
 		 * Unload & load
@@ -387,6 +390,7 @@ class WC_Robokassa
 			$logger->set_name('wc-robokassa.boot.log');
 			$logger->set_level(50);
 			$logger->set_path($wp_dir['basedir']);
+			$this->set_logger($logger);
 
 			return true;
 		}
