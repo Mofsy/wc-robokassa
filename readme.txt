@@ -51,6 +51,7 @@ More features
 * Test: WordPress 5.4
 * Optimize: loading & initializing
 * Add new options
+* Clean code
 * More fix
 
 = 2.4.0 =
