@@ -1136,7 +1136,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
 			'description' => __('When you select the option, a check will be generated and sent to the tax and customer. When used, you must set up the VAT of the items sold. VAT is calculated according to the legislation of the Russian Federation. There may be differences in the amount of VAT with the amount calculated by the store.', 'wc-robokassa'),
-			'default'     => 'off'
+			'default'     => 'no'
 		);
 
 		$fields['ofd_sno'] = array
