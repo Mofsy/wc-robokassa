@@ -1255,6 +1255,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if(!in_array(WC_Robokassa()->get_wc_currency(), $this->currency_all, false))
 		{
+			WC_Robokassa()->get_logger()->alert('is_valid_for_use: currency not support');
 			return false;
 		}
 
@@ -1265,6 +1266,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_test() === 'yes' && false === current_user_can('manage_options'))
 		{
+			WC_Robokassa()->get_logger()->alert('is_valid_for_use: test mode only admin');
 			return false;
 		}
 
@@ -1307,7 +1309,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 	/**
 	 * There are no payment fields for sprypay, but we want to show the description if set
-	 **/
+	 */
 	public function payment_fields()
 	{
 		// hook
@@ -1333,12 +1335,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 	/**
 	 * Show test mode on site
+	 *
+	 * @return void
 	 */
 	public function payment_fields_test_mode_show()
 	{
-		if($this->get_test() == 'yes')
+		if($this->get_test() === 'yes')
 		{
-			echo '<div style="padding:10px; background-color: #ff8982;text-align: center;">';
+			echo '<div style="padding:5px; border-radius:20px; background-color: #ff8982;text-align: center;">';
 			echo __('TEST mode is active. Payment will not be charged. After checking, disable this mode.', 'wc-robokassa');
 			echo '</div>';
 		}
@@ -1363,6 +1367,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($order === false)
 		{
+			WC_Robokassa()->get_logger()->error('process_payment: $order === false');
+
 			return array
 			(
 				'result' => 'failure',
@@ -1386,6 +1392,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_page_skipping() === 'yes')
 		{
+			WC_Robokassa()->get_logger()->info('process_payment: page skipping, success');
+
 			return array
 			(
 				'result' => 'success',
@@ -1393,10 +1401,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			);
 		}
 
+		WC_Robokassa()->get_logger()->info('process_payment: success');
+
 		return array
 		(
 			'result' => 'success',
-			'redirect' => $order->get_checkout_payment_url( true )
+			'redirect' => $order->get_checkout_payment_url(true)
 		);
 	}
 
@@ -1438,46 +1448,32 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 **/
 	public function generate_form($order_id)
 	{
-		/**
-		 * Create order object
-		 */
 		$order = wc_get_order($order_id);
 
-		/**
-		 * Form parameters
-		 */
-		$args = array();
+		WC_Robokassa()->get_logger()->debug('generate_form: $order', $order);
 
-		/**
-		 * Shop login
-		 */
+		$args = array();
 		$args['MerchantLogin'] = $this->get_shop_login();
 
-		/**
-		 * Sum
-		 */
 		$out_sum = number_format($order->get_total(), 2, '.', '');
 		$args['OutSum'] = $out_sum;
 
-		/**
-		 * Order id
-		 */
 		$args['InvId'] = $order_id;
-
-		/**
-		 * Product description
-		 */
 		$args['InvDesc'] = __('Order number: ' . $order_id, 'wc-robokassa');
 
 		/**
 		 * Rewrite currency from order
 		 */
-		WC_Robokassa::instance()->set_wc_currency($order->get_currency());
+		if(WC_Robokassa()->get_wc_currency() !== $order->get_currency('view'))
+		{
+			WC_Robokassa()->get_logger()->info('generate_form: rewrite currency');
+			WC_Robokassa::instance()->set_wc_currency($order->get_currency());
+		}
 
 		/**
 		 * Set currency to Robokassa
 		 */
-		switch (WC_Robokassa::instance()->get_wc_currency())
+		switch(WC_Robokassa::instance()->get_wc_currency())
 		{
 			case 'USD':
 				$args['OutSumCurrency'] = 'USD';
@@ -1493,21 +1489,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Test mode
 		 */
-		if ($this->get_test() === 'yes')
+		if($this->get_test() === 'yes')
 		{
-			/**
-			 * Signature pass for testing
-			 */
-			$signature_pass = $this->get_test_shop_pass_1();
+			WC_Robokassa()->get_logger()->info('generate_form: test mode active');
 
-			/**
-			 * Sign method
-			 */
+			$signature_pass = $this->get_test_shop_pass_1();
 			$signature_method = $this->get_test_sign_method();
 
-			/**
-			 * Test flag
-			 */
 			$args['IsTest'] = 1;
 		}
 		/**
@@ -1515,14 +1503,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		else
 		{
-			/**
-			 * Signature pass for real payments
-			 */
-			$signature_pass = $this->get_shop_pass_1();
+			WC_Robokassa()->get_logger()->info('generate_form: real payments');
 
-			/**
-			 * Sign method
-			 */
+			$signature_pass = $this->get_shop_pass_1();
 			$signature_method = $this->get_sign_method();
 		}
 
@@ -1541,30 +1524,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$receipt_result = '';
 		if($this->is_ofd_status() === true)
 		{
-			/**
-			 * Container
-			 */
-			$receipt = array();
+			WC_Robokassa()->get_logger()->info('generate_form: fiscal active');
 
-			/**
-			 * Items
-			 */
-			$receipt_items = $this->generate_receipt_items($order);
-
-			/**
-			 * Sno
-			 */
 			$receipt['sno'] = $this->get_ofd_sno();
+			$receipt['items'] = $this->generate_receipt_items($order);
 
-			/**
-			 * Items
-			 */
-			$receipt['items'] = $receipt_items;
-
-			/**
-			 * Result
-			 */
 			$receipt_result = json_encode($receipt);
+
+			WC_Robokassa()->get_logger()->debug('generate_form: $receipt_result', $receipt_result);
 		}
 
 		/**
@@ -1612,9 +1579,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$args_array[] = '<input type="hidden" name="'.esc_attr($key).'" value="'.esc_attr($value).'" />';
 		}
 
-		/**
-		 * Return full form
-		 */
 		return '<form action="' . esc_url($this->get_form_url()) . '" method="POST" id="wc_robokassa_payment_form" accept-charset="utf-8">' . "\n" .
 		       implode("\n", $args_array) .
 		       '<input type="submit" class="button alt" id="submit_wc_robokassa_payment_form" value="' . __('Pay', 'wc-robokassa') .
@@ -1623,6 +1587,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Generate receipt
+	 *
 	 * @since 2.2.0.1
 	 *
 	 * @param WC_Order $order
@@ -1636,7 +1602,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Order items
 		 */
-		foreach ($order->get_items() as $receipt_items_key => $receipt_items_value)
+		foreach($order->get_items() as $receipt_items_key => $receipt_items_value)
 		{
 			/**
 			 * Quantity
@@ -1696,7 +1662,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Delivery
 		 */
-		if ($order->get_shipping_total() > 0)
+		if($order->get_shipping_total() > 0)
 		{
 			/**
 			 * Build positions
