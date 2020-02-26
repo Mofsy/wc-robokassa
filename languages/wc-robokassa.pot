@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Payment gateway - Robokassa for WooCommerce\n"
-"POT-Creation-Date: 2020-01-26 17:18+0300\n"
+"POT-Creation-Date: 2020-02-27 00:58+0300\n"
 "PO-Revision-Date: 2016-01-10 16:41+0300\n"
 "Last-Translator: Mofsy <support@mofsy.ru>\n"
 "Language-Team: Mofsy <support@mofsy.ru>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: includes/class-wc-robokassa-method.php:147
-#: includes/class-wc-robokassa-method.php:1081
+#: includes/class-wc-robokassa-method.php:1105
 msgid "Robokassa"
 msgstr ""
 
@@ -29,84 +29,84 @@ msgstr ""
 msgid "Pay via Robokassa."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:857
+#: includes/class-wc-robokassa-method.php:872
 msgid "Main settings"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:859
+#: includes/class-wc-robokassa-method.php:874
 msgid ""
-"Enter the data from the study from the website of ROBOKASSA. The payment "
-"gateway will not work without these settings."
+"The payment gateway will not work without these settings. Make the "
+"settings carefully."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:864
-msgid "Online / Offline gateway"
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:866
-msgid "Enable display of the payment gateway on the website"
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:867
-msgid ""
-"Disable it for user convenience, if use child payment methods from the "
-"premium add-on."
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:873
-msgid "Shop identifier"
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:875
-msgid "Unique identification for shop from Robokassa."
+#: includes/class-wc-robokassa-method.php:879
+msgid "Online / Offline"
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:881
-#: includes/class-wc-robokassa-method.php:979
-msgid "Hash calculation algorithm"
+msgid "Tick the checkbox if you need to activate the payment gateway."
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:882
-#: includes/class-wc-robokassa-method.php:980
 msgid ""
-"The algorithm must match the one specified in the personal account of "
-"ROBOKASSA."
+"On disconnection, the payment gateway will not be available for selection "
+"on the site. It is useful for payments through subsidiaries, or just in "
+"case of temporary disconnection."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:898
-#: includes/class-wc-robokassa-method.php:996
+#: includes/class-wc-robokassa-method.php:888
+msgid "Shop identifier"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:890
+msgid "Unique identifier for shop from Robokassa."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:896
+#: includes/class-wc-robokassa-method.php:994
+msgid "Hash calculation algorithm"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:897
+msgid ""
+"The algorithm must match the one specified in the personal account of "
+"Robokassa."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:913
+#: includes/class-wc-robokassa-method.php:1011
 msgid "Password #1"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:900
+#: includes/class-wc-robokassa-method.php:915
 msgid ""
 "Please write Shop pass 1. The pass must match the one specified in the "
-"personal account of ROBOKASSA."
+"personal account of Robokassa."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:906
-#: includes/class-wc-robokassa-method.php:1004
+#: includes/class-wc-robokassa-method.php:921
+#: includes/class-wc-robokassa-method.php:1019
 msgid "Password #2"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:908
+#: includes/class-wc-robokassa-method.php:923
 msgid ""
 "Please write Shop pass 2. The pass must match the one specified in the "
-"personal account of ROBOKASSA."
+"personal account of Robokassa."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:912
+#: includes/class-wc-robokassa-method.php:927
 msgid ""
 "Address to notify the site of the results of operations in the background. "
 "Copy the address and enter it in your personal account ROBOKASSA in the "
 "technical settings. Notification method: POST."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:916
+#: includes/class-wc-robokassa-method.php:931
 msgid "Result Url"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:923
+#: includes/class-wc-robokassa-method.php:938
 msgid ""
 "The address for the user to go to the site after successful payment. Copy "
 "the address and enter it in your personal account ROBOKASSA in the "
@@ -114,11 +114,11 @@ msgid ""
 "addresses of your choice."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:927
+#: includes/class-wc-robokassa-method.php:942
 msgid "Success Url"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:934
+#: includes/class-wc-robokassa-method.php:949
 msgid ""
 "The address for the user to go to the site, after payment with an error. "
 "Copy the address and enter it in your personal account ROBOKASSA in the "
@@ -126,25 +126,25 @@ msgid ""
 "addresses of your choice."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:938
+#: includes/class-wc-robokassa-method.php:953
 msgid "Fail Url"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:959
+#: includes/class-wc-robokassa-method.php:974
 msgid "Parameters for test payments"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:961
+#: includes/class-wc-robokassa-method.php:976
 msgid ""
 "Passwords and hashing algorithms for test payments differ from those "
 "specified for real payments."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:966
+#: includes/class-wc-robokassa-method.php:981
 msgid "Test mode"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:968
+#: includes/class-wc-robokassa-method.php:983
 msgid ""
 "When you activate the test mode, no funds will be debited. In this case, "
 "the payment gateway will only be displayed when you log in with an "
@@ -152,139 +152,166 @@ msgid ""
 "orders."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:972
-#: includes/class-wc-robokassa-method.php:1236
+#: includes/class-wc-robokassa-method.php:987
+#: includes/class-wc-robokassa-method.php:1324
 msgid "Off"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:973
+#: includes/class-wc-robokassa-method.php:988
 msgid "On"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:998
+#: includes/class-wc-robokassa-method.php:995
+msgid ""
+"The algorithm must match the one specified in the personal account of "
+"ROBOKASSA."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1013
 msgid ""
 "Please write Shop pass 1 for testing payments. The pass must match the one "
 "specified in the personal account of ROBOKASSA."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1006
+#: includes/class-wc-robokassa-method.php:1021
 msgid ""
 "Please write Shop pass 2 for testing payments. The pass must match the one "
 "specified in the personal account of ROBOKASSA."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1024
+#: includes/class-wc-robokassa-method.php:1027
+msgid "Show notice in checkout?"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1029
+msgid "Show notice for test mode on checkout page."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1030
+msgid "Only working in test mode active."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1048
 msgid "Interface"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1026
+#: includes/class-wc-robokassa-method.php:1050
 msgid "Customize the appearance. Can leave it at that."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1031
+#: includes/class-wc-robokassa-method.php:1055
 msgid "Show gateway icon?"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1033
+#: includes/class-wc-robokassa-method.php:1057
 msgid "Show"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1039
+#: includes/class-wc-robokassa-method.php:1063
 msgid "Language interface"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1043
+#: includes/class-wc-robokassa-method.php:1067
 msgid "Russian"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1044
+#: includes/class-wc-robokassa-method.php:1068
 msgid "English"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1046
+#: includes/class-wc-robokassa-method.php:1070
 msgid "What language interface displayed for the customer on Robokassa?"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1052
+#: includes/class-wc-robokassa-method.php:1076
 msgid "Language based on the locale?"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1056
-#: includes/class-wc-robokassa-method.php:1069
+#: includes/class-wc-robokassa-method.php:1080
+#: includes/class-wc-robokassa-method.php:1093
+#: includes/class-wc-robokassa-method.php:1344
+#: includes/class-wc-robokassa-method.php:1357
 msgid "Yes"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1057
-#: includes/class-wc-robokassa-method.php:1070
+#: includes/class-wc-robokassa-method.php:1081
+#: includes/class-wc-robokassa-method.php:1094
+#: includes/class-wc-robokassa-method.php:1345
+#: includes/class-wc-robokassa-method.php:1358
 msgid "No"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1059
+#: includes/class-wc-robokassa-method.php:1083
 msgid ""
 "Automatic detection of the users language from the WordPress environment."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1065
+#: includes/class-wc-robokassa-method.php:1089
 msgid "Skip the received order page?"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1072
+#: includes/class-wc-robokassa-method.php:1096
 msgid "This setting is used to reduce actions when users switch to payment."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1078
+#: includes/class-wc-robokassa-method.php:1102
 msgid "Title"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1080
+#: includes/class-wc-robokassa-method.php:1104
 msgid "This is the name that the user sees during the payment."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1086
+#: includes/class-wc-robokassa-method.php:1110
 msgid "Order button text"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1088
+#: includes/class-wc-robokassa-method.php:1112
 msgid "This is the button text that the user sees during the payment."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1089
+#: includes/class-wc-robokassa-method.php:1113
 msgid "Goto pay"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1094
+#: includes/class-wc-robokassa-method.php:1118
 msgid "Description"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1096
+#: includes/class-wc-robokassa-method.php:1120
 msgid ""
 "Description of the method of payment that the customer will see on our "
 "website."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1097
+#: includes/class-wc-robokassa-method.php:1121
 msgid "Payment via Robokassa."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1114
+#: includes/class-wc-robokassa-method.php:1138
 msgid "Cart content sending (54fz)"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1116
+#: includes/class-wc-robokassa-method.php:1140
 msgid ""
 "These settings are required only for legal entities in the absence of its "
 "cash machine."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1121
+#: includes/class-wc-robokassa-method.php:1145
 msgid "The transfer of goods"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1123
+#: includes/class-wc-robokassa-method.php:1147
+#: includes/class-wc-robokassa-method.php:1256
+#: includes/class-wc-robokassa-method.php:1265
+#: includes/class-wc-robokassa-method.php:1274
+#: includes/class-wc-robokassa-method.php:1283
+#: includes/class-wc-robokassa-method.php:1292
 msgid "Enable"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1124
+#: includes/class-wc-robokassa-method.php:1148
 msgid ""
 "When you select the option, a check will be generated and sent to the tax "
 "and customer. When used, you must set up the VAT of the items sold. VAT is "
@@ -293,345 +320,382 @@ msgid ""
 "store."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1130
+#: includes/class-wc-robokassa-method.php:1154
 msgid "Taxation system"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1135
+#: includes/class-wc-robokassa-method.php:1159
 msgid "General"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1136
+#: includes/class-wc-robokassa-method.php:1160
 msgid "Simplified, income"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1137
+#: includes/class-wc-robokassa-method.php:1161
 msgid "Simplified, income minus consumption"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1138
+#: includes/class-wc-robokassa-method.php:1162
 msgid "Single tax on imputed income"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1139
+#: includes/class-wc-robokassa-method.php:1163
 msgid "Single agricultural tax"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1140
+#: includes/class-wc-robokassa-method.php:1164
 msgid "Patent system of taxation"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1146
+#: includes/class-wc-robokassa-method.php:1170
 msgid "Default VAT rate"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1151
+#: includes/class-wc-robokassa-method.php:1175
 msgid "Without the vat"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1152
+#: includes/class-wc-robokassa-method.php:1176
 msgid "VAT 0%"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1153
+#: includes/class-wc-robokassa-method.php:1177
 msgid "VAT 10%"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1154
+#: includes/class-wc-robokassa-method.php:1178
 msgid "VAT 20%"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1155
+#: includes/class-wc-robokassa-method.php:1179
 msgid "VAT receipt settlement rate 10/110"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1156
+#: includes/class-wc-robokassa-method.php:1180
 msgid "VAT receipt settlement rate 20/120"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1162
+#: includes/class-wc-robokassa-method.php:1186
 msgid "Indication of the calculation method"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1163
-#: includes/class-wc-robokassa-method.php:1182
+#: includes/class-wc-robokassa-method.php:1187
+#: includes/class-wc-robokassa-method.php:1206
 msgid ""
 "The parameter is optional. If this parameter is not configured, the check "
 "will indicate the default value of the parameter from the Personal account."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1168
-#: includes/class-wc-robokassa-method.php:1187
+#: includes/class-wc-robokassa-method.php:1192
+#: includes/class-wc-robokassa-method.php:1211
 msgid "Default in Robokassa"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1169
+#: includes/class-wc-robokassa-method.php:1193
 msgid "Prepayment 100%"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1170
+#: includes/class-wc-robokassa-method.php:1194
 msgid "Partial prepayment"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1171
+#: includes/class-wc-robokassa-method.php:1195
 msgid "Advance"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1172
+#: includes/class-wc-robokassa-method.php:1196
 msgid "Full settlement"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1173
+#: includes/class-wc-robokassa-method.php:1197
 msgid "Partial settlement and credit"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1174
+#: includes/class-wc-robokassa-method.php:1198
 msgid "Transfer on credit"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1175
+#: includes/class-wc-robokassa-method.php:1199
 msgid "Credit payment"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1181
+#: includes/class-wc-robokassa-method.php:1205
 msgid "Sign of the subject of calculation"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1188
+#: includes/class-wc-robokassa-method.php:1212
 msgid "Product"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1189
+#: includes/class-wc-robokassa-method.php:1213
 msgid "Excisable goods"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1190
+#: includes/class-wc-robokassa-method.php:1214
 msgid "Work"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1191
+#: includes/class-wc-robokassa-method.php:1215
 msgid "Service"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1192
+#: includes/class-wc-robokassa-method.php:1216
 msgid "Gambling rate"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1193
+#: includes/class-wc-robokassa-method.php:1217
 msgid "Gambling win"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1194
+#: includes/class-wc-robokassa-method.php:1218
 msgid "Lottery ticket"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1195
+#: includes/class-wc-robokassa-method.php:1219
 msgid "Winning the lottery"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1196
+#: includes/class-wc-robokassa-method.php:1220
 msgid "Results of intellectual activity"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1197
+#: includes/class-wc-robokassa-method.php:1221
 msgid "Payment"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1198
+#: includes/class-wc-robokassa-method.php:1222
 msgid "Agency fee"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1199
+#: includes/class-wc-robokassa-method.php:1223
 msgid "Compound subject of calculation"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1200
+#: includes/class-wc-robokassa-method.php:1224
 msgid "Another object of the calculation"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1201
+#: includes/class-wc-robokassa-method.php:1225
 msgid "Property right"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1202
+#: includes/class-wc-robokassa-method.php:1226
 msgid "Extraordinary income"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1203
+#: includes/class-wc-robokassa-method.php:1227
 msgid "Insurance premium"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1204
+#: includes/class-wc-robokassa-method.php:1228
 msgid "Sales tax"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1205
+#: includes/class-wc-robokassa-method.php:1229
 msgid "Resort fee"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1223
+#: includes/class-wc-robokassa-method.php:1247
+msgid "Orders notes"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1249
+msgid "Settings for adding notes to orders. All are off by default."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1254
+msgid "Request from Robokassa"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1257
+msgid "All requests from Robokassa for orders will be added to the notes."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1263
+msgid "Validation errors of requests"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1266
+msgid ""
+"Adding to the notes all the data related to the check for error requests."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1272
+msgid "Result requests"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1275
+msgid "Adding payment result data to order notes."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1281
+msgid "Failed requests"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1284
+msgid "Adding customers return data to the cancellation page in the notes."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1290
+msgid "Success requests"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1293
+msgid ""
+"Adding customers return data to the successful payment page in the notes."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1311
 msgid "Technical details"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1225
+#: includes/class-wc-robokassa-method.php:1313
 msgid ""
 "Setting technical parameters. Used by technical specialists. Can leave it "
 "at that."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1230
+#: includes/class-wc-robokassa-method.php:1318
 msgid "Logging"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1232
+#: includes/class-wc-robokassa-method.php:1320
 msgid ""
 "You can enable gateway logging, specify the level of error that you want "
 "to benefit from logging. All sensitive data in the report are deleted. By "
 "default, the error rate should not be less than ERROR."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1286
+#: includes/class-wc-robokassa-method.php:1338
+msgid "Cart clearing"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1340
+msgid ""
+"Clean the customers cart if payment is successful? If so, the shopping "
+"cart will be cleaned. If not, the goods already purchased will most likely "
+"remain in the shopping cart."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1351
+msgid "Mark order as cancelled?"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1353
+msgid ""
+"Change the status of the order to canceled when the user cancels the "
+"payment. The status changes when the user returns to the cancelled payment "
+"page."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1404
 msgid "Return to payment gateways"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1343
+#: includes/class-wc-robokassa-method.php:1463
 msgid ""
 "TEST mode is active. Payment will not be charged. After checking, disable "
 "this mode."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1385
+#: includes/class-wc-robokassa-method.php:1504
 msgid "The client started to pay."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1481
+#: includes/class-wc-robokassa-method.php:1579
 msgid "Order number: "
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1631
+#: includes/class-wc-robokassa-method.php:1701
 msgid "Pay"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1632
+#: includes/class-wc-robokassa-method.php:1702
 msgid "Cancel & return to cart"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1722
+#: includes/class-wc-robokassa-method.php:1796
 msgid "Delivery"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1959
+#: includes/class-wc-robokassa-method.php:2016
 msgid "Order not found."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1973
+#: includes/class-wc-robokassa-method.php:2030
 #, php-format
-msgid ""
-"Robokassa request success. Sum: %1$s Signature: %2$s Remote signature: %3$s"
+msgid "Robokassa request. Sum: %1$s. Signature: %2$s. Remote signature: %3$s"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1998
+#: includes/class-wc-robokassa-method.php:2055
 #, php-format
 msgid "Validate hash error. Local: %1$s Remote: %2$s"
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:2017
+#: includes/class-wc-robokassa-method.php:2074
 msgid "Order successfully paid (TEST MODE)."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:2030
+#: includes/class-wc-robokassa-method.php:2087
 msgid "Order successfully paid."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:2044
+#: includes/class-wc-robokassa-method.php:2101
 msgid "Payment error, please pay other time."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:2056
+#: includes/class-wc-robokassa-method.php:2113
 msgid "Client return to success page."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:2080
+#: includes/class-wc-robokassa-method.php:2140
 msgid "The order has not been paid."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:2098
+#: includes/class-wc-robokassa-method.php:2161
 msgid "Api request error. Action not found."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:468
+#: includes/class-wc-robokassa.php:435
 msgid "Premium addon"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:483
+#: includes/class-wc-robokassa.php:450
 msgid "Settings"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:516
-msgid ""
-"The plugin for accepting payments through ROBOKASSA for WooCommerce has "
-"been updated to a version that requires additional configuration."
-msgstr ""
-
-#: includes/class-wc-robokassa.php:518
-msgid ""
-"This is a fairly large update with many bug fixes and added features. "
-"Robokassa started working on improving its API. The premium add-on will "
-"soon include payment without leaving the site."
-msgstr ""
-
-#: includes/class-wc-robokassa.php:520
-msgid ""
-"The premium update is now available for 9 months at the same price. In "
-"addition, the VARFHA5V discount coupon is valid until January 31."
-msgstr ""
-
-#: includes/class-wc-robokassa.php:522
-msgid "The discount is 400 rubles."
-msgstr ""
-
-#: includes/class-wc-robokassa.php:524
-msgid "here"
-msgstr ""
-
-#: includes/class-wc-robokassa.php:525
-#, php-format
-msgid ""
-"Press %s (to go to payment gateway settings). Examine the new settings and "
-"save them. This notification will disappear."
-msgstr ""
-
-#: includes/class-wc-robokassa.php:642
+#: includes/class-wc-robokassa.php:582
 msgid "Useful information"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:646 includes/class-wc-robokassa.php:672
+#: includes/class-wc-robokassa.php:586 includes/class-wc-robokassa.php:612
 msgid "Official plugin page"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:647
+#: includes/class-wc-robokassa.php:587
 msgid "Related news: ROBOKASSA"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:648
+#: includes/class-wc-robokassa.php:588
 msgid "Plugins for WooCommerce"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:649
+#: includes/class-wc-robokassa.php:589
 msgid "Feedback to author"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:653
+#: includes/class-wc-robokassa.php:593
 msgid ""
 "This plugin is sponsored by the premium extension. Technical support and "
 "updates are provided on an irregular basis."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:665
+#: includes/class-wc-robokassa.php:605
 msgid "Extension"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:670
+#: includes/class-wc-robokassa.php:610
 msgid ""
 "Even more opportunities to accept payments. Increase conversion and "
 "stability of the algorithms."
