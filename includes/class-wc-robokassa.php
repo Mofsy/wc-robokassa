@@ -183,6 +183,11 @@ class WC_Robokassa
 		// hook
 		do_action('wc_robokassa_gateway_init_before');
 
+		if(class_exists('WC_Payment_Gateway') !== true)
+		{
+			$this->get_logger()->emergency('WC_Payment_Gateway not found');
+		}
+
 		add_filter('woocommerce_payment_gateways', array($this, 'add_wc_gateway_method'), 10);
 
 		// hook
@@ -199,13 +204,7 @@ class WC_Robokassa
 			return false;
 		}
 
-		if(class_exists('WC_Payment_Gateway') !== true)
-		{
-			$this->get_logger()->emergency('WC_Payment_Gateway not found');
-			return false;
-		}
-
-		add_action('init', array($this, 'wc_robokassa_gateway_init'), 10);
+		add_action('init', array($this, 'wc_robokassa_gateway_init'), 5);
 
 		$this->load_plugin_text_domain();
 		$this->load_wc_version();
