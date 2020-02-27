@@ -46,6 +46,9 @@ More features
 
 == Changelog ==
 
+= 3.0.1 =
+* Fix: loading queue
+
 = 3.0.0 =
 * Update: Gatework 0.2.0
 * Fix: language files
