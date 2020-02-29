@@ -1474,14 +1474,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function process_payment($order_id)
 	{
-		/**
-		 * Get order object
-		 */
 		$order = wc_get_order($order_id);
-		
-		/**
-		 * Order fail
-		 */
+
 		if($order === false)
 		{
 			WC_Robokassa()->get_logger()->error('process_payment: $order === false');
@@ -1496,17 +1490,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		// hook
 		do_action('wc_robokassa_before_process_payment', $order_id, $order);
 
-		/**
-		 * Add order note
-		 */
+		WC_Robokassa()->get_logger()->debug('process_payment: order', $order);
+
 		if(method_exists($order, 'add_order_note'))
 		{
 			$order->add_order_note(__('The client started to pay.', 'wc-robokassa'));
 		}
 
-		/**
-		 * Page skipping enabled
-		 */
 		if($this->get_page_skipping() === 'yes')
 		{
 			WC_Robokassa()->get_logger()->info('process_payment: page skipping, success');
