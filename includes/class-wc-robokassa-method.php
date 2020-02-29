@@ -1494,7 +1494,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 
 		// hook
-		do_action('wc_robokassa_process_payment_start', $order_id, $order);
+		do_action('wc_robokassa_before_process_payment', $order_id, $order);
 
 		/**
 		 * Add order note
