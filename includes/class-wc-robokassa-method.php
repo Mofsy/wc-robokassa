@@ -170,8 +170,31 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->init_actions();
 
 		/**
-		 * Admin options
+		 * Save options
 		 */
+		$this->process_options();
+
+		/**
+		 * Receipt page
+		 */
+		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
+
+		/**
+		 * Auto redirect
+		 */
+		add_action('wc_robokassa_input_payment_notifications', array($this, 'wc_robokassa_input_payment_notifications_redirect_by_form'), 20);
+
+		/**
+		 * Payment listener/API hook
+		 */
+		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
+	}
+
+	/**
+	 * Admin options
+	 */
+	public function process_options()
+	{
 		if(current_user_can('manage_options') && is_admin())
 		{
 			/**
@@ -190,21 +213,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'wc_robokassa_last_settings_update_version'
 			), 10);
 		}
-
-		/**
-		 * Receipt page
-		 */
-		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
-
-		/**
-		 * Auto redirect
-		 */
-		add_action('wc_robokassa_input_payment_notifications', array($this, 'wc_robokassa_input_payment_notifications_redirect_by_form'), 20);
-
-		/**
-		 * Payment listener/API hook
-		 */
-		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
 	}
 
 	/**
