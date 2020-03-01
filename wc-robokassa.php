@@ -18,42 +18,18 @@
  */
 defined('ABSPATH') || exit;
 
-if(defined('WC_ROBOKASSA_VERSION') !== true)
+if(class_exists('WC_Robokassa') !== true)
 {
 	$plugin_data = get_file_data(__FILE__, array('Version' => 'Version'));
 	define('WC_ROBOKASSA_VERSION', $plugin_data['Version']);
-}
 
-if(defined('WC_ROBOKASSA_URL') !== true)
-{
 	define('WC_ROBOKASSA_URL', plugin_dir_url(__FILE__));
-}
-
-if(defined('WC_ROBOKASSA_PLUGIN_DIR') !== true)
-{
 	define('WC_ROBOKASSA_PLUGIN_DIR', plugin_dir_path(__FILE__));
-}
-
-if(defined('WC_ROBOKASSA_PLUGIN_NAME') !== true)
-{
 	define('WC_ROBOKASSA_PLUGIN_NAME', plugin_basename(__FILE__));
-}
 
-/**
- * GateWork
- */
-include_once __DIR__ . '/gatework/init.php';
-
-/**
- * Gateway class
- */
-if(class_exists('WC_Robokassa') !== true)
-{
 	include_once __DIR__ . '/includes/functions-wc-robokassa.php';
+	include_once __DIR__ . '/includes/class-wc-robokassa-logger.php';
 	include_once __DIR__ . '/includes/class-wc-robokassa.php';
 }
 
-/**
- * Run
- */
 add_action('plugins_loaded', 'WC_Robokassa', 5);

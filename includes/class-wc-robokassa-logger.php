@@ -1,21 +1,19 @@
 <?php
-/*
-  +----------------------------------------------------------+
-  | Gatework                                                 |
-  +----------------------------------------------------------+
-  | Author: Mofsy <support@mofsy.ru>                         |
-  | Author website: https://mofsy.ru                         |
-  +----------------------------------------------------------+
-*/
+/**
+ * Logger class
+ *
+ * @package Mofsy/WC_Robokassa
+ */
+defined('ABSPATH') || exit;
 
-class WC_Gatework_Logger
+class WC_Robokassa_Logger
 {
 	/**
 	 * Log name
 	 *
 	 * @var string
 	 */
-	private $name = 'gatework.boot.log';
+	private $name = 'wc-robokassa.boot.log';
 
 	/**
 	 * Path

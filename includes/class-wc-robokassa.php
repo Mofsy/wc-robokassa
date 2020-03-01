@@ -18,7 +18,7 @@ class WC_Robokassa
 	/**
 	 * Logger
 	 *
-	 * @var WC_Gatework_Logger
+	 * @var WC_Robokassa_Logger
 	 */
 	public $logger = false;
 
@@ -274,7 +274,7 @@ class WC_Robokassa
 	 */
 	public function load_currency()
     {
-	    $wc_currency = gatework_get_wc_currency();
+	    $wc_currency = wc_robokassa_get_wc_currency();
 
 	    /**
 	     * WooCommerce Currency Switcher
@@ -300,7 +300,7 @@ class WC_Robokassa
 	 */
 	public function load_wc_version()
     {
-    	$wc_version = gatework_get_wc_version();
+    	$wc_version = wc_robokassa_get_wc_version();
 
 	    // log
 	    $this->get_logger()->debug('load_wc_version $wc_version', $wc_version);
@@ -375,7 +375,7 @@ class WC_Robokassa
 	{
 		try
 		{
-			$logger = new WC_Gatework_Logger();
+			$logger = new WC_Robokassa_Logger();
 		}
 		catch(Exception $e)
 		{
@@ -415,7 +415,7 @@ class WC_Robokassa
 	/**
 	 * Get logger
 	 *
-	 * @return WC_Gatework_Logger|null
+	 * @return WC_Robokassa_Logger|null
 	 */
 	public function get_logger()
 	{
