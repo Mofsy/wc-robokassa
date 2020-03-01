@@ -154,19 +154,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Logger
 		 */
-		if($this->get_option('logger') !== '')
-		{
-			WC_Robokassa()->get_logger()->set_level($this->get_option('logger'));
-
-			$file_name = get_option('wc_robokassa_log_file_name');
-			if($file_name === false)
-			{
-				$file_name = 'wc-robokassa.' . md5(mt_rand(1, 10) . 'MofsyMofsyMofsy' . mt_rand(1, 10)) . '.log';
-				update_option('wc_robokassa_log_file_name', $file_name, 'no');
-			}
-
-			WC_Robokassa()->get_logger()->set_name($file_name);
-		}
+		$this->init_logger();
 
 		/**
 		 * Initialize filters
@@ -217,6 +205,26 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Payment listener/API hook
 		 */
 		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
+	}
+
+	/**
+	 * Logger
+	 */
+	public function init_logger()
+	{
+		if($this->get_option('logger') !== '')
+		{
+			WC_Robokassa()->get_logger()->set_level($this->get_option('logger'));
+
+			$file_name = get_option('wc_robokassa_log_file_name');
+			if($file_name === false)
+			{
+				$file_name = 'wc-robokassa.' . md5(mt_rand(1, 10) . 'MofsyMofsyMofsy' . mt_rand(1, 10)) . '.log';
+				update_option('wc_robokassa_log_file_name', $file_name, 'no');
+			}
+
+			WC_Robokassa()->get_logger()->set_name($file_name);
+		}
 	}
 
 	/**
