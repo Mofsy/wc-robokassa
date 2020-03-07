@@ -2182,8 +2182,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Change status from external code
 		 *
 		 * @since 2.4.0
+		 * @deprecated 3.1
 		 */
 		$is_available = apply_filters('wc_robokassa_main_method_get_available', $is_available);
+		
+		/**
+		 * Change status from external code
+		 *
+		 * @since 3.1
+		 */
+		$is_available = apply_filters('wc_robokassa_method_get_available', $is_available);
 
 		return $is_available;
 	}
