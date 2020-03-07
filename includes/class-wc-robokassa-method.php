@@ -940,7 +940,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => ''
 		);
 
-		$result_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_result_url() . '</p>' . __('Address to notify the site of the results of operations in the background. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST.', 'wc-robokassa');
+		$result_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa()->get_result_url() . '</p>' . __('Address to notify the site of the results of operations in the background. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST.', 'wc-robokassa');
 
 		$fields['result_url'] = array
 		(
@@ -951,7 +951,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => ''
 		);
 
-		$success_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_success_url() . '</p>' . __('The address for the user to go to the site after successful payment. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa');
+		$success_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa()->get_success_url() . '</p>' . __('The address for the user to go to the site after successful payment. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa');
 
 		$fields['success_url'] = array
 		(
@@ -962,7 +962,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => ''
 		);
 
-		$fail_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa::instance()->get_fail_url() . '</p>' . __('The address for the user to go to the site, after payment with an error. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa');
+		$fail_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa()->get_fail_url() . '</p>' . __('The address for the user to go to the site, after payment with an error. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST. You can specify other addresses of your choice.', 'wc-robokassa');
 
 		$fields['fail_url'] = array
 		(
