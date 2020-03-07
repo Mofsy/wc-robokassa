@@ -1572,6 +1572,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function generate_form($order_id)
 	{
 		$order = wc_get_order($order_id);
+		if(!is_object($order))
+		{
+			WC_Robokassa()->get_logger()->error('generate_form: $order', $order);
+			die('Generate form error. Order not found.');
+		}
 
 		WC_Robokassa()->get_logger()->debug('generate_form: $order', $order);
 
@@ -1589,14 +1594,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if(WC_Robokassa()->get_wc_currency() !== $order->get_currency('view'))
 		{
-			WC_Robokassa()->get_logger()->info('generate_form: rewrite currency');
-			WC_Robokassa::instance()->set_wc_currency($order->get_currency());
+			WC_Robokassa()->get_logger()->info('generate_form: rewrite currency' . $order->get_currency());
+			WC_Robokassa()->set_wc_currency($order->get_currency());
 		}
 
 		/**
 		 * Set currency to Robokassa
 		 */
-		switch(WC_Robokassa::instance()->get_wc_currency())
+		switch(WC_Robokassa()->get_wc_currency())
 		{
 			case 'USD':
 				$args['OutSumCurrency'] = 'USD';
