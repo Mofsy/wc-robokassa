@@ -46,6 +46,10 @@ More features
 
 == Changelog ==
 
+= 3.1.0 =
+* Test: WooCommerce 4.0
+* More fix
+
 = 3.0.2 =
 * Remove gatework
 
