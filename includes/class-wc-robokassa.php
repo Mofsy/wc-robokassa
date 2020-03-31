@@ -225,6 +225,8 @@ class WC_Robokassa
 
 	/**
 	 * Load robokassa api
+	 *
+	 * @return Wc_Robokassa_Api
 	 */
 	public function load_robokassa_api()
     {
@@ -246,6 +248,8 @@ class WC_Robokassa
         $robokassa_api = new $robokassa_api_class_name();
 
         $this->set_robokassa_api($robokassa_api);
+
+        return $this->get_robokassa_api();
     }
 
 	/**
