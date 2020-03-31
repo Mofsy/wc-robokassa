@@ -86,7 +86,7 @@ class WC_Robokassa
 	 */
 	public static function instance()
 	{
-		if (is_null(self::$_instance))
+		if(is_null(self::$_instance))
 		{
 			self::$_instance = new self();
 		}
