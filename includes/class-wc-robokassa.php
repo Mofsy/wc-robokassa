@@ -274,6 +274,8 @@ class WC_Robokassa
 
 	/**
 	 * Load WooCommerce current currency
+	 *
+	 * @return string
 	 */
 	public function load_currency()
     {
@@ -286,29 +288,32 @@ class WC_Robokassa
 	    {
 		    global $WOOCS;
 
-		    // log
 		    $this->get_logger()->alert('load_currency WooCommerce Currency Switcher detect');
 
 		    $wc_currency = strtoupper($WOOCS->storage->get_val('woocs_current_currency'));
 	    }
 
-	    // log
 	    $this->get_logger()->debug('load_currency $wc_version', $wc_currency);
 
 	    $this->set_wc_currency($wc_currency);
+
+	    return $wc_currency;
     }
 
 	/**
 	 * Load current WC version
+	 *
+	 * @return string
 	 */
 	public function load_wc_version()
     {
     	$wc_version = wc_robokassa_get_wc_version();
 
-	    // log
 	    $this->get_logger()->debug('load_wc_version $wc_version', $wc_version);
 
 	    $this->set_wc_version($wc_version);
+	    
+	    return $wc_version;
     }
 
 	/**
