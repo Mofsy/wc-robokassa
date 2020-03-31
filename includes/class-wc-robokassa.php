@@ -73,7 +73,6 @@ class WC_Robokassa
 		do_action('wc_robokassa_loading');
 
 		$this->init_includes();
-
 		$this->init_hooks();
 
 		// hook
