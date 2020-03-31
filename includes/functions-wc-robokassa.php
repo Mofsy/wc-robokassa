@@ -1,7 +1,7 @@
 <?php
 /**
  * Main instance of WC_Robokassa
- * 
+ *
  * @since 3.0.0
  *
  * @return WC_Robokassa|false
@@ -59,4 +59,16 @@ function wc_robokassa_get_wc_version()
 function wc_robokassa_get_wc_currency()
 {
 	return get_woocommerce_currency();
+}
+
+/**
+ * Logger
+ *
+ * @since 3.1
+ *
+ * @return WC_Robokassa_Logger
+ */
+function wc_robokassa_logger()
+{
+	return WC_Robokassa()->get_logger();
 }
