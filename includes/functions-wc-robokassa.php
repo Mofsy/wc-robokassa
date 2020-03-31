@@ -1,6 +1,7 @@
 <?php
 /**
  * Main instance of WC_Robokassa
+ * 
  * @since 3.0.0
  *
  * @return WC_Robokassa|false
