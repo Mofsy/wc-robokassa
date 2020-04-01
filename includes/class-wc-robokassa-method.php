@@ -1380,7 +1380,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if(!in_array(WC_Robokassa()->get_wc_currency(), $this->currency_all, false))
 		{
-			WC_Robokassa()->get_logger()->alert('is_valid_for_use: currency not support');
+			wc_robokassa_logger()->alert('is_valid_for_use: currency not support');
 			return false;
 		}
 
@@ -1391,7 +1391,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_test() === 'yes' && false === current_user_can('manage_options'))
 		{
-			WC_Robokassa()->get_logger()->alert('is_valid_for_use: test mode only admin');
+			wc_robokassa_logger()->alert('is_valid_for_use: test mode only admin');
 			return false;
 		}
 
@@ -1486,7 +1486,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		if($order === false)
 		{
-			WC_Robokassa()->get_logger()->error('process_payment: $order === false');
+			wc_robokassa_logger()->error('process_payment: $order === false');
 
 			return array
 			(
@@ -1498,7 +1498,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		// hook
 		do_action('wc_robokassa_before_process_payment', $order_id, $order);
 
-		WC_Robokassa()->get_logger()->debug('process_payment: order', $order);
+		wc_robokassa_logger()->debug('process_payment: order', $order);
 
 		if(method_exists($order, 'add_order_note'))
 		{
@@ -1507,7 +1507,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		if($this->get_page_skipping() === 'yes')
 		{
-			WC_Robokassa()->get_logger()->info('process_payment: page skipping, success');
+			wc_robokassa_logger()->info('process_payment: page skipping, success');
 
 			return array
 			(
@@ -1516,7 +1516,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			);
 		}
 
-		WC_Robokassa()->get_logger()->info('process_payment: success');
+		wc_robokassa_logger()->info('process_payment: success');
 
 		return array
 		(
@@ -1566,11 +1566,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$order = wc_get_order($order_id);
 		if(!is_object($order))
 		{
-			WC_Robokassa()->get_logger()->error('generate_form: $order', $order);
+			wc_robokassa_logger()->error('generate_form: $order', $order);
 			die('Generate form error. Order not found.');
 		}
 
-		WC_Robokassa()->get_logger()->debug('generate_form: $order', $order);
+		wc_robokassa_logger()->debug('generate_form: $order', $order);
 
 		$args = array();
 		$args['MerchantLogin'] = $this->get_shop_login();
@@ -1586,7 +1586,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if(WC_Robokassa()->get_wc_currency() !== $order->get_currency('view'))
 		{
-			WC_Robokassa()->get_logger()->info('generate_form: rewrite currency' . $order->get_currency());
+			wc_robokassa_logger()->info('generate_form: rewrite currency' . $order->get_currency());
 			WC_Robokassa()->set_wc_currency($order->get_currency());
 		}
 
@@ -1611,7 +1611,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_test() === 'yes')
 		{
-			WC_Robokassa()->get_logger()->info('generate_form: test mode active');
+			wc_robokassa_logger()->info('generate_form: test mode active');
 
 			$signature_pass = $this->get_test_shop_pass_1();
 			$signature_method = $this->get_test_sign_method();
@@ -1623,7 +1623,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		else
 		{
-			WC_Robokassa()->get_logger()->info('generate_form: real payments');
+			wc_robokassa_logger()->info('generate_form: real payments');
 
 			$signature_pass = $this->get_shop_pass_1();
 			$signature_method = $this->get_sign_method();
@@ -1644,14 +1644,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$receipt_result = '';
 		if($this->is_ofd_status() === true)
 		{
-			WC_Robokassa()->get_logger()->info('generate_form: fiscal active');
+			wc_robokassa_logger()->info('generate_form: fiscal active');
 
 			$receipt['sno'] = $this->get_ofd_sno();
 			$receipt['items'] = $this->generate_receipt_items($order);
 
 			$receipt_result = json_encode($receipt);
 
-			WC_Robokassa()->get_logger()->debug('generate_form: $receipt_result', $receipt_result);
+			wc_robokassa_logger()->debug('generate_form: $receipt_result', $receipt_result);
 		}
 
 		/**
@@ -1719,7 +1719,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$receipt_items = array();
 
-		WC_Robokassa()->get_logger()->info('generate_receipt_items: start');
+		wc_robokassa_logger()->info('generate_receipt_items: start');
 
 		/**
 		 * Order items
@@ -1831,7 +1831,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			);
 		}
 
-		WC_Robokassa()->get_logger()->info('generate_receipt_items: success');
+		wc_robokassa_logger()->info('generate_receipt_items: success');
 
 		return $receipt_items;
 	}
@@ -2014,7 +2014,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($order === false)
 		{
-			WC_Robokassa()->get_logger()->error('input_payment_notifications: order not found');
+			wc_robokassa_logger()->error('input_payment_notifications: order not found');
 
 			wp_die(__('Order not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
 		}
