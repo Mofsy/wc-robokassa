@@ -394,9 +394,8 @@ class WC_Robokassa
 		{
 			$wp_dir = wp_upload_dir();
 
-			$logger->set_name('wc-robokassa.boot.log');
-			$logger->set_level(400);
 			$logger->set_path($wp_dir['basedir']);
+			$logger->set_name('wc-robokassa.boot.log');
 
 			$this->set_logger($logger);
 
