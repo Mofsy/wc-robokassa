@@ -152,18 +152,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->method_description = __('Pay via Robokassa.', 'wc-robokassa');
 
 		/**
-		 * Logger
+		 * Init
 		 */
 		$this->init_logger();
-
-		/**
-		 * Initialize filters
-		 */
 		$this->init_filters();
-
-		/**
-		 * Load settings
-		 */
 		$this->init_form_fields();
 		$this->init_settings();
 		$this->init_options();
