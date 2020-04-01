@@ -603,9 +603,6 @@ class WC_Robokassa
     <li class="list-group-item"><a href="https://mofsy.ru/others/feedback" target="_blank">' . __('Feedback to author', 'wc-robokassa') . '</a></li>
   </ul>
   </div>
-  <div class="card-footer text-muted" style="padding: 10px;">
-    ' . __('This plugin is sponsored by the premium extension. Technical support and updates are provided on an irregular basis.', 'wc-robokassa') . '
-  </div>
 </div>';
 	}
 
