@@ -9,6 +9,13 @@ defined('ABSPATH') || exit;
 class Wc_Robokassa_Method extends WC_Payment_Gateway
 {
 	/**
+	 * Unique gateway id
+	 *
+	 * @var string
+	 */
+	public $id = 'robokassa';
+
+	/**
 	 * All support currency
 	 *
 	 * @var array
@@ -45,13 +52,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 * @var string
 	 */
 	public $sign_method = 'sha256';
-
-	/**
-	 * Unique gateway id
-	 *
-	 * @var string
-	 */
-	public $id = 'robokassa';
 
 	/**
 	 * Form url for Merchant
