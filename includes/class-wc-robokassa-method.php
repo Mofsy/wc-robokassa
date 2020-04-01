@@ -335,7 +335,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Ofd
 		 */
-		if($this->get_option('ofd_status') == 'yes')
+		if($this->get_option('ofd_status') === 'yes')
 		{
 			$this->set_ofd_status(true);
 		}
