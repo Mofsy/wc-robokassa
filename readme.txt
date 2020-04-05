@@ -22,7 +22,15 @@ RUB, USD, EUR, KZT
 2. WooCommerce Currency Switcher (https://currency-switcher.com)
 
 = Premium available =
-More features
+1. WooCommerce Subscriptions
+2. Division into payment methods
+3. Payment without going to Robokassa website
+4. Payment of the buyer's commission
+5. Filtering by Delivery
+6. Commission calculation on the site side
+7. Checking limits
+8. Checking the availability of payment methods
+9. Choice of payment method before going to Robokassa
 [https://mofsy.ru/projects/wc-robokassa-premium](https://mofsy.ru/projects/wc-robokassa-premium)
 
 == Screenshots ==
