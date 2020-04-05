@@ -40,9 +40,7 @@ More features
 * Russian - always included
 
 == Installation ==
-1. Archive extract and upload "wc-robokassa" to /wp-content/plugins
-2. Activation
-3. Configure
+Archive extract and upload "wc-robokassa" to /wp-content/plugins
 
 == Changelog ==
 
