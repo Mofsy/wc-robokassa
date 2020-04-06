@@ -12,9 +12,10 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 == Description ==
 Integration Robokassa in WooCommerce as payment gateway plugin.
 Created for individuals, individual entrepreneurs and legal entities.
+Well-designed code without unnecessary dependencies with minimal system requirements.
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
-= Support currency =
+= Support WooCommerce currency =
 RUB, USD, EUR, KZT
 
 = Support external plugins =
@@ -24,7 +25,7 @@ RUB, USD, EUR, KZT
 = Premium available =
 1. WooCommerce Subscriptions
 2. Division into payment methods
-3. Payment without going to Robokassa website
+3. Payment without redirect to Robokassa website
 4. Payment of the buyer's commission
 5. Filtering by delivery methods
 6. Commission calculation on the site side
