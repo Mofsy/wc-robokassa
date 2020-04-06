@@ -26,7 +26,7 @@ RUB, USD, EUR, KZT
 2. Division into payment methods
 3. Payment without going to Robokassa website
 4. Payment of the buyer's commission
-5. Filtering by Delivery
+5. Filtering by delivery methods
 6. Commission calculation on the site side
 7. Checking limits
 8. Checking the availability of payment methods
