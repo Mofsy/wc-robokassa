@@ -55,7 +55,7 @@ Additional plugin adds new features to the main free plugin:
 * Russian - always included
 
 == Installation ==
-Archive extract and upload "wc-robokassa" to /wp-content/plugins
+Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 
 == Changelog ==
 
