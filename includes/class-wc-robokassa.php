@@ -226,10 +226,22 @@ class WC_Robokassa
 	/**
 	 * Load robokassa api
 	 *
+	 * @param $reload boolean
+	 *
 	 * @return Wc_Robokassa_Api
 	 */
-	public function load_robokassa_api()
+	public function load_robokassa_api($reload = true)
     {
+    	if(true === $reload)
+	    {
+		    $robokassa_api = $this->get_robokassa_api();
+
+		    if(false !== $robokassa_api)
+		    {
+			    return $robokassa_api;
+		    }
+	    }
+
         $default_class_name = 'Wc_Robokassa_Api';
 
 	    /**
