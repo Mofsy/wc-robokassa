@@ -17,11 +17,23 @@ Payment is accepted from users all over the world. Payment pages are available i
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
 = Support WooCommerce currency =
-Full support of options to work with these currencies:
+Full support of options to work with currencies:
 1. RUB
 2. USD
 3. EUR
 4. KZT
+
+= Plugin updates =
+Updates are issued at the expense of raised funds from the sale of the premium addon.
+The updates fix bugs, improve the code, add new features and add support for new versions of WooCommerce.
+Each purchase of a premium add-on allows to work on the plugin for 3 hours (1 hour in idea mode, and 2 hours in code editing mode).
+
+= Plugin support =
+Individual free support is not provided. If something doesn't work, it means it's either set up in the wrong way,
+or the plugin is used on unsupported versions of WordPress and WooCommerce.
+But you can always agree on paid support and add features.
+Features are added to the premium add-on! They become available for everyone.
+Support information can be found on the official website. If you have not found it, it is not fate.
 
 = Support external plugins =
 1. WPML (http://wpml.org)
