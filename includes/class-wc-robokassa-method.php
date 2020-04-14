@@ -16,7 +16,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $id = 'robokassa';
 
 	/**
-	 * All support currency
+	 * All support WooCommerce currency
 	 *
 	 * @var array
 	 */
@@ -26,28 +26,28 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	);
 
 	/**
-	 * Shop login
+	 * Shop login from Robokassa
 	 *
 	 * @var string
 	 */
 	public $shop_login = '';
 
 	/**
-	 * Shop pass 1
+	 * Shop pass 1 from Robokassa
 	 *
 	 * @var string
 	 */
 	public $shop_pass_1 = '';
 
 	/**
-	 * Shop pass 2
+	 * Shop pass 2 from Robokassa
 	 *
 	 * @var string
 	 */
 	public $shop_pass_2 = '';
 
 	/**
-	 * Hashing for signature
+	 * Hashing for signature from Robokassa
 	 *
 	 * @var string
 	 */
@@ -75,21 +75,21 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $test = 'no';
 
 	/**
-	 * Test shop pass 1
+	 * Test shop pass 1 from Robokassa
 	 *
 	 * @var string
 	 */
 	public $test_shop_pass_1 = '';
 
 	/**
-	 * Test shop pass 2
+	 * Test shop pass 2 from Robokassa
 	 *
 	 * @var string
 	 */
 	public $test_shop_pass_2 = '';
 
 	/**
-	 * Hashing for signature with test mode
+	 * Hashing for signature with test mode from Robokassa
 	 *
 	 * @var string
 	 */
