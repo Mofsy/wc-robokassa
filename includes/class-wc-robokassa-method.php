@@ -1563,6 +1563,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 **/
 	public function generate_form($order_id)
 	{
+		wc_robokassa_logger()->info('generate_form: start');
+
 		$order = wc_get_order($order_id);
 		if(!is_object($order))
 		{
@@ -1698,6 +1700,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$args_array[] = '<input type="hidden" name="'.esc_attr($key).'" value="'.esc_attr($value).'" />';
 		}
+
+		wc_robokassa_logger()->info('generate_form: success');
 
 		return '<form action="' . esc_url($this->get_form_url()) . '" method="POST" id="wc_robokassa_payment_form" accept-charset="utf-8">' . "\n" .
 		       implode("\n", $args_array) .
@@ -1937,6 +1941,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function input_payment_notifications()
 	{
+		wc_robokassa_logger()->info('input_payment_notifications: start');
+
 		// hook
 		do_action('wc_robokassa_input_payment_notifications');
 
@@ -2157,6 +2163,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			wp_redirect( str_replace('&amp;', '&', $order->get_cancel_order_url() ) );
 			die();
 		}
+
+		wc_robokassa_logger()->info('input_payment_notifications: error, action not found');
 
 		/**
 		 * Send Service unavailable
