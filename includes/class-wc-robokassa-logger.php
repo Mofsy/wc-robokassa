@@ -250,6 +250,10 @@ class WC_Robokassa_Logger
 		{
 			$content['object'] = print_r($object, true);
 		}
+		elseif(is_bool($object))
+		{
+			$content['object'] = $object ? 'true' : 'false';
+		}
 		else
 		{
 			$content['object'] = $object;
