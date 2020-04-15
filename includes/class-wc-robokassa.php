@@ -418,6 +418,23 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Filename for log
+	 *
+	 * @return mixed
+	 */
+	public function get_logger_filename()
+	{
+		$file_name = get_option('wc_robokassa_log_file_name');
+		if($file_name === false)
+		{
+			$file_name = 'wc-robokassa.' . md5(mt_rand(1, 10) . 'MofsyMofsyMofsy' . mt_rand(1, 10)) . '.log';
+			update_option('wc_robokassa_log_file_name', $file_name, 'no');
+		}
+
+		return $file_name;
+	}
+
+	/**
 	 * Set logger
 	 *
 	 * @param $logger

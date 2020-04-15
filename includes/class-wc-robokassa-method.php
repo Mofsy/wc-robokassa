@@ -222,12 +222,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			wc_robokassa_logger()->set_level($this->get_option('logger'));
 
-			$file_name = get_option('wc_robokassa_log_file_name');
-			if($file_name === false)
-			{
-				$file_name = 'wc-robokassa.' . md5(mt_rand(1, 10) . 'MofsyMofsyMofsy' . mt_rand(1, 10)) . '.log';
-				update_option('wc_robokassa_log_file_name', $file_name, 'no');
-			}
+			$file_name = WC_Robokassa()->get_logger_filename();
 
 			wc_robokassa_logger()->set_name($file_name);
 		}
