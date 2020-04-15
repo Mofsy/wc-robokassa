@@ -187,8 +187,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function process_options()
 	{
+		wc_robokassa_logger()->info('process_options: start');
+
 		if(current_user_can('manage_options') && is_admin())
 		{
+			wc_robokassa_logger()->info('process_options: manage_options success');
+
 			/**
 			 * Options save
 			 */
@@ -205,6 +209,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				'wc_robokassa_last_settings_update_version'
 			), 10);
 		}
+
+		wc_robokassa_logger()->info('process_options: end');
 	}
 
 	/**
@@ -232,12 +238,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_filters()
 	{
+		wc_robokassa_logger()->info('init_filters: start');
+
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'), 10);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_ofd'), 40);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_order_notes'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'), 50);
+
+		wc_robokassa_logger()->info('init_filters: end');
 	}
 
 	/**
@@ -245,6 +255,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_actions()
 	{
+		wc_robokassa_logger()->info('init_actions: start');
+
 		/**
 		 * Payment fields description show
 		 */
@@ -259,6 +271,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Receipt form show
 		 */
 		add_action('wc_robokassa_receipt_page_show', array($this, 'wc_robokassa_receipt_page_show_form'), 10);
+
+		wc_robokassa_logger()->info('init_actions: end');
 	}
 
 	/**
@@ -266,7 +280,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function wc_robokassa_last_settings_update_version()
 	{
-		update_option('wc_robokassa_last_settings_update_version', WC_ROBOKASSA_VERSION);
+		wc_robokassa_logger()->info('wc_robokassa_last_settings_update_version: start');
+
+		$result = update_option('wc_robokassa_last_settings_update_version', WC_ROBOKASSA_VERSION);
+
+		if($result)
+		{
+			wc_robokassa_logger()->info('wc_robokassa_last_settings_update_version: success');
+		}
+		else
+		{
+			wc_robokassa_logger()->notice('wc_robokassa_last_settings_update_version: not updated');
+		}
+
+		wc_robokassa_logger()->info('wc_robokassa_last_settings_update_version: end');
 	}
 
 	/**
@@ -274,6 +301,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_options()
 	{
+		wc_robokassa_logger()->info('init_options: start');
+
 		/**
 		 * Gateway not enabled?
 		 */
@@ -490,6 +519,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$this->enabled = false;
 		}
+
+		wc_robokassa_logger()->info('init_options: success');
 	}
 
 	/**
@@ -1375,6 +1406,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function is_valid_for_use()
 	{
+		wc_robokassa_logger()->info('is_valid_for_use: start');
+
 		/**
 		 * Check allow currency
 		 */
@@ -1394,6 +1427,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			wc_robokassa_logger()->alert('is_valid_for_use: test mode only admin');
 			return false;
 		}
+
+		wc_robokassa_logger()->info('is_valid_for_use: success');
 
 		return true;
 	}
@@ -1482,6 +1517,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function process_payment($order_id)
 	{
+		wc_robokassa_logger()->info('process_payment: start');
+
 		$order = wc_get_order($order_id);
 
 		if($order === false)
@@ -2181,7 +2218,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function is_available()
 	{
+		wc_robokassa_logger()->info('is_available: start');
+
 		$is_available = parent::is_available();
+
+		wc_robokassa_logger()->debug('is_available: parent $is_available', $is_available);
 
 		/**
 		 * Change status from external code
@@ -2197,6 +2238,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * @since 3.1
 		 */
 		$is_available = apply_filters('wc_robokassa_method_get_available', $is_available);
+
+		wc_robokassa_logger()->debug('is_available: $is_available', $is_available);
+		wc_robokassa_logger()->info('is_available: success');
 
 		return $is_available;
 	}
