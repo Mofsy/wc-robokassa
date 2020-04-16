@@ -905,7 +905,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Main settings', 'wc-robokassa'),
 			'type'        => 'title',
-			'description' => __('The payment gateway will not work without these settings. Make the settings carefully.', 'wc-robokassa'),
+			'description' => __('Without these settings, the payment gateway will not work. Be sure to make settings in this block.', 'wc-robokassa'),
 		);
 
 		$fields['enabled'] = array
@@ -946,7 +946,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #1', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Please write Shop pass 1. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
+			'description' => __('Shop pass 1. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
@@ -954,7 +954,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #2', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Please write Shop pass 2. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
+			'description' => __('Shop pass 2. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
