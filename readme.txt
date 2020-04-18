@@ -12,8 +12,8 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 == Description ==
 Integration Robokassa in WooCommerce as payment gateway plugin.
 Created for individuals, individual entrepreneurs and legal entities.
+Payments is accepted from users all over the world. Payment pages are available in Russian and English.
 Well-designed code without unnecessary dependencies with minimal system requirements.
-Payment is accepted from users all over the world. Payment pages are available in Russian and English.
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
 = Support WooCommerce currency =
@@ -23,21 +23,35 @@ Full support of options to work with currencies:
 3. EUR
 4. KZT
 
+= Support external plugins =
+1. WPML (http://wpml.org)
+2. WooCommerce Currency Switcher (https://currency-switcher.com)
+
 = Plugin updates =
 Updates are issued at the expense of raised funds from the sale of the premium addon.
-The updates fix bugs, improve the code, add new features and add support for new versions of WooCommerce.
-Each purchase of a premium add-on allows to work on the plugin for 3 hours (1 hour in idea mode, and 2 hours in code editing mode).
+The updates includes fix bugs, improve the code, add new features and add support for new versions of WooCommerce.
+Each purchase of a premium add-on allows to work on the plugin for 3 hours (2 hour in idea mode, and 1 hours in code editing mode).
 
 = Plugin support =
 Individual free support is not provided. If something doesn't work, it means it's either set up in the wrong way,
 or the plugin is used on unsupported versions of WordPress and WooCommerce.
-But you can always agree on paid support and add features.
+You can always agree on paid support and on paid add features.
 Features are added to the premium add-on! They become available for everyone.
-Support information can be found on the official website. If you have not found it, it is not fate.
+Support information can be found on the official website. If you have not found it, it is not available.
 
-= Support external plugins =
-1. WPML (http://wpml.org)
-2. WooCommerce Currency Switcher (https://currency-switcher.com)
+= Bug report =
+Error reports are accepted by email support@mofsy.ru with the subject: [bug] wc-robokassa
+If you specify a different topic, the report will most likely not be accepted. Reports are processed within your free time.
+You should keep in mind that errors are not always errors. Errors in settings are possible, as well as use on
+unsupported versions of software.
+If the bug is not fixed for a long time, then there is no funding.
+
+= Feature request =
+Requests to add features are accepted by e-mail support@mofsy.ru with the subject: [feature] wc-robokassa
+You can write requests on the support forum, but the forum is not often inspected.
+The description of the necessary feature should be as detailed as possible. Whatever you need to think over during implementation.
+The implementation of opportunities occurs within the budget collected from the mass sales of premium additions.
+If an opportunity is not added for a long time, there may be no money for it. You can order the refinement individually.
 
 = Premium available =
 Additional plugin adds new features to the main free plugin:
@@ -73,6 +87,9 @@ Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 
 = 3.1.0 =
 * Test: WooCommerce 4.0
+* More log information
+* Fix languages
+* New features
 * More fix
 
 = 3.0.2 =
