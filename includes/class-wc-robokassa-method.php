@@ -2088,6 +2088,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			{
 				$validate = false;
 
+				wc_robokassa_logger()->notice('input_payment_notifications: $signature !== $local_signature');
+
 				/**
 				 * Add order note
 				 */
@@ -2102,11 +2104,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 */
 			if($validate === true)
 			{
-				/**
-				 * Testing
-				 */
 				if($test === true)
 				{
+					wc_robokassa_logger()->info('input_payment_notifications: Order successfully paid (TEST MODE)');
+
 					/**
 					 * Add order note
 					 */
@@ -2115,11 +2116,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 						$order->add_order_note(__('Order successfully paid (TEST MODE).', 'wc-robokassa'));
 					}
 				}
-				/**
-				 * Real payment
-				 */
 				else
 				{
+					wc_robokassa_logger()->info('input_payment_notifications: Order successfully paid');
+
 					/**
 					 * Add order note
 					 */
@@ -2136,16 +2136,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				die('OK'.$order_id);
 			}
 
+			wc_robokassa_logger()->error('input_payment_notifications: action result - error');
+
 			/**
 			 * Send Service unavailable
 			 */
 			wp_die(__('Payment error, please pay other time.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
 		}
-		/**
-		 * Success
-		 */
 		elseif($_REQUEST['action'] === 'success')
 		{
+			wc_robokassa_logger()->info('input_payment_notifications: Client return to success page');
+
 			/**
 			 * Add order note
 			 */
@@ -2159,8 +2160,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 */
 			if($this->get_option('cart_clearing') === 'yes')
 			{
+				wc_robokassa_logger()->info('input_payment_notifications: clear cart');
+
 				WC()->cart->empty_cart();
 			}
+
+			wc_robokassa_logger()->info('input_payment_notifications: redirect to success page');
 
 			/**
 			 * Redirect to success
@@ -2168,11 +2173,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			wp_redirect($this->get_return_url($order));
 			die();
 		}
-		/**
-		 * Fail
-		 */
 		elseif($_REQUEST['action'] === 'fail')
 		{
+			wc_robokassa_logger()->info('input_payment_notifications: The order has not been paid');
+
 			/**
 			 * Add order note
 			 */
@@ -2186,13 +2190,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			 */
 			if($this->get_option('fail_set_order_status_failed') === 'yes')
 			{
+				wc_robokassa_logger()->info('input_payment_notifications: fail_set_order_status_failed');
+
 				$order->update_status('failed');
 			}
+
+			wc_robokassa_logger()->info('input_payment_notifications: redirect to order cancel page');
 
 			/**
 			 * Redirect to cancel
 			 */
-			wp_redirect( str_replace('&amp;', '&', $order->get_cancel_order_url() ) );
+			wp_redirect(str_replace('&amp;', '&', $order->get_cancel_order_url()));
 			die();
 		}
 
