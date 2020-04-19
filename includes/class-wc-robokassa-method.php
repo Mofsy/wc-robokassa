@@ -132,6 +132,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public $page_skipping = 'no';
 
 	/**
+	 * Max receipt items
+	 *
+	 * @var int
+	 */
+	protected $receipt_items_limit = 100;
+
+	/**
 	 * WC_Robokassa constructor
 	 */
 	public function __construct()
@@ -1730,7 +1737,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$args_array = array();
 		foreach ($args as $key => $value)
 		{
-			$args_array[] = '<input type="hidden" name="'.esc_attr($key).'" value="'.esc_attr($value).'" />';
+			$args_array[] = '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '" />';
 		}
 
 		wc_robokassa_logger()->info('generate_form: success');
@@ -2234,5 +2241,21 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		wc_robokassa_logger()->info('is_available: success');
 
 		return $is_available;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function get_receipt_items_limit()
+	{
+		return $this->receipt_items_limit;
+	}
+
+	/**
+	 * @param int $receipt_items_limit
+	 */
+	public function set_receipt_items_limit($receipt_items_limit)
+	{
+		$this->receipt_items_limit = $receipt_items_limit;
 	}
 }
