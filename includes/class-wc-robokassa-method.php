@@ -1111,12 +1111,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$fields['language_auto'] = array
 		(
 			'title'       => __('Language based on the locale?', 'wc-robokassa'),
-			'type'        => 'select',
-			'options'     => array
-			(
-				'yes' => __('Yes', 'wc-robokassa'),
-				'no'  => __('No', 'wc-robokassa')
-			),
+			'type'        => 'checkbox',
+			'label'   => __('Enable user language automatic detection?', 'wc-robokassa'),
 			'description' => __('Automatic detection of the users language from the WordPress environment.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
