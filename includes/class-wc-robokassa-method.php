@@ -1020,14 +1020,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$fields['test'] = array
 		(
 			'title'       => __('Test mode', 'wc-robokassa'),
-			'type'        => 'select',
+			'type'        => 'checkbox',
+			'label'   => __('Enable test mode?', 'wc-robokassa'),
 			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
-			'default'     => 'yes',
-			'options'     => array
-			(
-				'no'  => __('Off', 'wc-robokassa'),
-				'yes' => __('On', 'wc-robokassa'),
-			)
+			'default'     => 'yes'
 		);
 
 		$fields['test_sign_method'] = array
