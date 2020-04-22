@@ -1278,21 +1278,21 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'description' => __('Settings for adding notes to orders. All are off by default.', 'wc-robokassa'),
 		);
 
-		$fields['orders_notes_robokassa_request'] = array
+		$fields['orders_notes_robokassa_request_validate_error'] = array
 		(
-			'title'       => __('Request from Robokassa', 'wc-robokassa'),
+			'title'       => __('Errors when verifying the signature of requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
-			'description' => __('All requests from Robokassa for orders will be added to the notes.', 'wc-robokassa'),
+			'description' => __('Recording a errors when verifying the signature of requests from Robokassa.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
 
-		$fields['orders_notes_robokassa_request_validate_error'] = array
+		$fields['orders_notes_robokassa_paid_success'] = array
 		(
-			'title'       => __('Validation errors of requests', 'wc-robokassa'),
+			'title'       => __('Successful payments', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
-			'description' => __('Adding to the notes all the data related to the check for error requests.', 'wc-robokassa'),
+			'description' => __('Recording information about received requests with successful payment.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
 
@@ -1301,7 +1301,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'       => __('Result requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
-			'description' => __('Adding payment result data to order notes.', 'wc-robokassa'),
+			'description' => __('Recording information about the background queries about transactions from Robokassa.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
 
@@ -1997,9 +1997,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$action = $_REQUEST['action'];
 		}
 
-		/**
-		 * Test mode
-		 */
 		if($this->get_test() === 'yes' || (array_key_exists('IsTest', $_REQUEST) && $_REQUEST['IsTest'] == '1'))
 		{
 			$test = true;
@@ -2015,9 +2012,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			$signature_method = $this->get_test_sign_method();
 		}
-		/**
-		 * Real payments
-		 */
 		else
 		{
 			$test = false;
@@ -2064,16 +2058,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$signature_payload = $sum.':'.$order_id.':'.$signature_pass;
 		$local_signature = $this->get_signature($signature_payload, $signature_method);
 
-		if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request') === 'yes')
-		{
-			$order->add_order_note(sprintf(__('Robokassa request. Sum: %1$s. Signature: %2$s. Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
-		}
-
 		/**
 		 * Result
 		 */
 		if($action === 'result')
 		{
+			if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_result') === 'yes')
+			{
+				$order->add_order_note(sprintf(__('Robokassa request. Sum: %1$s. Signature: %2$s. Remote signature: %3$s', 'wc-robokassa'), $sum, $local_signature, $signature));
+			}
+
 			/**
 			 * Validated flag
 			 */
@@ -2103,7 +2097,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				{
 					wc_robokassa_logger()->info('input_payment_notifications: Order successfully paid (TEST MODE)');
 
-					if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_result') === 'yes')
+					if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_paid_success') === 'yes')
 					{
 						$order->add_order_note(__('Order successfully paid (TEST MODE).', 'wc-robokassa'));
 					}
@@ -2112,24 +2106,18 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				{
 					wc_robokassa_logger()->info('input_payment_notifications: Order successfully paid');
 
-					if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_result') === 'yes')
+					if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_paid_success') === 'yes')
 					{
 						$order->add_order_note(__('Order successfully paid.', 'wc-robokassa'));
 					}
 				}
 
-				/**
-				 * Set status is payment
-				 */
 				$order->payment_complete();
 				die('OK'.$order_id);
 			}
 
 			wc_robokassa_logger()->error('input_payment_notifications: action result - error');
 
-			/**
-			 * Send Service unavailable
-			 */
 			wp_die(__('Payment error, please pay other time.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
 		}
 		elseif($action === 'success')
@@ -2141,9 +2129,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
 			}
 
-			/**
-			 * Empty cart
-			 */
 			if($this->get_option('cart_clearing') === 'yes')
 			{
 				wc_robokassa_logger()->info('input_payment_notifications: clear cart');
@@ -2153,9 +2138,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			wc_robokassa_logger()->info('input_payment_notifications: redirect to success page');
 
-			/**
-			 * Redirect to success
-			 */
 			wp_redirect($this->get_return_url($order));
 			die();
 		}
@@ -2168,9 +2150,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
 			}
 
-			/**
-			 * Set status is failed
-			 */
 			if($this->get_option('fail_set_order_status_failed') === 'yes')
 			{
 				wc_robokassa_logger()->info('input_payment_notifications: fail_set_order_status_failed');
@@ -2180,18 +2159,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			wc_robokassa_logger()->info('input_payment_notifications: redirect to order cancel page');
 
-			/**
-			 * Redirect to cancel
-			 */
 			wp_redirect(str_replace('&amp;', '&', $order->get_cancel_order_url()));
 			die();
 		}
 
 		wc_robokassa_logger()->info('input_payment_notifications: error, action not found');
 
-		/**
-		 * Send Service unavailable
-		 */
 		wp_die(__('Api request error. Action not found.', 'wc-robokassa'), 'Payment error', array('response' => '503'));
 	}
 
