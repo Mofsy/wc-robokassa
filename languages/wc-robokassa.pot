@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Payment gateway - Robokassa for WooCommerce\n"
-"POT-Creation-Date: 2020-04-24 01:14+0300\n"
+"POT-Creation-Date: 2020-04-24 01:38+0300\n"
 "PO-Revision-Date: 2016-01-10 16:41+0300\n"
 "Last-Translator: Mofsy <support@mofsy.ru>\n"
 "Language-Team: Mofsy <support@mofsy.ru>\n"
@@ -236,7 +236,14 @@ msgid "Skip the received order page?"
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1131
-msgid "Enable skip order page?"
+#: includes/class-wc-robokassa-method.php:1183
+#: includes/class-wc-robokassa-method.php:1292
+#: includes/class-wc-robokassa-method.php:1301
+#: includes/class-wc-robokassa-method.php:1310
+#: includes/class-wc-robokassa-method.php:1319
+#: includes/class-wc-robokassa-method.php:1328
+#: includes/class-wc-robokassa-method.php:1337
+msgid "Enable"
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1132
@@ -289,16 +296,6 @@ msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1181
 msgid "The transfer of goods"
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:1183
-#: includes/class-wc-robokassa-method.php:1292
-#: includes/class-wc-robokassa-method.php:1301
-#: includes/class-wc-robokassa-method.php:1310
-#: includes/class-wc-robokassa-method.php:1319
-#: includes/class-wc-robokassa-method.php:1328
-#: includes/class-wc-robokassa-method.php:1337
-msgid "Enable"
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1184
@@ -538,7 +535,7 @@ msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1329
 msgid ""
-"Recording information about the clients refund to the canceled payment "
+"Recording information about the clients return to the canceled payment "
 "page."
 msgstr ""
 
@@ -548,7 +545,7 @@ msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1338
 msgid ""
-"Recording information about the clients refund to the success payment page."
+"Recording information about the clients return to the success payment page."
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1356
@@ -754,7 +751,7 @@ msgid "Status"
 msgstr ""
 
 #: includes/class-wc-robokassa.php:702
-msgid "Currency:"
+msgid "Currency: "
 msgstr ""
 
 #. Plugin Name of the plugin/theme
