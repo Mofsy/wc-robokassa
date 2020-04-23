@@ -524,7 +524,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Gateway allowed?
 		 */
-		if($this->is_valid_for_use() === false)
+		if($this->is_available_front() === false)
 		{
 			$this->enabled = false;
 		}
@@ -1408,9 +1408,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
-	 * Check if this gateway is enabled and available in the user's country
+	 * Check available in front
 	 */
-	public function is_valid_for_use()
+	public function is_available_front()
 	{
 		wc_robokassa_logger()->info('is_valid_for_use: start');
 
