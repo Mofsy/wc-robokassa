@@ -1326,7 +1326,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'       => __('Failed requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
-			'description' => __('Recording information about the clients refund to the canceled payment page.', 'wc-robokassa'),
+			'description' => __('Recording information about the clients return to the canceled payment page.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
 
@@ -1335,7 +1335,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'       => __('Success requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
-			'description' => __('Recording information about the clients refund to the success payment page.', 'wc-robokassa'),
+			'description' => __('Recording information about the clients return to the success payment page.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
 

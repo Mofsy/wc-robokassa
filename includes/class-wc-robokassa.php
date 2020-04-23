@@ -699,7 +699,7 @@ class WC_Robokassa
 	public function admin_right_widget_status_content_currency($content)
 	{
 		$content .= '<li class="list-group-item">'
-		. __('Currency:', 'wc-robokassa') . WC_Robokassa()->get_wc_currency() .
+		. __('Currency: ', 'wc-robokassa') . WC_Robokassa()->get_wc_currency() .
 		'</li>';
 
 		return $content;
