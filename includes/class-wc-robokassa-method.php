@@ -1128,7 +1128,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Skip the received order page?', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'   => __('Enable skip order page?', 'wc-robokassa'),
+			'label'   => __('Enable', 'wc-robokassa'),
 			'description' => __('This setting is used to reduce actions when users switch to payment.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
