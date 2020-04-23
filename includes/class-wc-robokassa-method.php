@@ -2199,7 +2199,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$is_available = apply_filters('wc_robokassa_method_get_available', $is_available);
 
 		wc_robokassa_logger()->debug('is_available: $is_available', $is_available);
-		wc_robokassa_logger()->info('is_available: success');
+		wc_robokassa_logger()->info('is_available: end');
 
 		return $is_available;
 	}
