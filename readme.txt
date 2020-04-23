@@ -67,7 +67,6 @@ Additional plugin adds new features to the main free plugin:
 [https://mofsy.ru/projects/wc-robokassa-premium](https://mofsy.ru/projects/wc-robokassa-premium)
 
 == Screenshots ==
-
 1. One
 2. Two
 3. Three
@@ -76,7 +75,6 @@ Additional plugin adds new features to the main free plugin:
 6. Six
 
 == Translations ==
-
 * English - default, always included
 * Russian - always included
 
