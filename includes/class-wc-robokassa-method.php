@@ -1287,6 +1287,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => 'no'
 		);
 
+		$fields['orders_notes_process_payment'] = array
+		(
+			'title'       => __('Process payments', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
+			'description' => __('Recording information about the beginning of the payment process by the user.', 'wc-robokassa'),
+			'default'     => 'no'
+		);
+
 		$fields['orders_notes_robokassa_paid_success'] = array
 		(
 			'title'       => __('Successful payments', 'wc-robokassa'),
@@ -1515,6 +1524,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			wc_robokassa_logger()->error('process_payment: $order === false');
 
+			if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_process_payment') === 'yes')
+			{
+				$order->add_order_note(__('The customer clicked the payment button, but an error occurred while getting the order object.', 'wc-robokassa'));
+			}
+
 			return array
 			(
 				'result' => 'failure',
@@ -1527,14 +1541,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		wc_robokassa_logger()->debug('process_payment: order', $order);
 
-		if(method_exists($order, 'add_order_note'))
-		{
-			$order->add_order_note(__('The client started to pay.', 'wc-robokassa'));
-		}
-
 		if($this->get_page_skipping() === 'yes')
 		{
 			wc_robokassa_logger()->info('process_payment: page skipping, success');
+
+			if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_process_payment') === 'yes')
+			{
+				$order->add_order_note(__('The customer clicked the payment button and was sent to the side of the Robokassa.', 'wc-robokassa'));
+			}
 
 			return array
 			(
@@ -1544,6 +1558,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 
 		wc_robokassa_logger()->info('process_payment: success');
+
+		if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_process_payment') === 'yes')
+		{
+			$order->add_order_note(__('The customer clicked the payment button and was sent to the page of the received order.', 'wc-robokassa'));
+		}
 
 		return array
 		(
@@ -1634,7 +1653,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$args['OutSumCurrency'] = 'KZT';
 				break;
 		}
-		
+
 		if($this->get_test() === 'yes')
 		{
 			wc_robokassa_logger()->info('generate_form: test mode active');
