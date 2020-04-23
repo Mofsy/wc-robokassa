@@ -1310,7 +1310,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'       => __('Failed requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
-			'description' => __('Adding customers return data to the cancellation page in the notes.', 'wc-robokassa'),
+			'description' => __('Recording information about the clients refund to the canceled payment page.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
 
@@ -1319,7 +1319,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'       => __('Success requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
-			'description' => __('Adding customers return data to the successful payment page in the notes.', 'wc-robokassa'),
+			'description' => __('Recording information about the clients refund to the success payment page.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
 
@@ -2126,7 +2126,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_success') === 'yes')
 			{
-				$order->add_order_note(__('Client return to success page.', 'wc-robokassa'));
+				$order->add_order_note(__('The client returned to the payment success page.', 'wc-robokassa'));
 			}
 
 			if($this->get_option('cart_clearing') === 'yes')
@@ -2147,7 +2147,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			if(method_exists($order, 'add_order_note') && $this->get_option('orders_notes_robokassa_request_fail') === 'yes')
 			{
-				$order->add_order_note(__('The order has not been paid.', 'wc-robokassa'));
+				$order->add_order_note(__('Order cancellation. The client returned to the payment cancellation page.', 'wc-robokassa'));
 			}
 
 			if($this->get_option('fail_set_order_status_failed') === 'yes')
