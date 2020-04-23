@@ -1634,10 +1634,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				$args['OutSumCurrency'] = 'KZT';
 				break;
 		}
-
-		/**
-		 * Test mode
-		 */
+		
 		if($this->get_test() === 'yes')
 		{
 			wc_robokassa_logger()->info('generate_form: test mode active');
@@ -1647,9 +1644,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			$args['IsTest'] = 1;
 		}
-		/**
-		 * Real payments
-		 */
 		else
 		{
 			wc_robokassa_logger()->info('generate_form: real payments');
