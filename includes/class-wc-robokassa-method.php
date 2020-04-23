@@ -253,6 +253,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
 			add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
+			add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_test'), 20);
 		}
 
 		wc_robokassa_logger()->info('init_filters: end');
@@ -2248,7 +2249,30 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 
 		$content .= '<li class="list-group-item">'
-		            . __('API Robokassa:', 'wc-robokassa') . $message .
+		            . __('API Robokassa: ', 'wc-robokassa') . $message .
+		            '</li>';
+
+		return $content;
+	}
+
+	/**
+	 * Widget status: test mode
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_test($content)
+	{
+		$message = __('active', 'wc-robokassa');
+
+		if(false !== $this->check_robokassa_api())
+		{
+			$message = __('inactive', 'wc-robokassa');
+		}
+
+		$content .= '<li class="list-group-item">'
+		            . __('Test mode: ', 'wc-robokassa') . $message .
 		            '</li>';
 
 		return $content;
@@ -2280,7 +2304,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function admin_right_widget_status_content_color($color)
 	{
-		if(false === $this->check_robokassa_api())
+		if(false === $this->check_robokassa_api() || 'yes' === $this->get_test())
 		{
 			$color = 'text-white bg-warning';
 		}
