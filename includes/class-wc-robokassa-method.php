@@ -249,6 +249,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_order_notes'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'), 50);
 
+		if(is_admin())
+		{
+			add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
+			add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
+		}
+
 		wc_robokassa_logger()->info('init_filters: end');
 	}
 
@@ -2195,7 +2201,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$is_available = parent::is_available();
 
 		wc_robokassa_logger()->debug('is_available: parent $is_available', $is_available);
-		
+
 		/**
 		 * Change status from external code
 		 *
@@ -2223,5 +2229,62 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function set_receipt_items_limit($receipt_items_limit)
 	{
 		$this->receipt_items_limit = $receipt_items_limit;
+	}
+
+	/**
+	 * Widget status: API
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_api($content)
+	{
+		$message = __('disconnected', 'wc-robokassa');
+
+		if(false !== $this->check_robokassa_api())
+		{
+			$message = __('connected', 'wc-robokassa');
+		}
+
+		$content .= '<li class="list-group-item">'
+		            . __('API Robokassa:', 'wc-robokassa') . $message .
+		            '</li>';
+
+		return $content;
+	}
+
+	/**
+	 * Check available API Robokassa
+	 *
+	 * @return bool
+	 */
+	public function check_robokassa_api()
+	{
+		$api = WC_Robokassa()->get_robokassa_api();
+
+		if(false !== $api->xml_get_limit($this->get_shop_login()))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Widget status: color
+	 *
+	 * @param $color
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_color($color)
+	{
+		if(false === $this->check_robokassa_api())
+		{
+			$color = 'text-white bg-warning';
+		}
+
+		return $color;
 	}
 }
