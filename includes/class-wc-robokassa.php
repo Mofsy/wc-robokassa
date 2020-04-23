@@ -165,7 +165,9 @@ class WC_Robokassa
 		{
 			add_action('init', array($this, 'admin_init'), 0);
 			add_action('admin_notices', array($this, 'wc_robokassa_admin_notices'), 10);
+			add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_currency'), 10);
 
+			add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 10);
 			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'), 10);
 			add_filter('plugin_row_meta', array($this, 'links_right'), 10, 2);
 
@@ -518,6 +520,7 @@ class WC_Robokassa
 	{
 		add_action('wc_robokassa_admin_options_form_before_show', array($this, 'page_explode_table_before'));
 		add_action('wc_robokassa_admin_options_form_after_show', array($this, 'page_explode_table_after'));
+		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_status'));
 		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_one'));
 		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_two'));
 	}
@@ -651,5 +654,54 @@ class WC_Robokassa
     <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary" target="_blank">' . __('Official plugin page', 'wc-robokassa') . '</a>
     </p>
   </div></div>';
+	}
+
+	/**
+	 * Widget status
+	 */
+	public function admin_right_widget_status()
+	{
+		$color = 'bg-light';
+		$content = '';
+
+		$color = apply_filters('wc_robokassa_widget_status_color', $color);
+		$content = apply_filters('wc_robokassa_widget_status_content', $content);
+
+		echo '<div class="card border-light ' . $color . '" style="margin-top: 0;padding: 0;"><div class="card-header" style="padding: 10px;">
+			<h5 style="margin: 0;padding: 0;">' . __('Status', 'wc-robokassa') . '</h5></div>
+			<div class="card-body" style="padding: 0;">
+      		<ul class="list-group list-group-flush" style="margin: 0;">';
+		echo $content;
+		echo '</ul></div></div>';
+	}
+
+	/**
+	 * Widget status: color
+	 *
+	 * @param $color
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_color($color)
+	{
+		//$color = 'text-white bg-warning';
+
+		return $color;
+	}
+
+	/**
+	 * Widget status: currency
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_currency($content)
+	{
+		$content .= '<li class="list-group-item">'
+		. __('Currency:', 'wc-robokassa') . WC_Robokassa()->get_wc_currency() .
+		'</li>';
+
+		return $content;
 	}
 }
