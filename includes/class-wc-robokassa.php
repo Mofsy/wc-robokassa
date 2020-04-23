@@ -661,7 +661,7 @@ class WC_Robokassa
 	 */
 	public function admin_right_widget_status()
 	{
-		$color = 'bg-light';
+		$color = 'text-white bg-success';
 		$content = '';
 
 		$color = apply_filters('wc_robokassa_widget_status_color', $color);
