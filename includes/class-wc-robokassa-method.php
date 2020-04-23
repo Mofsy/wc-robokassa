@@ -2304,9 +2304,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function admin_right_widget_status_content_color($color)
 	{
-		if(false === $this->check_robokassa_api() || 'yes' === $this->get_test())
+		if('yes' === $this->get_test())
 		{
 			$color = 'text-white bg-warning';
+		}
+
+		if(false === $this->check_robokassa_api())
+		{
+			$color = 'text-white bg-danger';
 		}
 
 		return $color;
