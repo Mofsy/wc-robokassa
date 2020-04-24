@@ -174,6 +174,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$this->process_options();
 
 		/**
+		 * Gateway allowed?
+		 */
+		if($this->is_available_front() === false)
+		{
+			$this->enabled = false;
+		}
+
+		/**
 		 * Receipt page
 		 */
 		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
@@ -519,14 +527,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('enable_icon') === 'yes')
 		{
 			$this->icon = apply_filters('woocommerce_icon_robokassa', WC_ROBOKASSA_URL . 'assets/img/robokassa.png');
-		}
-
-		/**
-		 * Gateway allowed?
-		 */
-		if($this->is_available_front() === false)
-		{
-			$this->enabled = false;
 		}
 
 		wc_robokassa_logger()->info('init_options: success');
@@ -1442,7 +1442,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			wc_robokassa_logger()->alert('is_support_currency: currency not support');
 			return false;
 		}
-		
+
 		return true;
 	}
 
