@@ -1408,18 +1408,56 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * @return array
+	 */
+	public function get_currency_all()
+	{
+		return $this->currency_all;
+	}
+
+	/**
+	 * @param array $currency_all
+	 */
+	public function set_currency_all($currency_all)
+	{
+		$this->currency_all = $currency_all;
+	}
+
+	/**
+	 * Check currency support
+	 *
+	 * @param string $currency
+	 *
+	 * @return bool
+	 */
+	public function is_support_currency($currency = '')
+	{
+		if($currency === '')
+		{
+			$currency = WC_Robokassa()->get_wc_currency();
+		}
+
+		if(!in_array($currency, $this->get_currency_all(), false))
+		{
+			wc_robokassa_logger()->alert('is_support_currency: currency not support');
+			return false;
+		}
+		
+		return true;
+	}
+
+	/**
 	 * Check available in front
 	 */
 	public function is_available_front()
 	{
-		wc_robokassa_logger()->info('is_valid_for_use: start');
+		wc_robokassa_logger()->info('is_available_front: start');
 
 		/**
 		 * Check allow currency
 		 */
-		if(!in_array(WC_Robokassa()->get_wc_currency(), $this->currency_all, false))
+		if($this->is_support_currency() === false)
 		{
-			wc_robokassa_logger()->alert('is_valid_for_use: currency not support');
 			return false;
 		}
 
@@ -1430,11 +1468,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_test() === 'yes' && false === current_user_can('manage_options'))
 		{
-			wc_robokassa_logger()->alert('is_valid_for_use: test mode only admin');
+			wc_robokassa_logger()->alert('is_available_front: test mode only admin');
 			return false;
 		}
 
-		wc_robokassa_logger()->info('is_valid_for_use: success');
+		wc_robokassa_logger()->info('is_available_front: success');
 
 		return true;
 	}
