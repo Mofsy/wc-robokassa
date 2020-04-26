@@ -953,7 +953,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #1', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Shop pass 1. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
+			'description' => __('Shop pass #1 must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
@@ -961,7 +961,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #2', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Shop pass 2. The pass must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
+			'description' => __('Shop pass #2 must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
@@ -1047,7 +1047,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #1', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Please write Shop pass 1 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'description' => __('Shop pass #1 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
@@ -1055,16 +1055,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Password #2', 'wc-robokassa'),
 			'type'        => 'text',
-			'description' => __('Please write Shop pass 2 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
+			'description' => __('Shop pass #2 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
 		$fields['test_checkout_notice'] = array
 		(
-			'title'   => __('Show notice in checkout?', 'wc-robokassa'),
+			'title'   => __('The notification is displayed on the test mode', 'wc-robokassa'),
 			'type'    => 'checkbox',
-			'label'   => __('Show notice for test mode on checkout page.', 'wc-robokassa'),
-			'description' => __('Only working in test mode active.', 'wc-robokassa'),
+			'label'   => __('Enable', 'wc-robokassa'),
+			'description' => __('A notification about the activated test mode will be displayed when the payment.', 'wc-robokassa'),
 			'default' => 'yes'
 		);
 
@@ -1092,7 +1092,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'   => __('Show gateway icon?', 'wc-robokassa'),
 			'type'    => 'checkbox',
 			'label'   => __('Show', 'wc-robokassa'),
-			'default' => 'yes'
+			'default' => 'yes',
+			'description' => __('Next to the name of the payment method will display the logo Robokassa.', 'wc-robokassa'),
 		);
 
 		$fields['language'] = array
@@ -1307,7 +1308,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['orders_notes_robokassa_request_result'] = array
 		(
-			'title'       => __('Result requests', 'wc-robokassa'),
+			'title'       => __('Background requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Enable', 'wc-robokassa'),
 			'description' => __('Recording information about the background queries about transactions from Robokassa.', 'wc-robokassa'),
