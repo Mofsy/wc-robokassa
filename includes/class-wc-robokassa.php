@@ -165,9 +165,7 @@ class WC_Robokassa
 		{
 			add_action('init', array($this, 'admin_init'), 0);
 			add_action('admin_notices', array($this, 'wc_robokassa_admin_notices'), 10);
-			add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_currency'), 10);
 
-			add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 10);
 			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'), 10);
 			add_filter('plugin_row_meta', array($this, 'links_right'), 10, 2);
 
@@ -690,35 +688,5 @@ class WC_Robokassa
 		echo '<div class="card-footer text-muted bg-light" style="padding: 10px;">';
 		echo $footer;
 		echo '</div></div>';
-	}
-
-	/**
-	 * Widget status: color
-	 *
-	 * @param $color
-	 *
-	 * @return string
-	 */
-	public function admin_right_widget_status_content_color($color)
-	{
-		//$color = 'text-white bg-warning';
-
-		return $color;
-	}
-
-	/**
-	 * Widget status: currency
-	 *
-	 * @param $content
-	 *
-	 * @return string
-	 */
-	public function admin_right_widget_status_content_currency($content)
-	{
-		$content .= '<li class="list-group-item mb-0 text-white bg-success">'
-		. __('Currency: ', 'wc-robokassa') . WC_Robokassa()->get_wc_currency() .
-		'</li>';
-
-		return $content;
 	}
 }

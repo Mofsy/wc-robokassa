@@ -1471,8 +1471,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
 		add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
+		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_currency'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_test'), 20);
-
+		
 		// hook
 		do_action('wc_robokassa_admin_options_before_show');
 
@@ -2304,6 +2305,22 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$content .= '<li class="list-group-item mb-0 ' . $color . '">'
 		            . __('Test mode: ', 'wc-robokassa') . $message .
+		            '</li>';
+
+		return $content;
+	}
+
+	/**
+	 * Widget status: currency
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_currency($content)
+	{
+		$content .= '<li class="list-group-item mb-0 text-white bg-success">'
+		            . __('Currency: ', 'wc-robokassa') . WC_Robokassa()->get_wc_currency() .
 		            '</li>';
 
 		return $content;
