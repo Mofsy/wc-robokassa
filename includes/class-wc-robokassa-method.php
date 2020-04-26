@@ -2304,7 +2304,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$message = __('inactive', 'wc-robokassa');
 		}
 
-		$content .= '<li class="list-group-item mb-0 ' . $color . '">'
+		$content .= '<li class="list-group-item text-white mb-0 ' . $color . '">'
 		            . __('Test mode: ', 'wc-robokassa') . $message .
 		            '</li>';
 
