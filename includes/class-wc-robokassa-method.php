@@ -2276,13 +2276,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function admin_right_widget_status_content_api($content)
 	{
 		$message = __('disconnected', 'wc-robokassa');
+		$color = 'bg-danger';
 
 		if(false !== $this->check_robokassa_api())
 		{
+			$color = 'text-white bg-success';
 			$message = __('connected', 'wc-robokassa');
 		}
 
-		$content .= '<li class="list-group-item">'
+		$content .= '<li class="list-group-item mb-0 ' . $color . '">'
 		            . __('API Robokassa: ', 'wc-robokassa') . $message .
 		            '</li>';
 
@@ -2299,13 +2301,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function admin_right_widget_status_content_test($content)
 	{
 		$message = __('active', 'wc-robokassa');
+		$color = 'bg-warning';
 
 		if('yes' !== $this->get_test())
 		{
+			$color = 'text-white bg-success';
 			$message = __('inactive', 'wc-robokassa');
 		}
 
-		$content .= '<li class="list-group-item">'
+		$content .= '<li class="list-group-item mb-0 ' . $color . '">'
 		            . __('Test mode: ', 'wc-robokassa') . $message .
 		            '</li>';
 

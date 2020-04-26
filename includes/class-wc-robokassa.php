@@ -663,16 +663,33 @@ class WC_Robokassa
 	{
 		$color = 'bg-success';
 		$content = '';
+		$footer = '';
 
 		$color = apply_filters('wc_robokassa_widget_status_color', $color);
 		$content = apply_filters('wc_robokassa_widget_status_content', $content);
+
+		if($color === 'bg-success' || $color === 'text-white bg-success')
+		{
+			$footer = __('Errors not found. Payment acceptance is active.', 'wc-robokassa');
+		}
+		elseif($color === 'bg-warning' || $color === 'text-white bg-warning')
+		{
+			$footer = __('Warnings found. They are highlighted in yellow. You should attention to them.', 'wc-robokassa');
+		}
+		else
+		{
+			$footer = __('Critical errors were detected. They are highlighted in red. Payment acceptance is not active.', 'wc-robokassa');
+		}
 
 		echo '<div class="card mb-3 ' . $color . '" style="margin-top: 0;padding: 0;"><div class="card-header" style="padding: 10px;">
 			<h5 style="margin: 0;padding: 0;">' . __('Status', 'wc-robokassa') . '</h5></div>
 			<div class="card-body" style="padding: 0;">
       		<ul class="list-group list-group-flush" style="margin: 0;">';
 		echo $content;
-		echo '</ul></div></div>';
+		echo '</ul></div>';
+		echo '<div class="card-footer text-muted bg-light" style="padding: 10px;">';
+		echo $footer;
+		echo '</div></div>';
 	}
 
 	/**
@@ -698,7 +715,7 @@ class WC_Robokassa
 	 */
 	public function admin_right_widget_status_content_currency($content)
 	{
-		$content .= '<li class="list-group-item">'
+		$content .= '<li class="list-group-item mb-0 text-white bg-success">'
 		. __('Currency: ', 'wc-robokassa') . WC_Robokassa()->get_wc_currency() .
 		'</li>';
 
