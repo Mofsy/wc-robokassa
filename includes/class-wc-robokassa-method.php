@@ -2342,6 +2342,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$color = 'bg-warning';
 		}
+		elseif('' === $this->get_shop_login() || '' === $this->get_shop_pass_1() || '' === $this->get_shop_pass_2())
+		{
+			$color = 'bg-warning';
+		}
 
 		if(false === $this->check_robokassa_api())
 		{
