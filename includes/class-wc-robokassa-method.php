@@ -1375,27 +1375,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$fields['cart_clearing'] = array
 		(
 			'title'       => __('Cart clearing', 'wc-robokassa'),
-			'type'        => 'select',
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
 			'description' => __('Clean the customers cart if payment is successful? If so, the shopping cart will be cleaned. If not, the goods already purchased will most likely remain in the shopping cart.', 'wc-robokassa'),
 			'default'     => 'no',
-			'options'     => array
-			(
-				'yes'    => __('Yes', 'wc-robokassa'),
-				'no' => __('No', 'wc-robokassa'),
-			)
 		);
 
 		$fields['fail_set_order_status_failed'] = array
 		(
 			'title'       => __('Mark order as cancelled?', 'wc-robokassa'),
-			'type'        => 'select',
+			'type'        => 'checkbox',
+			'label'       => __('Enable', 'wc-robokassa'),
 			'description' => __('Change the status of the order to canceled when the user cancels the payment. The status changes when the user returns to the cancelled payment page.', 'wc-robokassa'),
 			'default'     => 'no',
-			'options'     => array
-			(
-				'yes'    => __('Yes', 'wc-robokassa'),
-				'no' => __('No', 'wc-robokassa'),
-			)
 		);
 
 		return $fields;
