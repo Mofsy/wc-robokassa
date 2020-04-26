@@ -1470,6 +1470,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
 		add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
+		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_logger'), 10);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_currency'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_test'), 20);
@@ -2334,6 +2335,25 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Widget status: logger
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_logger($content)
+	{
+		if($this->get_option('logger') < 200)
+		{
+			$content .= '<li class="list-group-item mb-0 text-white bg-warning">'
+			            . __('The logging level is too low. Need to increase the level after debugging.', 'wc-robokassa') .
+			            '</li>';
+		}
+
+		return $content;
+	}
+
+	/**
 	 * Check available API Robokassa
 	 *
 	 * @return bool
@@ -2364,6 +2384,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$color = 'bg-warning';
 		}
 		elseif('' === $this->get_shop_login() || '' === $this->get_shop_pass_1() || '' === $this->get_shop_pass_2())
+		{
+			$color = 'bg-warning';
+		}
+		elseif($this->get_option('logger') < 200)
 		{
 			$color = 'bg-warning';
 		}
