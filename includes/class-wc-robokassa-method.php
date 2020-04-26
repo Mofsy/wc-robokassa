@@ -257,13 +257,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_order_notes'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'), 50);
 
-		if(is_admin())
-		{
-			add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
-			add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
-			add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_test'), 20);
-		}
-
 		wc_robokassa_logger()->info('init_filters: end');
 	}
 
@@ -1483,6 +1476,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function admin_options()
 	{
 		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
+		add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
+		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
+		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_test'), 20);
 
 		// hook
 		do_action('wc_robokassa_admin_options_before_show');
@@ -2304,7 +2300,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$message = __('active', 'wc-robokassa');
 
-		if(false !== $this->check_robokassa_api())
+		if('yes' !== $this->get_test())
 		{
 			$message = __('inactive', 'wc-robokassa');
 		}
@@ -2344,12 +2340,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		if('yes' === $this->get_test())
 		{
-			$color = 'text-white bg-warning';
+			$color = 'bg-warning';
 		}
 
 		if(false === $this->check_robokassa_api())
 		{
-			$color = 'text-white bg-danger';
+			$color = 'bg-danger';
 		}
 
 		return $color;

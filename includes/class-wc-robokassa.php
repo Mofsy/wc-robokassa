@@ -661,13 +661,13 @@ class WC_Robokassa
 	 */
 	public function admin_right_widget_status()
 	{
-		$color = 'text-white bg-success';
+		$color = 'bg-success';
 		$content = '';
 
 		$color = apply_filters('wc_robokassa_widget_status_color', $color);
 		$content = apply_filters('wc_robokassa_widget_status_content', $content);
 
-		echo '<div class="card border-light ' . $color . '" style="margin-top: 0;padding: 0;"><div class="card-header" style="padding: 10px;">
+		echo '<div class="card mb-3 ' . $color . '" style="margin-top: 0;padding: 0;"><div class="card-header" style="padding: 10px;">
 			<h5 style="margin: 0;padding: 0;">' . __('Status', 'wc-robokassa') . '</h5></div>
 			<div class="card-body" style="padding: 0;">
       		<ul class="list-group list-group-flush" style="margin: 0;">';
