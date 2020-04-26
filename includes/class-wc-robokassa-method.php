@@ -1473,7 +1473,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_currency'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_test'), 20);
-		
+
 		// hook
 		do_action('wc_robokassa_admin_options_before_show');
 
@@ -2319,7 +2319,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function admin_right_widget_status_content_currency($content)
 	{
-		$content .= '<li class="list-group-item mb-0 text-white bg-success">'
+		$color = 'bg-danger';
+
+		if(true === $this->is_support_currency())
+		{
+			$color = 'bg-success';
+		}
+
+		$content .= '<li class="list-group-item mb-0 text-white ' . $color . '">'
 		            . __('Currency: ', 'wc-robokassa') . WC_Robokassa()->get_wc_currency() .
 		            '</li>';
 
@@ -2361,7 +2368,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$color = 'bg-warning';
 		}
 
-		if(false === $this->check_robokassa_api())
+		if(false === $this->check_robokassa_api() || false === $this->is_support_currency())
 		{
 			$color = 'bg-danger';
 		}
