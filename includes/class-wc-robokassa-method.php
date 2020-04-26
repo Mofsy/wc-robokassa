@@ -2323,7 +2323,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function check_robokassa_api()
 	{
-		$api = WC_Robokassa()->get_robokassa_api();
+		$api = WC_Robokassa()->load_robokassa_api();
 
 		if(false !== $api->xml_get_limit($this->get_shop_login()))
 		{
