@@ -17,7 +17,6 @@ Well-designed code without unnecessary dependencies with minimal system requirem
 [More description](https://mofsy.ru/projects/wc-robokassa)
 
 = Support WooCommerce currency =
-Full support of options to work with currencies:
 1. RUB
 2. USD
 3. EUR
