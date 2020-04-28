@@ -520,7 +520,6 @@ class WC_Robokassa
 		add_action('wc_robokassa_admin_options_form_after_show', array($this, 'page_explode_table_after'));
 		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_status'));
 		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_one'));
-		add_action('wc_robokassa_admin_options_form_right_column_show', array($this, 'admin_right_widget_two'));
 	}
 
 	/**
@@ -633,25 +632,6 @@ class WC_Robokassa
   </ul>
   </div>
 </div>';
-	}
-
-	/**
-	 * Widget two
-	 */
-	public function admin_right_widget_two()
-	{
-		echo '<div class="card text-white border-light bg-dark" style="margin-top: 10px;padding: 0;">
-  <div class="card-header" style="padding: 10px;">
-    <h5 style="margin: 0;padding: 0;">' . __('Extension', 'wc-robokassa') . '</h5>
-  </div> <a href="https://mofsy.ru/projects/wc-robokassa-premium" target="_blank">
-   	<img src="' . WC_ROBOKASSA_URL . 'assets/img/wc-robokassa-premium-icon.png" class="card-img-top">
-   </a>
-  <div class="card-body text-center">
-    ' . __('Even more opportunities to accept payments. Increase conversion and stability of the algorithms.', 'wc-robokassa') . '
-    <p>
-    <a href="https://mofsy.ru/projects/wc-robokassa-premium" class="btn btn-secondary" target="_blank">' . __('Official plugin page', 'wc-robokassa') . '</a>
-    </p>
-  </div></div>';
 	}
 
 	/**
