@@ -25,17 +25,17 @@ Well-designed code without unnecessary dependencies with minimal system requirem
 = Support external plugins =
 1. WPML (http://wpml.org)
 2. WooCommerce Currency Switcher (https://currency-switcher.com)
+3. WooCommerce Subscriptions
 
 = Plugin updates =
-Updates are issued at the expense of raised funds from the sale of the premium addon.
+Updates are issued at the expense of raised funds from the sale of the serial keys.
 The updates includes fix bugs, improve the code, add new features and add support for new versions of WooCommerce.
-Each purchase of a premium add-on allows to work on the plugin for 3 hours (2 hour in idea mode, and 1 hours in code editing mode).
+Each purchase of a serial key allows to work on the plugin for 3 hours (2 hour in idea mode, and 1 hours in code editing mode).
 
 = Plugin support =
 Individual free support is not provided. If something doesn't work, it means it's either set up in the wrong way,
 or the plugin is used on unsupported versions of WordPress and WooCommerce.
 You can always agree on paid support and on paid add features.
-Features are added to the premium add-on! They become available for everyone.
 Support information can be found on the official website. If you have not found it, it is not available.
 
 = Bug report =
@@ -43,27 +43,14 @@ Error reports are accepted by email support@mofsy.ru with the subject: [bug] wc-
 If you specify a different topic, the report will most likely not be accepted. Reports are processed within your free time.
 You should keep in mind that errors are not always errors. Errors in settings are possible, as well as use on
 unsupported versions of software.
-If the bug is not fixed for a long time, then there is no funding.
+If the bug is not fixed for a long time, then there is no money.
 
 = Feature request =
 Requests to add features are accepted by e-mail support@mofsy.ru with the subject: [feature] wc-robokassa
 You can write requests on the support forum, but the forum is not often inspected.
 The description of the necessary feature should be as detailed as possible. Whatever you need to think over during implementation.
-The implementation of opportunities occurs within the budget collected from the mass sales of premium additions.
+The implementation of opportunities occurs within the budget collected from the mass sales of serial keys.
 If an opportunity is not added for a long time, there may be no money for it. You can order the refinement individually.
-
-= Premium available =
-Additional plugin adds new features to the main free plugin:
-1. WooCommerce Subscriptions
-2. Division into payment methods
-3. Payment without redirect to Robokassa website
-4. Payment of the buyer's commission
-5. Filtering by delivery methods
-6. Commission calculation on the site side
-7. Checking limits
-8. Checking the availability of payment methods
-9. Choice of payment method before going to Robokassa
-[https://mofsy.ru/projects/wc-robokassa-premium](https://mofsy.ru/projects/wc-robokassa-premium)
 
 == Screenshots ==
 1. One
@@ -81,6 +68,10 @@ Additional plugin adds new features to the main free plugin:
 Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 
 == Changelog ==
+
+= 4.0.0 =
+* Add all premium features
+* More fix
 
 = 3.1.0 =
 * Test: WooCommerce 4.0
