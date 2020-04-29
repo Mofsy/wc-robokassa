@@ -916,7 +916,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'description' => __('Получить можно на официальном сайте плагина, перейдя по ссылке: https://mofsy.ru/market/wc-robokassa-key', 'wc-robokassa'),
 		);
 
-		$fields['serial_key'] = array
+		$fields['key_data'] = array
 		(
 			'title'       => __('Поле ввода ключа:', 'wc-robokassa'),
 			'type'        => 'text',
