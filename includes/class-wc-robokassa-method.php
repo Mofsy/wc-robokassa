@@ -139,6 +139,34 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	protected $receipt_items_limit = 100;
 
 	/**
+	 * Commission pay by merchant
+	 *
+	 * @var bool
+	 */
+	protected $commission_merchant = false;
+
+	/**
+	 * Commission calculate by cbr
+	 *
+	 * @var bool
+	 */
+	protected $commission_merchant_by_cbr = false;
+
+	/**
+	 * Rates merchant
+	 *
+	 * @var bool
+	 */
+	protected $rates_merchant = false;
+
+	/**
+	 * Available only for shipping
+	 *
+	 * @var array|false
+	 */
+	protected $available_shipping = false;
+
+	/**
 	 * WC_Robokassa constructor
 	 */
 	public function __construct()
@@ -255,6 +283,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_ofd'), 40);
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_sub_methods'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_order_notes'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'), 50);
 
@@ -521,6 +550,27 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('enable_icon') === 'yes')
 		{
 			$this->icon = apply_filters('woocommerce_icon_robokassa', WC_ROBOKASSA_URL . 'assets/img/robokassa.png');
+		}
+
+		if($this->get_option('commission_merchant') === 'yes')
+		{
+			$this->set_commission_merchant(true);
+
+			if($this->get_option('commission_merchant_by_cbr') === 'yes')
+			{
+				$this->set_commission_merchant_by_cbr(true);
+			}
+		}
+
+		if($this->get_option('rates_merchant') === 'yes')
+		{
+			$this->set_rates_merchant(true);
+		}
+
+		$available_shipping = $this->get_option('available_shipping', '');
+		if(is_array($available_shipping))
+		{
+			$this->set_available_shipping($available_shipping);
 		}
 
 		wc_robokassa_logger()->info('init_options: success');
@@ -1100,6 +1150,34 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Add settings for sub methods
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_sub_methods($fields)
+	{
+		$fields['sub_methods'] = array
+		(
+			'title' => __('Sub methods', 'wc-robokassa-premium'),
+			'type' => 'title',
+			'description' => __('General settings for the sub methods of payment.', 'wc-robokassa-premium'),
+		);
+
+		$fields['rates_merchant'] = array
+		(
+			'title' => __('Show the total amount including the fee', 'wc-robokassa-premium'),
+			'type' => 'checkbox',
+			'label' => __('Enable (check the box to enable)', 'wc-robokassa-premium'),
+			'description' => __('If you enable this option, the exact amount payable, including fees, will be added to the payment method headers.', 'wc-robokassa-premium'),
+			'default' => 'off'
+		);
+
+		return $fields;
+	}
+
+	/**
 	 * Add settings for interface
 	 *
 	 * @param $fields
@@ -1418,6 +1496,94 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => 'no',
 		);
 
+		if(version_compare(wc_robokassa_get_wc_version(), '3.2.0', '>='))
+		{
+			$options = array();
+
+			try
+			{
+				$data_store = WC_Data_Store::load('shipping-zone');
+			}
+			catch(Exception $e)
+			{
+				return $fields;
+			}
+
+			$raw_zones = $data_store->get_zones();
+
+			foreach($raw_zones as $raw_zone)
+			{
+				$zones[] = new WC_Shipping_Zone($raw_zone);
+			}
+
+			$zones[] = new WC_Shipping_Zone(0);
+
+			foreach(WC()->shipping()->load_shipping_methods() as $method)
+			{
+				$options[$method->get_method_title()] = array();
+
+				// Translators: %1$s shipping method name.
+				$options[$method->get_method_title()][$method->id] = sprintf(__('Any &quot;%1$s&quot; method', 'woocommerce'), $method->get_method_title());
+
+				foreach($zones as $zone)
+				{
+					$shipping_method_instances = $zone->get_shipping_methods();
+
+					foreach($shipping_method_instances as $shipping_method_instance_id => $shipping_method_instance)
+					{
+						if($shipping_method_instance->id !== $method->id)
+						{
+							continue;
+						}
+
+						$option_id = $shipping_method_instance->get_rate_id();
+
+						// Translators: %1$s shipping method title, %2$s shipping method id.
+						$option_instance_title = sprintf(__('%1$s (#%2$s)', 'woocommerce'), $shipping_method_instance->get_title(), $shipping_method_instance_id);
+
+						// Translators: %1$s zone name, %2$s shipping method instance name.
+						$option_title = sprintf(__('%1$s &ndash; %2$s', 'woocommerce'), $zone->get_id() ? $zone->get_zone_name() : __('Other locations', 'woocommerce'), $option_instance_title);
+
+						$options[$method->get_method_title()][$option_id] = $option_title;
+					}
+				}
+			}
+
+			$fields['available_shipping'] =  array
+			(
+				'title' => __('Enable for shipping methods', 'wc-robokassa-premium'),
+				'type' => 'multiselect',
+				'class' => 'wc-enhanced-select',
+				'css' => 'width: 400px;',
+				'default' => '',
+				'description' => __('If only available for certain methods, set it up here. Leave blank to enable for all methods.', 'wc-robokassa-premium'),
+				'options' => $options,
+				'custom_attributes' => array
+				(
+					'data-placeholder' => __('Select shipping methods', 'wc-robokassa-premium'),
+				),
+			);
+		}
+
+		$fields['commission_merchant'] = array
+		(
+			'title' => __('Payment of the commission for the buyer', 'wc-robokassa-premium'),
+			'type' => 'checkbox',
+			'label' => __('Enable (check the box to enable)', 'wc-robokassa-premium'),
+			'description' => __('When you enable this feature, the store will pay all customer Commission costs. Works only when you select a payment method on the site and for stores individuals.', 'wc-robokassa-premium'),
+			'default' => 'off'
+		);
+
+		$fields['commission_merchant_by_cbr'] = array
+		(
+			'title' => __('Preliminary conversion of order currency into roubles for commission calculation', 'wc-robokassa-premium'),
+			'type' => 'checkbox',
+			'label' => __('Enable (check the box to enable)', 'wc-robokassa-premium'),
+			'description' => __('If the calculation of the customer commission is included and the order is not in roubles, the order will be converted to roubles based on data from the Central Bank of Russia.
+			This is required due to poor Robokassa API.', 'wc-robokassa-premium'),
+			'default' => 'off'
+		);
+
 		return $fields;
 	}
 
@@ -1458,6 +1624,22 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_available_shipping()
+	{
+		return $this->available_shipping;
+	}
+
+	/**
+	 * @param array $available_shipping
+	 */
+	public function set_available_shipping($available_shipping)
+	{
+		$this->available_shipping = $available_shipping;
 	}
 
 	/**
@@ -2246,6 +2428,58 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Is rates merchant
+	 *
+	 * @return bool
+	 */
+	public function is_rates_merchant()
+	{
+		return $this->rates_merchant;
+	}
+
+	/**
+	 * Set rates merchant
+	 *
+	 * @param bool $rates_merchant
+	 */
+	public function set_rates_merchant($rates_merchant)
+	{
+		$this->rates_merchant = $rates_merchant;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_commission_merchant()
+	{
+		return $this->commission_merchant;
+	}
+
+	/**
+	 * @param bool $commission_merchant
+	 */
+	public function set_commission_merchant($commission_merchant)
+	{
+		$this->commission_merchant = $commission_merchant;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_commission_merchant_by_cbr()
+	{
+		return $this->commission_merchant_by_cbr;
+	}
+
+	/**
+	 * @param bool $commission_merchant_by_cbr
+	 */
+	public function set_commission_merchant_by_cbr($commission_merchant_by_cbr)
+	{
+		$this->commission_merchant_by_cbr = $commission_merchant_by_cbr;
+	}
+
+	/**
 	 * Check if the gateway is available for use
 	 *
 	 * @since 1.0.0.1
@@ -2426,5 +2660,74 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 
 		return $color;
+	}
+
+	/**
+	 * Converts the chosen rate IDs generated by Shipping Methods to a canonical 'method_id:instance_id' format
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param array $order_shipping_items Array of WC_Order_Item_Shipping objects
+	 * @return array $canonical_rate_ids Rate IDs in a canonical format
+	 */
+	protected function get_canonical_order_shipping_item_rate_ids($order_shipping_items)
+	{
+		$canonical_rate_ids = array();
+
+		foreach($order_shipping_items as $order_shipping_item)
+		{
+			$canonical_rate_ids[] = $order_shipping_item->get_method_id() . ':' . $order_shipping_item->get_instance_id();
+		}
+
+		return $canonical_rate_ids;
+	}
+
+	/**
+	 * Converts the chosen rate IDs generated by Shipping Methods to a canonical 'method_id:instance_id' format
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param array $chosen_package_rate_ids Rate IDs as generated by shipping methods.
+	 * Can be anything if a shipping method doesn't honor WC conventions.
+	 *
+	 * @return array $canonical_rate_ids  Rate IDs in a canonical format.
+	 */
+	protected function get_canonical_package_rate_ids($chosen_package_rate_ids)
+	{
+		$shipping_packages = WC()->shipping()->get_packages();
+		$canonical_rate_ids = array();
+
+		if(!empty($chosen_package_rate_ids) && is_array($chosen_package_rate_ids))
+		{
+			foreach($chosen_package_rate_ids as $package_key => $chosen_package_rate_id)
+			{
+				if(!empty($shipping_packages[$package_key]['rates'][$chosen_package_rate_id]))
+				{
+					$chosen_rate = $shipping_packages[$package_key]['rates'][$chosen_package_rate_id];
+					$canonical_rate_ids[] = $chosen_rate->get_method_id() . ':' . $chosen_rate->get_instance_id();
+				}
+			}
+		}
+
+		return $canonical_rate_ids;
+	}
+
+	/**
+	 * Indicates whether a rate exists in an array of canonically-formatted rate IDs that activates this gateway.
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param array $rate_ids Rate ids to check
+	 *
+	 * @return mixed
+	 */
+	protected function get_matching_rates($rate_ids)
+	{
+		// First, match entries in 'method_id:instance_id' format. Then, match entries in 'method_id' format by stripping off the instance ID from the candidates.
+		return array_unique(array_merge
+		                    (
+			                    array_intersect($this->get_available_shipping(), $rate_ids),
+			                    array_intersect($this->get_available_shipping(), array_unique(array_map('wc_get_string_before_colon', $rate_ids)))
+		                    ));
 	}
 }

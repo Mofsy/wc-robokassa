@@ -65,6 +65,25 @@ class WC_Robokassa
 	private $success_url = '';
 
 	/**
+	 * Available currencies
+	 *
+	 * @var array
+	 */
+	private $robokassa_available_currencies = array();
+
+	/**
+	 * Current rates
+	 *
+	 * @var array
+	 */
+	private $robokassa_rates_merchant = array();
+
+	/**
+	 * @var array
+	 */
+	private $currency_rates_by_cbr = array();
+
+	/**
 	 * WC_Robokassa constructor
 	 */
 	public function __construct()
@@ -106,6 +125,39 @@ class WC_Robokassa
 
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-api.php';
 		require_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-sub-method.php';
+
+		/**
+		 * Sub methods
+		 */
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-alfabank-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-alfabank-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-avb-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-bin-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-fbid-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-inteza-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-min-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-sov-com-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-trust-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-vtb4-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-apple-pay-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-halva-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-samsung-pay-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-elecsnet-wallet-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-qiwi-wallet-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-w1-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-wmr-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-yandex-money-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-beeline-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-megafon-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-mts-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-tattelecom-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-tele2-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-biocoin-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-store-euroset-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-store-svyaznoy-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-terminals-terminals-elecsnet-method.php';
 
 		/**
 		 * @since 3.0.0
@@ -265,6 +317,162 @@ class WC_Robokassa
     }
 
 	/**
+	 * Load available currencies from Robokassa
+	 *
+	 * @param $merchant_login
+	 * @param string $language
+	 */
+	public function load_robokassa_available_currencies($merchant_login, $language = 'ru')
+	{
+		if(is_array($this->get_robokassa_available_currencies()) && count($this->get_robokassa_available_currencies()) == 0)
+		{
+			$api = WC_Robokassa()->get_robokassa_api();
+
+			if($api === false)
+			{
+				WC_Robokassa()->load_robokassa_api();
+				$api = WC_Robokassa()->get_robokassa_api();
+			}
+
+			$robokassa_available_currencies_result = $api->xml_get_currencies($merchant_login, $language);
+
+			if(is_array($robokassa_available_currencies_result))
+			{
+				$this->set_robokassa_available_currencies($robokassa_available_currencies_result);
+			}
+		}
+	}
+
+	/**
+	 * Load merchant rates
+	 *
+	 * @param $merchant_login
+	 * @param int $out_sum
+	 * @param string $language
+	 */
+	public function load_merchant_rates($merchant_login, $out_sum = 0, $language = 'ru')
+	{
+		if(is_array($this->get_robokassa_rates_merchant()) && count($this->get_robokassa_rates_merchant()) == 0)
+		{
+			$api = WC_Robokassa()->get_robokassa_api();
+
+			if($api === false)
+			{
+				WC_Robokassa()->load_robokassa_api();
+				$api = WC_Robokassa()->get_robokassa_api();
+			}
+
+			$robokassa_rates_merchant_result = $api->xml_get_rates($merchant_login, $out_sum, '', $language);
+
+			if(is_array($robokassa_rates_merchant_result))
+			{
+				$this->set_robokassa_rates_merchant($robokassa_rates_merchant_result);
+			}
+		}
+	}
+
+	/**
+	 * Get settings by method id for submethods
+	 *
+	 * @param string $method_id
+	 *
+	 * @return mixed
+	 */
+	public function get_method_settings_by_method_id($method_id = 'robokassa')
+	{
+		return get_option('woocommerce_' . $method_id . '_settings');
+	}
+
+	/**
+	 * Load currency rates by cbr
+	 *
+	 * @return mixed
+	 */
+	public function load_currency_rates_by_cbr()
+	{
+		$transient_name = 'wc_robokassa_currency_rates_cbr';
+		$current_rates = get_transient($transient_name);
+
+		if($current_rates)
+		{
+			$this->set_currency_rates_by_cbr($current_rates);
+			return $current_rates;
+		}
+
+		$url = 'https://www.cbr-xml-daily.ru/daily_json.js';
+
+		$result = wp_remote_get($url);
+		$result_body = wp_remote_retrieve_body($result);
+
+		if($result_body !== '')
+		{
+			$rates = json_decode($result_body, true);
+			set_transient($transient_name, $rates, 60 * 15);
+			$this->set_currency_rates_by_cbr($rates);
+
+			return $rates;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get merchant rates from Robokassa
+	 *
+	 * @return array
+	 */
+	public function get_robokassa_rates_merchant()
+	{
+		return $this->robokassa_rates_merchant;
+	}
+
+	/**
+	 * Set merchant rates from Robokassa
+	 *
+	 * @param array $robokassa_rates_merchant
+	 */
+	public function set_robokassa_rates_merchant($robokassa_rates_merchant)
+	{
+		$this->robokassa_rates_merchant = $robokassa_rates_merchant;
+	}
+
+	/**
+	 * Get merchant currencies available from Robokassa
+	 *
+	 * @return array
+	 */
+	public function get_robokassa_available_currencies()
+	{
+		return $this->robokassa_available_currencies;
+	}
+
+	/**
+	 * Set merchant currencies available from Robokassa
+	 *
+	 * @param array $robokassa_available_currencies
+	 */
+	public function set_robokassa_available_currencies($robokassa_available_currencies)
+	{
+		$this->robokassa_available_currencies = $robokassa_available_currencies;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_currency_rates_by_cbr()
+	{
+		return $this->currency_rates_by_cbr;
+	}
+
+	/**
+	 * @param array $currency_rates_by_cbr
+	 */
+	public function set_currency_rates_by_cbr($currency_rates_by_cbr)
+	{
+		$this->currency_rates_by_cbr = $currency_rates_by_cbr;
+	}
+
+	/**
 	 * Get Robokassa api
 	 *
 	 * @return Wc_Robokassa_Api
@@ -382,6 +590,37 @@ class WC_Robokassa
 		}
 
 		$methods[] = $robokassa_method_class_name;
+
+		/**
+		 * Sub
+		 */
+		$methods[] = 'Wc_Robokassa_Bank_Alfabank_Method';
+		$methods[] = 'Wc_Robokassa_Bank_Bank_Avb_Method';
+		$methods[] = 'Wc_Robokassa_Bank_Bank_Bin_Method';
+		$methods[] = 'Wc_Robokassa_Bank_Bank_Fbid_Method';
+		$methods[] = 'Wc_Robokassa_Bank_Bank_Inteza_Method';
+		$methods[] = 'Wc_Robokassa_Bank_Bank_Min_Method';
+		$methods[] = 'Wc_Robokassa_Bank_Bank_Sov_Com_Method';
+		$methods[] = 'Wc_Robokassa_Bank_Bank_Trust_Method';
+		//$methods[] = 'Wc_Robokassa_Bank_Vtb24_Method';
+		$methods[] = 'Wc_Robokassa_Bankcard_Bank_Card_Apple_Pay_Method';
+		$methods[] = 'Wc_Robokassa_Bankcard_Bank_Card_Halva_Method';
+		$methods[] = 'Wc_Robokassa_Bankcard_Bank_Card_Method';
+		$methods[] = 'Wc_Robokassa_Bankcard_Bank_Card_Samsung_Pay_Method';
+		$methods[] = 'Wc_Robokassa_Emoney_Elecsnet_Wallet_Method';
+		$methods[] = 'Wc_Robokassa_Emoney_Qiwi_Wallet_Method';
+		$methods[] = 'Wc_Robokassa_Emoney_W1_Method';
+		$methods[] = 'Wc_Robokassa_Emoney_Wmr_Method';
+		$methods[] = 'Wc_Robokassa_Emoney_Yandex_Money_Method';
+		$methods[] = 'Wc_Robokassa_Mobile_Phone_Beeline_Method';
+		$methods[] = 'Wc_Robokassa_Mobile_Phone_Megafon_Method';
+		$methods[] = 'Wc_Robokassa_Mobile_Phone_Mts_Method';
+		$methods[] = 'Wc_Robokassa_Mobile_Phone_Tattelecom_Method';
+		$methods[] = 'Wc_Robokassa_Mobile_Phone_Tele2_Method';
+		$methods[] = 'Wc_Robokassa_Other_Biocoin_Method';
+		$methods[] = 'Wc_Robokassa_Other_Store_Euroset_Method';
+		$methods[] = 'Wc_Robokassa_Other_Store_Svyaznoy_Method';
+		$methods[] = 'Wc_Robokassa_Terminals_Terminals_Elecsnet_Method';
 
 		return $methods;
 	}
