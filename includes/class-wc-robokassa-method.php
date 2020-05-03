@@ -963,7 +963,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Технический ключ', 'wc-robokassa'),
 			'type'        => 'title',
-			'description' => __('Получить можно на официальном сайте плагина, перейдя по ссылке: https://mofsy.ru/market/wc-robokassa-key', 'wc-robokassa'),
+			'description' => __('Получить можно на официальном сайте плагина, перейдя по ссылке: ', 'wc-robokassa') .
+			                 '<a target="_blank" href="https://mofsy.ru/market/wc-robokassa-key">https://mofsy.ru/market/wc-robokassa-key</a>.<br/>' .
+			                 __('После ввода валидного ключа и сохранения настроек, данное поле будет перенесено в технические детали. Появятся сервисные возможности.', 'wc-robokassa'),
 		);
 
 		$fields['key_data'] = array
