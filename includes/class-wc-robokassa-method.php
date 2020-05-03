@@ -961,16 +961,16 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['key'] = array
 		(
-			'title'       => __('Технический ключ', 'wc-robokassa'),
+			'title'       => __('Technical key', 'wc-robokassa'),
 			'type'        => 'title',
-			'description' => __('Получить можно на официальном сайте плагина, перейдя по ссылке: ', 'wc-robokassa') .
+			'description' => __('Get it on the official website of the plugin by clicking on the link: ', 'wc-robokassa') .
 			                 '<a target="_blank" href="https://mofsy.ru/market/wc-robokassa-key">https://mofsy.ru/market/wc-robokassa-key</a>.<br/>' .
-			                 __('После ввода валидного ключа и сохранения настроек, данное поле будет перенесено в технические детали. Появятся сервисные возможности.', 'wc-robokassa'),
+			                 __('After entering a valid key and saving settings, this field will be moved to technical details. Service features will available.', 'wc-robokassa'),
 		);
 
 		$fields['key_data'] = array
 		(
-			'title'       => __('Поле ввода ключа:', 'wc-robokassa'),
+			'title'       => __('Key entry field:', 'wc-robokassa'),
 			'type'        => 'text',
 			'description' => ' ',
 			'default'     => ''
@@ -1162,17 +1162,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		$fields['sub_methods'] = array
 		(
-			'title' => __('Sub methods', 'wc-robokassa-premium'),
+			'title' => __('Sub methods', 'wc-robokassa'),
 			'type' => 'title',
-			'description' => __('General settings for the sub methods of payment.', 'wc-robokassa-premium'),
+			'description' => __('General settings for the sub methods of payment.', 'wc-robokassa'),
 		);
 
 		$fields['rates_merchant'] = array
 		(
-			'title' => __('Show the total amount including the fee', 'wc-robokassa-premium'),
+			'title' => __('Show the total amount including the fee', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable (check the box to enable)', 'wc-robokassa-premium'),
-			'description' => __('If you enable this option, the exact amount payable, including fees, will be added to the payment method headers.', 'wc-robokassa-premium'),
+			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
+			'description' => __('If you enable this option, the exact amount payable, including fees, will be added to the payment method headers.', 'wc-robokassa'),
 			'default' => 'off'
 		);
 
@@ -1553,36 +1553,36 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 			$fields['available_shipping'] =  array
 			(
-				'title' => __('Enable for shipping methods', 'wc-robokassa-premium'),
+				'title' => __('Enable for shipping methods', 'wc-robokassa'),
 				'type' => 'multiselect',
 				'class' => 'wc-enhanced-select',
 				'css' => 'width: 400px;',
 				'default' => '',
-				'description' => __('If only available for certain methods, set it up here. Leave blank to enable for all methods.', 'wc-robokassa-premium'),
+				'description' => __('If only available for certain methods, set it up here. Leave blank to enable for all methods.', 'wc-robokassa'),
 				'options' => $options,
 				'custom_attributes' => array
 				(
-					'data-placeholder' => __('Select shipping methods', 'wc-robokassa-premium'),
+					'data-placeholder' => __('Select shipping methods', 'wc-robokassa'),
 				),
 			);
 		}
 
 		$fields['commission_merchant'] = array
 		(
-			'title' => __('Payment of the commission for the buyer', 'wc-robokassa-premium'),
+			'title' => __('Payment of the commission for the buyer', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable (check the box to enable)', 'wc-robokassa-premium'),
-			'description' => __('When you enable this feature, the store will pay all customer Commission costs. Works only when you select a payment method on the site and for stores individuals.', 'wc-robokassa-premium'),
+			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
+			'description' => __('When you enable this feature, the store will pay all customer Commission costs. Works only when you select a payment method on the site and for stores individuals.', 'wc-robokassa'),
 			'default' => 'off'
 		);
 
 		$fields['commission_merchant_by_cbr'] = array
 		(
-			'title' => __('Preliminary conversion of order currency into roubles for commission calculation', 'wc-robokassa-premium'),
+			'title' => __('Preliminary conversion of order currency into roubles for commission calculation', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable (check the box to enable)', 'wc-robokassa-premium'),
+			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
 			'description' => __('If the calculation of the customer commission is included and the order is not in roubles, the order will be converted to roubles based on data from the Central Bank of Russia.
-			This is required due to poor Robokassa API.', 'wc-robokassa-premium'),
+			This is required due to poor Robokassa API.', 'wc-robokassa'),
 			'default' => 'off'
 		);
 
