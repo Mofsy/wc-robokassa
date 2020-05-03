@@ -326,13 +326,7 @@ class WC_Robokassa
 	{
 		if(is_array($this->get_robokassa_available_currencies()) && count($this->get_robokassa_available_currencies()) == 0)
 		{
-			$api = WC_Robokassa()->get_robokassa_api();
-
-			if($api === false)
-			{
-				WC_Robokassa()->load_robokassa_api();
-				$api = WC_Robokassa()->get_robokassa_api();
-			}
+			$api = $this->load_robokassa_api();
 
 			$robokassa_available_currencies_result = $api->xml_get_currencies($merchant_login, $language);
 
@@ -354,13 +348,7 @@ class WC_Robokassa
 	{
 		if(is_array($this->get_robokassa_rates_merchant()) && count($this->get_robokassa_rates_merchant()) == 0)
 		{
-			$api = WC_Robokassa()->get_robokassa_api();
-
-			if($api === false)
-			{
-				WC_Robokassa()->load_robokassa_api();
-				$api = WC_Robokassa()->get_robokassa_api();
-			}
+			$api = $this->load_robokassa_api();
 
 			$robokassa_rates_merchant_result = $api->xml_get_rates($merchant_login, $out_sum, '', $language);
 
