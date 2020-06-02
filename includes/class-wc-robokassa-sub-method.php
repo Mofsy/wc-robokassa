@@ -69,8 +69,15 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 */
 		if($this->is_rates_merchant() && is_admin() === false)
 		{
-			$sum = WC()->cart->total;
-			WC_Robokassa()->load_merchant_rates($this->get_shop_login(), $sum, $this->get_user_interface_language());
+			if(isset(WC()->cart->total))
+			{
+				$sum = WC()->cart->total;
+				WC_Robokassa()->load_merchant_rates($this->get_shop_login(), $sum, $this->get_user_interface_language());
+			}
+			else
+			{
+				wc_robokassa_logger()->warning('WC()->cart->total not found');
+			}
 		}
 	}
 
