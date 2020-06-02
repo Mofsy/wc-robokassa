@@ -2525,11 +2525,63 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function is_available()
 	{
-		wc_robokassa_logger()->info('is_available: start');
-
 		$is_available = parent::is_available();
 
 		wc_robokassa_logger()->debug('is_available: parent $is_available', $is_available);
+
+		if($this->get_available_shipping() !== false && version_compare(wc_robokassa_get_wc_version(), '3.2.0', '>='))
+		{
+			$order = null;
+			$needs_shipping = false;
+
+			// Test if shipping is needed first
+			if(WC()->cart && WC()->cart->needs_shipping())
+			{
+				$needs_shipping = true;
+			}
+			elseif(is_page(wc_get_page_id('checkout')) && 0 < get_query_var('order-pay'))
+			{
+				$order_id = absint(get_query_var('order-pay'));
+				$order = wc_get_order($order_id);
+
+				// Test if order needs shipping
+				if(0 < count($order->get_items()))
+				{
+					foreach($order->get_items() as $item)
+					{
+						$_product = $item->get_product();
+						if($_product && $_product->needs_shipping())
+						{
+							$needs_shipping = true;
+							break;
+						}
+					}
+				}
+			}
+
+			$needs_shipping = apply_filters('woocommerce_cart_needs_shipping', $needs_shipping);
+
+			// Only apply if all packages are being shipped via chosen method
+			if($needs_shipping && !empty($this->get_available_shipping()))
+			{
+				$order_shipping_items = is_object($order) ? $order->get_shipping_methods() : false;
+				$chosen_shipping_methods_session = WC()->session->get('chosen_shipping_methods');
+
+				if($order_shipping_items)
+				{
+					$canonical_rate_ids = $this->get_canonical_order_shipping_item_rate_ids($order_shipping_items);
+				}
+				else
+				{
+					$canonical_rate_ids = $this->get_canonical_package_rate_ids($chosen_shipping_methods_session);
+				}
+
+				if(!count($this->get_matching_rates($canonical_rate_ids)))
+				{
+					$is_available = false;
+				}
+			}
+		}
 
 		/**
 		 * Change status from external code
@@ -2539,7 +2591,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$is_available = apply_filters('wc_robokassa_method_get_available', $is_available);
 
 		wc_robokassa_logger()->debug('is_available: $is_available', $is_available);
-		wc_robokassa_logger()->info('is_available: end');
 
 		return $is_available;
 	}
