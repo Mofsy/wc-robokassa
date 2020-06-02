@@ -27,21 +27,21 @@ class WC_Robokassa
      *
 	 * @var Wc_Robokassa_Api
 	 */
-	public $robokassa_api = false;
+	protected $robokassa_api = false;
 
 	/**
 	 * WooCommerce version
 	 *
 	 * @var
 	 */
-	public $wc_version = '';
+	protected $wc_version = '';
 
 	/**
 	 * WooCommerce currency
 	 *
 	 * @var string
 	 */
-	public $wc_currency = 'RUB';
+	protected $wc_currency = 'RUB';
 
 	/**
      * Result url
