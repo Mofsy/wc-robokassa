@@ -1120,7 +1120,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => ''
 		);
 
-		$fields['test_checkout_notice'] = array
+		$fields['test_mode_checkout_notice'] = array
 		(
 			'title'   => __('Test notification display on the test mode', 'wc-robokassa'),
 			'type'    => 'checkbox',
@@ -1739,7 +1739,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function payment_fields_test_mode_show()
 	{
-		if($this->get_test() === 'yes' && $this->get_option('test_checkout_notice') === 'yes')
+		if($this->get_test() === 'yes' && $this->get_option('test_mode_checkout_notice', 'no') === 'yes')
 		{
 			echo '<div style="padding:5px; border-radius:20px; background-color: #ff8982;text-align: center;">';
 			echo __('TEST mode is active. Payment will not be charged. After checking, disable this mode.', 'wc-robokassa');
