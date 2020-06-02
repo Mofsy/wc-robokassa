@@ -1,10 +1,10 @@
 <?php
-/*
-  +----------------------------------------------------------+
-  | Author: Mofsy <support@mofsy.ru>                         |
-  | Author website: https://mofsy.ru                         |
-  +----------------------------------------------------------+
-*/
+/**
+ * Sub method class
+ *
+ * @package Mofsy/WC_Robokassa/Submethods
+ */
+defined('ABSPATH') || exit;
 
 class Wc_Robokassa_Mobile_Phone_Megafon_Method extends Wc_Robokassa_Sub_Method
 {

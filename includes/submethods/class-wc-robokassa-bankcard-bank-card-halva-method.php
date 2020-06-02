@@ -1,10 +1,10 @@
 <?php
-/*
-  +----------------------------------------------------------+
-  | Author: Mofsy <support@mofsy.ru>                         |
-  | Author website: https://mofsy.ru                         |
-  +----------------------------------------------------------+
-*/
+/**
+ * Sub method class
+ *
+ * @package Mofsy/WC_Robokassa/Submethods
+ */
+defined('ABSPATH') || exit;
 
 class Wc_Robokassa_Bankcard_Bank_Card_Halva_Method extends Wc_Robokassa_Sub_Method
 {
