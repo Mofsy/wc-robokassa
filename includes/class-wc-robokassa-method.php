@@ -199,7 +199,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Save options
 		 */
-		$this->process_options();
+		if(current_user_can('manage_options') && is_admin())
+		{
+			$this->process_options();
+		}
 
 		/**
 		 * Gateway allowed?
@@ -209,20 +212,23 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$this->enabled = false;
 		}
 
-		/**
-		 * Receipt page
-		 */
-		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
+		if(false === is_admin())
+		{
+			/**
+			 * Receipt page
+			 */
+			add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
 
-		/**
-		 * Auto redirect
-		 */
-		add_action('wc_robokassa_input_payment_notifications', array($this, 'wc_robokassa_input_payment_notifications_redirect_by_form'), 20);
+			/**
+			 * Auto redirect
+			 */
+			add_action('wc_robokassa_input_payment_notifications', array($this, 'wc_robokassa_input_payment_notifications_redirect_by_form'), 20);
 
-		/**
-		 * Payment listener/API hook
-		 */
-		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
+			/**
+			 * Payment listener/API hook
+			 */
+			add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
+		}
 	}
 
 	/**
@@ -230,30 +236,21 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function process_options()
 	{
-		wc_robokassa_logger()->info('process_options: start');
+		/**
+		 * Options save
+		 */
+		add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(
+			$this,
+			'process_admin_options'
+		), 10);
 
-		if(current_user_can('manage_options') && is_admin())
-		{
-			wc_robokassa_logger()->info('process_options: manage_options success');
-
-			/**
-			 * Options save
-			 */
-			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(
-				$this,
-				'process_admin_options'
-			), 10);
-
-			/**
-			 * Update last version
-			 */
-			add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(
-				$this,
-				'wc_robokassa_last_settings_update_version'
-			), 10);
-		}
-
-		wc_robokassa_logger()->info('process_options: end');
+		/**
+		 * Update last version
+		 */
+		add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(
+			$this,
+			'wc_robokassa_last_settings_update_version'
+		), 10);
 	}
 
 	/**
@@ -261,7 +258,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_logger()
 	{
-		if($this->get_option('logger') !== '')
+		if($this->get_option('logger', '') !== '')
 		{
 			wc_robokassa_logger()->set_level($this->get_option('logger'));
 
@@ -276,9 +273,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_filters()
 	{
-		wc_robokassa_logger()->info('init_filters: start');
-
-		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_key'), 8);
+		//add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_key'), 8);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'), 10);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
@@ -286,8 +281,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_sub_methods'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_order_notes'), 45);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_technical'), 50);
-
-		wc_robokassa_logger()->info('init_filters: end');
 	}
 
 	/**
@@ -295,8 +288,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_actions()
 	{
-		wc_robokassa_logger()->info('init_actions: start');
-
 		/**
 		 * Payment fields description show
 		 */
@@ -311,8 +302,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Receipt form show
 		 */
 		add_action('wc_robokassa_receipt_page_show', array($this, 'wc_robokassa_receipt_page_show_form'), 10);
-
-		wc_robokassa_logger()->info('init_actions: end');
 	}
 
 	/**
@@ -320,8 +309,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function wc_robokassa_last_settings_update_version()
 	{
-		wc_robokassa_logger()->info('wc_robokassa_last_settings_update_version: start');
-
 		$result = update_option('wc_robokassa_last_settings_update_version', WC_ROBOKASSA_VERSION);
 
 		if($result)
@@ -330,10 +317,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		}
 		else
 		{
-			wc_robokassa_logger()->notice('wc_robokassa_last_settings_update_version: not updated');
+			wc_robokassa_logger()->warning('wc_robokassa_last_settings_update_version: not updated');
 		}
-
-		wc_robokassa_logger()->info('wc_robokassa_last_settings_update_version: end');
 	}
 
 	/**
@@ -341,8 +326,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_options()
 	{
-		wc_robokassa_logger()->info('init_options: start');
-
 		/**
 		 * Gateway not enabled?
 		 */
@@ -572,8 +555,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$this->set_available_shipping($available_shipping);
 		}
-
-		wc_robokassa_logger()->info('init_options: success');
 	}
 
 	/**
@@ -1141,7 +1122,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['test_checkout_notice'] = array
 		(
-			'title'   => __('The notification is displayed on the test mode', 'wc-robokassa'),
+			'title'   => __('Test notification display on the test mode', 'wc-robokassa'),
 			'type'    => 'checkbox',
 			'label'   => __('Enable', 'wc-robokassa'),
 			'description' => __('A notification about the activated test mode will be displayed when the payment.', 'wc-robokassa'),
@@ -1160,11 +1141,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_form_fields_sub_methods($fields)
 	{
-		$fields['sub_methods'] = array
+		$fields['title_sub_methods'] = array
 		(
 			'title' => __('Sub methods', 'wc-robokassa'),
 			'type' => 'title',
 			'description' => __('General settings for the sub methods of payment.', 'wc-robokassa'),
+		);
+
+		$fields['sub_methods'] = array
+		(
+			'title' => __('Enable sub methods', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
+			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
+			'default' => 'no'
 		);
 
 		$fields['rates_merchant'] = array
@@ -1173,7 +1163,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'type' => 'checkbox',
 			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
 			'description' => __('If you enable this option, the exact amount payable, including fees, will be added to the payment method headers.', 'wc-robokassa'),
-			'default' => 'off'
+			'default' => 'no'
 		);
 
 		return $fields;
