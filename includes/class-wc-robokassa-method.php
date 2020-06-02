@@ -1673,6 +1673,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			return false;
 		}
 
+		if($this->is_commission_merchant())
+		{
+			return false;
+		}
+
 		/**
 		 * Check test mode and admin rights
 		 *
