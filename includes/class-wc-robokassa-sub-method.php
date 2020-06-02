@@ -624,7 +624,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		}
 		else
 		{
-			return false;
+			$return = false;
 		}
 
 		return $return;
