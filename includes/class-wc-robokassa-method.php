@@ -539,13 +539,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$this->set_commission_merchant(true);
 
-			if($this->get_option('commission_merchant_by_cbr') === 'yes')
+			if($this->get_option('commission_merchant_by_cbr', 'no') === 'yes')
 			{
 				$this->set_commission_merchant_by_cbr(true);
 			}
 		}
 
-		if($this->get_option('rates_merchant') === 'yes')
+		if($this->get_option('rates_merchant', 'no') === 'yes')
 		{
 			$this->set_rates_merchant(true);
 		}
