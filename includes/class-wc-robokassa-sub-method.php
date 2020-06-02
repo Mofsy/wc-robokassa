@@ -363,7 +363,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 			return true;
 		}
 
-		WC_Robokassa()->get_logger()->info('load_parent_settings: return false');
+		WC_Robokassa()->get_logger()->warning('load_parent_settings: return false');
 		return false;
 	}
 
