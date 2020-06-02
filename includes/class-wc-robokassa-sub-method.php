@@ -90,6 +90,30 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	}
 
 	/**
+	 * Init actions
+	 */
+	public function init_actions()
+	{
+		/**
+		 * Payment fields description show
+		 */
+		add_action('wc_' . $this->id . '_payment_fields_show', array($this, 'payment_fields_description_show'), 10);
+
+		/**
+		 * Payment fields test mode show
+		 */
+		if($this->get_test() === 'yes' && isset($this->parent_settings['test_mode_checkout_notice']) && $this->parent_settings['test_mode_checkout_notice'] === 'yes')
+		{
+			add_action('wc_' . $this->id . '_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'), 10);
+		}
+
+		/**
+		 * Receipt form show
+		 */
+		add_action('wc_' . $this->id . '_receipt_page_show', array($this, 'wc_robokassa_receipt_page_show_form'), 10);
+	}
+
+	/**
 	 * Get current currency alias
 	 *
 	 * @return string
@@ -400,6 +424,11 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 * Rewrite options
 		 */
 		$this->init_child_options();
+
+		/**
+		 * Child actions
+		 */
+		$this->init_actions();
 
 		/**
 		 * Save options from admin

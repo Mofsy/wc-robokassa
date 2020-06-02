@@ -301,7 +301,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Payment fields test mode show
 		 */
-		add_action('wc_robokassa_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'), 10);
+		if($this->get_test() === 'yes' && $this->get_option('test_mode_checkout_notice', 'no') === 'yes')
+		{
+			add_action('wc_robokassa_payment_fields_after_show', array($this, 'payment_fields_test_mode_show'), 10);
+		}
 
 		/**
 		 * Receipt form show
@@ -1732,13 +1735,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function payment_fields()
 	{
 		// hook
-		do_action('wc_robokassa_payment_fields_before_show');
+		do_action('wc_' . $this->id . '_payment_fields_before_show');
 
 		// hook
-		do_action('wc_robokassa_payment_fields_show');
+		do_action('wc_' . $this->id . '_payment_fields_show');
 
 		// hook
-		do_action('wc_robokassa_payment_fields_after_show');
+		do_action('wc_' . $this->id . '_payment_fields_after_show');
 	}
 
 	/**
@@ -1759,12 +1762,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function payment_fields_test_mode_show()
 	{
-		if($this->get_test() === 'yes' && $this->get_option('test_mode_checkout_notice', 'no') === 'yes')
-		{
-			echo '<div style="padding:5px; border-radius:20px; background-color: #ff8982;text-align: center;">';
-			echo __('TEST mode is active. Payment will not be charged. After checking, disable this mode.', 'wc-robokassa');
-			echo '</div>';
-		}
+		echo '<div style="padding:5px; border-radius:20px; background-color: #ff8982;text-align: center;">';
+		echo __('TEST mode is active. Payment will not be charged. After checking, disable this mode.', 'wc-robokassa');
+		echo '</div>';
 	}
 
 	/**
