@@ -483,9 +483,6 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	/**
 	 * Initialise Gateway Settings Form Fields
 	 *
-	 * @access public
-	 * @filter wc_{id}_init_form_fields
-	 *
 	 * @return void
 	 */
 	public function init_form_fields()
