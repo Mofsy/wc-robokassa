@@ -117,7 +117,7 @@ class WC_Robokassa
 	/**
 	 * Init required files
 	 */
-	public function init_includes()
+	private function init_includes()
 	{
 		/**
 		 * @since 3.0.0
@@ -535,7 +535,7 @@ class WC_Robokassa
 	/**
 	 * Load localisation files
 	 */
-	public function load_plugin_text_domain()
+	private function load_plugin_text_domain()
 	{
 		/**
 		 * WP 5.x or later
@@ -635,7 +635,7 @@ class WC_Robokassa
 	 *
 	 * @return boolean
 	 */
-	public function load_logger()
+	protected function load_logger()
 	{
 		try
 		{
