@@ -31,7 +31,7 @@ class Wc_Robokassa_Terminals_Terminals_Elecsnet_Method extends Wc_Robokassa_Sub_
 		/**
 		 * Admin title
 		 */
-		$this->title = __('TerminalsElecsnet', 'wc-robokassa-premium');
+		$this->title = __('TerminalsElecsnet', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

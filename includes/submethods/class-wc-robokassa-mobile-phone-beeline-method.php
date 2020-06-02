@@ -31,7 +31,7 @@ class Wc_Robokassa_Mobile_Phone_Beeline_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Beeline', 'wc-robokassa-premium');
+		$this->title = __('Beeline', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

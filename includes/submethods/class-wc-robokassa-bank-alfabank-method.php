@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Alfabank_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Alfa-Click', 'wc-robokassa-premium');
+		$this->title = __('Alfa-Click', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

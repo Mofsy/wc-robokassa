@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Bank_Avb_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Bank AVB', 'wc-robokassa-premium');
+		$this->title = __('Bank AVB', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

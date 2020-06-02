@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Bank_Sov_Com_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Sovcombank', 'wc-robokassa-premium');
+		$this->title = __('Sovcombank', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

@@ -31,7 +31,7 @@ class Wc_Robokassa_Other_Store_Euroset_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Euroset', 'wc-robokassa-premium');
+		$this->title = __('Euroset', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

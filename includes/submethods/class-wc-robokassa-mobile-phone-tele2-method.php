@@ -31,7 +31,7 @@ class Wc_Robokassa_Mobile_Phone_Tele2_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Tele2', 'wc-robokassa-premium');
+		$this->title = __('Tele2', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

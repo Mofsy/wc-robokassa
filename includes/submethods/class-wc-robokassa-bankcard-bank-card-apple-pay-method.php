@@ -31,7 +31,7 @@ class Wc_Robokassa_Bankcard_Bank_Card_Apple_Pay_Method extends Wc_Robokassa_Sub_
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Apple Pay', 'wc-robokassa-premium');
+		$this->title = __('Apple Pay', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

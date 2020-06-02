@@ -31,7 +31,7 @@ class Wc_Robokassa_Bankcard_Bank_Card_Halva_Method extends Wc_Robokassa_Sub_Meth
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Card Halva', 'wc-robokassa-premium');
+		$this->title = __('Card Halva', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

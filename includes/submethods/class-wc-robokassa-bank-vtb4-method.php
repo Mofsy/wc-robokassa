@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Vtb24_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('VTB', 'wc-robokassa-premium');
+		$this->title = __('VTB', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

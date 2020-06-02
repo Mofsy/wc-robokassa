@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Bank_Trust_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('National Bank TRUST', 'wc-robokassa-premium');
+		$this->title = __('National Bank TRUST', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

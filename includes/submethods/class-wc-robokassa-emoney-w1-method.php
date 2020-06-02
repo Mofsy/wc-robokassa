@@ -31,7 +31,7 @@ class Wc_Robokassa_Emoney_W1_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('RUR W1', 'wc-robokassa-premium');
+		$this->title = __('RUR W1', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

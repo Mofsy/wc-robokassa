@@ -31,7 +31,7 @@ class Wc_Robokassa_Mobile_Phone_Mts_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Mts', 'wc-robokassa-premium');
+		$this->title = __('Mts', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

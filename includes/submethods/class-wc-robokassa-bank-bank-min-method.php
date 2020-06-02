@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Bank_Min_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Moscow Industrial Bank', 'wc-robokassa-premium');
+		$this->title = __('Moscow Industrial Bank', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

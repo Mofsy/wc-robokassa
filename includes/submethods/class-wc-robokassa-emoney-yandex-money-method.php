@@ -31,7 +31,7 @@ class Wc_Robokassa_Emoney_Yandex_Money_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Yandex.Money', 'wc-robokassa-premium');
+		$this->title = __('Yandex.Money', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

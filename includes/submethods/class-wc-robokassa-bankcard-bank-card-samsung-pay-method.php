@@ -31,7 +31,7 @@ class Wc_Robokassa_Bankcard_Bank_Card_Samsung_Pay_Method extends Wc_Robokassa_Su
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Samsung Pay', 'wc-robokassa-premium');
+		$this->title = __('Samsung Pay', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Bank_Fbid_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Federal Bank For Innovation And Development', 'wc-robokassa-premium');
+		$this->title = __('Federal Bank For Innovation And Development', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

@@ -31,7 +31,7 @@ class Wc_Robokassa_Emoney_Wmr_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('WMR', 'wc-robokassa-premium');
+		$this->title = __('WMR', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

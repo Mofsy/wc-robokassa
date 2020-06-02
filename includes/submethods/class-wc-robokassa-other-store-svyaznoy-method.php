@@ -31,7 +31,7 @@ class Wc_Robokassa_Other_Store_Svyaznoy_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Svyaznoy', 'wc-robokassa-premium');
+		$this->title = __('Svyaznoy', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

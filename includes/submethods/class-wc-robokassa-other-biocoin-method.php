@@ -31,7 +31,7 @@ class Wc_Robokassa_Other_Biocoin_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('BioCoin', 'wc-robokassa-premium');
+		$this->title = __('BioCoin', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

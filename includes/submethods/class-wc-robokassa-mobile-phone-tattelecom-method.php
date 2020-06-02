@@ -31,7 +31,7 @@ class Wc_Robokassa_Mobile_Phone_Tattelecom_Method extends Wc_Robokassa_Sub_Metho
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Tattelecom', 'wc-robokassa-premium');
+		$this->title = __('Tattelecom', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

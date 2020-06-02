@@ -31,7 +31,7 @@ class Wc_Robokassa_Emoney_Qiwi_Wallet_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('QIWI Wallet', 'wc-robokassa-premium');
+		$this->title = __('QIWI Wallet', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

@@ -31,7 +31,7 @@ class Wc_Robokassa_Mobile_Phone_Megafon_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Megafon', 'wc-robokassa-premium');
+		$this->title = __('Megafon', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор

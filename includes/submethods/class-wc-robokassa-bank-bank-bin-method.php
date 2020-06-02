@@ -31,7 +31,7 @@ class Wc_Robokassa_Bank_Bank_Bin_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('BINBANK', 'wc-robokassa-premium');
+		$this->title = __('BINBANK', 'wc-robokassa');
 
 		/**
 		 * Псевдо конструктор
