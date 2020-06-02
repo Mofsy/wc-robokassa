@@ -47,7 +47,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		/**
 		 * Admin title
 		 */
-		$this->method_title = __('Robokassa', 'wc-robokassa');
+		$this->method_title = __('Robokassa (child method)', 'wc-robokassa');
 
 		/**
 		 * Admin method description
