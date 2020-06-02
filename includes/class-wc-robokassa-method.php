@@ -1563,19 +1563,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __('Payment of the commission for the buyer', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('When you enable this feature, the store will pay all customer Commission costs. Works only when you select a payment method on the site and for stores individuals.', 'wc-robokassa'),
-			'default' => 'off'
+			'default' => 'no'
 		);
 
 		$fields['commission_merchant_by_cbr'] = array
 		(
 			'title' => __('Preliminary conversion of order currency into roubles for commission calculation', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('If the calculation of the customer commission is included and the order is not in roubles, the order will be converted to roubles based on data from the Central Bank of Russia.
 			This is required due to poor Robokassa API.', 'wc-robokassa'),
-			'default' => 'off'
+			'default' => 'no'
 		);
 
 		return $fields;
