@@ -70,6 +70,7 @@ Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 == Changelog ==
 
 = 4.0.0 =
+New major version. Please backup before update.
 * Add all premium features
 * More fix
 
