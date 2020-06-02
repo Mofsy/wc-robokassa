@@ -334,7 +334,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Gateway not enabled?
 		 */
-		if($this->get_option('enabled') !== 'yes')
+		if($this->get_option('enabled', 'no') !== 'yes')
 		{
 			$this->enabled = false;
 		}
@@ -342,7 +342,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Page skipping enabled?
 		 */
-		if($this->get_option('page_skipping') === 'yes')
+		if($this->get_option('page_skipping', 'no') === 'yes')
 		{
 			$this->set_page_skipping('yes');
 		}
@@ -350,17 +350,17 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Title for user interface
 		 */
-		$this->title = $this->get_option('title');
+		$this->title = $this->get_option('title', '');
 
 		/**
 		 * Set description
 		 */
-		$this->description = $this->get_option('description');
+		$this->description = $this->get_option('description', '');
 
 		/**
 		 * Testing?
 		 */
-		$this->set_test($this->get_option('test'));
+		$this->set_test($this->get_option('test', 'yes'));
 
 		/**
 		 * Default language for Robokassa interface
@@ -370,7 +370,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Automatic language
 		 */
-		if($this->get_option('language_auto') === 'yes')
+		if($this->get_option('language_auto', 'no') === 'yes')
 		{
 			$lang = get_locale();
 			switch($lang)
@@ -392,7 +392,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Ofd
 		 */
-		if($this->get_option('ofd_status') === 'yes')
+		if($this->get_option('ofd_status', 'no') === 'yes')
 		{
 			$this->set_ofd_status(true);
 		}
@@ -400,7 +400,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Ofd sno
 		 */
-		$ofd_sno_code = $this->get_option('ofd_sno');
+		$ofd_sno_code = $this->get_option('ofd_sno', '');
 		if($ofd_sno_code !== '')
 		{
 			$ofd_sno = 'osn';
@@ -436,7 +436,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Ofd nds
 		 */
-		$ofd_nds_code = $this->get_option('ofd_nds');
+		$ofd_nds_code = $this->get_option('ofd_nds', '');
 		if($ofd_nds_code !== '')
 		{
 			$ofd_nds = 'none';
@@ -472,7 +472,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set ofd_payment_method
 		 */
-		if($this->get_option('ofd_payment_method') !== '')
+		if($this->get_option('ofd_payment_method', '') !== '')
 		{
 			$this->set_ofd_payment_method($this->get_option('ofd_payment_method'));
 		}
@@ -480,7 +480,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set ofd_payment_object
 		 */
-		if($this->get_option('ofd_payment_object') !== '')
+		if($this->get_option('ofd_payment_object', '') !== '')
 		{
 			$this->set_ofd_payment_object($this->get_option('ofd_payment_object'));
 		}
@@ -488,7 +488,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set shop pass 1
 		 */
-		if($this->get_option('shop_pass_1') !== '')
+		if($this->get_option('shop_pass_1', '') !== '')
 		{
 			$this->set_shop_pass_1($this->get_option('shop_pass_1'));
 		}
@@ -496,7 +496,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set shop pass 2
 		 */
-		if($this->get_option('shop_pass_2') !== '')
+		if($this->get_option('shop_pass_2', '') !== '')
 		{
 			$this->set_shop_pass_2($this->get_option('shop_pass_2'));
 		}
@@ -504,7 +504,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Load shop login
 		 */
-		$this->set_shop_login($this->get_option('shop_login'));
+		$this->set_shop_login($this->get_option('shop_login', ''));
 
 		/**
 		 * Load sign method
@@ -514,7 +514,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set shop pass 1 for testing
 		 */
-		if($this->get_option('test_shop_pass_1') !== '')
+		if($this->get_option('test_shop_pass_1', '') !== '')
 		{
 			$this->set_test_shop_pass_1($this->get_option('test_shop_pass_1'));
 		}
@@ -522,7 +522,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set shop pass 2 for testing
 		 */
-		if($this->get_option('test_shop_pass_2') !== '')
+		if($this->get_option('test_shop_pass_2', '') !== '')
 		{
 			$this->set_test_shop_pass_2($this->get_option('test_shop_pass_2'));
 		}
@@ -535,12 +535,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Set icon
 		 */
-		if($this->get_option('enable_icon') === 'yes')
+		if($this->get_option('enable_icon', 'no') === 'yes')
 		{
 			$this->icon = apply_filters('woocommerce_icon_robokassa', WC_ROBOKASSA_URL . 'assets/img/robokassa.png', $this->id);
 		}
 
-		if($this->get_option('commission_merchant') === 'yes')
+		if($this->get_option('commission_merchant', 'no') === 'yes')
 		{
 			$this->set_commission_merchant(true);
 
@@ -1692,6 +1692,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function admin_options()
 	{
 		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
+
 		add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_logger'), 10);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);

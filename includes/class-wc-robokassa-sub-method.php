@@ -40,9 +40,9 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		$this->set_parent_id('robokassa');
 
 		/**
-		 * Main settings
+		 * The gateway shows fields on the checkout OFF
 		 */
-		$this->load_parent_settings();
+		$this->has_fields = false;
 
 		/**
 		 * Admin title
@@ -53,6 +53,11 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 * Admin method description
 		 */
 		$this->method_description = __('Pay via Robokassa. Child method for Robokassa.', 'wc-robokassa');
+
+		/**
+		 * Main settings
+		 */
+		$this->load_parent_settings();
 
 		/**
 		 * Main method options
