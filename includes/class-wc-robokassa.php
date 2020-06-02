@@ -504,12 +504,12 @@ class WC_Robokassa
 	    {
 		    global $WOOCS;
 
-		    $this->get_logger()->alert('load_currency WooCommerce Currency Switcher detect');
+		    wc_robokassa_logger()->alert('load_currency WooCommerce Currency Switcher detect');
 
 		    $wc_currency = strtoupper($WOOCS->storage->get_val('woocs_current_currency'));
 	    }
 
-	    $this->get_logger()->debug('load_currency $wc_version', $wc_currency);
+	    wc_robokassa_logger()->debug('load_currency $wc_version', $wc_currency);
 
 	    $this->set_wc_currency($wc_currency);
 
@@ -525,7 +525,7 @@ class WC_Robokassa
     {
     	$wc_version = wc_robokassa_get_wc_version();
 
-	    $this->get_logger()->debug('load_wc_version $wc_version', $wc_version);
+	    wc_robokassa_logger()->debug('load_wc_version $wc_version', $wc_version);
 
 	    $this->set_wc_version($wc_version);
 	    
@@ -557,7 +557,7 @@ class WC_Robokassa
 		$locale = apply_filters('plugin_locale', $locale, 'wc-robokassa');
 
 		// log
-		$this->get_logger()->debug('load_plugin_text_domain $locale', $locale);
+		wc_robokassa_logger()->debug('load_plugin_text_domain $locale', $locale);
 
 		/**
 		 * Unload & load

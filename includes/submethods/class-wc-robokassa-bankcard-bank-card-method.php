@@ -31,11 +31,13 @@ class Wc_Robokassa_Bankcard_Bank_Card_Method extends Wc_Robokassa_Sub_Method
 		/**
 		 * Admin title
 		 */
-		$this->title = __('Bank Card', 'wc-robokassa-premium');
+		$this->title = __('Bank Card', 'wc-robokassa');
 
 		/**
-		 * Псевдо конструктор
+		 * Initializing child method
 		 */
 		$this->init_child_method();
+
+		//var_dump($this);die;
 	}
 }

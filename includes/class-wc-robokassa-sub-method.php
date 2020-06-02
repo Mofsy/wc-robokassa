@@ -37,17 +37,17 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		/**
 		 * Main method id
 		 */
-		$this->parent_id = 'robokassa';
+		$this->set_parent_id('robokassa');
 
 		/**
-		 * Logger
+		 * Main settings
 		 */
-		$this->init_logger();
+		$this->load_parent_settings();
 
 		/**
 		 * Admin title
 		 */
-		$this->method_title = __('Robokassa (child method)', 'wc-robokassa');
+		$this->method_title = __('Robokassa', 'wc-robokassa');
 
 		/**
 		 * Admin method description
@@ -58,6 +58,8 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 * Main method options
 		 */
 		$this->init_options();
+
+		return;
 
 		/**
 		 * Load available currencies
@@ -379,7 +381,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		add_filter('wc_' . $this->id . '_init_form_fields', array($this, 'init_form_fields_interface'), 20);
 
 		/**
-		 * Перезапись локальных настроек
+		 * Main settings
 		 */
 		$this->init_settings();
 
@@ -396,7 +398,10 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		/**
 		 * Save options from admin
 		 */
-		$this->process_options();
+		if(current_user_can('manage_options') && is_admin())
+		{
+			$this->process_options();
+		}
 
 		/**
 		 * Auto redirect
@@ -510,7 +515,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		(
 			'title' => __('Online / Offline', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable display of the payment gateway on the website', 'wc-robokassa'),
+			'label' => __('Enable display of the payment method on the website', 'wc-robokassa'),
 			'description' => '',
 			'default' => 'off'
 		);
@@ -536,9 +541,9 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 
 		$fields['enable_icon'] = array
 		(
-			'title' => __('Show gateway icon?', 'wc-robokassa'),
+			'title' => __('Show icon?', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Show', 'wc-robokassa'),
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'default' => 'no'
 		);
 

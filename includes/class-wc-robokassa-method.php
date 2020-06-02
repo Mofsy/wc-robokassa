@@ -1082,7 +1082,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Test mode', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'   => __('Enable test mode?', 'wc-robokassa'),
+			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
 			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
 			'default'     => 'yes'
 		);
@@ -1124,7 +1124,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'   => __('Test notification display on the test mode', 'wc-robokassa'),
 			'type'    => 'checkbox',
-			'label'   => __('Enable', 'wc-robokassa'),
+			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
 			'description' => __('A notification about the activated test mode will be displayed when the payment.', 'wc-robokassa'),
 			'default' => 'yes'
 		);
@@ -1152,7 +1152,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __('Enable sub methods', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
 			'default' => 'no'
 		);
@@ -1161,7 +1161,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title' => __('Show the total amount including the fee', 'wc-robokassa'),
 			'type' => 'checkbox',
-			'label' => __('Enable (check the box to enable)', 'wc-robokassa'),
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('If you enable this option, the exact amount payable, including fees, will be added to the payment method headers.', 'wc-robokassa'),
 			'default' => 'no'
 		);
@@ -1187,9 +1187,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['enable_icon'] = array
 		(
-			'title'   => __('Show gateway icon?', 'wc-robokassa'),
+			'title'   => __('Show icon?', 'wc-robokassa'),
 			'type'    => 'checkbox',
-			'label'   => __('Show', 'wc-robokassa'),
+			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
 			'default' => 'yes',
 			'description' => __('Next to the name of the payment method will display the logo Robokassa.', 'wc-robokassa'),
 		);
@@ -1220,7 +1220,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Skip the received order page?', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'   => __('Enable', 'wc-robokassa'),
+			'label'   => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('This setting is used to reduce actions when users switch to payment.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1272,7 +1272,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('The transfer of goods', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('When you select the option, a check will be generated and sent to the tax and customer. When used, you must set up the VAT of the items sold. VAT is calculated according to the legislation of the Russian Federation. There may be differences in the amount of VAT with the amount calculated by the store.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1381,7 +1381,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Errors when verifying the signature of requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Recording a errors when verifying the signature of requests from Robokassa.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1390,7 +1390,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Process payments', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Recording information about the beginning of the payment process by the user.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1399,7 +1399,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Successful payments', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Recording information about received requests with successful payment.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1408,7 +1408,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Background requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Recording information about the background queries about transactions from Robokassa.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1417,7 +1417,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Failed requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Recording information about the clients return to the canceled payment page.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1426,7 +1426,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Success requests', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Recording information about the clients return to the success payment page.', 'wc-robokassa'),
 			'default'     => 'no'
 		);
@@ -1476,7 +1476,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Cart clearing', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Clean the customers cart if payment is successful? If so, the shopping cart will be cleaned. If not, the goods already purchased will most likely remain in the shopping cart.', 'wc-robokassa'),
 			'default'     => 'no',
 		);
@@ -1485,7 +1485,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Mark order as cancelled?', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Enable', 'wc-robokassa'),
+			'label'       => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Change the status of the order to canceled when the user cancels the payment. The status changes when the user returns to the cancelled payment page.', 'wc-robokassa'),
 			'default'     => 'no',
 		);
@@ -2599,7 +2599,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function admin_right_widget_status_content_logger($content)
 	{
-		if($this->get_option('logger') < 200)
+		if(wc_robokassa_logger()->get_level() < 200)
 		{
 			$content .= '<li class="list-group-item mb-0 text-white bg-warning">'
 			            . __('The logging level is too low. Need to increase the level after debugging.', 'wc-robokassa') .
@@ -2643,7 +2643,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		{
 			$color = 'bg-warning';
 		}
-		elseif($this->get_option('logger') < 200)
+		elseif(wc_robokassa_logger()->get_level() < 200)
 		{
 			$color = 'bg-warning';
 		}
