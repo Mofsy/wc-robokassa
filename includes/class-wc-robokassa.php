@@ -72,13 +72,14 @@ class WC_Robokassa
 	private $robokassa_available_currencies = array();
 
 	/**
-	 * Current rates
+	 * Current rates by robokassa
 	 *
 	 * @var array
 	 */
 	private $robokassa_rates_merchant = array();
 
 	/**
+	 * Current currency rates by CBR
 	 * @var array
 	 */
 	private $currency_rates_by_cbr = array();
@@ -237,11 +238,18 @@ class WC_Robokassa
 
 		if(class_exists('WC_Payment_Gateway') !== true)
 		{
-			$this->get_logger()->emergency('WC_Payment_Gateway not found');
+			wc_robokassa_logger()->emergency('WC_Payment_Gateway not found');
 			return false;
 		}
 
 		add_filter('woocommerce_payment_gateways', array($this, 'add_wc_gateway_method'), 10);
+
+		$robokassa_settings = $this->get_method_settings_by_method_id('robokassa');
+
+		if(isset($robokassa_settings['sub_methods']) && $robokassa_settings['sub_methods'] === 'yes')
+		{
+			add_filter('woocommerce_payment_gateways', array($this, 'add_gateway_submethods'), 10);
+		}
 
 		// hook
 		do_action('wc_robokassa_gateway_init_after');
@@ -579,9 +587,18 @@ class WC_Robokassa
 
 		$methods[] = $robokassa_method_class_name;
 
-		/**
-		 * Sub
-		 */
+		return $methods;
+	}
+
+	/**
+	 * Add the submethods gateway to WooCommerce
+	 *
+	 * @param $methods - all WooCommerce initialized gateways
+	 *
+	 * @return array - new WooCommerce initialized gateways
+	 */
+	public function add_gateway_submethods($methods)
+	{
 		$methods[] = 'Wc_Robokassa_Bank_Alfabank_Method';
 		$methods[] = 'Wc_Robokassa_Bank_Bank_Avb_Method';
 		$methods[] = 'Wc_Robokassa_Bank_Bank_Bin_Method';
