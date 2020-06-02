@@ -428,7 +428,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		/**
 		 * Add sum included commission to method title
 		 */
-		if(!is_admin() && $this->is_rates_merchant() === true && $this->is_commission_merchant() === false)
+		if(false === is_admin() && $this->is_rates_merchant() === true && $this->is_commission_merchant() === false)
 		{
 			$current_rates = WC_Robokassa()->get_robokassa_rates_merchant();
 
