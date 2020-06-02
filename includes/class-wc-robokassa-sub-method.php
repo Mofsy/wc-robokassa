@@ -59,26 +59,27 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 */
 		$this->init_options();
 
-		return;
-
 		/**
 		 * Load available currencies
 		 */
-		WC_Robokassa()->load_robokassa_available_currencies($this->get_shop_login(), $this->get_user_interface_language());
+		if($this->is_submethods_check_available())
+		{
+			WC_Robokassa()->load_robokassa_available_currencies($this->get_shop_login(), $this->get_user_interface_language());
+		}
 
 		/**
 		 * Load current rates
 		 */
 		if($this->is_rates_merchant() && is_admin() === false)
 		{
-			if(isset(WC()->cart->total))
+			if(!isset(WC()->cart->total))
 			{
-				$sum = WC()->cart->total;
-				WC_Robokassa()->load_merchant_rates($this->get_shop_login(), $sum, $this->get_user_interface_language());
+				wc_robokassa_logger()->warning('WC()->cart->total not found');
 			}
 			else
 			{
-				wc_robokassa_logger()->warning('WC()->cart->total not found');
+				$sum = WC()->cart->total;
+				WC_Robokassa()->load_merchant_rates($this->get_shop_login(), $sum, $this->get_user_interface_language());
 			}
 		}
 	}
@@ -446,7 +447,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		/**
 		 * Gateway not enabled?
 		 */
-		if($this->get_option('enabled') !== 'yes')
+		if($this->get_option('enabled', 'no') !== 'yes')
 		{
 			$this->enabled = false;
 		}
@@ -479,9 +480,11 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 * Set icon for child method
 		 */
 		$this->icon = '';
-		if($this->get_option('enable_icon') === 'yes')
+		if($this->get_option('enable_icon', 'no') === 'yes')
 		{
-			$this->icon = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . 'assets/img/' . $this->id . '.png');
+			$file_url = apply_filters('woocommerce_robokassa_icon', WC_ROBOKASSA_URL . 'assets/img/' . $this->id . '.png', $this->id);
+
+			$this->icon = $file_url;
 		}
 	}
 
@@ -623,13 +626,14 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	{
 		$return = parent::is_available();
 
-		if($return && is_array(WC_Robokassa()->get_robokassa_available_currencies()) && count(WC_Robokassa()->get_robokassa_available_currencies()) > 0)
-		{
-			$return = in_array($this->get_current_currency_alias(), array_unique(array_column(WC_Robokassa()->get_robokassa_available_currencies(), 'currency_alias')));
-		}
-		else
+		if($this->is_submethods_check_available())
 		{
 			$return = false;
+
+			if(is_array(WC_Robokassa()->get_robokassa_available_currencies()) && count(WC_Robokassa()->get_robokassa_available_currencies()) > 0)
+			{
+				$return = in_array($this->get_current_currency_alias(), array_unique(array_column(WC_Robokassa()->get_robokassa_available_currencies(), 'currency_alias')));
+			}
 		}
 
 		return $return;

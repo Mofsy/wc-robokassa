@@ -160,6 +160,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	protected $rates_merchant = false;
 
 	/**
+	 * @var bool
+	 */
+	protected $submethods_check_available = false;
+
+	/**
 	 * Available only for shipping
 	 *
 	 * @var array|false
@@ -532,7 +537,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->get_option('enable_icon') === 'yes')
 		{
-			$this->icon = apply_filters('woocommerce_icon_robokassa', WC_ROBOKASSA_URL . 'assets/img/robokassa.png');
+			$this->icon = apply_filters('woocommerce_icon_robokassa', WC_ROBOKASSA_URL . 'assets/img/robokassa.png', $this->id);
 		}
 
 		if($this->get_option('commission_merchant') === 'yes')
@@ -548,6 +553,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('rates_merchant', 'no') === 'yes')
 		{
 			$this->set_rates_merchant(true);
+		}
+
+		if($this->get_option('sub_methods_check_available', 'no') === 'yes')
+		{
+			$this->set_submethods_check_available(true);
 		}
 
 		$available_shipping = $this->get_option('available_shipping', '');
@@ -1154,6 +1164,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'type' => 'checkbox',
 			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
 			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
+			'default' => 'no'
+		);
+
+		$fields['sub_methods_check_available'] = array
+		(
+			'title' => __('Check available via the API', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
+			'description' => __('Check whether child methods are currently available for payment.', 'wc-robokassa'),
 			'default' => 'no'
 		);
 
@@ -2439,6 +2458,24 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function set_rates_merchant($rates_merchant)
 	{
 		$this->rates_merchant = $rates_merchant;
+	}
+
+	/**
+	 * Set submethods check available
+	 *
+	 * @param bool $submethods_check_available
+	 */
+	public function set_submethods_check_available($submethods_check_available)
+	{
+		$this->submethods_check_available = $submethods_check_available;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_submethods_check_available()
+	{
+		return $this->submethods_check_available;
 	}
 
 	/**

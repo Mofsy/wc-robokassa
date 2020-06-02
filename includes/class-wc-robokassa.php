@@ -332,7 +332,7 @@ class WC_Robokassa
 	 */
 	public function load_robokassa_available_currencies($merchant_login, $language = 'ru')
 	{
-		if(is_array($this->get_robokassa_available_currencies()) && count($this->get_robokassa_available_currencies()) == 0)
+		if(is_array($this->get_robokassa_available_currencies()) && count($this->get_robokassa_available_currencies()) === 0)
 		{
 			$api = $this->load_robokassa_api();
 
