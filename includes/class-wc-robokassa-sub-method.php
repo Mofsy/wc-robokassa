@@ -534,7 +534,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	{
 		$fields['interface'] = array
 		(
-			'title' => __( 'Interface', 'wc-robokassa' ),
+			'title' => __('Interface', 'wc-robokassa'),
 			'type' => 'title',
 			'description' => __( 'Customize the appearance. Can leave it at that.', 'wc-robokassa' ),
 		);
