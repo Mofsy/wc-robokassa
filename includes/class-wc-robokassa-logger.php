@@ -52,7 +52,7 @@ class WC_Robokassa_Logger
 	);
 
 	/**
-	 * WC_Gatework_Logger constructor
+	 * WC_Robokassa_Logger constructor
 	 *
 	 * @param $path
 	 * @param int $level
@@ -214,13 +214,12 @@ class WC_Robokassa_Logger
 	/**
 	 * Save to file
 	 *
-	 * @throws
-	 *
 	 * @param $level
 	 * @param $message
 	 * @param null $object
 	 *
 	 * @return bool
+	 * @throws Exception
 	 */
 	public function add($level, $message, $object = null)
 	{
@@ -254,12 +253,12 @@ class WC_Robokassa_Logger
 		{
 			$content['object'] = $object ? 'true' : 'false';
 		}
-		else
+		elseif(!is_null($object) && $object !== '')
 		{
 			$content['object'] = $object;
 		}
 
-		$content = implode(' -|- ', $content);
+		$content = implode(' |- ', $content);
 
 		$file = $this->get_path() . DIRECTORY_SEPARATOR . $this->get_name();
 
