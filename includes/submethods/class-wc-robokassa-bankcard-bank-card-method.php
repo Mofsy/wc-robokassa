@@ -37,7 +37,5 @@ class Wc_Robokassa_Bankcard_Bank_Card_Method extends Wc_Robokassa_Sub_Method
 		 * Initializing child method
 		 */
 		$this->init_child_method();
-
-		//var_dump($this);die;
 	}
 }

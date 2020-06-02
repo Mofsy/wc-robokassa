@@ -447,34 +447,26 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		/**
 		 * Gateway not enabled?
 		 */
-		if($this->get_option('enabled', 'no') !== 'yes')
+		$this->enabled = false;
+		if($this->get_option('enabled', 'no') === 'yes')
 		{
-			$this->enabled = false;
+			$this->enabled = true;
 		}
 
 		/**
 		 * Title for user interface
 		 */
-		if($this->get_option('title', '') !== '')
-		{
-			$this->title = $this->get_option('title');
-		}
+		$this->title = $this->get_option('title', $this->parent_settings['title']);
 
 		/**
 		 * Set description
 		 */
-		if($this->get_option('description', '') !== '')
-		{
-			$this->description = $this->get_option('description');
-		}
+		$this->description = $this->get_option('description', $this->parent_settings['description']);
 
 		/**
 		 * Set order button text
 		 */
-		if($this->get_option('order_button_text', '') !== '')
-		{
-			$this->order_button_text = $this->get_option('order_button_text');
-		}
+		$this->order_button_text = $this->get_option('order_button_text', $this->parent_settings['order_button_text']);
 
 		/**
 		 * Set icon for child method
