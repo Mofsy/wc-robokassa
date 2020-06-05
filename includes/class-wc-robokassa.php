@@ -718,6 +718,7 @@ class WC_Robokassa
            && $settings_version < WC_ROBOKASSA_VERSION
            && $section !== 'robokassa')
         {
+        	// todo: вывести
         }
     }
 
