@@ -1941,6 +1941,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		$receipt_signature = '';
 		if($receipt_result != '')
 		{
+			$receipt_result = urlencode($receipt_result);
 			$receipt_signature = ':' . $receipt_result;
 
 			$args['Receipt'] = $receipt_result;
