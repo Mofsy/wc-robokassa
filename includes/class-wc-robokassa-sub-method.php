@@ -211,7 +211,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 *
 		 * todo: percentage + -
 		 */
-		if($this->is_commission_merchant() && $this->get_current_currency_alias() != '' && WC_Robokassa()->get_wc_currency() == 'RUB')
+		if($this->is_commission_merchant() && $this->get_current_currency_alias() != '' && WC_Robokassa()->get_wc_currency() === 'RUB')
 		{
 			/**
 			 * Считаем сумму к получению
@@ -260,7 +260,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 * Если передается параметр OutSumCurrency, то он должен быть включен в расчет  контрольной суммы (SignatureValue).
 		 * В этом случае база для  расчёта будет выглядеть так: MerchantLogin:OutSum:InvId:OutSumCurrency:Пароль#1
 		 */
-		switch (WC_Robokassa()->get_wc_currency())
+		switch(WC_Robokassa()->get_wc_currency())
 		{
 			case 'USD':
 				$args['OutSumCurrency'] = 'USD';
@@ -321,18 +321,18 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		$receipt_signature = '';
 		if($receipt_result != '')
 		{
-			$receipt_signature = ':'.$receipt_result;
+			$receipt_signature = ':' . $receipt_result;
 
 			$args['Receipt'] = $receipt_result;
 		}
 
 		if(array_key_exists('OutSumCurrency', $args))
 		{
-			$signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].$receipt_signature.':'.$args['OutSumCurrency'].':'.$signature_pass;
+			$signature_payload = $args['MerchantLogin'] . ':' . $args['OutSum'] . ':' . $args['InvId'] . $receipt_signature . ':' . $args['OutSumCurrency'] . ':' . $signature_pass;
 		}
 		else
 		{
-			$signature_payload = $args['MerchantLogin'].':'.$args['OutSum'].':'.$args['InvId'].$receipt_signature.':'.$signature_pass;
+			$signature_payload = $args['MerchantLogin'] . ':' . $args['OutSum'] . ':' . $args['InvId'] . $receipt_signature . ':' . $signature_pass;
 		}
 		$args['SignatureValue'] = $this->get_signature($signature_payload, $signature_method);
 
