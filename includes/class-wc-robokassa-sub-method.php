@@ -30,11 +30,6 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	protected $current_currency_alias = '';
 
 	/**
-	 * @var bool
-	 */
-	protected $submethods_check_available = false;
-
-	/**
 	 * Wc_Robokassa_Sub_Method constructor
 	 */
 	public function __construct()
@@ -136,24 +131,6 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	public function set_current_currency_alias( $current_currency_alias )
 	{
 		$this->current_currency_alias = $current_currency_alias;
-	}
-
-	/**
-	 * Set submethods check available
-	 *
-	 * @param bool $submethods_check_available
-	 */
-	public function set_submethods_check_available($submethods_check_available)
-	{
-		$this->submethods_check_available = $submethods_check_available;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function is_submethods_check_available()
-	{
-		return $this->submethods_check_available;
 	}
 
 	/**
@@ -502,11 +479,6 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	 */
 	public function init_child_options()
 	{
-		if($this->get_option('sub_methods_check_available', 'no') === 'yes')
-		{
-			$this->set_submethods_check_available(true);
-		}
-
 		/**
 		 * Gateway not enabled?
 		 */

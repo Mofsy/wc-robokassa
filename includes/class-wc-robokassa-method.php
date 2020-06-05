@@ -167,6 +167,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	protected $available_shipping = false;
 
 	/**
+	 * @var bool
+	 */
+	protected $submethods_check_available = false;
+
+	/**
 	 * WC_Robokassa constructor
 	 */
 	public function __construct()
@@ -552,6 +557,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		if($this->get_option('rates_merchant', 'no') === 'yes')
 		{
 			$this->set_rates_merchant(true);
+		}
+
+		if($this->get_option('sub_methods_check_available', 'no') === 'yes')
+		{
+			$this->set_submethods_check_available(true);
 		}
 
 		$available_shipping = $this->get_option('available_shipping', '');
@@ -2465,6 +2475,24 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Set submethods check available
+	 *
+	 * @param bool $submethods_check_available
+	 */
+	public function set_submethods_check_available($submethods_check_available)
+	{
+		$this->submethods_check_available = $submethods_check_available;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_submethods_check_available()
+	{
+		return $this->submethods_check_available;
+	}
+
+	/**
 	 * Check if the gateway is available for use
 	 *
 	 * @since 1.0.0.1
@@ -2473,7 +2501,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function is_available()
 	{
-		$is_available = parent::is_available();
+		$is_available = true;
+
+		if(WC()->cart && 0 < $this->get_order_total() && 0 < $this->max_amount && $this->max_amount < $this->get_order_total())
+		{
+			$is_available = false;
+		}
 
 		wc_robokassa_logger()->debug('is_available: parent $is_available', $is_available);
 
