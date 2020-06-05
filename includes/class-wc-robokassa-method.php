@@ -1847,7 +1847,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		wc_robokassa_logger()->debug('generate_form: $order', $order);
 
-		$args = array();
+		$args = [];
 		$args['MerchantLogin'] = $this->get_shop_login();
 
 		$out_sum = number_format($order->get_total(), 2, '.', '');
