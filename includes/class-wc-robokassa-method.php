@@ -2501,7 +2501,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function is_available()
 	{
-		$is_available = true;
+		$is_available = $this->enabled;
 
 		if(WC()->cart && 0 < $this->get_order_total() && 0 < $this->max_amount && $this->max_amount < $this->get_order_total())
 		{
