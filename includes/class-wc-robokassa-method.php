@@ -1632,11 +1632,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		if($this->is_support_currency() === false)
 		{
+			wc_robokassa_logger()->alert('is_available_front: is_support_currency');
 			return false;
 		}
 
 		if($this->is_commission_merchant())
 		{
+			wc_robokassa_logger()->alert('is_available_front: is_commission_merchant');
 			return false;
 		}
 
