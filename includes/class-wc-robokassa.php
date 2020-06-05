@@ -526,7 +526,7 @@ class WC_Robokassa
     {
     	$wc_version = wc_robokassa_get_wc_version();
 
-	    wc_robokassa_logger()->debug('load_wc_version $wc_version', $wc_version);
+	    wc_robokassa_logger()->info('load_wc_version: $wc_version' . $wc_version);
 
 	    $this->set_wc_version($wc_version);
 	    
