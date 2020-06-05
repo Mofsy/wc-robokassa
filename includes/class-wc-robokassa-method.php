@@ -20,10 +20,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @var array
 	 */
-	public $currency_all = array
-	(
+	public $currency_all =
+	[
 		'RUB', 'USD', 'EUR', 'KZT'
-	);
+	];
 
 	/**
 	 * Shop login from Robokassa
