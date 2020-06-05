@@ -147,23 +147,30 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	 */
 	public function generate_form($order_id)
 	{
+		wc_robokassa_logger()->info('generate_form: start');
+
 		$order = wc_get_order($order_id);
 		if(!is_object($order))
 		{
+			wc_robokassa_logger()->error('generate_form: $order', $order);
 			die('Generate form error. Order not found.');
 		}
 
+		wc_robokassa_logger()->debug('generate_form: $order', $order);
+
 		/**
 		 * Rewrite currency from order
-		 *
-		 * todo: setting in admin?
 		 */
-		WC_Robokassa()->set_wc_currency($order->get_currency());
+		if(WC_Robokassa()->get_wc_currency() !== $order->get_currency('view'))
+		{
+			wc_robokassa_logger()->info('generate_form: rewrite currency' . $order->get_currency());
+			WC_Robokassa()->set_wc_currency($order->get_currency());
+		}
 
 		/**
 		 * Form parameters
 		 */
-		$args = array();
+		$args = [];
 
 		/**
 		 * Shop login
@@ -251,19 +258,13 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 				break;
 		}
 
-		/**
-		 * Test mode
-		 */
-		if ($this->test === 'yes')
+		if ($this->get_test() === 'yes')
 		{
 			$signature_pass = $this->test_shop_pass_1;
 			$signature_method = $this->test_sign_method;
 
 			$args['IsTest'] = 1;
 		}
-		/**
-		 * Real payments
-		 */
 		else
 		{
 			$signature_pass = $this->shop_pass_1;
@@ -663,6 +664,18 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Получение ссылки на автоматический редирект в робокассу
+	 *
+	 * @param $order_id
+	 *
+	 * @return string
+	 */
+	public function get_url_auto_redirect($order_id)
+	{
+		return get_site_url( null, '/?wc-api=wc_robokassa&action=redirect&order_id=' . $order_id);
 	}
 
 	/**

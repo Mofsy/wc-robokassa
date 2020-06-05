@@ -2161,7 +2161,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 *
 	 * @return string
 	 */
-	public function get_url_auto_redirect($order_id) // todo: more options
+	public function get_url_auto_redirect($order_id)
 	{
 		return get_site_url( null, '/?wc-api=wc_' . $this->id . '&action=redirect&order_id=' . $order_id);
 	}
