@@ -932,7 +932,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_form_fields()
 	{
-		$this->form_fields = apply_filters('wc_robokassa_init_form_fields', array());
+		$this->form_fields = apply_filters('wc_robokassa_init_form_fields', []);
 	}
 
 	/**
