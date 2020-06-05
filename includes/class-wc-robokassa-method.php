@@ -260,7 +260,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		if($this->get_option('logger', '') !== '')
 		{
-			wc_robokassa_logger()->set_level($this->get_option('logger'));
+			wc_robokassa_logger()->set_level($this->get_option('logger', 400));
 
 			$file_name = WC_Robokassa()->get_logger_filename();
 
