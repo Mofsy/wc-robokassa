@@ -218,7 +218,7 @@ class WC_Robokassa
 
 		if(is_admin())
 		{
-			add_action('init', array($this, 'admin_init'), 0);
+			add_action('init', array($this, 'init_admin'), 0);
 			add_action('admin_notices', array($this, 'wc_robokassa_admin_notices'), 10);
 
 			add_filter('plugin_action_links_' . WC_ROBOKASSA_PLUGIN_NAME, array($this, 'links_left'), 10);
@@ -276,7 +276,7 @@ class WC_Robokassa
 	/**
 	 * Admin initialization
 	 */
-	public function admin_init()
+	public function init_admin()
 	{
 		/**
 		 * Load URLs for settings
