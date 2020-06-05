@@ -95,6 +95,11 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 	public function init_actions()
 	{
 		/**
+		 * Receipt page
+		 */
+		add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'), 10);
+
+		/**
 		 * Payment fields description show
 		 */
 		add_action('wc_' . $this->id . '_payment_fields_show', array($this, 'payment_fields_description_show'), 10);
@@ -438,14 +443,6 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		{
 			$this->process_options();
 		}
-
-		/**
-		 * Auto redirect
-		 */
-		add_action('wc_' . $this->id . '_input_payment_notifications', array(
-			$this,
-			'wc_robokassa_input_payment_notifications_redirect'
-		));
 
 		/**
 		 * Admin title

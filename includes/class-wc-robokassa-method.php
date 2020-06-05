@@ -1820,13 +1820,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function receipt_page($order)
 	{
 		// hook
-		do_action('wc_robokassa_receipt_page_before_show', $order);
+		do_action('wc_' . $this->id . '_receipt_page_before_show', $order);
 
 		// hook
-		do_action('wc_robokassa_receipt_page_show', $order);
+		do_action('wc_' . $this->id . '_receipt_page_show', $order);
 
 		// hook
-		do_action('wc_robokassa_receipt_page_after_show', $order);
+		do_action('wc_' . $this->id . '_receipt_page_after_show', $order);
 	}
 
 	/**
