@@ -192,7 +192,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 *
 		 * Идентификатор магазина в ROBOKASSA, который придуман при создании магазина.
 		 */
-		$args['MerchantLogin'] = $this->shop_login;
+		$args['MerchantLogin'] = $this->get_shop_login();
 
 		/**
 		 * Sum
@@ -220,7 +220,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 			(
 				$this->get_current_currency_alias(),
 				$out_sum,
-				$this->shop_login
+				$this->get_shop_login()
 			);
 		}
 
@@ -275,15 +275,15 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 
 		if ($this->get_test() === 'yes')
 		{
-			$signature_pass = $this->test_shop_pass_1;
-			$signature_method = $this->test_sign_method;
+			$signature_pass = $this->get_test_shop_pass_1();
+			$signature_method = $this->get_test_sign_method();
 
 			$args['IsTest'] = 1;
 		}
 		else
 		{
-			$signature_pass = $this->shop_pass_1;
-			$signature_method = $this->sign_method;
+			$signature_pass = $this->get_shop_pass_1();
+			$signature_method = $this->get_sign_method();
 		}
 
 		/**
