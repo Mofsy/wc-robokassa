@@ -278,7 +278,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_filters()
 	{
-		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_key'), 8);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'), 10);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
@@ -942,35 +941,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function init_form_fields()
 	{
 		$this->form_fields = apply_filters('wc_robokassa_init_form_fields', array());
-	}
-
-	/**
-	 * Add fields for keys
-	 *
-	 * @param $fields
-	 *
-	 * @return array
-	 */
-	public function init_form_fields_key($fields)
-	{
-		$fields['key'] = array
-		(
-			'title'       => __('Technical key', 'wc-robokassa'),
-			'type'        => 'title',
-			'description' => __('Get it on the official website of the plugin by clicking on the link: ', 'wc-robokassa') .
-			                 '<a target="_blank" href="https://mofsy.ru/market/wc-robokassa-key">https://mofsy.ru/market/wc-robokassa-key</a>',
-		);
-
-		$fields['key_data'] = array
-		(
-			'title'       => __('Key entry field:', 'wc-robokassa'),
-			'type'        => 'text',
-			'description' =>
-				__('After entering a valid key and saving settings, this field will be moved to technical details. Service features will available.', 'wc-robokassa'),
-			'default'     => ''
-		);
-
-		return $fields;
 	}
 
 	/**
