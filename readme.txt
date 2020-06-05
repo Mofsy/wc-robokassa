@@ -72,6 +72,7 @@ Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 = 4.0.0 =
 New major version. Please backup before update.
 * Add all premium features
+* Test: WooCommerce 4.1, 4.2
 * More fix
 
 = 3.1.0 =
