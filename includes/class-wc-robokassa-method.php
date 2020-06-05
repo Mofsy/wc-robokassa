@@ -2475,7 +2475,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		wc_robokassa_logger()->debug('is_available: parent $is_available', $is_available);
 
-		if($this->get_available_shipping() !== false && version_compare(wc_robokassa_get_wc_version(), '3.2.0', '>='))
+		if(is_array($this->get_available_shipping()) && !empty($this->get_available_shipping()) && version_compare(wc_robokassa_get_wc_version(), '3.2.0', '>='))
 		{
 			$order = null;
 			$needs_shipping = false;
