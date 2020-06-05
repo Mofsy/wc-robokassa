@@ -244,7 +244,7 @@ class WC_Robokassa
 			return false;
 		}
 
-		add_filter('woocommerce_payment_gateways', array($this, 'add_wc_gateway_method'), 10);
+		add_filter('woocommerce_payment_gateways', array($this, 'add_gateway_method'), 10);
 
 		$robokassa_settings = $this->get_method_settings_by_method_id('robokassa');
 
@@ -540,7 +540,7 @@ class WC_Robokassa
 	 *
 	 * @return array - new WooCommerce initialized gateways
 	 */
-	public function add_wc_gateway_method($methods)
+	public function add_gateway_method($methods)
 	{
 	    $default_class_name = 'Wc_Robokassa_Method';
 
