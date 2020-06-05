@@ -222,7 +222,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			/**
 			 * Auto redirect
 			 */
-			add_action('wc_robokassa_input_payment_notifications', array($this, 'wc_robokassa_input_payment_notifications_redirect_by_form'), 20);
+			add_action('wc_robokassa_input_payment_notifications', array($this, 'input_payment_notifications_redirect_by_form'), 20);
 
 			/**
 			 * Payment listener/API hook
@@ -2160,8 +2160,10 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 	/**
 	 * Автоматический редирект на робокассу методом автоматической отправки формы
+	 *
+	 * @since 4.0.0
 	 */
-	public function wc_robokassa_input_payment_notifications_redirect_by_form()
+	public function input_payment_notifications_redirect_by_form()
 	{
 		if(false == isset($_GET['action']))
 		{
