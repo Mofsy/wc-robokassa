@@ -116,6 +116,16 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		 * Receipt form show
 		 */
 		add_action('wc_' . $this->id . '_receipt_page_show', array($this, 'wc_robokassa_receipt_page_show_form'), 10);
+
+		/**
+		 * Payment listener/API hook
+		 */
+		add_action('woocommerce_api_wc_' . $this->id, array($this, 'input_payment_notifications'), 10);
+
+		/**
+		 * Auto redirect
+		 */
+		add_action('wc_' . $this->id . '_input_payment_notifications', array($this, 'input_payment_notifications_redirect_by_form'), 20);
 	}
 
 	/**
@@ -661,18 +671,6 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		}
 
 		return $return;
-	}
-
-	/**
-	 * Получение ссылки на автоматический редирект в робокассу
-	 *
-	 * @param $order_id
-	 *
-	 * @return string
-	 */
-	public function get_url_auto_redirect($order_id)
-	{
-		return get_site_url( null, '/?wc-api=wc_robokassa&action=redirect&order_id=' . $order_id);
 	}
 
 	/**
