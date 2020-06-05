@@ -72,3 +72,36 @@ function wc_robokassa_logger()
 {
 	return WC_Robokassa()->get_logger();
 }
+
+
+/**
+ * Load localisation files
+ */
+function wc_robokassa_plugin_text_domain()
+{
+	/**
+	 * WP 5.x or later
+	 */
+	if(function_exists('determine_locale'))
+	{
+		$locale = determine_locale();
+	}
+	else
+	{
+		$locale = is_admin() && function_exists('get_user_locale') ? get_user_locale() : get_locale();
+	}
+
+	/**
+	 * Change locale from external code
+	 *
+	 * @since 2.4.0
+	 */
+	$locale = apply_filters('plugin_locale', $locale, 'wc-robokassa');
+
+	/**
+	 * Unload & load
+	 */
+	unload_textdomain('wc-robokassa');
+	load_textdomain('wc-robokassa', WP_LANG_DIR . '/wc-robokassa/wc-robokassa-' . $locale . '.mo');
+	load_textdomain('wc-robokassa', WC_ROBOKASSA_PLUGIN_DIR . 'languages/wc-robokassa-' . $locale . '.mo');
+}
