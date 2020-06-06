@@ -327,7 +327,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 
 		if(array_key_exists('OutSumCurrency', $args))
 		{
-			$signature_payload = $args['MerchantLogin'] . ':' . $args['OutSum'] . ':' . $args['InvId'] . $receipt_signature . ':' . $args['OutSumCurrency'] . ':' . $signature_pass;
+			$signature_payload = $args['MerchantLogin'] . ':' . $args['OutSum'] . ':' . $args['InvId'] . ':' . $args['OutSumCurrency'] . $receipt_signature . ':' . $signature_pass;
 		}
 		else
 		{

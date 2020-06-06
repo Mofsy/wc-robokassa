@@ -1947,7 +1947,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		if(array_key_exists('OutSumCurrency', $args))
 		{
-			$signature_payload = $args['MerchantLogin'] . ':' . $args['OutSum'] . ':' . $args['InvId'] . $receipt_signature . ':' . $args['OutSumCurrency'] . ':' . $signature_pass;
+			$signature_payload = $args['MerchantLogin'] . ':' . $args['OutSum'] . ':' . $args['InvId'] . ':' . $args['OutSumCurrency'] . $receipt_signature . ':' . $signature_pass;
 		}
 		else
 		{
