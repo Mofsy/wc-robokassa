@@ -321,7 +321,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		$receipt_signature = '';
 		if($receipt_result != '')
 		{
-			$receipt_signature = ':' . $receipt_result;
+			$receipt_signature = ':' . urlencode($receipt_result);
 
 			$args['Receipt'] = $receipt_result;
 		}
