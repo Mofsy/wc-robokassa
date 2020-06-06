@@ -302,7 +302,7 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 		/**
 		 * Receipt
 		 */
-		$receipt_result = '';
+		$receipt_json = '';
 		if($this->is_ofd_status() === true)
 		{
 			WC_Robokassa()->get_logger()->info('generate_form: fiscal active');
@@ -310,20 +310,19 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 			$receipt['sno'] = $this->get_ofd_sno();
 			$receipt['items'] = $this->generate_receipt_items($order);
 
-			$receipt_result = json_encode($receipt);
+			$receipt_json = urlencode(json_encode($receipt, 256));
 
-			WC_Robokassa()->get_logger()->debug('generate_form: $receipt_result', $receipt_result);
+			WC_Robokassa()->get_logger()->debug('generate_form: $receipt_result', $receipt_json);
 		}
 
 		/**
 		 * Signature
 		 */
 		$receipt_signature = '';
-		if($receipt_result != '')
+		if($receipt_json != '')
 		{
-			$receipt_signature = ':' . urlencode($receipt_result);
-
-			$args['Receipt'] = $receipt_result;
+			$receipt_signature = ':' . $receipt_json;
+			$args['Receipt'] = $receipt_json;
 		}
 
 		if(array_key_exists('OutSumCurrency', $args))

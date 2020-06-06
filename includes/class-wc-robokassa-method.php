@@ -1922,7 +1922,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		/**
 		 * Receipt
 		 */
-		$receipt_result = '';
+		$receipt_json = '';
 		if($this->is_ofd_status() === true)
 		{
 			wc_robokassa_logger()->info('generate_form: fiscal active');
@@ -1930,20 +1930,19 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$receipt['sno'] = $this->get_ofd_sno();
 			$receipt['items'] = $this->generate_receipt_items($order);
 
-			$receipt_result = json_encode($receipt);
+			$receipt_json = urlencode(json_encode($receipt, 256));
 
-			wc_robokassa_logger()->debug('generate_form: $receipt_result', $receipt_result);
+			wc_robokassa_logger()->debug('generate_form: $receipt_result', $receipt_json);
 		}
 
 		/**
 		 * Signature
 		 */
 		$receipt_signature = '';
-		if($receipt_result != '')
+		if($receipt_json != '')
 		{
-			$receipt_signature = ':' . urlencode($receipt_result);
-
-			$args['Receipt'] = $receipt_result;
+			$receipt_signature = ':' . $receipt_json;
+			$args['Receipt'] = $receipt_json;
 		}
 
 		if(array_key_exists('OutSumCurrency', $args))
@@ -2134,30 +2133,30 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		switch($method)
 		{
 			case 'ripemd160':
-				$signature = strtoupper(hash('ripemd160', $string));
+				$signature = hash('ripemd160', $string);
 				break;
 
 			case 'sha1':
-				$signature = strtoupper(sha1($string));
+				$signature = sha1($string);
 				break;
 
 			case 'sha256':
-				$signature = strtoupper(hash('sha256', $string));
+				$signature = hash('sha256', $string);
 				break;
 
 			case 'sha384':
-				$signature = strtoupper(hash('sha384', $string));
+				$signature = hash('sha384', $string);
 				break;
 
 			case 'sha512':
-				$signature = strtoupper(hash('sha512', $string));
+				$signature = hash('sha512', $string);
 				break;
 
 			default:
-				$signature = strtoupper(md5($string));
+				$signature = md5($string);
 		}
 
-		return $signature;
+		return strtoupper($signature);
 	}
 
 	/**
