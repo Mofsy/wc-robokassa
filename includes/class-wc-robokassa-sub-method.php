@@ -670,6 +670,11 @@ class Wc_Robokassa_Sub_Method extends Wc_Robokassa_Method
 			}
 		}
 
+		if($this->enabled !== true)
+		{
+			$return = false;
+		}
+
 		return $return;
 	}
 
