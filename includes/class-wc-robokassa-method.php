@@ -1971,6 +1971,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 */
 		$args = apply_filters('wc_robokassa_payment_form_args', $args);
 
+		wc_robokassa_logger()->debug('generate_form: final $args', $args);
+
 		/**
 		 * Form inputs generic
 		 */
