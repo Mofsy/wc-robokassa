@@ -801,7 +801,15 @@ class WC_Robokassa
            && $settings_version < WC_ROBOKASSA_VERSION
            && $section !== 'robokassa')
         {
-        	// todo: вывести
+	        ?>
+	        <div class="notice notice-warning" style="padding-top: 10px; padding-bottom: 10px; line-height: 170%;">
+		        <?php
+		        echo __('The plugin for accepting payments through ROBOKASSA for WooCommerce has been updated to a version that requires additional configuration.', 'wc-robokassa');
+		        echo '<br />';
+		        $link = '<a href="'. admin_url('admin.php?page=wc-settings&tab=checkout&section=robokassa') .'">'.__('here', 'wc-robokassa').'</a>';
+		        echo sprintf( __( 'Press %s (go to payment gateway settings).', 'wc-robokassa' ), $link ) ?>
+	        </div>
+	        <?php
         }
     }
 

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Payment gateway - Robokassa for WooCommerce\n"
-"POT-Creation-Date: 2020-07-02 16:24+0300\n"
-"PO-Revision-Date: 2020-07-02 16:32+0300\n"
+"POT-Creation-Date: 2020-07-02 22:42+0300\n"
+"PO-Revision-Date: 2020-07-02 22:43+0300\n"
 "Last-Translator: Mofsy <support@mofsy.ru>\n"
 "Language-Team: Mofsy <support@mofsy.ru>\n"
 "Language: ru_RU\n"
@@ -1062,34 +1062,51 @@ msgstr "Официальная страница"
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/class-wc-robokassa.php:919
+#: includes/class-wc-robokassa.php:807
+msgid ""
+"The plugin for accepting payments through ROBOKASSA for WooCommerce has been "
+"updated to a version that requires additional configuration."
+msgstr ""
+"Плагин для приема платежей через Робокассу для WooCommerce был обновлен до "
+"версии, требующей дополнительной настройки."
+
+#: includes/class-wc-robokassa.php:809
+msgid "here"
+msgstr "сюда"
+
+#: includes/class-wc-robokassa.php:810
+#, php-format
+msgid "Press %s (go to payment gateway settings)."
+msgstr "Нажмите %s (для перехода к настройкам платежного шлюза)."
+
+#: includes/class-wc-robokassa.php:927
 msgid "Useful information"
 msgstr "Полезная информация"
 
-#: includes/class-wc-robokassa.php:923
+#: includes/class-wc-robokassa.php:931
 msgid "Official plugin page"
 msgstr "Официальная страница"
 
-#: includes/class-wc-robokassa.php:924
+#: includes/class-wc-robokassa.php:932
 msgid "Related news: ROBOKASSA"
 msgstr "Новости по теме Робокасса"
 
-#: includes/class-wc-robokassa.php:925
+#: includes/class-wc-robokassa.php:933
 msgid "Plugins for WooCommerce"
 msgstr "Плагины для WooCommerce"
 
-#: includes/class-wc-robokassa.php:945
+#: includes/class-wc-robokassa.php:953
 msgid "Errors not found. Payment acceptance is active."
 msgstr "Ошибки не найдены. Прием платежей активен."
 
-#: includes/class-wc-robokassa.php:949
+#: includes/class-wc-robokassa.php:957
 msgid ""
 "Warnings found. They are highlighted in yellow. You should attention to them."
 msgstr ""
 "Предупреждения найдены. Они выделены желтым цветом. Вы должны обратить на "
 "них внимание."
 
-#: includes/class-wc-robokassa.php:953
+#: includes/class-wc-robokassa.php:961
 msgid ""
 "Critical errors were detected. They are highlighted in red. Payment "
 "acceptance is not active."
@@ -1097,7 +1114,7 @@ msgstr ""
 "Были обнаружены критические ошибки. Они выделены красным цветом. Прием "
 "платежей не активен."
 
-#: includes/class-wc-robokassa.php:957
+#: includes/class-wc-robokassa.php:965
 msgid "Status"
 msgstr "Состояние"
 
@@ -1362,13 +1379,6 @@ msgstr "https://mofsy.ru"
 #~ "способы оплаты из премиум дополнения."
 
 #~ msgid ""
-#~ "The plugin for accepting payments through ROBOKASSA for WooCommerce has "
-#~ "been updated to a version that requires additional configuration."
-#~ msgstr ""
-#~ "Плагин для приема платежей через ROBOKASSA для WooCommerce был обновлен "
-#~ "до версии, требующей дополнительной настройки."
-
-#~ msgid ""
 #~ "This is a fairly large update with many bug fixes and added features. "
 #~ "Robokassa started working on improving its API. The premium add-on will "
 #~ "soon include payment without leaving the site."
@@ -1387,9 +1397,6 @@ msgstr "https://mofsy.ru"
 #~ msgid "The discount is 400 rubles."
 #~ msgstr "Скидка составляет 400 рублей."
 
-#~ msgid "here"
-#~ msgstr "сюда"
-
 #, php-format
 #~ msgid ""
 #~ "Press %s (to go to payment gateway settings). Examine the new settings "
@@ -1400,10 +1407,6 @@ msgstr "https://mofsy.ru"
 
 #~ msgid "Trying to get the language based on the locale?"
 #~ msgstr "Получать язык для интерфейса Робокассы  на основе локали?"
-
-#, php-format
-#~ msgid "Press %s (to go to payment gateway settings)."
-#~ msgstr "Нажмите %s (для перехода к настройкам платежного шлюза)."
 
 #~ msgid "Paid supplement"
 #~ msgstr "Платное дополнение"
