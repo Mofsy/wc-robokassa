@@ -85,6 +85,13 @@ class WC_Robokassa
 	private $currency_rates_by_cbr = array();
 
 	/**
+	 * Tecodes
+	 *
+	 * @var null|Tecodes_Local
+	 */
+	private $tecodes = null;
+
+	/**
 	 * WC_Robokassa constructor
 	 */
 	public function __construct()
@@ -129,6 +136,10 @@ class WC_Robokassa
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-api.php';
 		require_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-sub-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/tecodes-local/bootstrap.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes-instance.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes-storage-code.php';
 
 		/**
 		 * Sub methods
@@ -209,6 +220,26 @@ class WC_Robokassa
 	}
 
 	/**
+	 * Get Tecodes
+	 *
+	 * @return Tecodes_Local|null
+	 */
+	public function tecodes()
+	{
+		return $this->tecodes;
+	}
+
+	/**
+	 * Set Tecodes
+	 *
+	 * @param Tecodes_Local|null $tecodes
+	 */
+	public function set_tecodes($tecodes)
+	{
+		$this->tecodes = $tecodes;
+	}
+
+	/**
 	 * Hooks (actions & filters)
 	 */
 	private function init_hooks()
@@ -269,6 +300,7 @@ class WC_Robokassa
 
 		$this->load_wc_version();
 		$this->load_currency();
+		$this->load_tecodes();
 
 		return true;
 	}
@@ -323,6 +355,57 @@ class WC_Robokassa
         $this->set_robokassa_api($robokassa_api);
 
         return $this->get_robokassa_api();
+    }
+
+	/**
+	 * Load Tecodes
+	 */
+    public function load_tecodes()
+    {
+	    $options =
+	    [
+		    'timeout' => 15,
+		    'verify_ssl' => false,
+		    'version' => 'tecodes/v1'
+	    ];
+
+	    $tecodes_local = new Wc_Robokassa_Tecodes('https://mofsy.ru/', $options);
+
+	    /**
+	     * Languages
+	     */
+	    $tecodes_local->status_messages = array
+	    (
+		    'status_1' => __('This activation code is active.', 'wc-robokassa'),
+		    'status_2' => __('Error: This activation code has expired.', 'wc-robokassa'),
+		    'status_3' => __('Activation code republished. Awaiting reactivation.', 'wc-robokassa'),
+		    'status_4' => __('Error: This activation code has been suspended.', 'wc-robokassa'),
+		    'code_not_found' => __('This activation code is not found.', 'wc-robokassa'),
+		    'localhost' => __('This activation code is active (localhost).', 'wc-robokassa'),
+		    'pending' => __('Error: This activation code is pending review.', 'wc-robokassa'),
+		    'download_access_expired' => __('Error: This version of the software was released after your download access expired. Please downgrade software or contact support for more information.', 'wc-robokassa'),
+		    'missing_activation_key' => __('Error: The activation code variable is empty.', 'wc-robokassa'),
+		    'could_not_obtain_local_code' => __('Error: I could not obtain a new local code.', 'wc-robokassa'),
+		    'maximum_delay_period_expired' => __('Error: The maximum local code delay period has expired.', 'wc-robokassa'),
+		    'local_code_tampering' => __('Error: The local key has been tampered with or is invalid.', 'wc-robokassa'),
+		    'local_code_invalid_for_location' => __('Error: The local code is invalid for this location.', 'wc-robokassa'),
+		    'missing_license_file' => __('Error: Please create the following file (and directories if they dont exist already): ', 'wc-robokassa'),
+		    'license_file_not_writable' => __('Error: Please make the following path writable: ', 'wc-robokassa'),
+		    'invalid_local_key_storage' => __('Error: I could not determine the local key storage on clear.', 'wc-robokassa'),
+		    'could_not_save_local_key' => __('Error: I could not save the local key.', 'wc-robokassa'),
+		    'code_string_mismatch' => __('Error: The local code is invalid for this activation code.', 'wc-robokassa'),
+		    'code_status_delete' => __('Error: This activation code has been deleted.', 'wc-robokassa'),
+		    'code_status_draft' => __('Error: This activation code has draft.', 'wc-robokassa'),
+		    'code_status_available' => __('Error: This activation code has available.', 'wc-robokassa'),
+		    'code_status_blocked' => __('Error: This activation code has been blocked.', 'wc-robokassa'),
+	    );
+
+	    $tecodes_local->set_local_code_storage(new Wc_Robokassa_Tecodes_Code_Storage());
+	    $tecodes_local->set_instance(new Wc_Robokassa_Tecodes_Instance());
+
+	    $tecodes_local->validate();
+
+	    $this->set_tecodes($tecodes_local);
     }
 
 	/**

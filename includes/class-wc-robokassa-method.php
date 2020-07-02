@@ -280,6 +280,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function init_filters()
 	{
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_tecodes'), 5);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'), 10);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
@@ -943,6 +944,96 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function init_form_fields()
 	{
 		$this->form_fields = apply_filters('wc_robokassa_init_form_fields', []);
+	}
+
+	/**
+	 * Add fields for tecodes settings
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_tecodes($fields)
+	{
+		if(WC_Robokassa()->tecodes()->is_valid())
+		{
+			return $fields;
+		}
+
+		$buy_url = esc_url('https://mofsy.ru/market/wc-robokassa-code');
+
+		$fields['tecodes'] = array
+		(
+			'title' => __('Activation', 'wc-robokassa'),
+			'type' => 'title',
+			'class' => WC_Robokassa()->tecodes()->is_valid() ? '' : 'bg-warning p-2 mt-1',
+			'description' => __('The code can be obtained from the plugin website:', 'wc-robokassa') . ' <a target="_blank" href="' . $buy_url . '">' . $buy_url . '</a>. ' . __('This section will disappear after enter a valid code before the expiration of the entered code, or its cancellation.', 'wc-robokassa'),
+		);
+
+		$fields['tecodes_code'] = array
+		(
+			'title' => __('Input code', 'wc-robokassa'),
+			'type' => 'tecodes_text',
+			'class' => 'p-2',
+			'description' => __('If enter the correct code, the current environment will be activated. Enter the code only on the actual workstation.', 'wc-robokassa'),
+			'default' => ''
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Generate Tecodes Text Input HTML
+	 *
+	 * @param string $key Field key.
+	 * @param array  $data Field data.
+	 *
+	 * @return string
+	 */
+	public function generate_tecodes_text_html($key, $data)
+	{
+		$field_key = $this->get_field_key($key);
+		$defaults = array
+		(
+			'title' => '',
+			'disabled' => false,
+			'class' => '',
+			'css' => '',
+			'placeholder' => '',
+			'type' => 'text',
+			'desc_tip' => false,
+			'description' => '',
+			'custom_attributes' => array(),
+		);
+
+		$data = wp_parse_args($data, $defaults);
+
+		ob_start();
+		?>
+		<tr valign="top">
+			<td colspan="2" class="forminp">
+				<fieldset>
+					<div class="row">
+						<div class="col-20 p-0">
+							<legend class="screen-reader-text"><span><?php echo wp_kses_post($data['title']); ?></span></legend>
+							<input class="input-text regular-input <?php echo esc_attr($data['class']); ?>"
+							       type="<?php echo esc_attr($data['type']); ?>" name="<?php echo esc_attr($field_key); ?>"
+							       id="<?php echo esc_attr($field_key); ?>" style="<?php echo esc_attr($data['css']); ?>"
+							       value="<?php echo esc_attr($this->get_option($key)); ?>"
+							       placeholder="<?php echo esc_attr($data['placeholder']); ?>" <?php disabled($data['disabled'], true); ?> <?php echo $this->get_custom_attribute_html($data); // WPCS: XSS ok.
+							?> />
+							<?php echo $this->get_description_html($data); // WPCS: XSS ok.?>
+						</div>
+						<div class="col-4 p-0">
+							<button style="float: right;margin: 0px;height: 90%; width: 90%;" name="save" class="button-primary woocommerce-save-button" type="submit" value="<?php _e('Activate', 'wc-robokassa') ?>"><?php _e('Activate', 'wc-robokassa') ?></button>
+						</div>
+					</div>
+				</fieldset>
+			</td>
+		</tr>
+		<?php
+
+		return ob_get_clean();
 	}
 
 	/**
@@ -1676,6 +1767,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		wp_enqueue_style('robokassa-admin-styles', WC_ROBOKASSA_URL . 'assets/css/main.css');
 
 		add_filter('wc_robokassa_widget_status_color', array($this, 'admin_right_widget_status_content_color'), 20);
+		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_tecodes'), 10);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_logger'), 10);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_api'), 20);
 		add_action('wc_robokassa_widget_status_content', array($this, 'admin_right_widget_status_content_currency'), 20);
@@ -1808,6 +1900,41 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'result' => 'success',
 			'redirect' => $order->get_checkout_payment_url(true)
 		);
+	}
+
+	/**
+	 * Validate tecodes code
+	 * @param string $key
+	 * @param string $value
+	 *
+	 * @return string
+	 *
+	 * @throws Exception
+	 */
+	public function validate_tecodes_code_field($key, $value)
+	{
+		if($value === '')
+		{
+			return '';
+		}
+
+		WC_Robokassa()->tecodes()->set_code($value);
+		WC_Robokassa()->tecodes()->validate();
+
+		if(!WC_Robokassa()->tecodes()->is_valid())
+		{
+			$errors = WC_Robokassa()->tecodes()->get_errors();
+
+			if(is_array($errors))
+			{
+				foreach(WC_Robokassa()->tecodes()->get_errors() as $error_key => $error)
+				{
+					WC_Admin_Settings::add_error($error);
+				}
+			}
+		}
+
+		return '';
 	}
 
 	/**
@@ -2594,6 +2721,28 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Widget status: Tecodes
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	public function admin_right_widget_status_content_tecodes($content)
+	{
+		if(WC_Robokassa()->tecodes()->is_valid())
+		{
+			return '';
+		}
+
+		$message = __('The activation was not success. It may be difficult to release new updates.', 'wc-robokassa');
+		$color = 'bg-warning';
+
+		$content .= '<li class="list-group-item mb-0 ' . $color . '">' . $message . '</li>';
+
+		return $content;
+	}
+
+	/**
 	 * Widget status: API
 	 *
 	 * @param $content
@@ -2603,7 +2752,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	public function admin_right_widget_status_content_api($content)
 	{
 		$message = __('disconnected', 'wc-robokassa');
-		$color = 'bg-danger';
+		$color = 'text-white bg-danger';
 
 		if(false !== $this->check_robokassa_api())
 		{
@@ -2636,7 +2785,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$message = __('inactive', 'wc-robokassa');
 		}
 
-		$content .= '<li class="list-group-item text-white mb-0 ' . $color . '">'
+		$content .= '<li class="list-group-item mb-0 ' . $color . '">'
 		            . __('Test mode: ', 'wc-robokassa') . $message .
 		            '</li>';
 
@@ -2724,6 +2873,11 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$color = 'bg-warning';
 		}
 
+		if(!WC_Robokassa()->tecodes()->is_valid())
+		{
+			$color = 'bg-warning';
+		}
+
 		if(false === $this->check_robokassa_api() || false === $this->is_support_currency())
 		{
 			$color = 'bg-danger';
@@ -2795,9 +2949,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		// First, match entries in 'method_id:instance_id' format. Then, match entries in 'method_id' format by stripping off the instance ID from the candidates.
 		return array_unique(array_merge
-		                    (
-			                    array_intersect($this->get_available_shipping(), $rate_ids),
-			                    array_intersect($this->get_available_shipping(), array_unique(array_map('wc_get_string_before_colon', $rate_ids)))
-		                    ));
+        (
+            array_intersect($this->get_available_shipping(), $rate_ids),
+            array_intersect($this->get_available_shipping(), array_unique(array_map('wc_get_string_before_colon', $rate_ids)))
+        ));
 	}
 }
