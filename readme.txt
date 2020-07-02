@@ -35,19 +35,18 @@ Each purchase of a serial key allows to work on the plugin for 3 hours (2 hour i
 = Plugin support =
 Individual free support is not provided. If something doesn't work, it means it's either set up in the wrong way,
 or the plugin is used on unsupported versions of WordPress and WooCommerce.
-You can always agree on paid support and on paid add features.
-Support information can be found on the official website. If have not found  information, it is not available.
+Can always agree on paid support and on paid add features.
+Support information can be found on the official website. If have not found  information, it support is not available.
 
 = Bug report =
 Error reports are accepted by email support@mofsy.ru with the subject: [bug] wc-robokassa
 If specify a different topic, the report will most likely not be accepted. Reports are processed within your free time.
-Should keep in mind that errors are not always errors. Errors in settings are possible, as well as use on
-unsupported versions of software.
-If the bug is not fixed for a long time, then there is no money.
+Should keep in mind that errors are not always errors. Errors in settings are possible, as well as use on unsupport versions of software.
+If the bug is not fixed for a long time, then there is no money to create release.
 
 = Feature request =
 Requests to add features are accepted by e-mail support@mofsy.ru with the subject: [feature] wc-robokassa
-Can write requests on the support forum, but the forum is not often inspected.
+Write requests on the support forum, but the forum is not often inspected.
 The description of the necessary feature should be as detailed as possible. Whatever need to think over during implementation.
 The implementation of opportunities occurs within the budget collected from the mass sales of serial keys.
 If an opportunity is not added for a long time, there may be no money for it. Can order the feature individually.
