@@ -364,7 +364,7 @@ class WC_Robokassa
     {
 	    $options =
 	    [
-		    'timeout' => 15,
+		    'timeout' => 2,
 		    'verify_ssl' => false,
 		    'version' => 'tecodes/v1'
 	    ];
