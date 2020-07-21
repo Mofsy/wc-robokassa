@@ -30,6 +30,6 @@ if(class_exists('WC_Robokassa') !== true)
 	include_once __DIR__ . '/includes/functions-wc-robokassa.php';
 	include_once __DIR__ . '/includes/class-wc-robokassa-logger.php';
 	include_once __DIR__ . '/includes/class-wc-robokassa.php';
-}
 
-add_action('plugins_loaded', 'WC_Robokassa', 5);
+	add_action('plugins_loaded', 'WC_Robokassa', 5);
+}
