@@ -68,7 +68,7 @@ Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 
 == Changelog ==
 
-= 4.1.0
+= 4.1.0 =
 * WC tested up to: 4.6
 
 = 4.0.0 =
