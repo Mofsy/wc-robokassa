@@ -73,7 +73,6 @@ function wc_robokassa_logger()
 	return WC_Robokassa()->get_logger();
 }
 
-
 /**
  * Load localisation files
  */
