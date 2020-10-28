@@ -70,6 +70,7 @@ Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 
 = 4.1.0 =
 * WC tested up to: 4.6
+* Fix: loading
 
 = 4.0.0 =
 New major version. Please backup before update.
