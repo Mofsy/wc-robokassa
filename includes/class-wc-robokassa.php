@@ -134,44 +134,11 @@ class WC_Robokassa
 		do_action('wc_robokassa_before_includes');
 
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-api.php';
-		require_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-sub-method.php';
+
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/tecodes-local/bootstrap.php';
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes.php';
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes-instance.php';
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes-storage-code.php';
-
-		/**
-		 * Sub methods
-		 */
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-alfabank-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-alfabank-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-avb-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-bin-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-fbid-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-inteza-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-min-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-sov-com-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-trust-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-vtb4-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-apple-pay-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-halva-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-samsung-pay-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-elecsnet-wallet-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-qiwi-wallet-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-w1-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-wmr-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-yandex-money-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-beeline-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-megafon-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-mts-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-tattelecom-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-tele2-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-biocoin-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-store-euroset-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-store-svyaznoy-method.php';
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-terminals-terminals-elecsnet-method.php';
 
 		/**
 		 * @since 3.0.0
@@ -269,12 +236,6 @@ class WC_Robokassa
 		// hook
 		do_action('wc_robokassa_gateway_init_before');
 
-		if(class_exists('WC_Payment_Gateway') !== true)
-		{
-			wc_robokassa_logger()->emergency('WC_Payment_Gateway not found');
-			return false;
-		}
-
 		add_filter('woocommerce_payment_gateways', array($this, 'add_gateway_method'), 10);
 
 		$robokassa_settings = $this->get_method_settings_by_method_id('robokassa');
@@ -298,8 +259,6 @@ class WC_Robokassa
 			return false;
 		}
 
-		$this->load_wc_version();
-		$this->load_currency();
 		$this->load_tecodes();
 
 		return true;
@@ -625,6 +584,11 @@ class WC_Robokassa
 	 */
 	public function add_gateway_method($methods)
 	{
+		$this->load_wc_version();
+		$this->load_currency();
+
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-method.php';
+
 	    $default_class_name = 'Wc_Robokassa_Method';
 
 		$robokassa_method_class_name = apply_filters('wc_robokassa_method_class_name_add', $default_class_name);
@@ -648,6 +612,39 @@ class WC_Robokassa
 	 */
 	public function add_gateway_submethods($methods)
 	{
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-sub-method.php';
+		/**
+		 * Sub methods
+		 */
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-alfabank-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-alfabank-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-avb-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-bin-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-fbid-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-inteza-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-min-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-sov-com-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-bank-trust-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bank-vtb4-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-apple-pay-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-halva-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-bankcard-bank-card-samsung-pay-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-elecsnet-wallet-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-qiwi-wallet-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-w1-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-wmr-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-emoney-yandex-money-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-beeline-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-megafon-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-mts-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-tattelecom-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-mobile-phone-tele2-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-biocoin-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-store-euroset-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-other-store-svyaznoy-method.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/submethods/class-wc-robokassa-terminals-terminals-elecsnet-method.php';
+
 		$methods[] = 'Wc_Robokassa_Bank_Alfabank_Method';
 		$methods[] = 'Wc_Robokassa_Bank_Bank_Avb_Method';
 		$methods[] = 'Wc_Robokassa_Bank_Bank_Bin_Method';
