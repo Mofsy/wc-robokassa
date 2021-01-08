@@ -2066,7 +2066,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		 * Signature
 		 */
 		$receipt_signature = '';
-		if($receipt_json != '')
+		if($receipt_json !== '')
 		{
 			$receipt_signature = ':' . $receipt_json;
 			$args['Receipt'] = $receipt_json;
@@ -2166,14 +2166,14 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				 *  целая часть не более 8 знаков;
 				 *  дробная часть не более 2 знаков.
 				 */
-				'sum' => intval($item_total),
+				'sum' => (int) $item_total,
 
 				/**
 				 * Количество/вес
 				 *
 				 * максимальная длина 128 символов
 				 */
-				'quantity' => intval($item_quantity),
+				'quantity' => (int) $item_quantity,
 
 				/**
 				 * Tax
@@ -2216,7 +2216,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				 *  целая часть не более 8 знаков;
 				 *  дробная часть не более 2 знаков.
 				 */
-				'sum' => intval($order->get_shipping_total()),
+				'sum' => (int) $order->get_shipping_total(),
 
 				/**
 				 * Количество/вес
@@ -2305,12 +2305,12 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	 */
 	public function input_payment_notifications_redirect_by_form()
 	{
-		if(false == isset($_GET['action']))
+		if(false === isset($_GET['action']))
 		{
 			return;
 		}
 
-		if(false == isset($_GET['order_id']))
+		if(false === isset($_GET['order_id']))
 		{
 			return;
 		}
