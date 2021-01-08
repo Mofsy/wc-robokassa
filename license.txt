@@ -1,6 +1,6 @@
 Payment gateway - Robokassa for WooCommerce
 
-Copyright © 2015-2020 by Mofsy, Official site http://mofsy.ru
+Copyright © 2015-2021 by Mofsy, Official site http://mofsy.ru
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -2,7 +2,7 @@
 Contributors: Mofsy
 Tags: robokassa, woocommerce, робокасса, робочеки, payment, gateway, woo commerce, ecommerce, gateway, woo robokassa, shop, robo, merchant, woo, woo robo
 Requires at least: 4.2
-Tested up to: 5.4
+Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: trunk
 Donate link: https://mofsy.ru/others/help
@@ -69,7 +69,8 @@ Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 == Changelog ==
 
 = 4.1.0 =
-* WC tested up to: 4.6
+* Test: WordPress 5.6
+* WC tested up to: 4.8
 * Fix: loading
 
 = 4.0.0 =

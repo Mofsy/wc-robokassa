@@ -5,12 +5,12 @@
  * Plugin URI: https://mofsy.ru/projects/wc-robokassa
  * Version: 4.1.0
  * WC requires at least: 3.0
- * WC tested up to: 4.6
+ * WC tested up to: 4.8
  * Text Domain: wc-robokassa
  * Domain Path: /languages
  * Author: Mofsy
  * Author URI: https://mofsy.ru
- * Copyright: Mofsy © 2015-2020
+ * Copyright: Mofsy © 2015-2021
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
