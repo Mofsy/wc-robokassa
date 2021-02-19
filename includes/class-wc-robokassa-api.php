@@ -336,15 +336,15 @@ class Wc_Robokassa_Api
 	 * ru – русский;
 	 * en – английский.
 	 *
-	 * @return mixed false - error, array - success
+	 * @return array|false false - error, array - success
 	 */
 	public function xml_get_currencies($merchantLogin, $language)
 	{
-		/**
-		 * Check available
-		 */
 		$is_available = $this->is_available();
-		if($is_available === 0) { return false; }
+		if($is_available === 0)
+		{
+			return false;
+		}
 
 		/**
 		 * URL
