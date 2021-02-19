@@ -93,6 +93,8 @@ class WC_Robokassa
 
 	/**
 	 * WC_Robokassa constructor
+     *
+     * @return void
 	 */
 	public function __construct()
 	{
@@ -169,7 +171,7 @@ class WC_Robokassa
 	/**
      * Get current WooCommerce version installed
      *
-	 * @return mixed
+	 * @return string
 	 */
 	public function get_wc_version()
     {
@@ -208,6 +210,8 @@ class WC_Robokassa
 
 	/**
 	 * Hooks (actions & filters)
+     *
+     * @return void
 	 */
 	private function init_hooks()
 	{
@@ -229,7 +233,7 @@ class WC_Robokassa
 	/**
 	 * Init plugin gateway
 	 *
-	 * @return mixed|void
+	 * @return void
 	 */
 	public function wc_robokassa_gateway_init()
 	{
@@ -251,10 +255,12 @@ class WC_Robokassa
 
 	/**
 	 * Initialization
+     *
+     * @return boolean
 	 */
 	public function init()
 	{
-		if($this->load_logger() === false)
+		if(false === $this->load_logger())
 		{
 			return false;
 		}
@@ -266,6 +272,8 @@ class WC_Robokassa
 
 	/**
 	 * Admin initialization
+     *
+     * @return void
 	 */
 	public function init_admin()
 	{
@@ -304,7 +312,7 @@ class WC_Robokassa
 	    /**
 	     * Fallback
 	     */
-	    if(class_exists($robokassa_api_class_name) !== true)
+	    if(false === class_exists($robokassa_api_class_name))
         {
 	        $robokassa_api_class_name = $default_class_name;
         }
@@ -318,6 +326,8 @@ class WC_Robokassa
 
 	/**
 	 * Load Tecodes
+     *
+     * @return void
 	 */
     public function load_tecodes()
     {
@@ -372,6 +382,8 @@ class WC_Robokassa
 	 *
 	 * @param $merchant_login
 	 * @param string $language
+     *
+     * @return void
 	 */
 	public function load_robokassa_available_currencies($merchant_login, $language = 'ru')
 	{
@@ -394,6 +406,8 @@ class WC_Robokassa
 	 * @param $merchant_login
 	 * @param int $out_sum
 	 * @param string $language
+     *
+     * @return void
 	 */
 	public function load_merchant_rates($merchant_login, $out_sum = 0, $language = 'ru')
 	{
@@ -613,6 +627,7 @@ class WC_Robokassa
 	public function add_gateway_submethods($methods)
 	{
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-sub-method.php';
+
 		/**
 		 * Sub methods
 		 */
@@ -811,7 +826,9 @@ class WC_Robokassa
     }
 
 	/**
-	 *  Add page explode actions
+	 * Add page explode actions
+     *
+     * @return void
 	 */
 	public function page_explode()
 	{
