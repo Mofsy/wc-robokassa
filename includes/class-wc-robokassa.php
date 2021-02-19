@@ -69,20 +69,20 @@ class WC_Robokassa
 	 *
 	 * @var array
 	 */
-	private $robokassa_available_currencies = array();
+	private $robokassa_available_currencies = [];
 
 	/**
 	 * Current rates by robokassa
 	 *
 	 * @var array
 	 */
-	private $robokassa_rates_merchant = array();
+	private $robokassa_rates_merchant = [];
 
 	/**
 	 * Current currency rates by CBR
 	 * @var array
 	 */
-	private $currency_rates_by_cbr = array();
+	private $currency_rates_by_cbr = [];
 
 	/**
 	 * Tecodes
