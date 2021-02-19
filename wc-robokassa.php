@@ -18,7 +18,7 @@
  */
 defined('ABSPATH') || exit;
 
-if(class_exists('WC_Robokassa') !== true)
+if(false === class_exists('WC_Robokassa'))
 {
 	if(false === function_exists('get_file_data'))
 	{
