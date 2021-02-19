@@ -20,6 +20,8 @@ function WC_Robokassa()
  * Get current version WooCommerce
  *
  * @since 3.0.2
+ *
+ * @return null|string
  */
 function wc_robokassa_get_wc_version()
 {
