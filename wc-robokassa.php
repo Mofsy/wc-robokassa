@@ -20,7 +20,7 @@ defined('ABSPATH') || exit;
 
 if(class_exists('WC_Robokassa') !== true)
 {
-	if(!function_exists('get_file_data'))
+	if(false === function_exists('get_file_data'))
 	{
 		return false;
 	}
