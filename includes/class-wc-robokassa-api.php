@@ -336,7 +336,7 @@ class Wc_Robokassa_Api
 	 * ru – русский;
 	 * en – английский.
 	 *
-	 * @return array|false false - error, array - success
+	 * @return array|false
 	 */
 	public function xml_get_currencies($merchantLogin, $language)
 	{
@@ -346,93 +346,76 @@ class Wc_Robokassa_Api
 			return false;
 		}
 
-		/**
-		 * URL
-		 */
 		$url = $this->get_base_api_url() . '/GetCurrencies?MerchantLogin=' . $merchantLogin . '&language=' . $language;
 
-		/**
-		 * Request execute
-		 */
-		$this->set_last_response(wp_remote_get($url));
+		$response = wp_remote_get($url);
+		$this->set_last_response($response);
 
-		/**
-		 * Last response set body
-		 */
-		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
+		$response_body = wp_remote_retrieve_body($this->get_last_response());
+		$this->set_last_response_body($response_body);
 
-		/**
-		 * Response is very good
-		 */
-		if($this->get_last_response_body() != '')
+		if('' === $this->get_last_response_body())
 		{
-			/**
-			 * Данные валют
-			 */
-			$currencies_data = array();
+			return false;
+		}
 
-			/**
-			 * SimpleXML
-			 */
-			if($is_available === 1)
+		/**
+		 * Данные валют
+		 */
+		$currencies_data = [];
+
+		/**
+		 * SimpleXML
+		 */
+		if($is_available === 1)
+		{
+			try
 			{
-				/**
-				 * Response normalize
-				 */
-				try
-				{
-					$response_data = new SimpleXMLElement($this->get_last_response_body());
-				}
-				catch (Exception $e)
-				{
-					return false;
-				}
-
-				/**
-				 * Check error
-				 */
-				if(!isset($response_data->Result) || $response_data->Result->Code != 0 || !isset($response_data->Groups))
-				{
-					return false;
-				}
-
-				/**
-				 * Перебираем данные
-				 */
-				foreach($response_data->Groups->Group as $xml_group)
-				{
-					$xml_group_attributes = $xml_group->attributes();
-
-					foreach($xml_group->Items->Currency as $xml_group_item)
-					{
-						$xml_group_item_attributes = $xml_group_item->attributes();
-
-						$response_item = array
-						(
-							'group_code' => (string)$xml_group_attributes['Code'],
-							'group_description' => (string)$xml_group_attributes['Description'],
-							'currency_label' => (string)$xml_group_item_attributes['Label'],
-							'currency_alias' => (string)$xml_group_item_attributes['Alias'],
-							'currency_name' => (string)$xml_group_item_attributes['Name'],
-							'language' => $language,
-						);
-
-						if(isset($xml_group_item_attributes['MaxValue']))
-						{
-							$response_item['sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
-						}
-
-						if(isset($xml_group_item_attributes['MinValue']))
-						{
-							$response_item['sum_min'] = (string)$xml_group_item_attributes['MinValue'];
-						}
-
-						$currencies_data[] = $response_item;
-					}
-				}
-
-				return $currencies_data;
+				$response_data = new SimpleXMLElement($this->get_last_response_body());
 			}
+			catch (Exception $e)
+			{
+				return false;
+			}
+
+			if(!isset($response_data->Result) || $response_data->Result->Code != 0 || !isset($response_data->Groups))
+			{
+				return false;
+			}
+
+			foreach($response_data->Groups->Group as $xml_group)
+			{
+				$xml_group_attributes = $xml_group->attributes();
+
+				foreach($xml_group->Items->Currency as $xml_group_item)
+				{
+					$xml_group_item_attributes = $xml_group_item->attributes();
+
+					$response_item = array
+					(
+						'group_code' => (string)$xml_group_attributes['Code'],
+						'group_description' => (string)$xml_group_attributes['Description'],
+						'currency_label' => (string)$xml_group_item_attributes['Label'],
+						'currency_alias' => (string)$xml_group_item_attributes['Alias'],
+						'currency_name' => (string)$xml_group_item_attributes['Name'],
+						'language' => $language,
+					);
+
+					if(isset($xml_group_item_attributes['MaxValue']))
+					{
+						$response_item['sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
+					}
+
+					if(isset($xml_group_item_attributes['MinValue']))
+					{
+						$response_item['sum_min'] = (string)$xml_group_item_attributes['MinValue'];
+					}
+
+					$currencies_data[] = $response_item;
+				}
+			}
+
+			return $currencies_data;
 		}
 
 		return false;
