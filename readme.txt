@@ -70,7 +70,7 @@ Archive extract and upload folder "wc-robokassa" to /wp-content/plugins
 
 = 4.1.0 =
 * Test: WordPress 5.6
-* WC tested up to: 4.8
+* WC tested up to: 5.0
 * Fix: loading
 
 = 4.0.0 =
