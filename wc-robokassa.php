@@ -20,6 +20,11 @@ defined('ABSPATH') || exit;
 
 if(class_exists('WC_Robokassa') !== true)
 {
+	if(!function_exists('get_file_data'))
+	{
+		return false;
+	}
+
 	$plugin_data = get_file_data(__FILE__, array('Version' => 'Version'));
 	define('WC_ROBOKASSA_VERSION', $plugin_data['Version']);
 
