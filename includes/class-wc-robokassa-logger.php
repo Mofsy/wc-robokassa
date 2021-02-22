@@ -59,6 +59,8 @@ class WC_Robokassa_Logger
 	 * @param string $name
 	 *
 	 * @throws Exception
+	 *
+	 * @return void
 	 */
 	public function __construct($path = '', $level = 400, $name = '')
 	{
