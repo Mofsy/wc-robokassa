@@ -137,7 +137,7 @@ class WC_Robokassa
 
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-api.php';
 
-		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/tecodes-local/bootstrap.php';
+		include_once WC_ROBOKASSA_PLUGIN_DIR . 'vendors/tecodes/tecodes-local/bootstrap.php';
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes.php';
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes-instance.php';
 		include_once WC_ROBOKASSA_PLUGIN_DIR . 'includes/class-wc-robokassa-tecodes-storage-code.php';
