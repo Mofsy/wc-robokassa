@@ -31,6 +31,8 @@ class Wc_Robokassa_Api
 
 	/**
 	 * Wc_Robokassa_Api constructor
+	 *
+	 * @return void
 	 */
 	public function __construct()
 	{
