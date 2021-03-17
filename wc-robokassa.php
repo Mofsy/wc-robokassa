@@ -5,7 +5,7 @@
  * Plugin URI: https://mofsy.ru/projects/wc-robokassa
  * Version: 4.1.0
  * WC requires at least: 3.0
- * WC tested up to: 5.0
+ * WC tested up to: 5.1
  * Text Domain: wc-robokassa
  * Domain Path: /languages
  * Author: Mofsy
