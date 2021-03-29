@@ -1015,6 +1015,9 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			<td colspan="2" class="forminp">
 				<fieldset>
 					<div class="row">
+                        <div class="col-4 p-0">
+                            <button style="margin: 0;height: 90%; width: 90%;" name="save" class="button-primary woocommerce-save-button" type="submit" value="<?php _e('Activate', 'wc-robokassa') ?>"><?php _e('Activate', 'wc-robokassa') ?></button>
+                        </div>
 						<div class="col-20 p-0">
 							<legend class="screen-reader-text"><span><?php echo wp_kses_post($data['title']); ?></span></legend>
 							<input class="input-text regular-input <?php echo esc_attr($data['class']); ?>"
@@ -1024,9 +1027,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 							       placeholder="<?php echo esc_attr($data['placeholder']); ?>" <?php disabled($data['disabled'], true); ?> <?php echo $this->get_custom_attribute_html($data); // WPCS: XSS ok.
 							?> />
 							<?php echo $this->get_description_html($data); // WPCS: XSS ok.?>
-						</div>
-						<div class="col-4 p-0">
-							<button style="float: right;margin: 0px;height: 90%; width: 90%;" name="save" class="button-primary woocommerce-save-button" type="submit" value="<?php _e('Activate', 'wc-robokassa') ?>"><?php _e('Activate', 'wc-robokassa') ?></button>
 						</div>
 					</div>
 				</fieldset>
