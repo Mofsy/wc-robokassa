@@ -282,6 +282,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	{
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_tecodes'), 5);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_main'), 10);
+		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_payments'), 15);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_test_payments'), 20);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_interface'), 30);
 		add_filter('wc_robokassa_init_form_fields', array($this, 'init_form_fields_ofd'), 40);
@@ -1061,44 +1062,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => 'off'
 		);
 
+		$fields['test'] = array
+		(
+			'title'       => __('Test mode', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
+			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
+			'default'     => 'yes'
+		);
+
 		$fields['shop_login'] = array
 		(
 			'title'       => __('Shop identifier', 'wc-robokassa'),
 			'type'        => 'text',
 			'description' => __('Unique identifier for shop from Robokassa.', 'wc-robokassa'),
-			'default'     => ''
-		);
-
-		$fields['sign_method'] = array
-		(
-			'title'       => __('Hash calculation algorithm', 'wc-robokassa'),
-			'description' => __('The algorithm must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
-			'type'        => 'select',
-			'options'     => array
-			(
-				'md5'       => 'MD5',
-				'ripemd160' => 'RIPEMD160',
-				'sha1'      => 'SHA1',
-				'sha256'    => 'SHA256',
-				'sha384'    => 'SHA384',
-				'sha512'    => 'SHA512'
-			),
-			'default'     => 'sha256'
-		);
-
-		$fields['shop_pass_1'] = array
-		(
-			'title'       => __('Password #1', 'wc-robokassa'),
-			'type'        => 'text',
-			'description' => __('Shop pass #1 must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
-			'default'     => ''
-		);
-
-		$fields['shop_pass_2'] = array
-		(
-			'title'       => __('Password #2', 'wc-robokassa'),
-			'type'        => 'text',
-			'description' => __('Shop pass #2 must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
 			'default'     => ''
 		);
 
@@ -1139,6 +1116,58 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 	}
 
 	/**
+	 * Add settings for payments
+	 *
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	public function init_form_fields_payments($fields)
+	{
+		$fields['payments'] = array
+		(
+			'title'       => __('Parameters for real payments', 'wc-robokassa'),
+			'type'        => 'title',
+			'description' => __('Passwords and hashing algorithms for real payments differ from those specified for test payments.', 'wc-robokassa'),
+		);
+
+		$fields['sign_method'] = array
+		(
+			'title'       => __('Hash calculation algorithm', 'wc-robokassa'),
+			'description' => __('The algorithm must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
+			'type'        => 'select',
+			'options'     => array
+			(
+				'md5'       => 'MD5',
+				'ripemd160' => 'RIPEMD160',
+				'sha1'      => 'SHA1',
+				'sha256'    => 'SHA256',
+				'sha384'    => 'SHA384',
+				'sha512'    => 'SHA512'
+			),
+			'default'     => 'sha256'
+		);
+
+		$fields['shop_pass_1'] = array
+		(
+			'title'       => __('Password #1', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('Shop pass #1 must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
+			'default'     => ''
+		);
+
+		$fields['shop_pass_2'] = array
+		(
+			'title'       => __('Password #2', 'wc-robokassa'),
+			'type'        => 'text',
+			'description' => __('Shop pass #2 must match the one specified in the personal account of Robokassa.', 'wc-robokassa'),
+			'default'     => ''
+		);
+
+		return $fields;
+	}
+
+	/**
 	 * Add settings for test payments
 	 *
 	 * @param $fields
@@ -1152,15 +1181,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title'       => __('Parameters for test payments', 'wc-robokassa'),
 			'type'        => 'title',
 			'description' => __('Passwords and hashing algorithms for test payments differ from those specified for real payments.', 'wc-robokassa'),
-		);
-
-		$fields['test'] = array
-		(
-			'title'       => __('Test mode', 'wc-robokassa'),
-			'type'        => 'checkbox',
-			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
-			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
-			'default'     => 'yes'
 		);
 
 		$fields['test_sign_method'] = array
@@ -1194,15 +1214,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'type'        => 'text',
 			'description' => __('Shop pass #2 for testing payments. The pass must match the one specified in the personal account of ROBOKASSA.', 'wc-robokassa'),
 			'default'     => ''
-		);
-
-		$fields['test_mode_checkout_notice'] = array
-		(
-			'title'   => __('Test notification display on the test mode', 'wc-robokassa'),
-			'type'    => 'checkbox',
-			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
-			'description' => __('A notification about the activated test mode will be displayed when the payment.', 'wc-robokassa'),
-			'default' => 'yes'
 		);
 
 		return $fields;
@@ -1277,6 +1288,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
 			'default' => 'yes',
 			'description' => __('Next to the name of the payment method will display the logo Robokassa.', 'wc-robokassa'),
+		);
+
+		$fields['test_mode_checkout_notice'] = array
+		(
+			'title'   => __('Test notification display on the test mode', 'wc-robokassa'),
+			'type'    => 'checkbox',
+			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
+			'description' => __('A notification about the activated test mode will be displayed when the payment.', 'wc-robokassa'),
+			'default' => 'yes'
 		);
 
 		$fields['language'] = array
