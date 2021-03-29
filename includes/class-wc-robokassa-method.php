@@ -964,7 +964,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['tecodes'] = array
 		(
-			'title' => __('Activation', 'wc-robokassa'),
+			'title' => __('Support activation', 'wc-robokassa'),
 			'type' => 'title',
 			'class' => WC_Robokassa()->tecodes()->is_valid() ? '' : 'bg-warning p-2 mt-1',
 			'description' => __('The code can be obtained from the plugin website:', 'wc-robokassa') . ' <a target="_blank" href="' . $buy_url . '">' . $buy_url . '</a>. ' . __('This section will disappear after enter a valid code before the expiration of the entered code, or its cancellation.', 'wc-robokassa'),
