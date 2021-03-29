@@ -2873,7 +2873,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			$color = 'bg-warning';
 		}
 
-		if(!WC_Robokassa()->tecodes()->is_valid())
+		if(false === WC_Robokassa()->tecodes()->is_valid())
 		{
 			$color = 'bg-warning';
 		}
