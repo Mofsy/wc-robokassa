@@ -1057,8 +1057,8 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 		(
 			'title'       => __('Online / Offline', 'wc-robokassa'),
 			'type'        => 'checkbox',
-			'label'       => __('Tick the checkbox if you need to activate the payment gateway.', 'wc-robokassa'),
-			'description' => __('On disconnection, the payment gateway will not be available for selection on the site. It is useful for payments through subsidiaries, or just in case of temporary disconnection.', 'wc-robokassa'),
+			'label'       => __('Tick the checkbox if you need to show the payment gateway.', 'wc-robokassa'),
+			'description' => __('On disabled, the payment gateway will not be available for selection on the site. It is useful for payments through subsidiaries, or just in case of temporary disconnection.', 'wc-robokassa'),
 			'default'     => 'off'
 		);
 
