@@ -1053,15 +1053,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'description' => __('Without these settings, the payment gateway will not work. Be sure to make settings in this block.', 'wc-robokassa'),
 		);
 
-		$fields['test'] = array
-		(
-			'title'       => __('Test mode', 'wc-robokassa'),
-			'type'        => 'checkbox',
-			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
-			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
-			'default'     => 'yes'
-		);
-
 		$fields['enabled'] = array
 		(
 			'title'       => __('Online / Offline', 'wc-robokassa'),
@@ -1071,21 +1062,30 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => 'off'
 		);
 
-		$fields['sub_methods'] = array
-		(
-			'title' => __('Enable sub methods', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
-			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
-			'default' => 'no'
-		);
-
 		$fields['shop_login'] = array
 		(
 			'title'       => __('Shop identifier', 'wc-robokassa'),
 			'type'        => 'text',
 			'description' => __('Unique identifier for shop from Robokassa.', 'wc-robokassa'),
 			'default'     => ''
+		);
+
+		$fields['test'] = array
+		(
+			'title'       => __('Test mode', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'   => __('Select the checkbox to enable test mode. Default is enabled.', 'wc-robokassa'),
+			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
+			'default'     => 'yes'
+		);
+
+		$fields['sub_methods'] = array
+		(
+			'title' => __('Sub methods', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Select the checkbox to enable sub methods feature. Default is disabled.', 'wc-robokassa'),
+			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
+			'default' => 'no'
 		);
 
 		$result_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa()->get_result_url() . '</p>' . __('Address to notify the site of the results of operations in the background. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST.', 'wc-robokassa');
