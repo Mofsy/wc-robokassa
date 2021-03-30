@@ -1053,6 +1053,15 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'description' => __('Without these settings, the payment gateway will not work. Be sure to make settings in this block.', 'wc-robokassa'),
 		);
 
+		$fields['test'] = array
+		(
+			'title'       => __('Test mode', 'wc-robokassa'),
+			'type'        => 'checkbox',
+			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
+			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
+			'default'     => 'yes'
+		);
+
 		$fields['enabled'] = array
 		(
 			'title'       => __('Online / Offline', 'wc-robokassa'),
@@ -1062,13 +1071,13 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'default'     => 'off'
 		);
 
-		$fields['test'] = array
+		$fields['sub_methods'] = array
 		(
-			'title'       => __('Test mode', 'wc-robokassa'),
-			'type'        => 'checkbox',
-			'label'   => __('Select the checkbox to enable this feature. Default is enabled.', 'wc-robokassa'),
-			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
-			'default'     => 'yes'
+			'title' => __('Enable sub methods', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
+			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
+			'default' => 'no'
 		);
 
 		$fields['shop_login'] = array
@@ -1233,15 +1242,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'title' => __('Sub methods', 'wc-robokassa'),
 			'type' => 'title',
 			'description' => __('General settings for the sub methods of payment.', 'wc-robokassa'),
-		);
-
-		$fields['sub_methods'] = array
-		(
-			'title' => __('Enable sub methods', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
-			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
-			'default' => 'no'
 		);
 
 		$fields['sub_methods_check_available'] = array
@@ -1577,6 +1577,25 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			)
 		);
 
+		$fields['commission_merchant'] = array
+		(
+			'title' => __('Payment of the commission for the buyer', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
+			'description' => __('When you enable this feature, the store will pay all customer Commission costs. Works only when you select a payment method on the site and for stores individuals.', 'wc-robokassa'),
+			'default' => 'no'
+		);
+
+		$fields['commission_merchant_by_cbr'] = array
+		(
+			'title' => __('Preliminary conversion of order currency into roubles for commission calculation', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
+			'description' => __('If the calculation of the customer commission is included and the order is not in roubles, the order will be converted to roubles based on data from the Central Bank of Russia.
+			This is required due to poor Robokassa API.', 'wc-robokassa'),
+			'default' => 'no'
+		);
+
 		$fields['cart_clearing'] = array
 		(
 			'title'       => __('Cart clearing', 'wc-robokassa'),
@@ -1663,25 +1682,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 				),
 			);
 		}
-
-		$fields['commission_merchant'] = array
-		(
-			'title' => __('Payment of the commission for the buyer', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
-			'description' => __('When you enable this feature, the store will pay all customer Commission costs. Works only when you select a payment method on the site and for stores individuals.', 'wc-robokassa'),
-			'default' => 'no'
-		);
-
-		$fields['commission_merchant_by_cbr'] = array
-		(
-			'title' => __('Preliminary conversion of order currency into roubles for commission calculation', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Select the checkbox to enable this feature. Default is disabled.', 'wc-robokassa'),
-			'description' => __('If the calculation of the customer commission is included and the order is not in roubles, the order will be converted to roubles based on data from the Central Bank of Russia.
-			This is required due to poor Robokassa API.', 'wc-robokassa'),
-			'default' => 'no'
-		);
 
 		return $fields;
 	}
