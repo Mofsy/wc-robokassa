@@ -1004,7 +1004,7 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'type' => 'text',
 			'desc_tip' => false,
 			'description' => '',
-			'custom_attributes' => array(),
+			'custom_attributes' => [],
 		);
 
 		$data = wp_parse_args($data, $defaults);
