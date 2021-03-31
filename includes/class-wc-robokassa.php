@@ -614,7 +614,7 @@ class WC_Robokassa
 
 		$robokassa_method_class_name = apply_filters('wc_robokassa_method_class_name_add', $default_class_name);
 
-		if(!class_exists($robokassa_method_class_name))
+		if(false === class_exists($robokassa_method_class_name))
 		{
 			$robokassa_method_class_name = $default_class_name;
 		}
