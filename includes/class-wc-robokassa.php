@@ -536,7 +536,7 @@ class WC_Robokassa
 	/**
 	 * Get Robokassa api
 	 *
-	 * @return Wc_Robokassa_Api
+	 * @return Wc_Robokassa_Api|false
 	 */
 	public function get_robokassa_api()
     {
