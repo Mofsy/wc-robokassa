@@ -325,6 +325,7 @@ class WC_Robokassa
         }
 	    catch(Exception $e)
         {
+	        wc_robokassa_logger()->error('load_robokassa_api exception', $e);
             return false;
         }
 
