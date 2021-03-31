@@ -1055,11 +1055,20 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 
 		$fields['enabled'] = array
 		(
-			'title'       => __('Online / Offline', 'wc-robokassa'),
+			'title'       => __('Main method', 'wc-robokassa'),
 			'type'        => 'checkbox',
 			'label'       => __('Tick the checkbox if you need to show the payment gateway.', 'wc-robokassa'),
 			'description' => __('On disabled, the payment gateway will not be available for selection on the site. Feature useful for payments through subsidiaries, or just in case of temporary disconnection.', 'wc-robokassa'),
 			'default'     => 'off'
+		);
+
+		$fields['sub_methods'] = array
+		(
+			'title' => __('Sub methods', 'wc-robokassa'),
+			'type' => 'checkbox',
+			'label' => __('Tick the checkbox to enable sub methods feature. Default is disabled.', 'wc-robokassa'),
+			'description' => __('Use of all mechanisms of child payment methods. The main method can be turned off. The cart will show the child payment methods.', 'wc-robokassa'),
+			'default' => 'no'
 		);
 
 		$fields['shop_login'] = array
@@ -1077,15 +1086,6 @@ class Wc_Robokassa_Method extends WC_Payment_Gateway
 			'label'   => __('Tick the checkbox to enable test mode. Default is enabled.', 'wc-robokassa'),
 			'description' => __('When you activate the test mode, no funds will be debited. In this case, the payment gateway will only be displayed when you log in with an administrator account. This is done in order to protect you from false orders.', 'wc-robokassa'),
 			'default'     => 'yes'
-		);
-
-		$fields['sub_methods'] = array
-		(
-			'title' => __('Sub methods', 'wc-robokassa'),
-			'type' => 'checkbox',
-			'label' => __('Tick the checkbox to enable sub methods feature. Default is disabled.', 'wc-robokassa'),
-			'description' => __('Use of all mechanisms add a child of payment methods.', 'wc-robokassa'),
-			'default' => 'no'
 		);
 
 		$result_url_description = '<p class="input-text regular-input robokassa_urls">' . WC_Robokassa()->get_result_url() . '</p>' . __('Address to notify the site of the results of operations in the background. Copy the address and enter it in your personal account ROBOKASSA in the technical settings. Notification method: POST.', 'wc-robokassa');
