@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Payment gateway - Robokassa for WooCommerce\n"
-"POT-Creation-Date: 2021-03-31 00:35+0300\n"
+"POT-Creation-Date: 2021-04-02 01:20+0300\n"
 "PO-Revision-Date: 2016-01-10 16:41+0300\n"
 "Last-Translator: Mofsy <support@mofsy.ru>\n"
 "Language-Team: Mofsy <support@mofsy.ru>\n"
@@ -70,8 +70,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1058
-#: includes/class-wc-robokassa-sub-method.php:554
-msgid "Online / Offline"
+msgid "Main method"
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1060
@@ -86,40 +85,42 @@ msgid ""
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1067
-msgid "Shop identifier"
+#: includes/class-wc-robokassa-method.php:1242
+msgid "Sub methods"
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1069
-msgid "Unique identifier for shop from Robokassa."
+msgid "Tick the checkbox to enable sub methods feature. Default is disabled."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1075
-msgid "Test mode"
+#: includes/class-wc-robokassa-method.php:1070
+msgid ""
+"Use of all mechanisms of child payment methods. The main method can be "
+"turned off. The cart will show the child payment methods."
 msgstr ""
 
-#: includes/class-wc-robokassa-method.php:1077
-msgid "Tick the checkbox to enable test mode. Default is enabled."
+#: includes/class-wc-robokassa-method.php:1076
+msgid "Shop identifier"
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1078
+msgid "Unique identifier for shop from Robokassa."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1084
+msgid "Test mode"
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1086
+msgid "Tick the checkbox to enable test mode. Default is enabled."
+msgstr ""
+
+#: includes/class-wc-robokassa-method.php:1087
 msgid ""
 "When you activate the test mode, no funds will be debited. In this case, "
 "the payment gateway will only be displayed when you log in with an "
 "administrator account. This is done in order to protect you from false "
 "orders."
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:1084
-#: includes/class-wc-robokassa-method.php:1242
-msgid "Sub methods"
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:1086
-msgid "Tick the checkbox to enable sub methods feature. Default is disabled."
-msgstr ""
-
-#: includes/class-wc-robokassa-method.php:1087
-msgid "Use of all mechanisms add a child of payment methods."
 msgstr ""
 
 #: includes/class-wc-robokassa-method.php:1091
@@ -888,6 +889,10 @@ msgid ""
 "data."
 msgstr ""
 
+#: includes/class-wc-robokassa-sub-method.php:554
+msgid "Online / Offline"
+msgstr ""
+
 #: includes/class-wc-robokassa-sub-method.php:556
 msgid "Enable display of the payment method on the website"
 msgstr ""
@@ -896,155 +901,155 @@ msgstr ""
 msgid "Select the checkbox to enable this feature. Default is disabled."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:348
+#: includes/class-wc-robokassa.php:356
 msgid "This activation code is active."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:349
+#: includes/class-wc-robokassa.php:357
 msgid "Error: This activation code has expired."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:350
+#: includes/class-wc-robokassa.php:358
 msgid "Activation code republished. Awaiting reactivation."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:351
+#: includes/class-wc-robokassa.php:359
 msgid "Error: This activation code has been suspended."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:352
+#: includes/class-wc-robokassa.php:360
 msgid "This activation code is not found."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:353
+#: includes/class-wc-robokassa.php:361
 msgid "This activation code is active (localhost)."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:354
+#: includes/class-wc-robokassa.php:362
 msgid "Error: This activation code is pending review."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:355
+#: includes/class-wc-robokassa.php:363
 msgid ""
 "Error: This version of the software was released after your download "
 "access expired. Please downgrade software or contact support for more "
 "information."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:356
+#: includes/class-wc-robokassa.php:364
 msgid "Error: The activation code variable is empty."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:357
+#: includes/class-wc-robokassa.php:365
 msgid "Error: I could not obtain a new local code."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:358
+#: includes/class-wc-robokassa.php:366
 msgid "Error: The maximum local code delay period has expired."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:359
+#: includes/class-wc-robokassa.php:367
 msgid "Error: The local key has been tampered with or is invalid."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:360
+#: includes/class-wc-robokassa.php:368
 msgid "Error: The local code is invalid for this location."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:361
+#: includes/class-wc-robokassa.php:369
 msgid ""
 "Error: Please create the following file (and directories if they dont "
 "exist already): "
 msgstr ""
 
-#: includes/class-wc-robokassa.php:362
+#: includes/class-wc-robokassa.php:370
 msgid "Error: Please make the following path writable: "
 msgstr ""
 
-#: includes/class-wc-robokassa.php:363
+#: includes/class-wc-robokassa.php:371
 msgid "Error: I could not determine the local key storage on clear."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:364
+#: includes/class-wc-robokassa.php:372
 msgid "Error: I could not save the local key."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:365
+#: includes/class-wc-robokassa.php:373
 msgid "Error: The local code is invalid for this activation code."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:366
+#: includes/class-wc-robokassa.php:374
 msgid "Error: This activation code has been deleted."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:367
+#: includes/class-wc-robokassa.php:375
 msgid "Error: This activation code has draft."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:368
+#: includes/class-wc-robokassa.php:376
 msgid "Error: This activation code has available."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:369
+#: includes/class-wc-robokassa.php:377
 msgid "Error: This activation code has been blocked."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:775
+#: includes/class-wc-robokassa.php:783
 msgid "Official site"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:790
+#: includes/class-wc-robokassa.php:798
 msgid "Settings"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:819
+#: includes/class-wc-robokassa.php:827
 msgid ""
 "The plugin for accepting payments through ROBOKASSA for WooCommerce has "
 "been updated to a version that requires additional configuration."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:821
+#: includes/class-wc-robokassa.php:829
 msgid "here"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:822
+#: includes/class-wc-robokassa.php:830
 #, php-format
 msgid "Press %s (go to payment gateway settings)."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:941
+#: includes/class-wc-robokassa.php:949
 msgid "Useful information"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:945
+#: includes/class-wc-robokassa.php:953
 msgid "Official plugin page"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:946
+#: includes/class-wc-robokassa.php:954
 msgid "Related news: ROBOKASSA"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:947
+#: includes/class-wc-robokassa.php:955
 msgid "Plugins for WooCommerce"
 msgstr ""
 
-#: includes/class-wc-robokassa.php:967
+#: includes/class-wc-robokassa.php:975
 msgid "Errors not found. Payment acceptance is active."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:971
+#: includes/class-wc-robokassa.php:979
 msgid ""
 "Warnings found. They are highlighted in yellow. You should attention to "
 "them."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:975
+#: includes/class-wc-robokassa.php:983
 msgid ""
 "Critical errors were detected. They are highlighted in red. Payment "
 "acceptance is not active."
 msgstr ""
 
-#: includes/class-wc-robokassa.php:979
+#: includes/class-wc-robokassa.php:987
 msgid "Status"
 msgstr ""
 

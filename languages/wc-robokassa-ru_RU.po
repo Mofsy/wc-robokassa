@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Payment gateway - Robokassa for WooCommerce\n"
-"POT-Creation-Date: 2021-03-31 00:35+0300\n"
-"PO-Revision-Date: 2021-03-31 00:44+0300\n"
+"POT-Creation-Date: 2021-04-02 01:20+0300\n"
+"PO-Revision-Date: 2021-04-02 01:22+0300\n"
 "Last-Translator: Mofsy <support@mofsy.ru>\n"
 "Language-Team: Mofsy <support@mofsy.ru>\n"
 "Language: ru_RU\n"
@@ -77,9 +77,8 @@ msgstr ""
 "настройки в этом блоке."
 
 #: includes/class-wc-robokassa-method.php:1058
-#: includes/class-wc-robokassa-sub-method.php:554
-msgid "Online / Offline"
-msgstr "Включено / Отключено"
+msgid "Main method"
+msgstr "Основной метод"
 
 #: includes/class-wc-robokassa-method.php:1060
 msgid "Tick the checkbox if you need to show the payment gateway."
@@ -96,23 +95,41 @@ msgstr ""
 "временного отключения."
 
 #: includes/class-wc-robokassa-method.php:1067
+#: includes/class-wc-robokassa-method.php:1242
+msgid "Sub methods"
+msgstr "Дочерние методы"
+
+#: includes/class-wc-robokassa-method.php:1069
+msgid "Tick the checkbox to enable sub methods feature. Default is disabled."
+msgstr ""
+"Установите флажок, чтобы включить дочерние методы. По умолчанию - отключены."
+
+#: includes/class-wc-robokassa-method.php:1070
+msgid ""
+"Use of all mechanisms of child payment methods. The main method can be "
+"turned off. The cart will show the child payment methods."
+msgstr ""
+"Использование всех механизмов дочерних методов оплаты. Основной метод можно "
+"отключить. В корзине будут указаны дочерние способы оплаты."
+
+#: includes/class-wc-robokassa-method.php:1076
 msgid "Shop identifier"
 msgstr "Идентификатор магазина"
 
-#: includes/class-wc-robokassa-method.php:1069
+#: includes/class-wc-robokassa-method.php:1078
 msgid "Unique identifier for shop from Robokassa."
 msgstr "Уникальный идентификатор магазина из личного кабинета Робокассы."
 
-#: includes/class-wc-robokassa-method.php:1075
+#: includes/class-wc-robokassa-method.php:1084
 msgid "Test mode"
 msgstr "Тестовый режим"
 
-#: includes/class-wc-robokassa-method.php:1077
+#: includes/class-wc-robokassa-method.php:1086
 msgid "Tick the checkbox to enable test mode. Default is enabled."
 msgstr ""
 "Установите флажок, чтобы включить тестовый режим. По умолчанию включено."
 
-#: includes/class-wc-robokassa-method.php:1078
+#: includes/class-wc-robokassa-method.php:1087
 msgid ""
 "When you activate the test mode, no funds will be debited. In this case, the "
 "payment gateway will only be displayed when you log in with an administrator "
@@ -122,20 +139,6 @@ msgstr ""
 "этом случае платежный шлюз будет отображаться только при входе в систему с "
 "учетной записью администратора. Это делается для того, чтобы защитить вас от "
 "ложных заказов."
-
-#: includes/class-wc-robokassa-method.php:1084
-#: includes/class-wc-robokassa-method.php:1242
-msgid "Sub methods"
-msgstr "Дочерние методы"
-
-#: includes/class-wc-robokassa-method.php:1086
-msgid "Tick the checkbox to enable sub methods feature. Default is disabled."
-msgstr ""
-"Установите флажок, чтобы включить дочерние методы. По умолчанию - отключены."
-
-#: includes/class-wc-robokassa-method.php:1087
-msgid "Use of all mechanisms add a child of payment methods."
-msgstr "Использование всех механизмов добавления дочерних способов оплаты."
 
 #: includes/class-wc-robokassa-method.php:1091
 msgid ""
@@ -967,6 +970,10 @@ msgid ""
 "data."
 msgstr "Работа невозможна без этих настроек."
 
+#: includes/class-wc-robokassa-sub-method.php:554
+msgid "Online / Offline"
+msgstr "Включено / Отключено"
+
 #: includes/class-wc-robokassa-sub-method.php:556
 msgid "Enable display of the payment method on the website"
 msgstr "Включить отображение платежного метода на сайте"
@@ -977,35 +984,35 @@ msgstr ""
 "Установите флажок, чтобы включить эту возможность. Значение по умолчанию - "
 "отключено."
 
-#: includes/class-wc-robokassa.php:348
+#: includes/class-wc-robokassa.php:356
 msgid "This activation code is active."
 msgstr "Этот код активации активен."
 
-#: includes/class-wc-robokassa.php:349
+#: includes/class-wc-robokassa.php:357
 msgid "Error: This activation code has expired."
 msgstr "Ошибка: Этот код активации истек."
 
-#: includes/class-wc-robokassa.php:350
+#: includes/class-wc-robokassa.php:358
 msgid "Activation code republished. Awaiting reactivation."
 msgstr "Код активации переиздан. Ожидание повторной активации."
 
-#: includes/class-wc-robokassa.php:351
+#: includes/class-wc-robokassa.php:359
 msgid "Error: This activation code has been suspended."
 msgstr "Ошибка: Этот код активации приостановлен."
 
-#: includes/class-wc-robokassa.php:352
+#: includes/class-wc-robokassa.php:360
 msgid "This activation code is not found."
 msgstr "Указанный код активации не найден."
 
-#: includes/class-wc-robokassa.php:353
+#: includes/class-wc-robokassa.php:361
 msgid "This activation code is active (localhost)."
 msgstr "Этот код активации активен (localhost)."
 
-#: includes/class-wc-robokassa.php:354
+#: includes/class-wc-robokassa.php:362
 msgid "Error: This activation code is pending review."
 msgstr "Ошибка: Этот код активации находится на рассмотрении."
 
-#: includes/class-wc-robokassa.php:355
+#: includes/class-wc-robokassa.php:363
 msgid ""
 "Error: This version of the software was released after your download access "
 "expired. Please downgrade software or contact support for more information."
@@ -1014,27 +1021,27 @@ msgstr ""
 "доступа к загрузкам. Пожалуйста, понизьте класс программного обеспечения или "
 "свяжитесь со службой поддержки для получения более подробной информации."
 
-#: includes/class-wc-robokassa.php:356
+#: includes/class-wc-robokassa.php:364
 msgid "Error: The activation code variable is empty."
 msgstr "Ошибка: Переменная кода активации пуста."
 
-#: includes/class-wc-robokassa.php:357
+#: includes/class-wc-robokassa.php:365
 msgid "Error: I could not obtain a new local code."
 msgstr "Ошибка: Я не смог получить новый локальный код."
 
-#: includes/class-wc-robokassa.php:358
+#: includes/class-wc-robokassa.php:366
 msgid "Error: The maximum local code delay period has expired."
 msgstr "Ошибка: Максимальный период задержки локального кода истек."
 
-#: includes/class-wc-robokassa.php:359
+#: includes/class-wc-robokassa.php:367
 msgid "Error: The local key has been tampered with or is invalid."
 msgstr "Ошибка: Локальный ключ был подделан или недействителен."
 
-#: includes/class-wc-robokassa.php:360
+#: includes/class-wc-robokassa.php:368
 msgid "Error: The local code is invalid for this location."
 msgstr "Ошибка: локальный код недействителен для этого места."
 
-#: includes/class-wc-robokassa.php:361
+#: includes/class-wc-robokassa.php:369
 msgid ""
 "Error: Please create the following file (and directories if they dont exist "
 "already): "
@@ -1042,47 +1049,47 @@ msgstr ""
 "Ошибка: Пожалуйста, создайте следующий файл (и каталоги, если они еще не "
 "существуют): "
 
-#: includes/class-wc-robokassa.php:362
+#: includes/class-wc-robokassa.php:370
 msgid "Error: Please make the following path writable: "
 msgstr "Ошибка: Пожалуйста, сделайте следующий путь доступным для записи: "
 
-#: includes/class-wc-robokassa.php:363
+#: includes/class-wc-robokassa.php:371
 msgid "Error: I could not determine the local key storage on clear."
 msgstr "Ошибка: Я не смог определить локальное хранилище ключей на чистоте."
 
-#: includes/class-wc-robokassa.php:364
+#: includes/class-wc-robokassa.php:372
 msgid "Error: I could not save the local key."
 msgstr "Ошибка: Я не смог сохранить локальный ключ."
 
-#: includes/class-wc-robokassa.php:365
+#: includes/class-wc-robokassa.php:373
 msgid "Error: The local code is invalid for this activation code."
 msgstr "Ошибка: Локальный код недействителен для указанного кода активации."
 
-#: includes/class-wc-robokassa.php:366
+#: includes/class-wc-robokassa.php:374
 msgid "Error: This activation code has been deleted."
 msgstr "Ошибка: Этот код активации был удален."
 
-#: includes/class-wc-robokassa.php:367
+#: includes/class-wc-robokassa.php:375
 msgid "Error: This activation code has draft."
 msgstr "Ошибка: Этот код активации имеет черновик."
 
-#: includes/class-wc-robokassa.php:368
+#: includes/class-wc-robokassa.php:376
 msgid "Error: This activation code has available."
 msgstr "Ошибка: Этот код активации доступен."
 
-#: includes/class-wc-robokassa.php:369
+#: includes/class-wc-robokassa.php:377
 msgid "Error: This activation code has been blocked."
 msgstr "Ошибка: Этот код активации заблокирован."
 
-#: includes/class-wc-robokassa.php:775
+#: includes/class-wc-robokassa.php:783
 msgid "Official site"
 msgstr "Официальная страница"
 
-#: includes/class-wc-robokassa.php:790
+#: includes/class-wc-robokassa.php:798
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/class-wc-robokassa.php:819
+#: includes/class-wc-robokassa.php:827
 msgid ""
 "The plugin for accepting payments through ROBOKASSA for WooCommerce has been "
 "updated to a version that requires additional configuration."
@@ -1090,43 +1097,43 @@ msgstr ""
 "Плагин для приема платежей через Робокассу для WooCommerce был обновлен до "
 "версии, требующей дополнительной настройки."
 
-#: includes/class-wc-robokassa.php:821
+#: includes/class-wc-robokassa.php:829
 msgid "here"
 msgstr "сюда"
 
-#: includes/class-wc-robokassa.php:822
+#: includes/class-wc-robokassa.php:830
 #, php-format
 msgid "Press %s (go to payment gateway settings)."
 msgstr "Нажмите %s (для перехода к настройкам платежного шлюза)."
 
-#: includes/class-wc-robokassa.php:941
+#: includes/class-wc-robokassa.php:949
 msgid "Useful information"
 msgstr "Полезная информация"
 
-#: includes/class-wc-robokassa.php:945
+#: includes/class-wc-robokassa.php:953
 msgid "Official plugin page"
 msgstr "Официальная страница"
 
-#: includes/class-wc-robokassa.php:946
+#: includes/class-wc-robokassa.php:954
 msgid "Related news: ROBOKASSA"
 msgstr "Новости по теме Робокасса"
 
-#: includes/class-wc-robokassa.php:947
+#: includes/class-wc-robokassa.php:955
 msgid "Plugins for WooCommerce"
 msgstr "Плагины для WooCommerce"
 
-#: includes/class-wc-robokassa.php:967
+#: includes/class-wc-robokassa.php:975
 msgid "Errors not found. Payment acceptance is active."
 msgstr "Ошибки не найдены. Прием платежей активен."
 
-#: includes/class-wc-robokassa.php:971
+#: includes/class-wc-robokassa.php:979
 msgid ""
 "Warnings found. They are highlighted in yellow. You should attention to them."
 msgstr ""
 "Найдены предупреждения. Они выделены желтым цветом. Нужно обратить на них "
 "внимание."
 
-#: includes/class-wc-robokassa.php:975
+#: includes/class-wc-robokassa.php:983
 msgid ""
 "Critical errors were detected. They are highlighted in red. Payment "
 "acceptance is not active."
@@ -1134,7 +1141,7 @@ msgstr ""
 "Были обнаружены критические ошибки. Они выделены красным цветом. Прием "
 "платежей не активен."
 
-#: includes/class-wc-robokassa.php:979
+#: includes/class-wc-robokassa.php:987
 msgid "Status"
 msgstr "Состояние"
 
@@ -1265,6 +1272,9 @@ msgstr "Мофси"
 #. Author URI of the plugin/theme
 msgid "https://mofsy.ru"
 msgstr "https://mofsy.ru"
+
+#~ msgid "Use of all mechanisms add a child of payment methods."
+#~ msgstr "Использование всех механизмов добавления дочерних способов оплаты."
 
 #~ msgid "Enable sub methods"
 #~ msgstr "Включить дочерние методы"
