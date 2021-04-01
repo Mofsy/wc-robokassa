@@ -9,11 +9,18 @@ defined('ABSPATH') || exit;
 class Wc_Robokassa_Api
 {
 	/**
-	 * Base Api url
+	 * Api url
 	 *
 	 * @var string
 	 */
-	private $base_api_url = 'https://auth.robokassa.ru/Merchant/WebService/Service.asmx';
+	private $api_url = 'https://auth.robokassa.ru/Merchant/WebService/Service.asmx';
+
+	/**
+	 * Api endpoint
+	 *
+	 * @var string
+	 */
+	private $api_endpoint = '';
 
 	/**
 	 * Last response
@@ -33,29 +40,80 @@ class Wc_Robokassa_Api
 	 * Wc_Robokassa_Api constructor
 	 *
 	 * @return void
+	 *
+	 * @throws Exception
 	 */
 	public function __construct()
 	{
+		if(!defined('LIBXML_VERSION'))
+		{
+			throw new Exception('LIBXML_VERSION not defined');
+		}
+
+		if(!function_exists('libxml_use_internal_errors'))
+		{
+			throw new Exception('libxml_use_internal_errors');
+		}
+
+		if(!function_exists('wp_remote_get') || !function_exists('wp_remote_retrieve_body'))
+		{
+			throw new Exception('wp_remote_get && wp_remote_retrieve_body is not available');
+		}
+
+		if(!class_exists('SimpleXMLElement'))
+		{
+			throw new Exception('SimpleXMLElement is not exists');
+		}
+
+		libxml_use_internal_errors(true);
 	}
 
 	/**
 	 * Get base api URL
 	 *
+	 * @since 4.1.0
+	 *
 	 * @return string
 	 */
-	public function get_base_api_url()
+	public function get_api_url()
 	{
-		return $this->base_api_url;
+		return $this->api_url;
 	}
 
 	/**
 	 * Set base api URL
 	 *
-	 * @param string $base_api_url
+	 * @since 4.1.0
+	 *
+	 * @param string $api_url
 	 */
-	public function set_base_api_url($base_api_url)
+	public function set_api_url($api_url)
 	{
-		$this->base_api_url = $base_api_url;
+		$this->api_url = $api_url;
+	}
+
+	/**
+	 * Get api endpoint
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return string
+	 */
+	public function get_api_endpoint()
+	{
+		return $this->api_endpoint;
+	}
+
+	/**
+	 * Set api endpoint
+	 *
+	 * @since 4.1.0
+	 *
+	 * @param string $api_endpoint
+	 */
+	public function set_api_endpoint($api_endpoint)
+	{
+		$this->api_endpoint = $api_endpoint;
 	}
 
 	/**
@@ -108,29 +166,35 @@ class Wc_Robokassa_Api
 	}
 
 	/**
-	 * Available API
+	 * Request execute
 	 *
-	 * @return int
+	 * @return mixed
+	 *
+	 * @throws Exception
 	 */
-	public function is_available()
+	private function execute()
 	{
-		/**
-		 * Check WP
-		 */
-		if(!function_exists('wp_remote_get') || !function_exists('wp_remote_retrieve_body'))
+		$url = $this->get_api_url() . $this->get_api_endpoint();
+
+		$response = wp_remote_get($url);
+		$this->set_last_response($response);
+
+		$response_body = wp_remote_retrieve_body($this->get_last_response());
+		$this->set_last_response_body($response_body);
+
+		if($this->get_last_response_body() === '')
 		{
-			return 0;
+			return false;
 		}
 
-		/**
-		 * Check SimpleXMLElement installed
-		 */
-		if(class_exists('SimpleXMLElement'))
+		$xml_data = simplexml_load_string($this->get_last_response_body());
+
+		if(!$xml_data)
 		{
-			return 1;
+			throw new Exception('Wc_Robokassa_Api execute: xml errors');
 		}
 
-		return 0;
+		return $xml_data;
 	}
 
 	/**
@@ -145,71 +209,37 @@ class Wc_Robokassa_Api
 	 * @param $IncSum mixed Сумма, которую должен будет заплатить пользователь.
 	 * @param $merchantLogin string Логин магазина.
 	 *
-	 * @return mixed false - error, integer - success
+	 * @return false|string false - error, integer - success
 	 */
 	public function xml_calc_out_sum($IncCurrLabel, $IncSum, $merchantLogin = 'demo')
 	{
-		/**
-		 * Check available
-		 */
-		$is_available = $this->is_available();
-		if($is_available === 0) { return false; }
+		$endpoint = '/CalcOutSumm?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&IncSum=' . $IncSum;
+		$this->set_api_endpoint($endpoint);
 
-		/**
-		 * URL
-		 */
-		$url = $this->get_base_api_url() . '/CalcOutSumm?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&IncSum=' . $IncSum;
-
-		/**
-		 * Request execute
-		 */
-		$this->set_last_response(wp_remote_get($url));
-
-		/**
-		 * Last response set body
-		 */
-		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
-
-		/**
-		 * Response is very good
-		 */
-		if($this->get_last_response_body() != '')
+		try
 		{
-			/**
-			 * SimpleXMl
-			 */
-			if($is_available === 1)
-			{
-				/**
-				 * Response normalize
-				 */
-				try
-				{
-					$response_data = new SimpleXMLElement($this->get_last_response_body());
-				}
-				catch(Exception $e)
-				{
-					return false;
-				}
+			$response_data = $this->execute();
+		}
+		catch(Exception $e)
+		{
+			wc_robokassa_logger()->error('xml_calc_out_sum', $e);
+			return false;
+		}
 
-				/**
-				 * Check error
-				 */
-				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
-				{
-					return false;
-				}
+		/**
+		 * Check error
+		 */
+		if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+		{
+			return false;
+		}
 
-				/**
-				 * OutSum
-				 */
-				if(isset($response_data->OutSum))
-				{
-					return (string)$response_data->OutSum;
-				}
-
-				return false;
-			}
+		/**
+		 * OutSum
+		 */
+		if(isset($response_data->OutSum))
+		{
+			return (string)$response_data->OutSum;
 		}
 
 		return false;
@@ -234,94 +264,61 @@ class Wc_Robokassa_Api
 	 */
 	public function xml_op_state($merchantLogin, $InvoiceID, $Signature)
 	{
-		/**
-		 * Check available
-		 */
-		$is_available = $this->is_available();
-		if($is_available === 0) { return false; }
+		$endpoint = '/OpState?MerchantLogin=' . $merchantLogin . '&InvoiceID=' . $InvoiceID . '&Signature=' . $Signature;
 
-		/**
-		 * URL
-		 */
-		$url = $this->get_base_api_url() . '/OpState?MerchantLogin=' . $merchantLogin . '&InvoiceID=' . $InvoiceID . '&Signature=' . $Signature;
+		$this->set_api_endpoint($endpoint);
 
-		/**
-		 * Request execute
-		 */
-		$this->set_last_response(wp_remote_get($url));
-
-		/**
-		 * Last response set body
-		 */
-		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
-
-		/**
-		 * Response is very good
-		 */
-		if($this->get_last_response_body() != '')
+		try
 		{
-			$op_state_data = array();
-
-			/**
-			 * SimpleXML
-			 */
-			if($is_available === 1)
-			{
-				/**
-				 * Response normalize
-				 */
-				try
-				{
-					$response_data = new SimpleXMLElement($this->get_last_response_body());
-				}
-				catch(Exception $e)
-				{
-					return false;
-				}
-
-				/**
-				 * Check error
-				 */
-				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
-				{
-					return false;
-				}
-
-				/**
-				 * Current payment state
-				 */
-				if(isset($response_data->State))
-				{
-					$op_state_data['state'] = array
-					(
-						'code' => (string)$response_data->State->Code,
-						'request_date' => (string)$response_data->State->RequestDate,
-						'state_date' => (string)$response_data->State->StateDate,
-					);
-				}
-
-				/**
-				 * Информация об операции оплаты счета
-				 */
-				if(isset($response_data->Info))
-				{
-					$op_state_data['info'] = array
-					(
-						'inc_curr_label' => (string)$response_data->Info->IncCurrLabel,
-						'inc_sum' => (string)$response_data->Info->IncSum,
-						'inc_account' => (string)$response_data->Info->IncAccount,
-						'payment_method_code' => (string)$response_data->Info->PaymentMethod->Code,
-						'payment_method_description' => (string)$response_data->Info->PaymentMethod->Description,
-						'out_curr_label' => (string)$response_data->Info->OutCurrLabel,
-						'out_sum' => (string)$response_data->Info->OutSum,
-					);
-				}
-
-				return $op_state_data;
-			}
+			$response_data = $this->execute();
+		}
+		catch(Exception $e)
+		{
+			wc_robokassa_logger()->error('xml_op_state', $e);
+			return false;
 		}
 
-		return false;
+		$op_state_data = [];
+
+		/**
+		 * Check error
+		 */
+		if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+		{
+			return false;
+		}
+
+		/**
+		 * Current payment state
+		 */
+		if(isset($response_data->State))
+		{
+			$op_state_data['state'] = array
+			(
+				'code' => (string)$response_data->State->Code,
+				'request_date' => (string)$response_data->State->RequestDate,
+				'state_date' => (string)$response_data->State->StateDate,
+			);
+		}
+
+		/**
+		 * Информация об операции оплаты счета
+		 */
+		if(isset($response_data->Info))
+		{
+			$op_state_data['info'] = array
+			(
+				'inc_curr_label' => (string)$response_data->Info->IncCurrLabel,
+				'inc_sum' => (string)$response_data->Info->IncSum,
+				'inc_account' => (string)$response_data->Info->IncAccount,
+				'payment_method_code' => (string)$response_data->Info->PaymentMethod->Code,
+				'payment_method_description' => (string)$response_data->Info->PaymentMethod->Description,
+				'out_curr_label' => (string)$response_data->Info->OutCurrLabel,
+				'out_sum' => (string)$response_data->Info->OutSum,
+			);
+		}
+
+		return $op_state_data;
 	}
 
 	/**
@@ -342,85 +339,63 @@ class Wc_Robokassa_Api
 	 */
 	public function xml_get_currencies($merchantLogin, $language)
 	{
-		$is_available = $this->is_available();
-		if($is_available === 0)
+		$endpoint = '/GetCurrencies?MerchantLogin=' . $merchantLogin . '&language=' . $language;
+
+		$this->set_api_endpoint($endpoint);
+
+		try
 		{
-			return false;
+			$response_data = $this->execute();
 		}
-
-		$url = $this->get_base_api_url() . '/GetCurrencies?MerchantLogin=' . $merchantLogin . '&language=' . $language;
-
-		$response = wp_remote_get($url);
-		$this->set_last_response($response);
-
-		$response_body = wp_remote_retrieve_body($this->get_last_response());
-		$this->set_last_response_body($response_body);
-
-		if('' === $this->get_last_response_body())
+		catch(Exception $e)
 		{
+			wc_robokassa_logger()->error('xml_get_currencies', $e);
 			return false;
 		}
 
 		/**
-		 * Данные валют
+		 * Available currencies
 		 */
 		$currencies_data = [];
 
-		/**
-		 * SimpleXML
-		 */
-		if($is_available === 1)
+		if(!isset($response_data->Result) || $response_data->Result->Code != 0 || !isset($response_data->Groups))
 		{
-			try
-			{
-				$response_data = new SimpleXMLElement($this->get_last_response_body());
-			}
-			catch (Exception $e)
-			{
-				return false;
-			}
-
-			if(!isset($response_data->Result) || $response_data->Result->Code != 0 || !isset($response_data->Groups))
-			{
-				return false;
-			}
-
-			foreach($response_data->Groups->Group as $xml_group)
-			{
-				$xml_group_attributes = $xml_group->attributes();
-
-				foreach($xml_group->Items->Currency as $xml_group_item)
-				{
-					$xml_group_item_attributes = $xml_group_item->attributes();
-
-					$response_item = array
-					(
-						'group_code' => (string)$xml_group_attributes['Code'],
-						'group_description' => (string)$xml_group_attributes['Description'],
-						'currency_label' => (string)$xml_group_item_attributes['Label'],
-						'currency_alias' => (string)$xml_group_item_attributes['Alias'],
-						'currency_name' => (string)$xml_group_item_attributes['Name'],
-						'language' => $language,
-					);
-
-					if(isset($xml_group_item_attributes['MaxValue']))
-					{
-						$response_item['sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
-					}
-
-					if(isset($xml_group_item_attributes['MinValue']))
-					{
-						$response_item['sum_min'] = (string)$xml_group_item_attributes['MinValue'];
-					}
-
-					$currencies_data[] = $response_item;
-				}
-			}
-
-			return $currencies_data;
+			return false;
 		}
 
-		return false;
+		foreach($response_data->Groups->Group as $xml_group)
+		{
+			$xml_group_attributes = $xml_group->attributes();
+
+			foreach($xml_group->Items->Currency as $xml_group_item)
+			{
+				$xml_group_item_attributes = $xml_group_item->attributes();
+
+				$response_item = array
+				(
+					'group_code' => (string)$xml_group_attributes['Code'],
+					'group_description' => (string)$xml_group_attributes['Description'],
+					'currency_label' => (string)$xml_group_item_attributes['Label'],
+					'currency_alias' => (string)$xml_group_item_attributes['Alias'],
+					'currency_name' => (string)$xml_group_item_attributes['Name'],
+					'language' => $language,
+				);
+
+				if(isset($xml_group_item_attributes['MaxValue']))
+				{
+					$response_item['sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
+				}
+
+				if(isset($xml_group_item_attributes['MinValue']))
+				{
+					$response_item['sum_min'] = (string)$xml_group_item_attributes['MinValue'];
+				}
+
+				$currencies_data[] = $response_item;
+			}
+		}
+
+		return $currencies_data;
 	}
 
 	/**
@@ -438,86 +413,50 @@ class Wc_Robokassa_Api
 	 * ru – русский;
 	 * en – английский.
 	 *
-	 * @return mixed false - error, array - success
+	 * @return array|false - error, array - success
 	 */
-	public function xml_get_payment_methods($merchantLogin, $language)
+	public function xml_get_payment_methods($merchantLogin = 'demo', $language = 'ru')
 	{
-		/**
-		 * Check available
-		 */
-		$is_available = $this->is_available();
-		if($is_available === 0) { return false; }
+		$endpoint = '/GetPaymentMethods?MerchantLogin=' . $merchantLogin . '&language=' . $language;
 
-		/**
-		 * URL
-		 */
-		$url = $this->get_base_api_url() . '/GetPaymentMethods?MerchantLogin=' . $merchantLogin . '&language=' . $language;
+		$this->set_api_endpoint($endpoint);
 
-		/**
-		 * Request execute
-		 */
-		$this->set_last_response(wp_remote_get($url));
-
-		/**
-		 * Last response set body
-		 */
-		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
-
-		/**
-		 * Response is very good
-		 */
-		if($this->get_last_response_body() != '')
+		try
 		{
-			/**
-			 * Данные валют
-			 */
-			$methods_data = array();
-
-			/**
-			 * SimpleXML
-			 */
-			if($is_available === 1)
-			{
-				/**
-				 * Response normalize
-				 */
-				try
-				{
-					$response_data = new SimpleXMLElement($this->get_last_response_body());
-				}
-				catch (Exception $e)
-				{
-					return false;
-				}
-
-				/**
-				 * Check error
-				 */
-				if (!isset($response_data->Result) || $response_data->Result->Code != 0)
-				{
-					return false;
-				}
-
-				/**
-				 * Перебираем данные
-				 */
-				foreach ( $response_data->Methods->Method as $xml_method )
-				{
-					$xml_method_attributes = $xml_method->attributes();
-
-					$methods_data[ (string) $xml_method_attributes['Code'] ] = array
-					(
-						'method_code' => (string) $xml_method_attributes['Code'],
-						'method_description' => (string) $xml_method_attributes['Description'],
-						'language' => $language
-					);
-				}
-
-				return $methods_data;
-			}
+			$response_data = $this->execute();
+		}
+		catch(Exception $e)
+		{
+			wc_robokassa_logger()->error('xml_get_payment_methods', $e);
+			return false;
 		}
 
-		return false;
+		/**
+		 * Available methods
+		 */
+		$methods_data = [];
+
+		/**
+		 * Check error
+		 */
+		if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+		{
+			return false;
+		}
+
+		foreach($response_data->Methods->Method as $xml_method)
+		{
+			$xml_method_attributes = $xml_method->attributes();
+
+			$methods_data[ (string) $xml_method_attributes['Code'] ] = array
+			(
+				'method_code' => (string) $xml_method_attributes['Code'],
+				'method_description' => (string) $xml_method_attributes['Description'],
+				'language' => $language
+			);
+		}
+
+		return $methods_data;
 	}
 
 	/**
@@ -544,104 +483,68 @@ class Wc_Robokassa_Api
 	 */
 	public function xml_get_rates($merchantLogin, $OutSum, $IncCurrLabel = '', $language = 'ru')
 	{
-		/**
-		 * Check available
-		 */
-		$is_available = $this->is_available();
-		if($is_available === 0) { return false; }
+		$endpoint = '/GetRates?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&OutSum=' . $OutSum . '&Language=' . $language;
 
-		/**
-		 * URL
-		 */
-		$url = $this->get_base_api_url() . '/GetRates?MerchantLogin=' . $merchantLogin . '&IncCurrLabel=' . $IncCurrLabel . '&OutSum=' . $OutSum . '&Language=' . $language;
+		$this->set_api_endpoint($endpoint);
 
-		/**
-		 * Request execute
-		 */
-		$this->set_last_response(wp_remote_get($url));
-
-		/**
-		 * Last response set body
-		 */
-		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
-
-		/**
-		 * Response is very good
-		 */
-		if($this->get_last_response_body() != '')
+		try
 		{
-			/**
-			 * Данные валют
-			 */
-			$rates_data = array();
+			$response_data = $this->execute();
+		}
+		catch(Exception $e)
+		{
+			wc_robokassa_logger()->error('xml_get_rates', $e);
+			return false;
+		}
 
-			/**
-			 * SimpleXML
-			 */
-			if($is_available === 1)
+		/**
+		 * Rates
+		 */
+		$rates_data = [];
+
+		/**
+		 * Check error
+		 */
+		if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+		{
+			return false;
+		}
+
+		foreach($response_data->Groups->Group as $xml_group)
+		{
+			$xml_group_attributes = $xml_group->attributes();
+
+			foreach($xml_group->Items->Currency as $xml_group_item)
 			{
-				/**
-				 * Response normalize
-				 */
-				try
+				$xml_group_item_attributes = $xml_group_item->attributes();
+				$xml_group_item_rate_attributes = $xml_group_item->Rate->attributes();
+
+				$rates_item =  array
+				(
+					'group_code' => (string)$xml_group_attributes['Code'],
+					'group_description' => (string)$xml_group_attributes['Description'],
+					'currency_label' => (string)$xml_group_item_attributes['Label'],
+					'currency_alias' => (string)$xml_group_item_attributes['Alias'],
+					'currency_name' => (string)$xml_group_item_attributes['Name'],
+					'rate_inc_sum' => (string)$xml_group_item_rate_attributes['IncSum'],
+					'language' => $language,
+				);
+
+				if(isset($xml_group_item_attributes['MaxValue']))
 				{
-					$response_data = new SimpleXMLElement($this->get_last_response_body());
-				}
-				catch(Exception $e)
-				{
-					return false;
-				}
-
-				/**
-				 * Check error
-				 */
-				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
-				{
-					return false;
-				}
-
-				/**
-				 * Перебираем данные
-				 */
-				foreach($response_data->Groups->Group as $xml_group)
-				{
-					$xml_group_attributes = $xml_group->attributes();
-
-					foreach($xml_group->Items->Currency as $xml_group_item)
-					{
-						$xml_group_item_attributes = $xml_group_item->attributes();
-						$xml_group_item_rate_attributes = $xml_group_item->Rate->attributes();
-
-						$rates_item =  array
-						(
-							'group_code' => (string)$xml_group_attributes['Code'],
-							'group_description' => (string)$xml_group_attributes['Description'],
-							'currency_label' => (string)$xml_group_item_attributes['Label'],
-							'currency_alias' => (string)$xml_group_item_attributes['Alias'],
-							'currency_name' => (string)$xml_group_item_attributes['Name'],
-							'rate_inc_sum' => (string)$xml_group_item_rate_attributes['IncSum'],
-							'language' => $language,
-						);
-
-						if(isset($xml_group_item_attributes['MaxValue']))
-						{
-							$rates_item['currency_sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
-						}
-
-						if(isset($xml_group_item_attributes['MinValue']))
-						{
-							$rates_item['currency_sum_min'] = (string)$xml_group_item_attributes['MinValue'];
-						}
-
-						$rates_data[] = $rates_item;
-					}
+					$rates_item['currency_sum_max'] = (string)$xml_group_item_attributes['MaxValue'];
 				}
 
-				return $rates_data;
+				if(isset($xml_group_item_attributes['MinValue']))
+				{
+					$rates_item['currency_sum_min'] = (string)$xml_group_item_attributes['MinValue'];
+				}
+
+				$rates_data[] = $rates_item;
 			}
 		}
 
-		return false;
+		return $rates_data;
 	}
 
 	/**
@@ -649,71 +552,38 @@ class Wc_Robokassa_Api
 	 *
 	 * @param string $merchantLogin
 	 *
-	 * @return mixed
+	 * @return string|false
 	 */
-	public function xml_get_limit($merchantLogin)
+	public function xml_get_limit($merchantLogin = 'demo')
 	{
-		/**
-		 * Check available
-		 */
-		$is_available = $this->is_available();
-		if($is_available === 0) { return false; }
+		$endpoint = '/GetLimit?MerchantLogin=' . $merchantLogin;
 
-		/**
-		 * URL
-		 */
-		$url = $this->get_base_api_url() . '/GetLimit?MerchantLogin=' . $merchantLogin;
+		$this->set_api_endpoint($endpoint);
 
-		/**
-		 * Request execute
-		 */
-		$this->set_last_response(wp_remote_get($url));
-
-		/**
-		 * Last response set body
-		 */
-		$this->set_last_response_body(wp_remote_retrieve_body($this->get_last_response()));
-
-		/**
-		 * Response is very good
-		 */
-		if($this->get_last_response_body() != '')
+		try
 		{
-			/**
-			 * SimpleXMl
-			 */
-			if($is_available === 1)
-			{
-				/**
-				 * Response normalize
-				 */
-				try
-				{
-					$response_data = new SimpleXMLElement($this->get_last_response_body());
-				}
-				catch(Exception $e)
-				{
-					return false;
-				}
+			$response_data = $this->execute();
+		}
+		catch(Exception $e)
+		{
+			wc_robokassa_logger()->error('xml_get_limit', $e);
+			return false;
+		}
 
-				/**
-				 * Check error
-				 */
-				if(!isset($response_data->Result) || $response_data->Result->Code != 0)
-				{
-					return false;
-				}
+		/**
+		 * Check error
+		 */
+		if(!isset($response_data->Result) || $response_data->Result->Code != 0)
+		{
+			return false;
+		}
 
-				/**
-				 * Limit exists
-				 */
-				if(isset($response_data->Limit))
-				{
-					return (string)$response_data->Limit;
-				}
-
-				return false;
-			}
+		/**
+		 * Limit exists
+		 */
+		if(isset($response_data->Limit))
+		{
+			return (string)$response_data->Limit;
 		}
 
 		return false;
